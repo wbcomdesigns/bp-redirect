@@ -25,14 +25,17 @@ if( !class_exists( 'BP_Redirect_AJAX' ) ) {
 		*  Actions performed for saving admin settings
 		*  @since   1.0.0
 		*  @author  Wbcom Designs
+		*  @access public
 		*/
                 
-		function bp_redirect_save_admin_settings() {
+		public function bp_redirect_save_admin_settings() {
 			if( $_POST['action'] === 'bp_redirect_admin_settings' ) {		
 				parse_str($_POST['form'], $form_data);
 				$setting_details = filter_var_array( $form_data, FILTER_SANITIZE_STRING );
-				if( !empty( $setting_details) ){
-					update_option('bp_redirect_admin_settings', $setting_details );
+				if( !empty( $setting_details) && !empty( $_POST['sequence'] )){
+					$setting_arr = $setting_details;
+					$setting_arr['sequence'] = $_POST['sequence'];					
+					update_option('bp_redirect_admin_settings', $setting_arr );
 				}
 			}	exit;
 		}                
