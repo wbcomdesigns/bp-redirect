@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BP Redirect
  * Plugin URI: https://wbcomdesigns.com/contact/
- * Description: This plugin allows buddypress login redirect according to user role.
+ * Description: This plugin allows login redirect according to user role.
  * Version: 1.0.0
  * Author: Wbcom Designs
  * Author URI: http://wbcomdesigns.com
@@ -47,55 +47,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 	function bp_redirect_plugins_files() {
 	    global $bp;
-        if ( !in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-            add_action( 'admin_notices', 'bp_redirect_admin_notice' );            
-        } else {
-    		
-       //     if( bp_is_active('groups' ) || bp_is_active('activity' ) || bp_is_active('xprofile' ) || bp_is_active('forums' ) || bp_is_active('messages' ) ) {
-				/**
-	            * Include needed files on init
-	            */
-	             $include_files = array(
-		                'admin/settings.php', 
-		                'includes/scripts.php',
-		                'includes/ajax.php',
-		                'includes/bp-redirect-login.php'
-		            );
-		            foreach($include_files as $include_file) {
-		                include $include_file;
-		            } 	           
-        /**    } else {
-        		add_action( 'admin_notices', 'bp_redirect_component_notice' );       
-        	}            **/
-    }
+	    $include_files = array(
+	            'admin/settings.php', 
+	            'includes/scripts.php',
+	            'includes/ajax.php',
+	            'includes/bp-redirect-login.php'
+	        );
+        foreach($include_files as $include_file) {
+            include $include_file;
+        }            
 
 	 }
-
-
-    /**
-     * Show admin notice when buddypress not active or install
-     *  @since   1.0.0
-     *  @author  Wbcom Designs
-    */
-	
-    function bp_redirect_admin_notice() {
-        ?>
-        <div class="error notice is-dismissible">
-            <p><?php _e( 'The <b>BP Redirect</b> plugin requires <b>Buddypress</b> plugin to be installed and active.', BP_REDIRECT_DOMAIN ); ?></p>
-        </div>
-        <?php
-    }
-    
-    /**
-     * Show admin notice when buddypress user groups component not active
-     *  @since   1.0.0
-     *  @author  Wbcom Designs
-    */   
-	
-    function bp_redirect_component_notice(){
-        ?>
-        <div class="error notice is-dismissible">
-            <p><?php _e( 'The <b>BP Redirect</b> plugin requires <b>BuddyPress Components </b> to be active.', BP_REDIRECT_DOMAIN ); ?></p>
-        </div>
-        <?php  
-    }
