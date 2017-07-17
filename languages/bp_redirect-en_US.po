@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: bp redirect 1.0.0\n"
+"POT-Creation-Date: 2017-07-17 14:47+0530\n"
+"PO-Revision-Date: 2017-07-17 14:51+0530\n"
+"Last-Translator: \n"
+"Language-Team: wbcomdesigns\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/settings.php:40
+msgid "BP Redirect Setting Page"
+msgstr ""
+
+#: admin/settings.php:40
+msgid "BP Redirect"
+msgstr ""
+
+#: admin/settings.php:42 admin/settings.php:177
+msgid "General"
+msgstr ""
+
+#: admin/settings.php:42
+msgid " General "
+msgstr ""
+
+#: admin/settings.php:58
+msgid "BP Redirect Settings"
+msgstr ""
+
+#: admin/settings.php:60
+msgid "Settings saved."
+msgstr ""
+
+#: admin/settings.php:87
+msgid "Log in"
+msgstr ""
+
+#: admin/settings.php:103
+msgid "Component"
+msgstr ""
+
+#: admin/settings.php:107
+msgid "profile"
+msgstr ""
+
+#: admin/settings.php:121
+msgid ""
+"Check this option to send the user to the component page when they will "
+"visit after log in."
+msgstr ""
+
+#: admin/settings.php:126
+msgid "Check this option to send the user to a custom location after login."
+msgstr ""
+
+#: admin/settings.php:138
+msgid "Save Settings"
+msgstr ""

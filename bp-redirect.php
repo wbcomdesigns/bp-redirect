@@ -23,22 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
 	/**
-	 * Plugin Activation
-	 *  @since   1.0.0
-	 *  @author  Wbcom Designs
-	*/
-
-	register_activation_hook( __FILE__, 'bp_redirect_plugin_activation' );
-	function bp_redirect_plugin_activation() {
-	        //Check if "Buddypress" plugin is active or not
-	        if (!in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-	                //Buddypress Plugin is inactive, hence deactivate this plugin
-	                deactivate_plugins( plugin_basename( __FILE__ ) );
-
-	        }
-	}
-
-	/**
 	 * Include needed files on init
 	 *  @since   1.0.0
 	 *  @author  Wbcom Designs
