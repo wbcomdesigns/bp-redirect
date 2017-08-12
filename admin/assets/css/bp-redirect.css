@@ -1182,3 +1182,33 @@ a.ui-button:active,
 #bp-redirect-settings-form .ui-icon{
 	float: right;
 }
+
+.bp-redirect-help-tip {
+    color: #666;
+    display: inline-block;
+    font-size: 1.1em;
+    font-style: normal;
+    height: 16px;
+    line-height: 16px;
+    position: relative;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.bp-redirect-help-tip::after {
+    content: "";
+    cursor: help;
+    font-family: Dashicons;
+    font-variant: normal;
+    font-weight: 400;
+    height: 100%;
+    left: 0;
+    line-height: 1;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    text-indent: 0;
+    text-transform: none;
+    top: 0;
+    width: 100%;
+}      
