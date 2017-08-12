@@ -52,13 +52,20 @@ if( !class_exists( 'BP_Redirect_admin' ) ) {
 
 		public function bp_redirect_settings_page() {
 			global $bp;
-			$spinner_src = includes_url().'/images/spinner.gif';
-			$saved_setting = get_option('bp_redirect_admin_settings');			
+			$spinner_src = includes_url().'images/spinner.gif';
+			$saved_setting = get_option('bp_redirect_admin_settings');	
+			$bp_pages = get_option( 'bp-pages' );
+			$wp_pages_ids = get_all_page_ids();
+			$bp_pages_ids = array_values($bp_pages);
+			
+			if( !empty( $wp_pages_ids ) && !empty( $bp_pages_ids ) ) {
+				$wp_pages_ids = array_diff( $wp_pages_ids, $bp_pages_ids );
+			}			
 		 ?>
 			<h1><?php _e('BP Redirect Settings', BP_REDIRECT_DOMAIN ); ?></h1>
 			<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible"> 
 				<p><strong><?php _e('Settings saved.', BP_REDIRECT_DOMAIN ); ?></strong></p>
-				<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+				<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss this notice.', BP_REDIRECT_DOMAIN ); ?></span></button>
 			</div>
 			<form method="post" id="bp-redirect-settings-form">			
 				<div id="accordion">
@@ -69,12 +76,35 @@ if( !class_exists( 'BP_Redirect_admin' ) ) {
 						if( !empty( $seq ) ) {								
 							uksort($roles, function($key1, $key2) use ( $seq ) {
 								return (array_search($key1, $seq ) > array_search($key2, $seq ));
-							});
-												
-						}			
-					
+							});												
+						}					
 					}
 				}
+				?>
+				<!--<ul>
+					<li>
+					<input type="radio" id="f-option" name="selector">
+					<label for="f-option">Pizza</label>
+
+					<div class="check"></div>
+					</li>
+
+					<li>
+					<input type="radio" id="s-option" name="selector">
+					<label for="s-option">Bacon</label>
+
+					<div class="check"><div class="inside"></div></div>
+					</li>
+
+					<li>
+					<input type="radio" id="t-option" name="selector">
+					<label for="t-option">Cats</label>
+
+					<div class="check">
+							<div class="inside"></div></div>
+					</li>
+				</ul> -->
+				<?php
 				foreach( $roles as $key => $val ) {
 				  ?>
 				    <div class="group" id="<?php echo $key; ?>" >
@@ -95,33 +125,55 @@ if( !class_exists( 'BP_Redirect_admin' ) ) {
 														 	if( array_key_exists('login_type', $setting[$key])){
 																$login_type_val = $setting[$key]['login_type'];								
 															}
-															$login_component = $setting[$key]['login_component'];											
+															if(!empty($setting[$key]['login_component'])){
+																$login_component = $setting[$key]['login_component'];	
+															}	
 															$login_url= $setting[$key]['login_url'];
 														}	
-													} ?>																		
-												<input name='<?php echo "bp_redirect_redirection[$key][login_type]"; ?>' id= '<?php echo "bp_redirect_redirection_".$key."_login_type_referer"; ?>' value="referer" type="radio" class="bp_redi_login_type" <?php if( isset( $login_type_val) &&  $login_type_val == "referer" ) { echo "checked = 'checked'"; } ?>> 
-												<label for="bp_redirect_redirection_administrator_login_type_referer"><?php _e('Component', BP_REDIRECT_DOMAIN ); ?></label>													
-												<select name='<?php echo "bp_redirect_redirection[$key][login_component]"; ?>'>
-												<?php if ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) { 
-											  			if( bp_is_active( 'members' )) { ?>
-								               				<option value= "<?php echo 'profile'; ?>" <?php if( $login_component == 'profile' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'profile', BP_REDIRECT_DOMAIN ); ?>            			
-										               		</option>
-							               		<?php	}	
-							               			}
-									               		
-										            $pages = get_pages(); 
-													foreach ( $pages as $page ) {
+												} 
+												if ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) { 
+												?>																		
+													<input name='<?php echo "bp_redirect_redirection[$key][login_type]"; ?>' id= '<?php echo "bp_redirect_redirection_".$key."_login_type_referer"; ?>' value="referer" type="radio" class="bp_redi_login_type" <?php if( isset( $login_type_val) &&  $login_type_val == "referer" ) { echo "checked = 'checked'"; } ?>> 
+													<label for="bp_redirect_redirection_administrator_login_type_referer"><?php _e('BuddyPress Component', BP_REDIRECT_DOMAIN ); ?></label>													
+													<div class="check">
+														<div class="inside"></div>
+													</div>
+													<div class="bpr_tooltip">
+  														<span class="bpr_tooltiptext">bpr tooltip text</span>
+													</div>
+													<select name='<?php echo "bp_redirect_redirection[$key][login_component]"; ?>'>
+													<?php 	if( bp_is_active( 'members' )) { ?>
+																<option value= "<?php echo 'profile'; ?>" <?php if( $login_component == 'profile' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'Profile', BP_REDIRECT_DOMAIN ); ?>            			
+																</option>
+													<?php	}
+														$bp_pages = bp_core_get_directory_page_ids();
+														$pages = get_pages( array('include' => $bp_pages)); 
+															foreach ( $pages as $page ) {
+																$option = '<option value="' . get_page_link( $page->ID ) . '">';
+																$option .= $page->post_title;
+																$option .= '</option>';
+																echo $option; 
+															}																									    
+												  	?> 
+													</select>
+													<p class="description"><?php _e( "Check this option to send the user to the component page when they will visit after log in.", BP_REDIRECT_DOMAIN ); ?></p>
+													<br> 
+												<?php } ?>
+												<input name='<?php echo "bp_redirect_redirection[$key][login_type]"; ?>' id= '<?php echo "bp_redirect_redirection_".$key."_login_type_wp_pages"; ?>' value="wp_pages" type="radio" class="bp_redi_login_type" <?php if( isset( $login_type_val) &&  $login_type_val == "wp_pages" ) { echo "checked = 'checked'"; } ?>> 
+												<label for="bp_redirect_redirection_administrator_login_type_wp_pages"><?php _e('WP Pages', BP_REDIRECT_DOMAIN ); ?></label>							
+												<select name='<?php echo "bp_redirect_redirection[$key][login_wp_pages]"; ?>'>	
+										        <?php   $pages = get_pages( array('include' => $wp_pages_ids)); 
+												 	foreach ( $pages as $page ) {
 													    $option = '<option value="' . get_page_link( $page->ID ) . '">';
 													    $option .= $page->post_title;
 													    $option .= '</option>';
 													    echo $option; 
 													} ?>
 								           		</select>
-
-								           		<p class="description"><?php _e( "Check this option to send the user to the component page when they will visit after log in.", BP_REDIRECT_DOMAIN ); ?></p>
-									           	<br> 
+												<p class="description"><?php _e( "Check this option to send the user to the WordPress page when they will visit after log in.", BP_REDIRECT_DOMAIN ); ?></p>
+									           	<br>								           		
 												<input name='<?php echo "bp_redirect_redirection[$key][login_type]"; ?>' id='<?php echo "bp_redirect_redirection_".$key."login_type_custom"; ?>' value="custom" type="radio" class="bp_redi_login_type" <?php if( isset( $login_type_val) &&  $login_type_val == "custom" ) { echo "checked = 'checked'"; } ?>>
-												<label for="bp_redirect_redirection_login_type_custom">Custom URL</label>
+												<label for="bp_redirect_redirection_login_type_custom"><?php _e('Custom URL', BP_REDIRECT_DOMAIN ); ?></label>
 												<input name='<?php echo "bp_redirect_redirection[$key][login_url]"; ?>' id='<?php echo "bp_redirect_redirection_".$key."_login_url"; ?>' value="<?php if( !empty( $login_url ) ){ _e( $login_url , BP_REDIRECT_DOMAIN ); } ?>" class="regular-text" type="text">			
 												<p class="description"><?php _e( 'Check this option to send the user to a custom location after login.', BP_REDIRECT_DOMAIN ); ?></p>
 											</td>

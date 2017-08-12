@@ -68,36 +68,44 @@ if( !class_exists( 'BP_Redirect_Login' ) ) {
 			$login_type_val = '';
 			$login_component = '';
 			$login_url = '';
+			$login_wp_pages = '';
 			if( array_key_exists( $key, $setting )) {
-				$login_component = $setting[$key]['login_component'];											
-				$login_url= $setting[$key]['login_url'];
+				if ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) { 
+					$login_component = $setting[$key]['login_component'];
+				} 
+				$login_url= $setting[$key]['login_url'];	
+				$login_wp_pages = $setting[$key]['login_wp_pages'];
 			 	if( array_key_exists('login_type', $setting[$key])) {							 		
 					$login_type_val = $setting[$key]['login_type'];	
 					if( $login_type_val == 'referer' ){			
-						if( isset( $login_component ) && $login_component == 'profile' ) {
+						if( !empty( $login_component ) && $login_component == 'profile' ) {
 							$redirect_url = $this->redirect_to_profile( $redirect_to, $request, $user );
 			 				return esc_url( $redirect_url );
+						} elseif(!empty( $login_component ) && $login_component != 'profile'){		
+							return esc_url( $login_component );								
 						} else {
-							return esc_url( $login_component );	
-						}			
-					} else {				
-
+							$url = $this->redirect_general( $user ); 
+							return $url;							
+						}		
+					} else if( $login_type_val == 'wp_pages' ){
+						if( isset( $login_wp_pages ) ) {							
+			 				return esc_url( $login_wp_pages );
+						} else {
+							$url = $this->redirect_general( $user ); 
+							return $url;
+						}		
+					} else {
 						if( !empty( $login_url ) && $login_type_val == 'custom') {	
 							return esc_url( $login_url );	
 						} else {
-							if ( isset( $user->roles ) && is_array( $user->roles ) ) {
-								//check for admins
-								if ( in_array( 'administrator', $user->roles ) ) {
-									// redirect them to the default place
-									return esc_url(admin_url());
-								} else {
-									return esc_url(home_url());
-								}
-							}	
+							$url = $this->redirect_general( $user ); 
+							return $url;
 						}
-
 					}									
-				}
+				} else {
+					$url = $this->redirect_general( $user ); 
+					return $url;
+				}	
 				
 			}
 		}
@@ -113,7 +121,19 @@ if( !class_exists( 'BP_Redirect_Login' ) ) {
 		public function redirect_to_profile( $redirect_to, $request, $user ){
 			global $bp;
 			return bp_core_get_user_domain($user->ID);
-		}   
+		}
+
+		public function redirect_general( $user ){
+			if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+				//check for admins
+				if ( in_array( 'administrator', $user->roles ) ) {
+					// redirect them to the default place
+					return esc_url(admin_url());
+				} else {
+					return esc_url(home_url());
+				}
+			}	
+		}		
 	}
 	new BP_Redirect_Login();
 }
