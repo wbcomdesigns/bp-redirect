@@ -1159,14 +1159,19 @@ a.ui-button:active,
 
 
 /*** Admin setting css ***/
-#bp-redirect-settings-form{
+#bpr-login-settings-form,
+#bpr-logout-settings-form {
 	margin-top: 10px;
 	width: 98%;
 }
-#bp-redirect-settings-form .group{
+
+#bpr-login-settings-form .group, 
+#bpr-logout-settings-form .group {
 	margin-bottom: 10px;
 }
-#bpredirect-settings_updated, .bp-redirect-settings-spinner{
+
+#bpredirect-settings_updated,
+.bp-redirect-settings-spinner{
 	display: none;
 }
 
@@ -1179,11 +1184,18 @@ a.ui-button:active,
     border: 1px solid #008EC2;
 }
 
-#bp-redirect-settings-form .ui-icon{
+#bpr-login-settings-form .ui-icon,
+#bpr-logout-settings-form .ui-icon {
 	float: right;
 }
 
-.bp-redirect-help-tip {
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.bpr_tooltiptext {
     color: #666;
     display: inline-block;
     font-size: 1.1em;
@@ -1195,7 +1207,7 @@ a.ui-button:active,
     width: 16px;
 }
 
-.bp-redirect-help-tip::after {
+.bpr_tooltiptext::after {
     content: "";
     cursor: help;
     font-family: Dashicons;
@@ -1211,4 +1223,113 @@ a.ui-button:active,
     text-transform: none;
     top: 0;
     width: 100%;
-}      
+}  
+
+.bpr_tooltiptext .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.bpr_tooltiptext .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.bpr_tooltiptext:hover .tooltiptext {
+    visibility: visible;
+}    
+
+/*** Responsive css for admin ***/
+[class*="bpr-col-"] {
+    float: left;
+    padding: 10px 0;
+ }
+
+.bpr-row {
+    clear: both;
+    border-bottom: 1px solid #ddd;    
+    overflow: hidden;
+    padding-bottom: 5px;
+}
+
+.bpr-col-1 {
+    width: 8.33%;
+}
+
+.bpr-col-2 {
+    width: 16.66%;
+}
+
+.bpr-col-3 {
+    width: 25%;
+}
+
+.bpr-col-4 {
+    width: 33.33%;
+}
+
+.bpr-col-5 {
+    width: 41.66%;
+}
+
+.bpr-col-6 {
+    width: 50%;
+}
+
+.bpr-col-7 {
+    width: 58.33%;
+}
+
+.bpr-col-8 {
+    width: 66.66%;
+}
+
+.bpr-col-9 {
+    width: 75%;
+}
+
+.bpr-col-10 {
+    width: 83.33%;
+}
+
+.bpr-col-11 {
+    width: 91.66%;
+}
+
+.bpr-col-12 {
+    width: 100%;
+}
+
+@media(max-width: 767px) {
+    [class*="bpr-col-"] {
+        width: 100%;
+    }
+} 
+
+.bpr-login-component, 
+.bpr-login-custom,
+.bpr-logout-component, 
+.bpr-logout-custom {
+	display: none;
+}
+
+.bpr_show{
+	display: block;
+}
+

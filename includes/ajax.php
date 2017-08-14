@@ -30,15 +30,18 @@ if( !class_exists( 'BP_Redirect_AJAX' ) ) {
                 
 		public function bp_redirect_save_admin_settings() {
 			if( $_POST['action'] === 'bp_redirect_admin_settings' ) {		
-				parse_str($_POST['form'], $form_data);
-				$setting_details = filter_var_array( $form_data, FILTER_SANITIZE_STRING );
-				if( !empty( $setting_details) && !empty( $_POST['sequence'] )){
-					$setting_arr = $setting_details;
-					$setting_arr['sequence'] = $_POST['sequence'];					
-					update_option('bp_redirect_admin_settings', $setting_arr );
+				parse_str($_POST['login_details'], $login_form_data);
+				parse_str($_POST['logout_details'], $logout_form_data);				
+				$login_details = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
+				$logout_details = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
+				$setting_arr = array_merge( $login_details, $logout_details );	
+				if( !empty( $setting_arr) && !empty( $_POST['loginSequence'] )){					
+					$setting_arr['loginSequence'] = $_POST['loginSequence'];
+					$setting_arr['logoutSequence'] = $_POST['logoutSequence'];					
+					update_option('bp_redirect_admin_settings', $setting_arr );			
 				}
 			}	exit;
-		}                
+		}             
    
 	}
 	new BP_Redirect_AJAX();

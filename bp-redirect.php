@@ -35,7 +35,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 	            'admin/settings.php', 
 	            'includes/scripts.php',
 	            'includes/ajax.php',
-	            'includes/bp-redirect-login.php'
+	            'includes/bp-redirect-login.php',
+	            'includes/bp-redirect-logout.php'
 	        );
         foreach($include_files as $include_file) {
             include $include_file;
