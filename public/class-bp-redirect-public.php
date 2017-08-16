@@ -103,16 +103,8 @@ class BP_Redirect_Public {
 		 	if( array_key_exists('login_type', $setting[$key])) {							 		
 				$login_type_val = $setting[$key]['login_type'];	
 				if( $login_type_val == 'referer' ) {		
-					if( !empty( $login_component ) && $login_component == 'profile' ) {
-						$redirect_url = $this->bpr_login_redirect_to_profile( $redirect_to, $request, $user );
-		 				return esc_url( $redirect_url );
-					} elseif( !empty( $login_component ) && $login_component != 'profile' ) {
-						$redirect_url = $this->bpr_login_redirect_to_member_activity( $redirect_to, $request, $user );
-		 				return esc_url( $redirect_url );					
-					} else {
-						$url = $this->bpr_redirect_general( $user );
-						return $url;							
-					}		
+					$url = $this->bp_login_redirect_referer( $login_component, $redirect_to, $request, $user );
+					return $url;
 				} else {
 					if( !empty( $login_url ) && $login_type_val == 'custom' ) {
 						return esc_url( $login_url );	
@@ -129,6 +121,20 @@ class BP_Redirect_Public {
 		}
 	}
 
+	public function bp_login_redirect_referer( $login_component, $redirect_to, $request, $user ) {
+		if( !empty( $login_component ) && $login_component == 'profile' ) {
+			$redirect_url = $this->bpr_login_redirect_to_profile( $redirect_to, $request, $user );
+				return esc_url( $redirect_url );
+		} elseif( !empty( $login_component ) && $login_component == 'member_activity'  ) {
+			$redirect_url = $this->bpr_login_redirect_to_member_activity( $redirect_to, $request, $user );
+				return esc_url( $redirect_url );					
+		} elseif( !empty( $login_component ) ) {
+			return esc_url( $login_component );							
+		} else {
+			$url = $this->bpr_redirect_general( $user );
+			return $url;									
+		}	
+	}
 	/**
  	*  Login redirects to Member's profile page
 	*
@@ -234,17 +240,9 @@ class BP_Redirect_Public {
 			$logout_url= $setting[$key]['logout_url'];
 		 	if( array_key_exists('logout_type', $setting[$key]) ) {							 		
 				$logout_type_val = $setting[$key]['logout_type'];	
-				if( $logout_type_val == 'referer' ) {		
-					if( !empty( $logout_component ) && $logout_component == 'profile' ) {
-						$redirect_url = $this->bpr_logout_redirect_to_member_profile( $redirect_to, $request, $user );
-		 				return esc_url( $redirect_url );
-					} elseif( !empty( $logout_component ) && $logout_component == 'member_activity' ) {
-						$redirect_url = $this->bpr_logout_redirect_to_member_activity( $redirect_to, $request, $user );
-		 				return esc_url( $redirect_url );								
-					} else {
-						$url = $this->bpr_redirect_general( $user );
-						return $url;							
-					}		
+				if( $logout_type_val == 'referer' ) {
+					$url = $this->bp_logout_redirect_referer( $logout_component, $redirect_to, $request, $user );
+					return $url;
 				} else {
 					if( !empty( $logout_url ) && $logout_type_val == 'custom' ) {
 						return esc_url( $logout_url );	
@@ -259,6 +257,29 @@ class BP_Redirect_Public {
 			}
 			
 		}
+	}
+
+	/**
+ 	*  Logout redirects when logout redirect type referer
+	*
+	*  @since 1.0.0
+	*  @author  Wbcom Designs <admin@wbcomdesigns.com>
+	*  @access public
+	*/
+
+	public function bp_logout_redirect_referer( $logout_component, $redirect_to, $request, $user ) {
+		if( !empty( $logout_component ) && $logout_component == 'profile' ) {
+			$redirect_url = $this->bpr_logout_redirect_to_member_profile( $redirect_to, $request, $user );
+				return esc_url( $redirect_url );
+		} elseif( !empty( $logout_component ) && $logout_component == 'member_activity' ) {
+			$redirect_url = $this->bpr_logout_redirect_to_member_activity( $redirect_to, $request, $user );
+				return esc_url( $redirect_url );								
+		} elseif( !empty( $logout_component ) ) {
+			return esc_url( $logout_component );
+		} else {
+			$url = $this->bpr_redirect_general( $user );
+			return $url;							
+		}	
 	}
 
 	/**
