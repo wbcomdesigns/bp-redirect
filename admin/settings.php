@@ -55,22 +55,41 @@ if( !class_exists( 'BP_Redirect_admin' ) ) {
 			$spinner_src = includes_url().'images/spinner.gif';
 			$saved_setting = get_option('bp_redirect_admin_settings');	
 			$bp_pages = get_option( 'bp-pages' );
-			$wp_pages_ids = get_all_page_ids();
 			$bp_pages_ids = array_values($bp_pages);			
-			if( !empty( $wp_pages_ids ) && !empty( $bp_pages_ids ) ) {
-				$wp_pages_ids = array_diff( $wp_pages_ids, $bp_pages_ids );
-			}	
-			$roles = get_editable_roles();  
+				
+			$loginSequence = get_editable_roles();  
 			if( !empty( $saved_setting )) {
-				if( array_key_exists( 'sequence', $saved_setting )) {
-					$seq = explode( ',', $saved_setting['sequence'] );					 
+				if( array_key_exists( 'loginSequence', $saved_setting )) {
+					$seq = explode( ',', $saved_setting['loginSequence'] );
+					foreach ( $seq as $key => $val ) {
+						$val_arr = explode( '-', $val );
+						$seq[$key] = $val_arr[1];
+					}						
 					if( !empty( $seq ) ) {								
-						uksort($roles, function($key1, $key2) use ( $seq ) {
+						uksort($loginSequence, function($key1, $key2) use ( $seq ) {
 							return (array_search($key1, $seq ) > array_search($key2, $seq ));
 						});												
 					}					
 				}
-			}		
+			}
+
+			$logoutSequence = get_editable_roles();  
+			if( !empty( $saved_setting )) {
+				if( array_key_exists( 'logoutSequence', $saved_setting )) {
+					$logoutseq = explode( ',', $saved_setting['logoutSequence'] );
+					foreach ($logoutseq as $key => $val ) {
+						$val_arr = explode( '-', $val );
+						$logoutseq[$key] = $val_arr[1];
+					}
+					if( !empty( $logoutseq ) ) {								
+						uksort($logoutSequence, function($logoutkey1, $logoutkey2) use ( $logoutseq ) {
+							return (array_search($logoutkey1, $logoutseq ) > array_search($logoutkey2, $logoutseq ));
+						});									
+										
+					}
+				}
+			}			
+
 		 ?>
 			<h1><?php _e('BP Redirect Settings', BP_REDIRECT_DOMAIN ); ?></h1>
 			<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible"> 
@@ -81,10 +100,10 @@ if( !class_exists( 'BP_Redirect_admin' ) ) {
 				<div class="bpr-col-8">
 					<!-- login Settings -->
 					<h2><?php _e('Login Redirect Settings', BP_REDIRECT_DOMAIN ); ?></h2>
-					<?php $this->bp_redirect_plugin_login_settings( $roles, $bp_pages_ids, $saved_setting ); ?>
+					<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
 					<!-- Logout Settings --> 
 					<h2><?php _e('Logout Redirect Settings', BP_REDIRECT_DOMAIN ); ?></h2>	
-					<?php $this->bp_redirect_plugin_logout_settings( $roles, $bp_pages_ids, $saved_setting ); ?>
+					<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
 				</div>
 				<div class="bpr-col-4">
 					<!-- FAQ(s) -->
