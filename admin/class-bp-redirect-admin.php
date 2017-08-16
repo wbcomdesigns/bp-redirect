@@ -122,7 +122,8 @@ class BP_Redirect_Admin {
 	public function bp_redirect_settings_page() {
 		global $bp;
 		$spinner_src = includes_url().'images/spinner.gif';
-		$saved_setting = get_option('bp_redirect_admin_settings');	
+		$saved_setting = get_option('bp_redirect_admin_settings');
+
 		$bp_pages = get_option( 'bp-pages' );
 		$bp_pages_ids = array_values($bp_pages);				
 		$loginSequence = $this->get_editable_roles();  
@@ -170,10 +171,12 @@ class BP_Redirect_Admin {
 				<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
 				<!-- Logout Settings --> 
 				<h2><?php _e('Logout Redirect Settings', BP_REDIRECT_DOMAIN ); ?></h2>	
-				<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
+				<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>				
 			</div>
-			<div class="bpr-col-4">
+			<div class="bpr-col-4" id="bpr-faq-section">
 				<!-- FAQ(s) -->
+				<h2><?php  _e('FAQ(s)', BP_REDIRECT_DOMAIN ); ?></h2>
+				<?php $this->bp_redirect_faqs(); ?>
 			</div>
 		</div>
 		<p>
@@ -397,4 +400,65 @@ class BP_Redirect_Admin {
 			}
 		}	exit;
 	}
+
+	/**
+	*  Display faq(s)
+	*  @since   1.0.0
+	*  @author  Wbcom Designs
+	*  @access public
+	*/
+
+	public function bp_redirect_faqs(){ ?>
+		<div class="bpr-col-12">
+			<div class="bpr-row">
+				<div class="bpr-ques">
+					<?php _e( 'Is this plugin requires another plugin?', BP_REDIRECT_DOMAIN ); ?>
+				</div>
+				<div class="bpr-ans">
+					<?php _e( 'Yes, this plugin requires BuddyPress plugin.', BP_REDIRECT_DOMAIN ); ?>
+				</div>
+			</div>
+			<div class="bpr-row">
+				<div class="bpr-ques">
+					<?php _e( 'Where it redirects if no option selected or in the case of empty custom URL field?', BP_REDIRECT_DOMAIN ); ?>
+				</div>
+				<div class="bpr-ans">
+					<?php _e( 'In that case, plugin follows default redirection rule.', BP_REDIRECT_DOMAIN ); ?>
+				</div>
+			</div>
+			<div class="bpr-row">
+				<div class="bpr-ques">
+					<?php _e( 'Where it redirects, when we select "Member profile" in BuddyPress Component dropdown?', BP_REDIRECT_DOMAIN ); ?>
+				</div>
+				<div class="bpr-ans">
+					<?php _e( "It redirects to logged in member's profile page", BP_REDIRECT_DOMAIN ); ?>
+				</div>
+			</div>
+			<div class="bpr-row">
+				<div class="bpr-ques">
+					<?php _e( 'Where it redirects, when we select "Member activity" in BuddyPress Component dropdown?', BP_REDIRECT_DOMAIN ); ?>
+				</div>
+				<div class="bpr-ans">
+					<?php _e( "It redirects to logged in member's activity page", BP_REDIRECT_DOMAIN ); ?>
+				</div>
+			</div>
+			<div class="bpr-row">
+				<div class="bpr-ques">
+					<?php _e( 'Where it redirects, when we select "Activity" in BuddyPress Component dropdown?', BP_REDIRECT_DOMAIN ); ?>
+				</div>
+				<div class="bpr-ans">
+					<?php _e( "It redirects to logged in site wide activity page", BP_REDIRECT_DOMAIN ); ?>
+				</div>
+			</div>
+			<div class="bpr-row">
+				<div class="bpr-ques">
+					<?php _e( 'Where do I ask for support?', BP_REDIRECT_DOMAIN ); ?>
+				</div>
+				<div class="bpr-ans">
+					<?php _e( "Please visit <a href='http://wbcomdesigns.com/contact' rel='nofollow'>Wbcom Designs</a> for any query related to plugin and BuddyPress.", BP_REDIRECT_DOMAIN ); ?>
+				</div>
+			</div>
+		</div>
+
+	<?php }
 }

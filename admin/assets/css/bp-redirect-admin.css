@@ -1333,3 +1333,14 @@ a.ui-button:active,
 	display: block;
 }
 
+.bpr-ques {
+	font-weight: 700;
+}
+
+#bpr-faq-section .bpr-row{
+	padding: 10px 20px;
+}
+#bpr-faq-section h2{
+	padding-left: 20px;
+}
+
