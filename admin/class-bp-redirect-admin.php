@@ -247,10 +247,11 @@ class BP_Redirect_Admin {
 									<select name='<?php echo "bp_login_redirect_settings[$key][login_component]"; ?>' class='bpr-login-component <?php if( isset( $login_type_val) &&  $login_type_val == "referer" ) { echo "bpr_show"; } ?> ' >
 									<?php 	if( bp_is_active( 'members' )) { ?>
 												<option value= "<?php echo 'profile'; ?>" <?php if( $login_component == 'profile' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'Member Profile', BP_REDIRECT_DOMAIN ); ?>           			
-												</option>
+												</option>												
+									<?php	} if( bp_is_active( 'activity' )) { ?>
 												<option value= "<?php echo 'member_activity'; ?>" <?php if( $login_component == 'member_activity' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'Member Activity', BP_REDIRECT_DOMAIN ); ?>           			
 												</option>
-									<?php	}
+									<?php   }		
 										$bp_pages = bp_core_get_directory_page_ids();
 										$pages = get_pages( array('include' => $bp_pages));						
 										foreach ( $pages as $page ) {
@@ -325,10 +326,11 @@ class BP_Redirect_Admin {
 									<select name='<?php echo "bp_logout_redirect_settings[$key][logout_component]"; ?>' class='bpr-logout-component <?php if( isset( $logout_type_val) &&  $logout_type_val == "referer" ) { echo "bpr_show"; } ?> ' >
 									<?php 	if( bp_is_active( 'members' )) { ?>
 												<option value= "<?php echo 'profile'; ?>" <?php if( $logout_component == 'profile' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'Member Profile', BP_REDIRECT_DOMAIN ); ?>           			
-												</option>
+												</option>												
+									<?php	} if( bp_is_active( 'activity' )) { ?>
 												<option value= "<?php echo 'member_activity'; ?>" <?php if( $logout_component == 'member_activity' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'Member Activity', BP_REDIRECT_DOMAIN ); ?>         			
 												</option>
-									<?php	}
+									<?php   }
 										$bp_pages = bp_core_get_directory_page_ids();
 										$pages = get_pages( array('include' => $bp_pages) );						
 										foreach ( $pages as $page ) {
