@@ -26,6 +26,7 @@ jQuery(document).ready(function($) {
      
     jQuery( "#bgr-login-accordion,#bgr-logout-accordion" )
       .accordion({
+        heightStyle: "content",
   	    collapsible: true,
         option: "icons",
   	    icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
