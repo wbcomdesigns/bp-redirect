@@ -1,10 +1,10 @@
-=== BuddyPress Group Reviews ===
+=== BP Redirect ===
 Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/donate/
 Tags: login redirect, buddypress redirect
 Requires at least: 3.0.1
-Tested up to: 4.7
-Stable tag: 4.6
+Tested up to: 4.8.1
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +30,7 @@ After installation of BP Redirect plugin, a new menu will be added. This menu li
 No, BP Redirect plugin is not required BuddyPress plugin to be active.
 
 == Screenshots ==
-1. The screenshot shows the admin settings to change redirect on login for different roles and corresponds to screenshot-1.(png|jpg|jpeg|gif).
+1. The screenshot shows the admin settings to change redirect on login and logout for different roles and corresponds to screenshot-1.(png|jpg|jpeg|gif).
 2. The screenshot shows the admin settings to change roles sequence by drag & drop and corresponds to screenshot-2.(png|jpg|jpeg|gif).
 
 == Changelog ==
