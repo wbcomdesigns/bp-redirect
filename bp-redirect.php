@@ -7,7 +7,7 @@
  * @wordpress-plugin
  * Plugin Name:       BP Redirect
  * Plugin URI:        https://wbcomdesigns.com/contact/
- * Description:       This plugin allows login redirect according to user role.
+ * Description:       This plugin allows login and logout redirect according to the user role.
  * Version:           1.0.0
  * Author:            Wbcom Designs <admin@wbcomdesigns.com>
  * Author URI:        https://wbcomdesigns.com/contact/
