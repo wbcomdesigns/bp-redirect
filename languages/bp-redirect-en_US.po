@@ -1,0 +1,149 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BP Redirect\n"
+"POT-Creation-Date: 2017-08-17 10:51+0530\n"
+"PO-Revision-Date: 2017-08-17 10:51+0530\n"
+"Last-Translator: \n"
+"Language-Team: Wbcom Designs\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.3\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_x\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-bp-redirect-admin.php:78
+msgid "BP Redirect Setting Page"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:78 bp-redirect.php:43
+msgid "BP Redirect"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:80 admin/class-bp-redirect-admin.php:379
+msgid "General"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:80
+msgid " General "
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:162
+msgid "BP Redirect Settings"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:164
+msgid "Settings saved."
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:165
+msgid "Dismiss this notice."
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:170
+msgid "Login Redirect Settings"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:173
+msgid "Logout Redirect Settings"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:178
+msgid "FAQ(s)"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:183
+msgid "Save Settings"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:242 admin/class-bp-redirect-admin.php:321
+msgid "BuddyPress Component"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:247 admin/class-bp-redirect-admin.php:326
+msgid "Custom URL"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:252 admin/class-bp-redirect-admin.php:331
+msgid "Member Profile"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:255 admin/class-bp-redirect-admin.php:334
+msgid "Member Activity"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:272 admin/class-bp-redirect-admin.php:351
+msgid "Enter custom url"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:415
+msgid "Is this plugin requires another plugin?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:418
+msgid "Yes, this plugin requires BuddyPress plugin."
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:423
+msgid ""
+"Where it redirects if no option selected or in the case of empty custom URL "
+"field?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:426
+msgid "In that case, plugin follows default redirection rule."
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:431
+msgid ""
+"Where it redirects, when we select \"Member profile\" in BuddyPress "
+"Component dropdown?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:434
+msgid "It redirects to logged in member's profile page"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:439
+msgid ""
+"Where it redirects, when we select \"Member activity\" in BuddyPress "
+"Component dropdown?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:442
+msgid "It redirects to logged in member's activity page"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:447
+msgid ""
+"Where it redirects, when we select \"Activity\" in BuddyPress Component "
+"dropdown?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:450
+msgid "It redirects to logged in site wide activity page"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:455
+msgid "Where do I ask for support?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:458
+msgid ""
+"Please visit <a href='http://wbcomdesigns.com/contact' rel='nofollow'>Wbcom "
+"Designs</a> for any query related to plugin and BuddyPress."
+msgstr ""
+
+#: bp-redirect.php:44
+msgid "BuddyPress"
+msgstr ""
+
+#: bp-redirect.php:46
+#, php-format
+msgid ""
+"The %1$s plugin requires %2$s plugin to activate and function correctly."
+msgstr ""
