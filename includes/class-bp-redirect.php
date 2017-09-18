@@ -153,7 +153,7 @@ class BP_Redirect {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'wp_ajax_bp_redirect_admin_settings', $plugin_admin, 'bp_redirect_save_admin_settings' );
 	}
 
 	/**
