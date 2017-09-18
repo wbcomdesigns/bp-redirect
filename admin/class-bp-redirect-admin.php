@@ -414,7 +414,7 @@ class BP_Redirect_Admin {
 			if( !empty( $setting_arr) && !empty( $_POST['loginSequence'] ) ) {	
 				$setting_arr['loginSequence'] = $_POST['loginSequence'];
 				$setting_arr['logoutSequence'] = $_POST['logoutSequence'];
-				update_site_option('bp_redirect_admin_settings', $setting_arr );
+				update_option('bp_redirect_admin_settings', $setting_arr );
 			}
 		}
 		exit;
