@@ -58,7 +58,6 @@ class BP_Redirect_Public {
 	*  @access public
 	*/
 	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
-		global $bp;
 	    global $wp_roles;
 	    if ( ! is_wp_error( $user ) && !empty( $user )) {
 			$saved_setting = get_option('bp_redirect_admin_settings');
@@ -149,7 +148,6 @@ class BP_Redirect_Public {
 	*/
 
 	public function bpr_login_redirect_to_profile( $redirect_to, $request, $user ){
-		global $bp;
 		$url = bp_core_get_user_domain($user->ID).'profile/';
 		return $url;
 	}
@@ -163,7 +161,6 @@ class BP_Redirect_Public {
 	*/
 
 	public function bpr_login_redirect_to_member_activity( $redirect_to, $request, $user ){
-		global $bp;
 		$url = bp_core_get_user_domain($user->ID).'activity/';
 		return $url;
 	}
@@ -196,7 +193,6 @@ class BP_Redirect_Public {
 	*/
             
 	public function bp_logout_redirection_front( $redirect_to, $request='', $user='' ) {
-		global $bp;
 	    global $wp_roles;
 	    if ( ! is_wp_error( $user ) && !empty( $user ) ) {
 			$saved_setting = get_option('bp_redirect_admin_settings');
@@ -296,7 +292,6 @@ class BP_Redirect_Public {
 	*/
 
 	public function bpr_logout_redirect_to_member_profile( $redirect_to, $request, $user ){
-		global $bp;
 		$url = bp_core_get_user_domain($user->ID).'profile/';
 		return $url;
 	}
@@ -310,7 +305,6 @@ class BP_Redirect_Public {
 	*/
 
 	public function bpr_logout_redirect_to_member_activity( $redirect_to, $request, $user ){
-		global $bp;
 		$url = bp_core_get_user_domain($user->ID).'activity/';
 		return $url;
 	}

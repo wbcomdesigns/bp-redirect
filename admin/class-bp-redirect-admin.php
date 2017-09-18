@@ -116,7 +116,6 @@ class BP_Redirect_Admin {
 	 */
 
 	public function bp_redirect_settings_page() {
-		global $bp;
 		$spinner_src = includes_url().'images/spinner.gif';
 		$saved_setting = get_option('bp_redirect_admin_settings');
 
@@ -207,8 +206,7 @@ class BP_Redirect_Admin {
 	 * @access public
 	 */
 
-	public function bp_redirect_plugin_login_settings( $roles, $bp_pages_ids, $saved_setting ){ 
-		global $bp;	?>			
+	public function bp_redirect_plugin_login_settings( $roles, $bp_pages_ids, $saved_setting ){ ?>			
 	  	<div class="bpr-col-12">						   
 			<form method="post" id="bpr-login-settings-form">			
 				<div id="bgr-login-accordion">
@@ -298,8 +296,7 @@ class BP_Redirect_Admin {
 	 * @access public
 	 */
 
-	public function bp_redirect_plugin_logout_settings( $roles, $bp_pages_ids, $saved_setting ) { 
-		global $bp;	?>
+	public function bp_redirect_plugin_logout_settings( $roles, $bp_pages_ids, $saved_setting ) {?>
 	  	<div class="bpr-col-12">						   
 			<form method="post" id="bpr-logout-settings-form">			
 				<div id="bgr-logout-accordion">
