@@ -46,10 +46,10 @@ jQuery(document).ready(function($) {
       });
 
       jQuery( "#bp-redirect-settings-submit" ).on( 'click', function(){
-      	jQuery( ".bp-redirect-settings-spinner" ).show();
+      	
         var loginRoleSequence = [];
         var logoutRoleSequence = [];
-      	var login_settings_form = jQuery( "#bpr-login-settings-form" ).serialize(); 
+      	var login_settings_form = jQuery( "#bpr-login-settings-form" ).serialize();
         var logout_settings_form = jQuery( "#bpr-logout-settings-form" ).serialize(); 
         jQuery( "#bpr-login-settings-form .group" ).each(function () {
             if(jQuery( this ).attr('id').trim()!= '') {         
@@ -63,6 +63,7 @@ jQuery(document).ready(function($) {
         }); 
         loginRoleSequence = loginRoleSequence.join();  
         logoutRoleSequence = logoutRoleSequence.join();
+        jQuery( ".bp-redirect-settings-spinner" ).show();
   			jQuery.post(
   	            ajaxurl,
   	            {

@@ -153,6 +153,8 @@ class BP_Redirect {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_init' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_menu' );
 		$this->loader->add_action( 'wp_ajax_bp_redirect_admin_settings', $plugin_admin, 'bp_redirect_save_admin_settings' );
 	}
 
@@ -167,8 +169,8 @@ class BP_Redirect {
 
 		$plugin_public = new BP_Redirect_Public( $this->get_plugin_name(), $this->get_version() );
 
-
-
+		$this->loader->add_filter( 'login_redirect', $plugin_public, 'bp_login_redirection_front', 10, 3 );
+		$this->loader->add_filter( 'logout_redirect', $plugin_public, 'bp_logout_redirection_front', 10, 3 );
 	}
 
 	/**

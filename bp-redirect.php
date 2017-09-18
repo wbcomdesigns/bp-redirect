@@ -28,6 +28,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 define( 'BP_REDIRECT_PLUGIN_PATH', plugin_dir_path(__FILE__) );
 define( 'BP_REDIRECT_PLUGIN_URL', plugin_dir_url(__FILE__) );
 define( 'BP_REDIRECT_DOMAIN','bp-redirect');
+if (!defined('BP_ENABLE_MULTIBLOG')) {
+    define('BP_ENABLE_MULTIBLOG', false);
+}
+if ( !defined( 'BP_ROOT_BLOG' ) ) {
+    define( 'BP_ROOT_BLOG', 1 );
+}
 
 /**
  * Check plugin requirement on plugins loaded
@@ -36,13 +42,8 @@ define( 'BP_REDIRECT_DOMAIN','bp-redirect');
 
 add_action('plugins_loaded', 'bpr_plugin_init');
 function bpr_plugin_init() {
-    $bp_active = in_array('buddypress/bp-loader.php', get_option('active_plugins'));
-    if ( current_user_can('activate_plugins') && $bp_active !== true ) {
-        add_action('admin_notices', 'bpr_plugin_admin_notice');
-    } else {
-        run_bp_redirect();
-        add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bpr_plugin_links' );
-    }
+    run_bp_redirect();
+    add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bpr_plugin_links' );
 }
 
 /**
@@ -57,27 +58,13 @@ function bpr_plugin_links( $links ) {
 }
 
 /**
- *  Show admin notice when BuddyPress plugin not activated
- *  @since   1.0.0
- *  @author  Wbcom Designs
-*/
-
-function bpr_plugin_admin_notice() {
-    $bpr_plugin = __( 'BP Redirect', BP_REDIRECT_DOMAIN );
-    $bp_plugin = __( 'BuddyPress', BP_REDIRECT_DOMAIN );
-    echo '<div class="error"><p>'
-    . sprintf(__('%1$s is ineffective now as it requires %2$s to be installed and active.', BP_REDIRECT_DOMAIN ), '<strong>' . esc_html($bpr_plugin) . '</strong>', '<strong>' . esc_html($bp_plugin) . '</strong>')
-    . '</p></div>';
-}
-
-/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-bp-redirect-activator.php
  */
 
 function activate_bp_redirect() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-activator.php';
-	BP_Redirect_Activator::activate();
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-activator.php';
+    BP_Redirect_Activator::activate();
 }
 
 /**
@@ -86,8 +73,8 @@ function activate_bp_redirect() {
  */
 
 function deactivate_bp_redirect() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-deactivator.php';
-	BP_Redirect_Deactivator::deactivate();
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-deactivator.php';
+    BP_Redirect_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_bp_redirect' );
@@ -108,7 +95,19 @@ function run_bp_redirect() {
      * admin-specific hooks, and public-facing site hooks.
      */
     require plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect.php';
-	$plugin = new BP_Redirect();
-	$plugin->run();
+    $plugin = new BP_Redirect();
+    $plugin->run();
 
 }
+
+function bpr_plugin_new_blog($blog_id, $user_id, $domain, $path, $site_id, $meta) {
+
+    if (!is_plugin_active_for_network('buddypress/bp-loader.php')) {
+        switch_to_blog($blog_id);
+        //Buddypress Plugin is inactive, hence deactivate this plugin
+        deactivate_plugins(plugin_basename(__FILE__));
+        wp_die(__('The <b>BP Redirect</b> plugin requires <b>Buddypress</b> plugin to be installed and active. Return to <a href="' . admin_url('plugins.php') . '">Plugins</a>', BP_REDIRECT_DOMAIN));
+        restore_current_blog();
+    }
+}
+add_action('wpmu_new_blog', 'bpr_plugin_new_blog', 10, 6);
