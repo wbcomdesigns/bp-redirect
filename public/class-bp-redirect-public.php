@@ -49,8 +49,6 @@ class BP_Redirect_Public {
 	public function __construct( $plugin_name, $version ) {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
-        add_filter( 'login_redirect', array( $this, 'bp_login_redirection_front'), 10, 3 );
-		add_filter( 'logout_redirect', array( $this, 'bp_logout_redirection_front'), 10, 3 );
 	}
 
 	/**
@@ -59,27 +57,23 @@ class BP_Redirect_Public {
 	*  @author  Wbcom Designs
 	*  @access public
 	*/
-            
-	public function bp_login_redirection_front( $redirect_to, $request='', $user='' ) {
+	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
 		global $bp;
 	    global $wp_roles;
 	    if ( ! is_wp_error( $user ) && !empty( $user )) {
 			$saved_setting = get_option('bp_redirect_admin_settings');
-			$setting       = $saved_setting['bp_login_redirect_settings'];		
-			$roles = $wp_roles->roles;  
-			foreach( $roles as $key => $val ) {
-				$current_user_role = $user->roles;
-				if( $current_user_role[0] == $key ) {						
+			$setting       = $saved_setting['bp_login_redirect_settings'];
+
+			foreach( $wp_roles->roles as $key => $val ) {
+				if( in_array( $key, $user->roles ) ) {
 					if( !empty( $setting )) {
 						$url = $this->bpr_login_redirect_according_settings( $key, $setting, $redirect_to, $request, $user );
-						return $url;
 					} else {	
-						$url = $this->bpr_redirect_general( $user ); 
-						return $url;						
+						$url = $this->bpr_redirect_general( $user );
 					}
-					
 				}
-			}	
+			}
+			return $url;
 		}		
 	} 
 
@@ -91,15 +85,26 @@ class BP_Redirect_Public {
 	*  @access public
 	*/
 
-	public function bpr_login_redirect_according_settings(  $key, $setting, $redirect_to, $request, $user ){
+	public function bpr_login_redirect_according_settings(  $key, $setting, $redirect_to, $request, $user ) {
 		$login_type_val = '';
 		$login_component = '';
 		$login_url = '';
 		if( array_key_exists( $key, $setting )) {
-			if ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) { 
+
+			if (is_multisite()) {
+				 // Makes sure the plugin is defined before trying to use it
+				if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+					require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+				}
+				if ( is_plugin_active_for_network( 'buddypress/bp-loader.php' ) === true ) {
+					$login_component = $setting[$key]['login_component'];
+				}
+			} elseif ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) { 
 				$login_component = $setting[$key]['login_component'];
-			} 
+			}
+
 			$login_url= $setting[$key]['login_url'];
+
 		 	if( array_key_exists('login_type', $setting[$key])) {							 		
 				$login_type_val = $setting[$key]['login_type'];	
 				if( $login_type_val == 'referer' ) {		
