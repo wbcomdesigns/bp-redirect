@@ -72,6 +72,11 @@ class BP_Redirect_Public {
 					}
 				}
 			}
+
+			$url_headers = get_headers( $url, 1 );
+			if( stripos( $url_headers[0], '404' ) ) {
+				$url = get_home_url();
+			}
 			return $url;
 		}		
 	} 
