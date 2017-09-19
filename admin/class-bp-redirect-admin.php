@@ -207,7 +207,6 @@ class BP_Redirect_Admin {
 	 */
 
 	public function bp_redirect_plugin_login_settings( $roles, $bp_pages_ids, $saved_setting ){?>
-		<?php // echo '<pre>'; print_r( get_option( 'bp_redirect_admin_settings' ) ); die;?>
 	  	<div class="bpr-col-12">						   
 			<form method="post" id="bpr-login-settings-form">			
 				<div id="bgr-login-accordion">
@@ -407,8 +406,8 @@ class BP_Redirect_Admin {
 	 */
 	public function bp_redirect_save_admin_settings() {	
 		if( isset( $_POST['action'] ) && $_POST['action'] === 'bp_redirect_admin_settings' ) {
-			parse_str( sanitize_text_field( $_POST['login_details'] ), $login_form_data );
-			parse_str( sanitize_text_field( $_POST['logout_details'] ), $logout_form_data );				
+			parse_str( $_POST['login_details'], $login_form_data );
+			parse_str( $_POST['logout_details'], $logout_form_data );				
 			$login_details = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
 			$logout_details = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
 			$setting_arr = array_merge( $login_details, $logout_details );
