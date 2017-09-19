@@ -2,13 +2,16 @@ jQuery(document).ready(function($) {
     jQuery( ".bp_redi_login_type" ).on( 'click', function(){
       var id = jQuery( this ). attr('id');
       var type = id.split('_').pop();
-    
+     
       if( type == 'referer' ) {
         jQuery( this ).parent().parent().children().find('.bpr-login-custom').removeClass('bpr_show');
         jQuery( this ).parent().parent().children().find('.bpr-login-component').addClass('bpr_show');
+      } else if( type == 'none' ) {
+        jQuery( this ).parent().parent().children().find('.bpr-login-custom').removeClass('bpr_show');
+        jQuery( this ).parent().parent().children().find('.bpr-login-component').removeClass('bpr_show');
       } else {
         jQuery( this ).parent().parent().children().find('.bpr-login-component').removeClass('bpr_show');
-        jQuery( this ).parent().parent().children().find('.bpr-login-custom').addClass('bpr_show');
+        jQuery( this ).parent().parent().children().find('.bpr-login-custom').addClass('bpr_show');        
       }
     });
 
@@ -18,6 +21,9 @@ jQuery(document).ready(function($) {
       if( type == 'referer' ) {
         jQuery( this ).parent().parent().children().find('.bpr-logout-custom').removeClass('bpr_show');
         jQuery( this ).parent().parent().children().find('.bpr-logout-component').addClass('bpr_show');
+      } else if( type == 'none' ) {
+        jQuery( this ).parent().parent().children().find('.bpr-logout-custom').removeClass('bpr_show');
+        jQuery( this ).parent().parent().children().find('.bpr-logout-component').removeClass('bpr_show');
       } else {
         jQuery( this ).parent().parent().children().find('.bpr-logout-component').removeClass('bpr_show');
         jQuery( this ).parent().parent().children().find('.bpr-logout-custom').addClass('bpr_show');
