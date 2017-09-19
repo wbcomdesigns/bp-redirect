@@ -237,7 +237,7 @@ class BP_Redirect_Admin {
 									}
 									if ( is_plugin_active_for_network( 'buddypress/bp-loader.php' ) === true ) {
 										?>
-										<div class="bpr-col-6">
+										<div class="bpr-col-4">
 											<input name='<?php echo "bp_login_redirect_settings[$key][login_type]"; ?>' id= '<?php echo "bp_login_redirect_settings_".$key."_login_type_referer"; ?>' value="referer" type="radio" class="bp_redi_login_type" <?php if( isset( $login_type_val) &&  $login_type_val == "referer" ) { echo "checked = 'checked'"; } ?>> 
 											<label for="<?php echo "bp_login_redirect_settings_".$key."_login_type_referer"; ?>"><?php _e('BuddyPress Component', BP_REDIRECT_DOMAIN ); ?></label>
 										</div>
@@ -250,12 +250,17 @@ class BP_Redirect_Admin {
 									<label for="<?php echo "bp_login_redirect_settings_".$key."_login_type_referer"; ?>"><?php _e('BuddyPress Component', BP_REDIRECT_DOMAIN ); ?></label>
 								</div>			
 								<?php }?>
-								<div class="bpr-col-6">													           		
+								<div class="bpr-col-4">													           		
 									<input name='<?php echo "bp_login_redirect_settings[$key][login_type]"; ?>' id='<?php echo "bp_login_redirect_settings_".$key."_login_type_custom"; ?>' value="custom" type="radio" class="bp_redi_login_type" <?php if( isset( $login_type_val) &&  $login_type_val == "custom" ) { echo "checked = 'checked'"; } ?>>
 									<label for="<?php echo "bp_login_redirect_settings_".$key."_login_type_custom"; ?>"><?php _e('Custom URL', BP_REDIRECT_DOMAIN ); ?></label>					
-								</div>									
-								<div class="bpr-col-6">
+								</div>
+								<div class="bpr-col-4">													           		
+									<input name='<?php echo "bp_login_redirect_settings[$key][login_type]"; ?>' id='<?php echo "bp_login_redirect_settings_".$key."_login_type_none"; ?>' value="none" type="radio" class="bp_redi_login_type" <?php if( isset( $login_type_val) &&  $login_type_val == "none" ) { echo "checked = 'checked'"; } ?>>
+									<label for="<?php echo "bp_login_redirect_settings_".$key."_login_type_none"; ?>"><?php _e('None', BP_REDIRECT_DOMAIN ); ?></label>					
+								</div>										
+								<div class="bpr-col-4">
 									<select name='<?php echo "bp_login_redirect_settings[$key][login_component]"; ?>' class='bpr-login-component <?php if( isset( $login_type_val) &&  $login_type_val == "referer" ) { echo "bpr_show"; } ?> ' >
+										<option value=''><?php _e('Select', BP_REDIRECT_DOMAIN ); ?></option>
 									<?php 	if( bp_is_active( 'members' )) { ?>
 												<option value= "<?php echo 'profile'; ?>" <?php if( $login_component == 'profile' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'Member Profile', BP_REDIRECT_DOMAIN ); ?>           			
 												</option>												
@@ -276,8 +281,8 @@ class BP_Redirect_Admin {
 								  	?>
 									</select>
 								</div>
-								<div class="bpr-col-6">
-									<input name='<?php echo "bp_login_redirect_settings[$key][login_url]"; ?>' id='<?php echo "bp_login_redirect_settings_".$key."_login_url"; ?>' value="<?php if( !empty( $login_url ) ){ _e( $login_url , BP_REDIRECT_DOMAIN ); } ?>" class="regular-text bpr-login-custom <?php if( isset( $login_type_val) &&  $login_type_val == "custom" ) { echo "bpr_show"; } ?>" type="text" placeholder="<?php _e( 'Enter custom url' , BP_REDIRECT_DOMAIN ); ?>">
+								<div class="bpr-col-4">
+									<input name='<?php echo "bp_login_redirect_settings[$key][login_url]"; ?>' id='<?php echo "bp_login_redirect_settings_".$key."_login_url"; ?>' value="<?php if( !empty( $login_url ) ){ _e( $login_url , BP_REDIRECT_DOMAIN ); } ?>" class="bpr-login-custom <?php if( isset( $login_type_val) &&  $login_type_val == "custom" ) { echo "bpr_show"; } ?>" type="text" placeholder="<?php _e( 'Enter custom url' , BP_REDIRECT_DOMAIN ); ?>">
 								</div>
 							</div>
 						</div>
@@ -328,7 +333,7 @@ class BP_Redirect_Admin {
 									}
 									if ( is_plugin_active_for_network( 'buddypress/bp-loader.php' ) === true ) {
 										?>
-										<div class="bpr-col-6">																	
+										<div class="bpr-col-4">																	
 											<input name='<?php echo "bp_logout_redirect_settings[$key][logout_type]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_type_referer"; ?>' value="referer" type="radio" class="bp_redi_logout_type" <?php if( isset( $logout_type_val) &&  $logout_type_val == "referer" ) { echo "checked = 'checked'"; } ?>> 
 											<label for="<?php echo "bp_logout_redirect_settings_".$key."_logout_type_referer"; ?>"><?php _e('BuddyPress Component', BP_REDIRECT_DOMAIN ); ?></label>
 										</div>
@@ -336,17 +341,22 @@ class BP_Redirect_Admin {
 									}
 								} elseif ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins'))) ) { 
 									?>
-									<div class="bpr-col-6">
+									<div class="bpr-col-4">
 										<input name='<?php echo "bp_logout_redirect_settings[$key][logout_type]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_type_referer"; ?>' value="referer" type="radio" class="bp_redi_logout_type" <?php if( isset( $logout_type_val) &&  $logout_type_val == "referer" ) { echo "checked = 'checked'"; } ?>> 
 										<label for="<?php echo "bp_logout_redirect_settings_".$key."_logout_type_referer"; ?>"><?php _e('BuddyPress Component', BP_REDIRECT_DOMAIN ); ?></label>
 									</div>
 								<?php }?>
-								<div class="bpr-col-6">
+								<div class="bpr-col-4">
 									<input name='<?php echo "bp_logout_redirect_settings[$key][logout_type]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_type_custom"; ?>' value="custom" type="radio" class="bp_redi_logout_type" <?php if( isset( $logout_type_val) &&  $logout_type_val == "custom" ) { echo "checked = 'checked'"; } ?>>
 									<label for="<?php echo "bp_logout_redirect_settings_".$key."_logout_type_custom"; ?>"><?php _e('Custom URL', BP_REDIRECT_DOMAIN ); ?></label>					
 								</div>
-								<div class="bpr-col-6">
+								<div class="bpr-col-4">													           		
+									<input name='<?php echo "bp_logout_redirect_settings[$key][logout_type]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_type_none"; ?>' value="none" type="radio" class="bp_redi_logout_type" <?php if( isset( $logout_type_val) &&  $logout_type_val == "none" ) { echo "checked = 'checked'"; } ?>>
+									<label for="<?php echo "bp_logout_redirect_settings_".$key."_logout_type_none"; ?>"><?php _e('None', BP_REDIRECT_DOMAIN ); ?></label>					
+								</div>
+								<div class="bpr-col-4">
 									<select name='<?php echo "bp_logout_redirect_settings[$key][logout_component]"; ?>' class='bpr-logout-component <?php if( isset( $logout_type_val) &&  $logout_type_val == "referer" ) { echo "bpr_show"; } ?> ' >
+										<option value=''><?php _e('Select', BP_REDIRECT_DOMAIN ); ?></option>
 									<?php 	if( bp_is_active( 'members' )) { ?>
 												<option value= "<?php echo 'profile'; ?>" <?php if( $logout_component == 'profile' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'Member Profile', BP_REDIRECT_DOMAIN ); ?>           			
 												</option>
@@ -367,8 +377,8 @@ class BP_Redirect_Admin {
 								  	?>
 									</select>
 								</div>
-								<div class="bpr-col-6">
-									<input name='<?php echo "bp_logout_redirect_settings[$key][logout_url]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_url"; ?>' value="<?php if( !empty( $logout_url ) ){ _e( $logout_url , BP_REDIRECT_DOMAIN ); } ?>" class="regular-text bpr-logout-custom <?php if( isset( $logout_type_val) &&  $logout_type_val == "custom" ) { echo "bpr_show"; } ?>" type="text" placeholder="<?php _e( 'Enter custom url' , BP_REDIRECT_DOMAIN ); ?>">
+								<div class="bpr-col-4">
+									<input name='<?php echo "bp_logout_redirect_settings[$key][logout_url]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_url"; ?>' value="<?php if( !empty( $logout_url ) ){ _e( $logout_url , BP_REDIRECT_DOMAIN ); } ?>" class="bpr-logout-custom <?php if( isset( $logout_type_val) &&  $logout_type_val == "custom" ) { echo "bpr_show"; } ?>" type="text" placeholder="<?php _e( 'Enter custom url' , BP_REDIRECT_DOMAIN ); ?>">
 								</div>
 							</div>
 						</div>		
