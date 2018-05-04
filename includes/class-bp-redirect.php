@@ -153,26 +153,8 @@ class BP_Redirect {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
-		/*if (is_multisite()) {
-			 // Makes sure the plugin is defined before trying to use it
-			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-			}
-			if ( BP_ENABLE_MULTIBLOG === true ) {
-				$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_init' );
-				$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_menu' );
-			} else {
-				$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_init' );
-				$this->loader->add_action( 'network_admin_menu', $plugin_admin, 'admin_menu' );
-			}
-		} else {
-			$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_init' );
-			$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_menu' );
-		}*/
-
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_init' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_menu' );
+		$this->loader->add_action( bp_core_admin_hook(), $plugin_admin, 'admin_menu' );
 		$this->loader->add_action( 'wp_ajax_bp_redirect_admin_settings', $plugin_admin, 'bp_redirect_save_admin_settings' );
 	}
 

@@ -117,9 +117,9 @@ class BP_Redirect_Admin {
 
 	public function bp_redirect_settings_page() {
 		$spinner_src = includes_url().'images/spinner.gif';
-		$saved_setting = get_option('bp_redirect_admin_settings');
+		$saved_setting = bp_get_option('bp_redirect_admin_settings');
 
-		$bp_pages = get_option( 'bp-pages' );
+		$bp_pages = bp_get_option( 'bp-pages' );
 		$bp_pages_ids = array_values($bp_pages);				
 		$loginSequence = $this->get_editable_roles();  
 		if( !empty( $saved_setting )) {
@@ -243,7 +243,7 @@ class BP_Redirect_Admin {
 										</div>
 										<?php
 									}
-								} elseif ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) { 
+								} elseif ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', bp_get_option('active_plugins')))) { 
 								?>
 								<div class="bpr-col-4">
 									<input name='<?php echo "bp_login_redirect_settings[$key][login_type]"; ?>' id= '<?php echo "bp_login_redirect_settings_".$key."_login_type_referer"; ?>' value="referer" type="radio" class="bp_redi_login_type" <?php if( isset( $login_type_val) &&  $login_type_val == "referer" ) { echo "checked = 'checked'"; } ?>> 
@@ -339,7 +339,7 @@ class BP_Redirect_Admin {
 										</div>
 										<?php
 									}
-								} elseif ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins'))) ) { 
+								} elseif ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', bp_get_option('active_plugins'))) ) { 
 									?>
 									<div class="bpr-col-4">
 										<input name='<?php echo "bp_logout_redirect_settings[$key][logout_type]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_type_referer"; ?>' value="referer" type="radio" class="bp_redi_logout_type" <?php if( isset( $logout_type_val) &&  $logout_type_val == "referer" ) { echo "checked = 'checked'"; } ?>> 
@@ -424,7 +424,7 @@ class BP_Redirect_Admin {
 			if( !empty( $setting_arr) && !empty( $_POST['loginSequence'] ) ) {	
 				$setting_arr['loginSequence'] = sanitize_text_field( $_POST['loginSequence'] );
 				$setting_arr['logoutSequence'] = sanitize_text_field( $_POST['logoutSequence'] );
-				update_option('bp_redirect_admin_settings', $setting_arr );
+				bp_update_option('bp_redirect_admin_settings', $setting_arr );
 			}
 		}
 		exit;
