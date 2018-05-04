@@ -28,22 +28,85 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 define( 'BP_REDIRECT_PLUGIN_PATH', plugin_dir_path(__FILE__) );
 define( 'BP_REDIRECT_PLUGIN_URL', plugin_dir_url(__FILE__) );
 define( 'BP_REDIRECT_DOMAIN','bp-redirect');
-if (!defined('BP_ENABLE_MULTIBLOG')) {
-    define('BP_ENABLE_MULTIBLOG', false);
+if (!defined('BP_REDIRECT_PLUGIN_BASENAME')) {
+    define('BP_REDIRECT_PLUGIN_BASENAME', plugin_basename(__FILE__));
 }
-if ( !defined( 'BP_ROOT_BLOG' ) ) {
-    define( 'BP_ROOT_BLOG', 1 );
-}
-
 /**
  * Check plugin requirement on plugins loaded
  * this plugin requires BuddyPress to be installed and active
  */
 
-add_action('plugins_loaded', 'bpr_plugin_init');
+add_action('bp_loaded', 'bpr_plugin_init');
 function bpr_plugin_init() {
-    run_bp_redirect();
-    add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bpr_plugin_links' );
+    if ( bpr_check_config() ){
+        run_bp_redirect();
+        add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bpr_plugin_links' );
+    }
+}
+
+function bpr_check_config(){
+    global $bp;
+    $config = array(
+        'blog_status'    => false, 
+        'network_active' => false, 
+        'network_status' => true 
+    );
+    if ( get_current_blog_id() == bp_get_root_blog_id() ) {
+        $config['blog_status'] = true;
+    }
+    
+    $network_plugins = get_site_option( 'active_sitewide_plugins', array() );
+
+    // No Network plugins
+    if ( empty( $network_plugins ) )
+
+    // Looking for BuddyPress and bp-activity plugin
+    $check[] = $bp->basename;
+    $check[] = BP_REDIRECT_PLUGIN_BASENAME;
+
+    // Are they active on the network ?
+    $network_active = array_diff( $check, array_keys( $network_plugins ) );
+    
+    // If result is 1, your plugin is network activated
+    // and not BuddyPress or vice & versa. Config is not ok
+    if ( count( $network_active ) == 1 )
+        $config['network_status'] = false;
+
+    // We need to know if the plugin is network activated to choose the right
+    // notice ( admin or network_admin ) to display the warning message.
+    $config['network_active'] = isset( $network_plugins[ BP_REDIRECT_PLUGIN_BASENAME ] );
+
+    // if BuddyPress config is different than bp-activity plugin
+    if ( !$config['blog_status'] || !$config['network_status'] ) {
+
+        $warnings = array();
+        if ( !bp_core_do_network_admin() && !$config['blog_status'] ) {
+            add_action( 'admin_notices', 'bpr_same_blog' );
+            $warnings[] = __( 'BP Redirect requires to be activated on the blog where BuddyPress is activated.', 'bp-redirect' );
+        }
+
+        if ( bp_core_do_network_admin() && !$config['network_status'] ) {
+            add_action( 'admin_notices', 'bpr_same_network_config' );
+            $warnings[] = __( 'BP Redirect and BuddyPress need to share the same network configuration.', 'bp-redirect' );
+        }
+
+        if ( ! empty( $warnings ) ) :
+            return false;
+        endif;
+    }
+    return true;
+}
+
+function bpr_same_blog(){
+    echo '<div class="error"><p>'
+    . esc_html( __( 'BP Redirect requires to be activated on the blog where BuddyPress is activated.', 'bp-redirect' ) )
+    . '</p></div>';
+}
+
+function bpr_same_network_config(){
+    echo '<div class="error"><p>'
+    . esc_html( __( 'BP Redirect and BuddyPress need to share the same network configuration.', 'bp-redirect' ) )
+    . '</p></div>';
 }
 
 /**
@@ -99,15 +162,3 @@ function run_bp_redirect() {
     $plugin->run();
 
 }
-
-function bpr_plugin_new_blog($blog_id, $user_id, $domain, $path, $site_id, $meta) {
-
-    if (!is_plugin_active_for_network('buddypress/bp-loader.php')) {
-        switch_to_blog($blog_id);
-        //Buddypress Plugin is inactive, hence deactivate this plugin
-        deactivate_plugins(plugin_basename(__FILE__));
-        wp_die(__('The <b>BP Redirect</b> plugin requires <b>Buddypress</b> plugin to be installed and active. Return to <a href="' . admin_url('plugins.php') . '">Plugins</a>', BP_REDIRECT_DOMAIN));
-        restore_current_blog();
-    }
-}
-add_action('wpmu_new_blog', 'bpr_plugin_new_blog', 10, 6);

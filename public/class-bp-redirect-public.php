@@ -60,9 +60,8 @@ class BP_Redirect_Public {
 	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
 	    global $wp_roles;
 	    if ( ! is_wp_error( $user ) && !empty( $user )) {
-			$saved_setting = get_option('bp_redirect_admin_settings');
+			$saved_setting = bp_get_option('bp_redirect_admin_settings');
 			$setting       = $saved_setting['bp_login_redirect_settings'];
-
 			foreach( $wp_roles->roles as $key => $val ) {
 				if( in_array( $key, $user->roles ) ) {
 					if( !empty( $setting )) {
@@ -73,14 +72,32 @@ class BP_Redirect_Public {
 				}
 			}
 
-			$url_headers = get_headers( $url, 1 );
-			if( stripos( $url_headers[0], '404' ) ) {
+			if(!empty($url)){
+				$url_headers = $this->get_url_status( $url);
+			}
+			if( $url_headers=='404'  ) {
 				$url = get_home_url();
 			}
 			return $url;
 		}		
-	} 
-
+	}
+	
+	function get_url_status($url, $timeout = 10) 
+	{
+		$ch = curl_init();
+		// set cURL options
+		$opts = array(
+			CURLOPT_RETURNTRANSFER => true, // do not output to browser
+		    CURLOPT_URL => $url,            // set URL
+		    CURLOPT_NOBODY => true,         // do a HEAD request only
+		    CURLOPT_TIMEOUT => $timeout
+		);   // set timeout
+		curl_setopt_array($ch, $opts);
+		curl_exec($ch); // do it!
+		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE); // find HTTP status
+		curl_close($ch); // close handle
+		return $status; //or return $status;
+	}
 	/**
  	*  Login redirects according plugin settings
 	*
@@ -94,19 +111,7 @@ class BP_Redirect_Public {
 		$login_component = '';
 		$login_url = '';
 		if( array_key_exists( $key, $setting )) {
-
-			if (is_multisite()) {
-				 // Makes sure the plugin is defined before trying to use it
-				if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-					require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-				}
-				if ( is_plugin_active_for_network( 'buddypress/bp-loader.php' ) === true ) {
-					$login_component = $setting[$key]['login_component'];
-				}
-			} elseif ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) { 
-				$login_component = $setting[$key]['login_component'];
-			}
-
+			$login_component = $setting[$key]['login_component'];
 			$login_url= $setting[$key]['login_url'];
 
 		 	if( array_key_exists('login_type', $setting[$key])) {							 		
@@ -200,7 +205,7 @@ class BP_Redirect_Public {
 	public function bp_logout_redirection_front( $redirect_to, $request='', $user='' ) {
 	    global $wp_roles;
 	    if ( ! is_wp_error( $user ) && !empty( $user ) ) {
-			$saved_setting = get_option('bp_redirect_admin_settings');
+			$saved_setting = bp_get_option('bp_redirect_admin_settings');
 			$setting       = $saved_setting['bp_logout_redirect_settings'];		
 			$roles = $wp_roles->roles;  
 			foreach( $roles as $key => $val ) {
@@ -240,7 +245,7 @@ class BP_Redirect_Public {
 		$logout_component = '';
 		$logout_url = '';
 		if( array_key_exists( $key, $setting ) ) {
-			if ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) { 
+			if ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', bp_get_option('active_plugins')))) { 
 				$logout_component = $setting[$key]['logout_component'];
 			} 
 			$logout_url= $setting[$key]['logout_url'];
