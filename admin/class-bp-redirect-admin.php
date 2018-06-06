@@ -324,28 +324,7 @@ class BP_Redirect_Admin {
 										}	
 										$logout_url = $setting[ $key ]['logout_url'];
 									}	
-								}
-
-								if (is_multisite()) {
-									 // Makes sure the plugin is defined before trying to use it
-									if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-										require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-									}
-									if ( is_plugin_active_for_network( 'buddypress/bp-loader.php' ) === true ) {
-										?>
-										<div class="bpr-col-4">																	
-											<input name='<?php echo "bp_logout_redirect_settings[$key][logout_type]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_type_referer"; ?>' value="referer" type="radio" class="bp_redi_logout_type" <?php if( isset( $logout_type_val) &&  $logout_type_val == "referer" ) { echo "checked = 'checked'"; } ?>> 
-											<label for="<?php echo "bp_logout_redirect_settings_".$key."_logout_type_referer"; ?>"><?php _e('BuddyPress Component', BP_REDIRECT_DOMAIN ); ?></label>
-										</div>
-										<?php
-									}
-								} elseif ( in_array('buddypress/bp-loader.php', apply_filters('active_plugins', bp_get_option('active_plugins'))) ) { 
-									?>
-									<div class="bpr-col-4">
-										<input name='<?php echo "bp_logout_redirect_settings[$key][logout_type]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_type_referer"; ?>' value="referer" type="radio" class="bp_redi_logout_type" <?php if( isset( $logout_type_val) &&  $logout_type_val == "referer" ) { echo "checked = 'checked'"; } ?>> 
-										<label for="<?php echo "bp_logout_redirect_settings_".$key."_logout_type_referer"; ?>"><?php _e('BuddyPress Component', BP_REDIRECT_DOMAIN ); ?></label>
-									</div>
-								<?php }?>
+								}?>
 								<div class="bpr-col-4">
 									<input name='<?php echo "bp_logout_redirect_settings[$key][logout_type]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_type_custom"; ?>' value="custom" type="radio" class="bp_redi_logout_type" <?php if( isset( $logout_type_val) &&  $logout_type_val == "custom" ) { echo "checked = 'checked'"; } ?>>
 									<label for="<?php echo "bp_logout_redirect_settings_".$key."_logout_type_custom"; ?>"><?php _e('Custom URL', BP_REDIRECT_DOMAIN ); ?></label>					
@@ -354,29 +333,7 @@ class BP_Redirect_Admin {
 									<input name='<?php echo "bp_logout_redirect_settings[$key][logout_type]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_type_none"; ?>' value="none" type="radio" class="bp_redi_logout_type" <?php if( isset( $logout_type_val) &&  $logout_type_val == "none" ) { echo "checked = 'checked'"; } ?>>
 									<label for="<?php echo "bp_logout_redirect_settings_".$key."_logout_type_none"; ?>"><?php _e('None', BP_REDIRECT_DOMAIN ); ?></label>					
 								</div>
-								<div class="bpr-col-4">
-									<select name='<?php echo "bp_logout_redirect_settings[$key][logout_component]"; ?>' class='bpr-logout-component <?php if( isset( $logout_type_val) &&  $logout_type_val == "referer" ) { echo "bpr_show"; } ?> ' >
-										<option value=''><?php _e('Select', BP_REDIRECT_DOMAIN ); ?></option>
-									<?php 	if( bp_is_active( 'members' )) { ?>
-												<option value= "<?php echo 'profile'; ?>" <?php if( $logout_component == 'profile' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'Member Profile', BP_REDIRECT_DOMAIN ); ?>           			
-												</option>
-									<?php	} if( bp_is_active( 'activity' )) { ?>
-												<option value= "<?php echo 'member_activity'; ?>" <?php if( $logout_component == 'member_activity' ) { echo "selected = 'selected'"; } ?> ><?php _e( 'Member Activity', BP_REDIRECT_DOMAIN ); ?>         			
-												</option>
-									<?php   }
-										$bp_pages = bp_core_get_directory_page_ids();
-										$pages = get_pages( array('include' => $bp_pages) );
-										foreach ( $pages as $page ) {
-											if( $page->post_title == 'Activity' ) {
-											$option = '<option value="' . get_page_link( $page->ID ) . '">';
-											$option .= $page->post_title;
-											$option .= '</option>';
-											echo $option;
-											}
-										}
-								  	?>
-									</select>
-								</div>
+								
 								<div class="bpr-col-4">
 									<input name='<?php echo "bp_logout_redirect_settings[$key][logout_url]"; ?>' id='<?php echo "bp_logout_redirect_settings_".$key."_logout_url"; ?>' value="<?php if( !empty( $logout_url ) ){ _e( $logout_url , BP_REDIRECT_DOMAIN ); } ?>" class="bpr-logout-custom <?php if( isset( $logout_type_val) &&  $logout_type_val == "custom" ) { echo "bpr_show"; } ?>" type="text" placeholder="<?php _e( 'Enter custom url' , BP_REDIRECT_DOMAIN ); ?>">
 								</div>
