@@ -162,3 +162,37 @@ function run_bp_redirect() {
     $plugin->run();
 
 }
+
+/**
+ *  Check if buddypress activate.
+ */
+function bpr_requires_buddypress()
+{
+
+    if ( !class_exists( 'Buddypress' ) ) {
+        deactivate_plugins( plugin_basename( __FILE__ ) );
+        //deactivate_plugins('buddypress-polls/buddypress-polls.php');
+        add_action( 'admin_notices', 'bpr_required_plugin_admin_notice' );
+        unset($_GET['activate']);
+    }
+}
+
+add_action( 'admin_init', 'bpr_requires_buddypress' );
+/**
+ * Throw an Alert to tell the Admin why it didn't activate.
+ *
+ * @author wbcomdesigns
+ * @since  1.2.0
+ */
+function bpr_required_plugin_admin_notice()
+{
+
+    $bpquotes_plugin          = esc_html__('BP Redirect', 'bp-redirect');
+    $bp_plugin                = esc_html__('BuddyPress', 'bp-redirect');
+    echo '<div class="error"><p>';
+    echo sprintf(esc_html__('%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-redirect'), '<strong>' . esc_html($bpquotes_plugin) . '</strong>', '<strong>' . esc_html($bp_plugin) . '</strong>');
+    echo '</p></div>';
+    if (isset($_GET['activate']) ) {
+        unset($_GET['activate']);
+    }
+}
