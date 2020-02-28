@@ -60,7 +60,6 @@ class BP_Redirect_Public {
 	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
 		global $wp_roles;
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
-
 			$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
 			$setting       = $saved_setting['bp_login_redirect_settings'];
 			$url           = array();
@@ -79,7 +78,6 @@ class BP_Redirect_Public {
 			if ( $url_headers == '404' ) {
 				$url[0] = get_home_url();
 			}
-
 			return $url[0];
 		}
 	}
@@ -108,10 +106,13 @@ class BP_Redirect_Public {
 	 */
 
 	public function bpr_login_redirect_according_settings( $key, $setting, $redirect_to, $request, $user ) {
+
 		$login_type_val  = '';
 		$login_component = '';
 		$login_url       = '';
+
 		if ( array_key_exists( $key, $setting ) ) {
+
 			$login_component = $setting[ $key ]['login_component'];
 			$login_url       = $setting[ $key ]['login_url'];
 
