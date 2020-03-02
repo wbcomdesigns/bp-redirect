@@ -59,7 +59,7 @@ add_action( 'admin_init', 'edd_redirect_plugin_updater', 0 );
 *************************************/
 
 function edd_redirect_license_menu() {
-	add_plugins_page( 'Plugin License', 'Plugin License', 'manage_options', EDD_REDIRECT_PLUGIN_LICENSE_PAGE, 'edd_redirect_license_page' );
+	add_plugins_page( 'BP Redirect License', 'Plugin License', 'manage_options', EDD_REDIRECT_PLUGIN_LICENSE_PAGE, 'edd_redirect_license_page' );
 }
 add_action('admin_menu', 'edd_redirect_license_menu');
 
@@ -68,7 +68,7 @@ function edd_redirect_license_page() {
 	$status  = get_option( 'edd_redirect_license_status' );
 	?>
 	<div class="wrap">
-		<h2><?php _e('Plugin License Options'); ?></h2>
+		<h2><?php _e('BuddyPress Redirect License Options'); ?></h2>
 		<form method="post" action="options.php">
 
 			<?php settings_fields('edd_redirect_license'); ?>
@@ -81,7 +81,7 @@ function edd_redirect_license_page() {
 						</th>
 						<td>
 							<input id="edd_redirect_license_key" name="edd_redirect_license_key" type="text" class="regular-text" value="<?php esc_attr_e( $license ); ?>" />
-							<label class="description" for="edd_redirect_license_key"><?php _e('Enter your license key'); ?></label>
+							<label class="description" for="edd_redirect_license_key"><?php _e('Enter your license key for BuddyPress Redirect plugin.'); ?></label>
 						</td>
 					</tr>
 					<?php if( false !== $license ) { ?>
