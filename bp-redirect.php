@@ -25,8 +25,23 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *  @since   1.0.0
  *  @author  Wbcom Designs
  */
-define( 'BP_REDIRECT_PLUGIN_PATH', plugin_dir_path(__FILE__) );
-define( 'BP_REDIRECT_PLUGIN_URL', plugin_dir_url(__FILE__) );
+
+ if ( ! defined( 'REDIRECT_PLUGIN_VERSION' ) ) {
+	define( 'REDIRECT_PLUGIN_VERSION', '1.2.0' );
+}
+
+if ( ! defined( 'BP_REDIRECT_PLUGIN_PATH' ) ) {
+  define( 'BP_REDIRECT_PLUGIN_PATH', plugin_dir_path(__FILE__) );
+}
+
+if ( ! defined( 'BP_REDIRECT_PLUGIN_FILE' ) ) {
+	define( 'BP_REDIRECT_PLUGIN_FILE', __FILE__ );
+}
+
+if ( ! defined( 'BP_REDIRECT_PLUGIN_URL' ) ) {
+	define( 'BP_REDIRECT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+}
+
 define( 'BP_REDIRECT_DOMAIN','bp-redirect');
 if (!defined('BP_REDIRECT_PLUGIN_BASENAME')) {
     define('BP_REDIRECT_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -47,14 +62,14 @@ function bpr_plugin_init() {
 function bpr_check_config(){
     global $bp;
     $config = array(
-        'blog_status'    => false, 
-        'network_active' => false, 
-        'network_status' => true 
+        'blog_status'    => false,
+        'network_active' => false,
+        'network_status' => true
     );
     if ( get_current_blog_id() == bp_get_root_blog_id() ) {
         $config['blog_status'] = true;
     }
-    
+
     $network_plugins = get_site_option( 'active_sitewide_plugins', array() );
 
     // No Network plugins
@@ -66,7 +81,7 @@ function bpr_check_config(){
 
     // Are they active on the network ?
     $network_active = array_diff( $check, array_keys( $network_plugins ) );
-    
+
     // If result is 1, your plugin is network activated
     // and not BuddyPress or vice & versa. Config is not ok
     if ( count( $network_active ) == 1 )
@@ -139,7 +154,7 @@ function deactivate_bp_redirect() {
     require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-deactivator.php';
     BP_Redirect_Deactivator::deactivate();
 }
-
+require plugin_dir_path(__FILE__) . 'edd-license/edd-redirect-license.php';
 register_activation_hook( __FILE__, 'activate_bp_redirect' );
 register_deactivation_hook( __FILE__, 'deactivate_bp_redirect' );
 
