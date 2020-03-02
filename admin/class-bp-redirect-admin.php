@@ -73,6 +73,7 @@ class BP_Redirect_Admin {
 		add_menu_page( __( 'BP Redirect Setting Page', BP_REDIRECT_DOMAIN ), __( 'BP Redirect', BP_REDIRECT_DOMAIN ), 'manage_options', 'bp_redirect_settings', array( $this, 'bp_redirect_settings_page' ), 'dashicons-external' );
 
 		add_submenu_page( 'bp_redirect_settings', __( 'General', BP_REDIRECT_DOMAIN ), __( ' General ', BP_REDIRECT_DOMAIN ), 'manage_options', 'bp_redirect_settings' );
+		add_submenu_page( 'bp_redirect_settings', __( 'BP Redirect Licence', BP_REDIRECT_DOMAIN ), __( 'BP Redirect Licence', BP_REDIRECT_DOMAIN ), 'manage_options', EDD_REDIRECT_PLUGIN_LICENSE_PAGE, 'edd_redirect_license_page');
 	}
 
 	/**

@@ -59,9 +59,10 @@ add_action( 'admin_init', 'edd_redirect_plugin_updater', 0 );
 *************************************/
 
 function edd_redirect_license_menu() {
-	add_plugins_page( 'BP Redirect License', 'BP Redirect License', 'manage_options', EDD_REDIRECT_PLUGIN_LICENSE_PAGE, 'edd_redirect_license_page' );
+	//add_plugins_page( 'BP Redirect License', 'BP Redirect License', 'manage_options', EDD_REDIRECT_PLUGIN_LICENSE_PAGE, 'edd_redirect_license_page' );
+	add_submenu_page( 'bp_redirect_settings', 'BP Redirect License', 'BP Redirect License', 'manage_options', EDD_REDIRECT_PLUGIN_LICENSE_PAGE, 'edd_redirect_license_page');
 }
-add_action('admin_menu', 'edd_redirect_license_menu');
+//add_action('admin_menu', 'edd_redirect_license_menu');
 
 function edd_redirect_license_page() {
 	$license = get_option( 'edd_redirect_license_key' );
@@ -218,9 +219,17 @@ function edd_redirect_activate_license() {
 
 		// Check if anything passed on a message constituting a failure
 		if ( ! empty( $message ) ) {
-			$base_url = admin_url( 'plugins.php?page=' . EDD_REDIRECT_PLUGIN_LICENSE_PAGE );
-			$redirect = add_query_arg( array( 'sl_activation' => 'false', 'message' => urlencode( $message ) ), $base_url );
-
+			$base_url = admin_url( 'admin.php?page=' . EDD_REDIRECT_PLUGIN_LICENSE_PAGE );
+			$redirect = add_query_arg(
+                array(
+                    'REDIRECT_activation' => 'false',
+                    'message'       => urlencode($message),
+                ),
+                $base_url
+            );
+            $license = trim($license);
+            update_option('edd_redirect_license_key', $license);
+            update_option('edd_redirect_license_status', $license_data->license);
 			wp_redirect( $redirect );
 			exit();
 		}
@@ -228,7 +237,7 @@ function edd_redirect_activate_license() {
 		// $license_data->license will be either "valid" or "invalid"
 
 		update_option( 'edd_redirect_license_status', $license_data->license );
-		wp_redirect( admin_url( 'plugins.php?page=' . EDD_REDIRECT_PLUGIN_LICENSE_PAGE ) );
+		wp_redirect( admin_url( 'admin.php?page=' . EDD_REDIRECT_PLUGIN_LICENSE_PAGE ) );
 		exit();
 	}
 }
@@ -273,8 +282,8 @@ function edd_redirect_deactivate_license() {
 				$message = __( 'An error occurred, please try again.' );
 			}
 
-			$base_url = admin_url( 'plugins.php?page=' . EDD_REDIRECT_PLUGIN_LICENSE_PAGE );
-			$redirect = add_query_arg( array( 'sl_activation' => 'false', 'message' => urlencode( $message ) ), $base_url );
+			$base_url = admin_url( 'admin.php?page=' . EDD_REDIRECT_PLUGIN_LICENSE_PAGE );
+			$redirect = add_query_arg( array( 'REDIRECT_activation' => 'false', 'message' => urlencode( $message ) ), $base_url );
 
 			wp_redirect( $redirect );
 			exit();
@@ -288,7 +297,7 @@ function edd_redirect_deactivate_license() {
 			delete_option( 'edd_redirect_license_status' );
 		}
 
-		wp_redirect( admin_url( 'plugins.php?page=' . EDD_REDIRECT_PLUGIN_LICENSE_PAGE ) );
+		wp_redirect( admin_url( 'admin.php?page=' . EDD_REDIRECT_PLUGIN_LICENSE_PAGE ) );
 		exit();
 
 	}
@@ -338,9 +347,9 @@ function edd_redirect_check_license() {
  * This is a means of catching errors from the activation method above and displaying it to the customer
  */
 function edd_redirect_admin_notices() {
-	if ( isset( $_GET['sl_activation'] ) && ! empty( $_GET['message'] ) ) {
+	if ( isset( $_GET['REDIRECT_activation'] ) && ! empty( $_GET['message'] ) ) {
 
-		switch( $_GET['sl_activation'] ) {
+		switch( $_GET['REDIRECT_activation'] ) {
 
 			case 'false':
 				$message = urldecode( $_GET['message'] );
