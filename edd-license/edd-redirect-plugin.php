@@ -59,7 +59,7 @@ add_action( 'admin_init', 'edd_redirect_plugin_updater', 0 );
 *************************************/
 
 function edd_redirect_license_menu() {
-	add_plugins_page( 'BP Redirect License', 'Plugin License', 'manage_options', EDD_REDIRECT_PLUGIN_LICENSE_PAGE, 'edd_redirect_license_page' );
+	add_plugins_page( 'BP Redirect License', 'BP Redirect License', 'manage_options', EDD_REDIRECT_PLUGIN_LICENSE_PAGE, 'edd_redirect_license_page' );
 }
 add_action('admin_menu', 'edd_redirect_license_menu');
 
