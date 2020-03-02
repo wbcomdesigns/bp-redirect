@@ -154,7 +154,7 @@ function deactivate_bp_redirect() {
     require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-deactivator.php';
     BP_Redirect_Deactivator::deactivate();
 }
-require plugin_dir_path(__FILE__) . 'edd-license/edd-redirect-license.php';
+require plugin_dir_path(__FILE__) . 'edd-license/edd-redirect-plugin.php';
 register_activation_hook( __FILE__, 'activate_bp_redirect' );
 register_deactivation_hook( __FILE__, 'deactivate_bp_redirect' );
 

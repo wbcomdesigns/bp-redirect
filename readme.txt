@@ -34,8 +34,13 @@ No, BP Redirect plugin is not required BuddyPress plugin to be active.
 2. The screenshot shows the admin settings to change roles sequence by drag & drop and corresponds to screenshot-2.(png|jpg|jpeg|gif).
 
 == Changelog ==
+
+= 1.2.0 =
+* Fix: Added Licence keys for future auto updates.
+* Fix: Login redirect with latest BuddyPress and BuddyBoss.
+
 = 1.1.0 =
-Fix: BuddyPress plugin admin notice
+* Fix: BuddyPress plugin admin notice
 
 = 1.0.0 =
 * Initial release.
