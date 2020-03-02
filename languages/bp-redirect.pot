@@ -1,0 +1,273 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: BP Redirect\n"
+"POT-Creation-Date: 2020-03-02 23:12+0530\n"
+"PO-Revision-Date: 2020-03-02 23:12+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: bp-redirect.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: admin/class-bp-redirect-admin.php:73
+msgid "BP Redirect Setting Page"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: admin/class-bp-redirect-admin.php:73 bp-redirect.php:205
+msgid "BP Redirect"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:75 admin/class-bp-redirect-admin.php:476
+msgid "General"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:75
+msgid " General "
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:162
+msgid "BP Redirect Settings"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:164
+msgid "Settings saved."
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:165
+msgid "Dismiss this notice."
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:170
+msgid "Login Redirect Settings"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:173
+msgid "Logout Redirect Settings"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:178
+msgid "FAQ(s)"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:183
+msgid "Save Settings"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:272 admin/class-bp-redirect-admin.php:285
+msgid "BuddyPress Component"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:295 admin/class-bp-redirect-admin.php:417
+msgid "Page"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:304 admin/class-bp-redirect-admin.php:426
+msgid "None"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:313
+msgid "Select"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:320
+msgid "Member Profile"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:328
+msgid "Member Activity"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:514
+msgid "Is this plugin requires another plugin?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:517
+msgid "Yes, this plugin requires BuddyPress plugin."
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:522
+msgid ""
+"Where it redirects if no option selected or in the case of empty custom URL "
+"field?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:525
+msgid "In that case, plugin follows default redirection rule."
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:530
+msgid ""
+"Where it redirects, when we select \"Member profile\" in BuddyPress "
+"Component dropdown?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:533
+msgid "It redirects to logged in member's profile page"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:538
+msgid ""
+"Where it redirects, when we select \"Member activity\" in BuddyPress "
+"Component dropdown?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:541
+msgid "It redirects to logged in member's activity page"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:546
+msgid ""
+"Where it redirects, when we select \"Activity\" in BuddyPress Component "
+"dropdown?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:549
+msgid "It redirects to logged in site wide activity page"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:554
+msgid "Where do I ask for support?"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:557
+msgid ""
+"Please visit <a href='http://wbcomdesigns.com/contact' rel='nofollow'>Wbcom "
+"Designs</a> for any query related to plugin and BuddyPress."
+msgstr ""
+
+#: bp-redirect.php:100 bp-redirect.php:117
+msgid ""
+"BP Redirect requires to be activated on the blog where BuddyPress is "
+"activated."
+msgstr ""
+
+#: bp-redirect.php:105 bp-redirect.php:123
+msgid ""
+"BP Redirect and BuddyPress need to share the same network configuration."
+msgstr ""
+
+#: bp-redirect.php:132
+msgid "Settings"
+msgstr ""
+
+#: bp-redirect.php:133
+msgid "Go for any custom development."
+msgstr ""
+
+#: bp-redirect.php:133
+msgid "Support"
+msgstr ""
+
+#: bp-redirect.php:206
+msgid "BuddyPress"
+msgstr ""
+
+#: bp-redirect.php:208
+#, php-format
+msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
+msgstr ""
+
+#: edd-license/EDD_REDIRECT_Plugin_Updater.php:228
+#, php-format
+msgid ""
+"There is a new version of %1$s available. %2$sView version %3$s details%4$s."
+msgstr ""
+
+#: edd-license/EDD_REDIRECT_Plugin_Updater.php:236
+#, php-format
+msgid ""
+"There is a new version of %1$s available. %2$sView version %3$s details%4$s "
+"or %5$supdate now%6$s."
+msgstr ""
+
+#: edd-license/EDD_REDIRECT_Plugin_Updater.php:474
+msgid "You do not have permission to install plugin updates"
+msgstr ""
+
+#: edd-license/EDD_REDIRECT_Plugin_Updater.php:474
+msgid "Error"
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:71
+msgid "BuddyPress Redirect License Options"
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:80
+msgid "License Key"
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:84
+msgid "Enter your license key for BuddyPress Redirect plugin."
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:90
+#: edd-license/edd-redirect-plugin.php:99
+msgid "Activate License"
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:94
+msgid "active"
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:96
+msgid "Deactivate License"
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:163
+#: edd-license/edd-redirect-plugin.php:211
+#: edd-license/edd-redirect-plugin.php:273
+msgid "An error occurred, please try again."
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:177
+#, php-format
+msgid "Your license key expired on %s."
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:185
+msgid "Your license key has been disabled."
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:190
+msgid "Invalid license."
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:196
+msgid "Your license is not active for this URL."
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:201
+#, php-format
+msgid "This appears to be an invalid license key for %s."
+msgstr ""
+
+#: edd-license/edd-redirect-plugin.php:206
+msgid "Your license key has reached its activation limit."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://wbcomdesigns.com/contact/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"This plugin allows login and logout redirect according to the user role."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Wbcom Designs <admin@wbcomdesigns.com>"
+msgstr ""
