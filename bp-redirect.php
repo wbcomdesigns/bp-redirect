@@ -44,7 +44,7 @@ if ( ! defined( 'BP_REDIRECT_PLUGIN_URL' ) ) {
 	define( 'BP_REDIRECT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
-define( 'BP_REDIRECT_DOMAIN', 'bp-redirect' );
+
 if ( ! defined( 'BP_REDIRECT_PLUGIN_BASENAME' ) ) {
 	define( 'BP_REDIRECT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 }
@@ -133,8 +133,8 @@ function bpr_same_network_config() {
  */
 function bpr_plugin_links( $links ) {
 	$bplock_links = array(
-		'<a href="' . admin_url( 'admin.php?page=bp_redirect_settings' ) . '">' . __( 'Settings', BP_REDIRECT_DOMAIN ) . '</a>',
-		'<a href="https://wbcomdesigns.com/contact/" target="_blank" title="' . __( 'Go for any custom development.', BP_REDIRECT_DOMAIN ) . '">' . __( 'Support', BP_REDIRECT_DOMAIN ) . '</a>',
+		'<a href="' . admin_url( 'admin.php?page=bp_redirect_settings' ) . '">' . __( 'Settings', 'bp-redirect' ) . '</a>',
+		'<a href="https://wbcomdesigns.com/contact/" target="_blank" title="' . __( 'Go for any custom development.', 'bp-redirect' ) . '">' . __( 'Support', 'bp-redirect' ) . '</a>',
 	);
 	return array_merge( $links, $bplock_links );
 }

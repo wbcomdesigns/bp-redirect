@@ -3,6 +3,7 @@
 if ( ! class_exists( 'Puc_v4p10_Autoloader', false ) ) :
 
 	class Puc_v4p10_Autoloader {
+
 		private $prefix     = '';
 		private $rootDir    = '';
 		private $libraryDir = '';
@@ -42,7 +43,11 @@ if ( ! class_exists( 'Puc_v4p10_Autoloader', false ) ) :
 
 		public function autoload( $className ) {
 			if ( isset( $this->staticMap[ $className ] ) && file_exists( $this->libraryDir . $this->staticMap[ $className ] ) ) {
-				/** @noinspection PhpIncludeInspection */
+				/**
+
+			  *
+		  * @noinspection PhpIncludeInspection
+*/
 				include $this->libraryDir . $this->staticMap[ $className ];
 				return;
 			}
@@ -53,7 +58,11 @@ if ( ! class_exists( 'Puc_v4p10_Autoloader', false ) ) :
 				$path = $this->rootDir . $path . '.php';
 
 				if ( file_exists( $path ) ) {
-					/** @noinspection PhpIncludeInspection */
+					/**
+
+				  *
+			 * @noinspection PhpIncludeInspection
+*/
 					include $path;
 				}
 			}

@@ -182,7 +182,7 @@ class BP_Redirect {
 	public function bp_redirect_initialize_updater() {
 		if ( class_exists( 'Puc_v4_Factory' ) ) {
 			$bpmh_export_impoer_updater = Puc_v4_Factory::buildUpdateChecker(
-				'https://demos.wbcomdesigns.com/exporter/free-plugins/bp-modify-member-directory-header.json',
+				'https://demos.wbcomdesigns.com/exporter/free-plugins/bp-redirect.json',
 				BP_REDIRECT_PLUGIN_FILE,
 				'bp-redirect'
 			);
