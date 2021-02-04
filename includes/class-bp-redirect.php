@@ -180,11 +180,13 @@ class BP_Redirect {
 	 * @since    1.2.0
 	 */
 	public function bp_redirect_initialize_updater() {
-		$bpmh_export_impoer_updater = Puc_v4_Factory::buildUpdateChecker(
-			'https://demos.wbcomdesigns.com/exporter/free-plugins/bp-modify-member-directory-header.json',
-			BP_REDIRECT_PLUGIN_FILE,
-			'bp-redirect'
-		);
+		if ( class_exists( 'Puc_v4_Factory' ) ) {
+			$bpmh_export_impoer_updater = Puc_v4_Factory::buildUpdateChecker(
+				'https://demos.wbcomdesigns.com/exporter/free-plugins/bp-modify-member-directory-header.json',
+				BP_REDIRECT_PLUGIN_FILE,
+				'bp-redirect'
+			);
+		}
 
 	}
 
