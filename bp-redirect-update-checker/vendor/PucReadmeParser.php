@@ -1,31 +1,29 @@
 <?php
-
 if ( ! class_exists( 'PucReadmeParser', false ) ) :
 
 	/**
 	 * This is a slightly modified version of github.com/markjaquith/WordPress-Plugin-Readme-Parser
 	 * It uses Parsedown instead of the "Markdown Extra" parser.
 	 */
-
 	class PucReadmeParser {
 
-		function __construct() {
-			// This space intentionally blank
+		public function __construct() {
+			// This space intentionally blank.
 		}
 
-		function parse_readme( $file ) {
+		public function parse_readme( $file ) {
 			$file_contents = @implode( '', @file( $file ) );
 			return $this->parse_readme_contents( $file_contents );
 		}
 
-		function parse_readme_contents( $file_contents ) {
+		public function parse_readme_contents( $file_contents ) {
 			$file_contents = str_replace( array( "\r\n", "\r" ), "\n", $file_contents );
 			$file_contents = trim( $file_contents );
 			if ( 0 === strpos( $file_contents, "\xEF\xBB\xBF" ) ) {
 				$file_contents = substr( $file_contents, 3 );
 			}
 
-			// Markdown transformations
+			// Markdown transformations.
 			$file_contents = preg_replace( "|^###([^#]+)#*?\s*?\n|im", '=$1=' . "\n", $file_contents );
 			$file_contents = preg_replace( "|^##([^#]+)#*?\s*?\n|im", '==$1==' . "\n", $file_contents );
 			$file_contents = preg_replace( "|^#([^#]+)#*?\s*?\n|im", '===$1===' . "\n", $file_contents );
@@ -33,42 +31,42 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			// === Plugin Name ===
 			// Must be the very first thing.
 			if ( ! preg_match( '|^===(.*)===|', $file_contents, $_name ) ) {
-				return array(); // require a name
+				return array(); // require a name.
 			}
 			$name = trim( $_name[1], '=' );
 			$name = $this->sanitize_text( $name );
 
 			$file_contents = $this->chop_string( $file_contents, $_name[0] );
 
-			// Requires at least: 1.5
+			// Requires at least: 1.5.
 			if ( preg_match( '|Requires at least:(.*)|i', $file_contents, $_requires_at_least ) ) {
 				$requires_at_least = $this->sanitize_text( $_requires_at_least[1] );
 			} else {
 				$requires_at_least = null;
 			}
 
-			// Tested up to: 2.1
+			// Tested up to: 2.1.
 			if ( preg_match( '|Tested up to:(.*)|i', $file_contents, $_tested_up_to ) ) {
 				$tested_up_to = $this->sanitize_text( $_tested_up_to[1] );
 			} else {
 				$tested_up_to = null;
 			}
 
-			// Requires PHP: 5.2.4
+			// Requires PHP: 5.2.4.
 			if ( preg_match( '|Requires PHP:(.*)|i', $file_contents, $_requires_php ) ) {
 				$requires_php = $this->sanitize_text( $_requires_php[1] );
 			} else {
 				$requires_php = null;
 			}
 
-			// Stable tag: 10.4-ride-the-fire-eagle-danger-day
+			// Stable tag: 10.4-ride-the-fire-eagle-danger-day.
 			if ( preg_match( '|Stable tag:(.*)|i', $file_contents, $_stable_tag ) ) {
 				$stable_tag = $this->sanitize_text( $_stable_tag[1] );
 			} else {
-				$stable_tag = null; // we assume trunk, but don't set it here to tell the difference between specified trunk and default trunk
+				$stable_tag = null; // we assume trunk, but don't set it here to tell the difference between specified trunk and default trunk.
 			}
 
-			// Tags: some tag, another tag, we like tags
+			// Tags: some tag, another tag, we like tags.
 			if ( preg_match( '|Tags:(.*)|i', $file_contents, $_tags ) ) {
 				$tags = preg_split( '|,[\s]*?|', trim( $_tags[1] ) );
 				foreach ( array_keys( $tags ) as $t ) {
@@ -78,7 +76,7 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 				$tags = array();
 			}
 
-			// Contributors: markjaquith, mdawaffe, zefrank
+			// Contributors: markjaquith, mdawaffe, zefrank.
 			$contributors = array();
 			if ( preg_match( '|Contributors:(.*)|i', $file_contents, $_contributors ) ) {
 				$temp_contributors = preg_split( '|,[\s]*|', trim( $_contributors[1] ) );
@@ -91,7 +89,7 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 				}
 			}
 
-			// Donate Link: URL
+			// Donate Link: URL.
 			if ( preg_match( '|Donate link:(.*)|i', $file_contents, $_donate_link ) ) {
 				$donate_link = esc_url( $_donate_link[1] );
 			} else {
@@ -108,7 +106,7 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 
 			$file_contents = trim( $file_contents );
 
-			// short-description fu
+			// short-description fu.
 			if ( ! preg_match( '/(^(.*?))^[\s]*=+?[\s]*.+?[\s]*=+?/ms', $file_contents, $_short_description ) ) {
 				$_short_description = array(
 					1 => &$file_contents,
@@ -124,7 +122,7 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 				$truncated = false;
 			}
 			if ( $_short_description[1] ) {
-				$file_contents = $this->chop_string( $file_contents, $_short_description[1] ); // yes, the [1] is intentional
+				$file_contents = $this->chop_string( $file_contents, $_short_description[1] ); // yes, the [1] is intentional.
 			}
 
 			// == Section ==
@@ -150,7 +148,7 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 
 			// Special sections
 			// This is where we nab our special sections, so we can enforce their order and treat them differently, if needed
-			// upgrade_notice is not a section, but parse it like it is for now
+			// upgrade_notice is not a section, but parse it like it is for now.
 			$final_sections = array();
 			foreach ( array( 'description', 'installation', 'frequently_asked_questions', 'screenshots', 'changelog', 'change_log', 'upgrade_notice' ) as $special_section ) {
 				if ( isset( $sections[ $special_section ] ) ) {
@@ -173,7 +171,7 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			}
 
 			// Parse the upgrade_notice section specially:
-			// 1.0 => blah, 1.1 => fnord
+			// 1.0 => blah, 1.1 => fnord.
 			$upgrade_notice = array();
 			if ( isset( $final_sections['upgrade_notice'] ) ) {
 				$split = preg_split( '#<h4>(.*?)</h4>#', $final_sections['upgrade_notice'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
@@ -195,7 +193,7 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			}
 
 			// dump the non-special sections into $remaining_content
-			// their order will be determined by their original order in the readme.txt
+			// their order will be determined by their original order in the readme.txt.
 			$remaining_content = '';
 			foreach ( $sections as $s_name => $s_data ) {
 				$remaining_content .= "\n<h3>{$s_data['title']}</h3>\n{$s_data['content']}";
@@ -203,8 +201,8 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			$remaining_content = trim( $remaining_content );
 
 			// All done!
-			// $r['tags'] and $r['contributors'] are simple arrays
-			// $r['sections'] is an array with named elements
+			// $r['tags'] and $r['contributors'] are simple arrays.
+			// $r['sections'] is an array with named elements.
 			$r = array(
 				'name'              => $name,
 				'tags'              => $tags,
@@ -226,8 +224,8 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			return $r;
 		}
 
-		function chop_string( $string, $chop ) {
-			// chop a "prefix" from a string: Agressive! uses strstr not 0 === strpos
+		public function chop_string( $string, $chop ) {
+			// chop a "prefix" from a string: Agressive! uses strstr not 0 === strpos.
 			if ( $_string = strstr( $string, $chop ) ) {
 				$_string = substr( $_string, strlen( $chop ) );
 				return trim( $_string );
@@ -236,9 +234,9 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			}
 		}
 
-		function user_sanitize( $text, $strict = false ) {
-			// whitelisted chars
-			if ( function_exists( 'user_sanitize' ) ) { // bbPress native
+		public function user_sanitize( $text, $strict = false ) {
+			// whitelisted chars.
+			if ( function_exists( 'user_sanitize' ) ) { // bbPress native.
 				return user_sanitize( $text, $strict );
 			}
 
@@ -251,19 +249,19 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			return $text;
 		}
 
-		function sanitize_text( $text ) {
-			// not fancy
+		public function sanitize_text( $text ) {
+			// not fancy.
 			$text = strip_tags( $text );
 			$text = esc_html( $text );
 			$text = trim( $text );
 			return $text;
 		}
 
-		function filter_text( $text, $markdown = false ) {
-			// fancy, Markdown
+		public function filter_text( $text, $markdown = false ) {
+			// fancy, Markdown.
 			$text = trim( $text );
 
-			$text = call_user_func( array( __CLASS__, 'code_trick' ), $text, $markdown ); // A better parser than Markdown's for: backticks -> CODE
+			$text = call_user_func( array( __CLASS__, 'code_trick' ), $text, $markdown ); // A better parser than Markdown's for: backticks -> CODE.
 
 			if ( $markdown ) { // Parse markdown.
 				if ( ! class_exists( 'Parsedown', false ) ) {
@@ -301,10 +299,10 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			return $text;
 		}
 
-		function code_trick( $text, $markdown ) {
+		public function code_trick( $text, $markdown ) {
 			// Don't use bbPress native function - it's incompatible with Markdown
 			// If doing markdown, first take any user formatted code blocks and turn them into backticks so that
-			// markdown will preserve things like underscores in code blocks
+			// markdown will preserve things like underscores in code blocks.
 			if ( $markdown ) {
 				$text = preg_replace_callback( '!(<pre><code>|<code>)(.*?)(</code></pre>|</code>)!s', array( __CLASS__, 'decodeit' ), $text );
 			}
@@ -313,23 +311,23 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			if ( ! $markdown ) {
 				// This gets the "inline" code blocks, but can't be used with Markdown.
 				$text = preg_replace_callback( '|(`)(.*?)`|', array( __CLASS__, 'encodeit' ), $text );
-				// This gets the "block level" code blocks and converts them to PRE CODE
+				// This gets the "block level" code blocks and converts them to PRE CODE.
 				$text = preg_replace_callback( "!(^|\n)`(.*?)`!s", array( __CLASS__, 'encodeit' ), $text );
 			} else {
-				// Markdown can do inline code, we convert bbPress style block level code to Markdown style
+				// Markdown can do inline code, we convert bbPress style block level code to Markdown style.
 				$text = preg_replace_callback( "!(^|\n)([ \t]*?)`(.*?)`!s", array( __CLASS__, 'indent' ), $text );
 			}
 			return $text;
 		}
 
-		function indent( $matches ) {
+		public function indent( $matches ) {
 			$text = $matches[3];
 			$text = preg_replace( '|^|m', $matches[2] . '    ', $text );
 			return $matches[1] . $text;
 		}
 
-		function encodeit( $matches ) {
-			if ( function_exists( 'encodeit' ) ) { // bbPress native
+		public function encodeit( $matches ) {
+			if ( function_exists( 'encodeit' ) ) { // bbPress native.
 				return encodeit( $matches );
 			}
 
@@ -340,14 +338,14 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			$text = str_replace( '&amp;lt;', '&lt;', $text );
 			$text = str_replace( '&amp;gt;', '&gt;', $text );
 			$text = "<code>$text</code>";
-			if ( '`' != $matches[1] ) {
+			if ( '`' !== $matches[1] ) {
 				$text = "<pre>$text</pre>";
 			}
 			return $text;
 		}
 
-		function decodeit( $matches ) {
-			if ( function_exists( 'decodeit' ) ) { // bbPress native
+		public function decodeit( $matches ) {
+			if ( function_exists( 'decodeit' ) ) { // bbPress native.
 				return decodeit( $matches );
 			}
 
@@ -357,7 +355,7 @@ if ( ! class_exists( 'PucReadmeParser', false ) ) :
 			$text        = str_replace( '<br />', '', $text );
 			$text        = str_replace( '&#38;', '&', $text );
 			$text        = str_replace( '&#39;', "'", $text );
-			if ( '<pre><code>' == $matches[1] ) {
+			if ( '<pre><code>' === $matches[1] ) {
 				$text = "\n$text\n";
 			}
 			return "`$text`";
