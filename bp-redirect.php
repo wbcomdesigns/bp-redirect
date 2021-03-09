@@ -1,5 +1,7 @@
 <?php
 /**
+ * BP Redirect Plugin allows login and logout redirect according to the user role.
+ *
  * @link              https://wbcomdesigns.com/contact/
  * @since             1.0.0
  * @package           BP_Redirect
@@ -16,9 +18,10 @@
  * Text Domain:       bp-redirect
  * Domain Path:       /languages
  */
+
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -52,15 +55,17 @@ if ( ! defined( 'BP_REDIRECT_PLUGIN_BASENAME' ) ) {
  * Check plugin requirement on plugins loaded
  * this plugin requires BuddyPress to be installed and active
  */
-
-add_action( 'bp_loaded', 'bpr_plugin_init' );
 function bpr_plugin_init() {
 	if ( bpr_check_config() ) {
 		run_bp_redirect();
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bpr_plugin_links' );
 	}
 }
+add_action( 'bp_loaded', 'bpr_plugin_init' );
 
+/**
+ * BP Redirect checks the configuration.
+ */
 function bpr_check_config() {
 	global $bp;
 	$config = array(
@@ -68,16 +73,16 @@ function bpr_check_config() {
 		'network_active' => false,
 		'network_status' => true,
 	);
-	if ( get_current_blog_id() == bp_get_root_blog_id() ) {
+	if ( get_current_blog_id() === bp_get_root_blog_id() ) {
 		$config['blog_status'] = true;
 	}
 
 	$network_plugins = get_site_option( 'active_sitewide_plugins', array() );
 
-	// No Network plugins
+	// No Network plugins.
 	if ( empty( $network_plugins ) ) {
 
-		// Looking for BuddyPress and bp-activity plugin
+		// Looking for BuddyPress and bp-activity plugin.
 		$check[] = $bp->basename;
 	}
 	$check[] = BP_REDIRECT_PLUGIN_BASENAME;
@@ -86,8 +91,8 @@ function bpr_check_config() {
 	$network_active = array_diff( $check, array_keys( $network_plugins ) );
 
 	// If result is 1, your plugin is network activated
-	// and not BuddyPress or vice & versa. Config is not ok
-	if ( count( $network_active ) == 1 ) {
+	// and not BuddyPress or vice & versa. Config is not ok.
+	if ( count( $network_active ) === 1 ) {
 		$config['network_status'] = false;
 	}
 
@@ -95,7 +100,7 @@ function bpr_check_config() {
 	// notice ( admin or network_admin ) to display the warning message.
 	$config['network_active'] = isset( $network_plugins[ BP_REDIRECT_PLUGIN_BASENAME ] );
 
-	// if BuddyPress config is different than bp-activity plugin
+	// if BuddyPress config is different than bp-activity plugin.
 	if ( ! $config['blog_status'] || ! $config['network_status'] ) {
 
 		$warnings = array();
@@ -116,12 +121,22 @@ function bpr_check_config() {
 	return true;
 }
 
+/**
+ * Error Message for BP Redirect requies to be activated.
+ *
+ * @return void
+ */
 function bpr_same_blog() {
 	echo '<div class="error"><p>'
 	. esc_html( __( 'BP Redirect requires to be activated on the blog where BuddyPress is activated.', 'bp-redirect' ) )
 	. '</p></div>';
 }
 
+/**
+ * Error Message for network configuration.
+ *
+ * @return void
+ */
 function bpr_same_network_config() {
 	echo '<div class="error"><p>'
 	. esc_html( __( 'BP Redirect and BuddyPress need to share the same network configuration.', 'bp-redirect' ) )
@@ -130,6 +145,8 @@ function bpr_same_network_config() {
 
 /**
  * Add the Plugin Links
+ *
+ * @param string $links BP Lock Links.
  */
 function bpr_plugin_links( $links ) {
 	$bplock_links = array(
@@ -143,7 +160,6 @@ function bpr_plugin_links( $links ) {
  * The code that runs during plugin activation.
  * This action is documented in includes/class-bp-redirect-activator.php
  */
-
 function activate_bp_redirect() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-activator.php';
 	BP_Redirect_Activator::activate();
@@ -153,7 +169,6 @@ function activate_bp_redirect() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-bp-redirect-deactivator.php
  */
-
 function deactivate_bp_redirect() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-deactivator.php';
 	BP_Redirect_Deactivator::deactivate();
@@ -162,15 +177,15 @@ function deactivate_bp_redirect() {
 register_activation_hook( __FILE__, 'activate_bp_redirect' );
 register_deactivation_hook( __FILE__, 'deactivate_bp_redirect' );
 
- /**
-  * Begins execution of the plugin.
-  *
-  * Since everything within the plugin is registered via hooks,
-  * then kicking off the plugin from this point in the file does
-  * not affect the page life cycle.
-  *
-  * @since    1.0.0
-  */
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    1.0.0
+ */
 function run_bp_redirect() {
 	/**
 	 * The core plugin class that is used to define internationalization,
@@ -188,7 +203,7 @@ function run_bp_redirect() {
 function bpr_requires_buddypress() {
 	if ( ! class_exists( 'Buddypress' ) ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-		// deactivate_plugins('buddypress-polls/buddypress-polls.php');
+		// deactivate_plugins('buddypress-polls/buddypress-polls.php');.
 		add_action( 'admin_notices', 'bpr_required_plugin_admin_notice' );
 		unset( $_GET['activate'] );
 	}
@@ -205,6 +220,7 @@ function bpr_required_plugin_admin_notice() {
 	$bpquotes_plugin = esc_html__( 'BP Redirect', 'bp-redirect' );
 	$bp_plugin       = esc_html__( 'BuddyPress', 'bp-redirect' );
 	echo '<div class="error"><p>';
+	/* translators: BP Redirect */
 	echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-redirect' ), '<strong>' . esc_html( $bpquotes_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
 	echo '</p></div>';
 	if ( isset( $_GET['activate'] ) ) {

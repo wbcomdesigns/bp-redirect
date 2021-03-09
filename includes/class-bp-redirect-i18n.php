@@ -1,12 +1,10 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       https://wbcomdesigns.com/contact/
  * @since      1.0.0
  *
  * @package    BP_Redirect
@@ -19,6 +17,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
+ * @link       https://wbcomdesigns.com/contact/
  * @since      1.0.0
  * @package    BP_Redirect
  * @subpackage BP_Redirect/includes

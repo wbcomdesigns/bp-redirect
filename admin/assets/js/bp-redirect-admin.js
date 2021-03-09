@@ -55,7 +55,6 @@ jQuery(document).ready(function($) {
     });
 
   jQuery("#bp-redirect-settings-submit").on('click', function() {
-
     var loginRoleSequence = [];
     var logoutRoleSequence = [];
     var global_settings_form = jQuery("#bpr-global-settings-form").serialize();
@@ -77,6 +76,7 @@ jQuery(document).ready(function($) {
     jQuery.post(
       ajaxurl, {
         'action': 'bp_redirect_admin_settings',
+        'nonce': bp_redirect_ajax_nonce.nonce,
         'global_details': global_settings_form,
         'login_details': login_settings_form,
         'logout_details': logout_settings_form,
