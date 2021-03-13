@@ -183,7 +183,7 @@ class BP_Redirect_Admin {
 			</div>
 		</div>
 		<p>
-			<button id="bp-redirect-settings-submit" class="button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php esc_attr__( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
+			<button id="bp-redirect-settings-submit" class="button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
 		</p>
 		<?php
 	}
@@ -321,7 +321,7 @@ class BP_Redirect_Admin {
 									' >
 									<option value=''><?php esc_html_e( 'Select', 'bp-redirect' ); ?></option>
 			<?php if ( bp_is_active( 'members' ) ) { ?>
-												<option value= "<?php echo 'profile'; ?>"
+												<option value= "profile"
 																		<?php
 																		if ( 'profile' === $login_component ) {
 																			echo "selected = 'selected'";
@@ -330,7 +330,7 @@ class BP_Redirect_Admin {
 												><?php esc_html_e( 'Member Profile', 'bp-redirect' ); ?>
 												</option>
 			<?php	} if ( bp_is_active( 'activity' ) ) { ?>
-												<option value= "<?php echo 'member_activity'; ?>"
+												<option value= "member_activity"
 																		<?php
 																		if ( 'member_activity' === $login_component ) {
 																			echo "selected = 'selected'";
@@ -339,7 +339,21 @@ class BP_Redirect_Admin {
 												><?php esc_html_e( 'Member Activity', 'bp-redirect' ); ?>
 												</option>
 				<?php
+			} if ( bp_is_active( 'groups' ) ) {
+				?>
+						<option value= "groups"
+																		<?php
+																		if ( 'groups' === $login_component ) {
+																			echo "selected = 'selected'";
+																		}
+																		?>
+												><?php esc_html_e( 'Groups', 'bp-redirect' ); ?>
+												</option>
+				<?php
 			}
+			?>
+
+			<?php
 										$bp_pages = bp_core_get_directory_page_ids();
 										$pages    = get_pages( array( 'include' => $bp_pages ) );
 			foreach ( $pages as $page ) {
@@ -347,7 +361,7 @@ class BP_Redirect_Admin {
 					$option  = '<option value="' . get_page_link( $page->ID ) . '">';
 					$option .= $page->post_title;
 					$option .= '</option>';
-					echo esc_html_e( $option );
+					echo $option;
 				}
 			}
 			?>
@@ -367,8 +381,8 @@ class BP_Redirect_Admin {
 				foreach ( $wp_page_ids as $wp_page_id ) {
 					$wp_page_url = get_permalink( $wp_page_id );
 					?>
-												<option value="<?php echo esc_attr( $wp_page_url ); ?>" <?php selected( $login_url, $wp_page_url ); ?> >
-					<?php echo esc_html_e( get_the_title( $wp_page_id ) ); ?>
+												<option value="<?php echo $wp_page_url; ?>" <?php selected( $login_url, $wp_page_url ); ?> >
+					<?php echo get_the_title( $wp_page_id ); ?>
 												</option>
 					<?php
 				}
@@ -503,14 +517,14 @@ class BP_Redirect_Admin {
 	public function bp_redirect_save_admin_settings() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bp-js-admin-ajax-nonce' ) ) {
 			if ( isset( $_POST['action'] ) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
-				parse_str( sanitize_text_field( wp_unslash( $_POST['login_details'] ) ), $login_form_data );
-				parse_str( sanitize_text_field( wp_unslash( $_POST['logout_details'] ) ), $logout_form_data );
+				parse_str( $_POST['login_details'], $login_form_data );
+				parse_str( $_POST['logout_details'], $logout_form_data );
 				$login_details  = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
 				$logout_details = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
 				$setting_arr    = array_merge( $login_details, $logout_details );
 				if ( ! empty( $setting_arr ) && ! empty( $_POST['loginSequence'] ) ) {
-					$setting_arr['loginSequence']  = sanitize_text_field( wp_unslash( $_POST['loginSequence'] ) );
-					$setting_arr['logoutSequence'] = sanitize_text_field( wp_unslash( $_POST['logoutSequence'] ) );
+					$setting_arr['loginSequence']  = sanitize_text_field( $_POST['loginSequence'] );
+					$setting_arr['logoutSequence'] = sanitize_text_field( $_POST['logoutSequence'] );
 					bp_update_option( 'bp_redirect_admin_settings', $setting_arr );
 				}
 			}
