@@ -162,6 +162,9 @@ class BP_Redirect_Public {
 		} elseif ( ! empty( $login_component ) && 'member_activity' === $login_component ) {
 			$redirect_url = $this->bpr_login_redirect_to_member_activity( $redirect_to, $request, $user );
 				return esc_url( $redirect_url );
+		} elseif ( ! empty( $login_component ) && 'groups' === $login_component ) {
+			$redirect_url = $this->bpr_login_redirect_to_groups_page( $redirect_to, $request, $user );
+				return esc_url( $redirect_url );
 		} elseif ( ! empty( $login_component ) ) {
 			return esc_url( $login_component );
 		} else {
@@ -197,6 +200,22 @@ class BP_Redirect_Public {
 	 */
 	public function bpr_login_redirect_to_member_activity( $redirect_to, $request, $user ) {
 		$url = bp_core_get_user_domain( $user->ID ) . 'activity/';
+		return $url;
+	}
+
+	/**
+	 *  Login redirects to Group's  Directory page
+	 *
+	 *  @param  string $redirect_to Redirect url.
+	 *  @param  string $request Request.
+	 *  @param  string $user user id.
+	 *
+	 *  @since 1.0.0
+	 *  @author  Wbcom Designs <admin@wbcomdesigns.com>
+	 *  @access public
+	 */
+	public function bpr_login_redirect_to_groups_page( $redirect_to, $request, $user ) {
+		$url = bp_get_group_permalink( $group );
 		return $url;
 	}
 
