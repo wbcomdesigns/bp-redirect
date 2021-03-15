@@ -7,7 +7,7 @@
  * @package           BP_Redirect
  *
  * @wordpress-plugin
- * Plugin Name:       BP Redirect
+ * Plugin Name:       Wbcom Designs - BuddyPress Redirect
  * Plugin URI:        https://wbcomdesigns.com/contact/
  * Description:       This plugin allows login and logout redirect according to the user role.
  * Version:           1.3.0
