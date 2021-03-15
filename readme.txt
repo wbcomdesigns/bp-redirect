@@ -1,4 +1,4 @@
-=== BP Redirect ===
+=== Wbcom Designs - BuddyPress Redirect ===
 Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/donate/
 Tags: login redirect, buddypress redirect
