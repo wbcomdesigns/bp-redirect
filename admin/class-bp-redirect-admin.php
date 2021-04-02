@@ -517,14 +517,14 @@ class BP_Redirect_Admin {
 	public function bp_redirect_save_admin_settings() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bp-js-admin-ajax-nonce' ) ) {
 			if ( isset( $_POST['action'] ) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
-				parse_str( sanitize_text_field( wp_unslash( $_POST['login_details'] ) ), $login_form_data );
-				parse_str( sanitize_text_field( wp_unslash( $_POST['logout_details'] ) ), $logout_form_data );
+				parse_str( $_POST['login_details'], $login_form_data );
+				parse_str( $_POST['logout_details'], $logout_form_data );
 				$login_details  = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
 				$logout_details = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
 				$setting_arr    = array_merge( $login_details, $logout_details );
 				if ( ! empty( $setting_arr ) && ! empty( $_POST['loginSequence'] ) ) {
-					$setting_arr['loginSequence']  = sanitize_text_field( wp_unslash( $_POST['loginSequence'] ) );
-					$setting_arr['logoutSequence'] = sanitize_text_field( wp_unslash( $_POST['logoutSequence'] ) );
+					$setting_arr['loginSequence']  = sanitize_text_field( $_POST['loginSequence'] );
+					$setting_arr['logoutSequence'] = sanitize_text_field( $_POST['logoutSequence'] );
 					bp_update_option( 'bp_redirect_admin_settings', $setting_arr );
 				}
 			}
