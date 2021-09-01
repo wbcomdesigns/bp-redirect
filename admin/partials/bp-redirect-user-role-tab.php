@@ -1,0 +1,110 @@
+<?php
+
+/**
+ * Provide an admin area view for the vendor's settings page.
+ *
+ * This file is used to markup the admin-facing aspects of the plugin.
+ *
+ * @link       https://wbcomdesigns.com/
+ * @since      1.0.0
+ *
+ * @package    BuddyPress Redirect
+ * @subpackage bp-redirect/admin/partials
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+
+
+?>
+
+<?php
+		$spinner_src   = includes_url() . 'images/spinner.gif';
+		$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
+		$bp_pages      = bp_get_option( 'bp-pages' );
+		$bp_pages_ids  = array_values( $bp_pages );
+		$loginSequence = $this->get_editable_roles();
+		
+if ( ! empty( $saved_setting ) ) {
+	if ( array_key_exists( 'loginSequence', $saved_setting ) ) {
+		$seq = explode( ',', $saved_setting['loginSequence'] );
+		foreach ( $seq as $key => $val ) {
+			$val_arr     = explode( '-', $val );
+			$seq[ $key ] = $val_arr[1];
+		}
+		if ( ! empty( $seq ) ) {
+			uksort(
+				$loginSequence,
+				function ( $key1, $key2 ) use ( $seq ) {
+					return ( array_search( $key1, $seq ) > array_search( $key2, $seq ) );
+				}
+			);
+		}
+	}
+}
+
+		$logoutSequence = $this->get_editable_roles();
+if ( ! empty( $saved_setting ) ) {
+	if ( array_key_exists( 'logoutSequence', $saved_setting ) ) {
+		$logoutseq = explode( ',', $saved_setting['logoutSequence'] );
+		foreach ( $logoutseq as $key => $val ) {
+			$val_arr           = explode( '-', $val );
+			$logoutseq[ $key ] = $val_arr[1];
+		}
+		if ( ! empty( $logoutseq ) ) {
+			uksort(
+				$logoutSequence,
+				function ( $logoutkey1, $logoutkey2 ) use ( $logoutseq ) {
+					return ( array_search( $logoutkey1, $logoutseq ) > array_search( $logoutkey2, $logoutseq ) );
+				}
+			);
+		}
+	}
+}
+
+?>
+		<div class="wbcom-tab-content">
+		<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible">
+			<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
+			<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>
+		</div>
+
+		<form method="post">
+		<div class="enable_disable_btn">
+	<label for="bp-redirect" class="enable_disable_setting">
+		<?php esc_html_e( 'Enable Setting For User Role', 'bp-redirect' ); ?></label>
+		<input type="checkbox" class="wppd-ui-toggle" id="bp_role_enable_disable" name="role_btn_value" value="on"<?php ( isset( $saved_setting['role_btn_value'] ) ) ? checked( $saved_setting['role_btn_value'], 'on' ) : ''; ?>>
+	</div>
+		</form>
+
+		<div class="bpr-row" <?php
+				if ( ! isset( $saved_setting['role_btn_value'] ) ) {
+					?>
+  style="display:none" <?php } ?>>
+			<div class="bpr-col-8">
+				<!-- login Settings -->
+				<h2><?php esc_html_e( 'Login Redirect Settings', 'bp-redirect' ); ?></h2>
+		<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+				<!-- Logout Settings -->
+				<h2><?php esc_html_e( 'Logout Redirect Settings', 'bp-redirect' ); ?></h2>
+		<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
+			</div>
+			<div class="bpr-col-4" id="bpr-faq-section">
+				<!-- FAQ(s) -->
+				<h2><?php esc_html_e( 'FAQ(s)', 'bp-redirect' ); ?></h2>
+		<?php $this->bp_redirect_faqs(); ?>
+			</div>
+		</div>
+		<p>
+			<button id="bp-redirect-settings-submit" class="button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
+		</p>
+	</div>
+		
+
+
+
+
+
+
+
