@@ -90,3 +90,21 @@ jQuery(document).ready(function($) {
     );
   });
 });
+jQuery(document).ready(function () {
+  jQuery('#bp_red_enable_disable').on('click', function () {
+    if (jQuery(this).prop("checked") == true) {
+      jQuery('.bpr-row').show(500);
+    } else {
+      jQuery('.bpr-row').hide(500);
+    }
+  });
+});
+jQuery(document).ready(function () {
+  jQuery('#bp_role_enable_disable').on('click', function () {
+    if (jQuery(this).prop("checked") == true) {
+      jQuery('.bpr-row').show(500);
+    } else {
+      jQuery('.bpr-row').hide(500);
+    }
+  });
+});
