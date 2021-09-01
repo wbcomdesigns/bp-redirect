@@ -119,6 +119,11 @@ class BP_Redirect {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-bp-redirect-public.php';
 
+		/**
+		* The add WBCOM wrapper framework for admin options.
+		*/
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
+
 		$this->loader = new BP_Redirect_Loader();
 
 	}
@@ -153,8 +158,8 @@ class BP_Redirect {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_init' );
-		$this->loader->add_action( bp_core_admin_hook(), $plugin_admin, 'admin_menu' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'bp_redirect_init_plugin_settings' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'bp_redirect_admin_option' );
 		$this->loader->add_action( 'wp_ajax_bp_redirect_admin_settings', $plugin_admin, 'bp_redirect_save_admin_settings' );
 	}
 
