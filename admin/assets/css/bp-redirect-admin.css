@@ -1560,11 +1560,11 @@ a.ui-button:active,
 .bpr-login-custom,
 .bpr-logout-component,
 .bpr-logout-custom {
-  display: none;
+  display: none!important;
 }
 
 .bpr_show {
-  display: block;
+  display: block!important;
 }
 
 .bpr-ques {
