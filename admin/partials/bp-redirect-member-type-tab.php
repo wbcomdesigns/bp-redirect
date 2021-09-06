@@ -95,16 +95,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 				if ( ! isset( $saved_setting['member_type_btn_value'] ) ) {
 					?>
   style="display:none" <?php } ?>>
-			<div class="bpr-col-8">
+			<div class="row">
+				<div class="bpr-col-6">
 				<!-- login Settings -->
-				<h2><?php esc_html_e( 'Buddypress Login Redirect Settings', 'bp-redirect' ); ?></h2>
-				
-		<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+				<h2><?php esc_html_e( 'Buddypress Login Redirect Settings', 'bp-redirect' ); ?></h2>				
+				<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+				</div>
+		<div class="bpr-col-6">
 				<!-- Logout Settings -->
 				<h2><?php esc_html_e( 'Buddypress Logout Redirect Settings', 'bp-redirect' ); ?></h2>
 		<?php $this->bp_redirect_plugin_logout_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
 			</div>
-			<div class="bpr-col-4" id="bpr-faq-section">
+			</div>
+			<div class="bpr-col-12" id="bpr-faq-section">
 				<!-- FAQ(s) -->
 				<h2><?php esc_html_e( 'FAQ(s)', 'bp-redirect' ); ?></h2>
 		<?php $this->bp_redirect_faqs(); ?>
