@@ -1567,16 +1567,30 @@ a.ui-button:active,
   display: block!important;
 }
 
-.bpr-ques {
-  font-weight: 700;
-}
-
 #bpr-faq-section .bpr-row {
-  padding: 10px 20px;
+    padding: 12px 20px;
+    box-shadow: 0 0 15px #f1f1f1;
+    margin:15px 0;
+    border: 1px solid #eee;
+    overflow: auto;
+    border-radius: 8px;
+    transition: all 0.3s;
 }
-
+#bpr-faq-section .bpr-row:hover {
+    box-shadow: 0 2px 15px #dcdcdc;
+    cursor: pointer;
+}
 #bpr-faq-section h2 {
-  padding-left: 20px;
+  margin-bottom: 0;
+  font-size: 20px;
+}
+#bpr-faq-section .bpr-ques {
+    font-size: 15px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+#bpr-faq-section .bpr-ans {
+    font-size: 16px;
 }
 
 input[type="checkbox"].bp-redirect-toggle-checkbox {
@@ -1722,4 +1736,12 @@ input[type="checkbox"].wppd-ui-toggle:checked:after {
 .enable_disable_setting{
   font-size: 20px;
     font-weight: 500;
+}
+
+
+@media only screen and (max-width: 1300px) {
+  .bpr-row .bpr-col-6 {
+    width: 100%;
+  }
+
 }
