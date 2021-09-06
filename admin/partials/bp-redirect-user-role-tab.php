@@ -82,15 +82,19 @@ if ( ! empty( $saved_setting ) ) {
 				if ( ! isset( $saved_setting['role_btn_value'] ) ) {
 					?>
   style="display:none" <?php } ?>>
-			<div class="bpr-col-8">
+			<div class="row">
+				<div class="bpr-col-6">
 				<!-- login Settings -->
 				<h2><?php esc_html_e( 'Login Redirect Settings', 'bp-redirect' ); ?></h2>
-		<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+				<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+			</div>
+			<div class="bpr-col-6">
 				<!-- Logout Settings -->
 				<h2><?php esc_html_e( 'Logout Redirect Settings', 'bp-redirect' ); ?></h2>
-		<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
-			</div>
-			<div class="bpr-col-4" id="bpr-faq-section">
+			<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
+				</div>
+				</div>
+			<div class="bpr-col-12" id="bpr-faq-section">
 				<!-- FAQ(s) -->
 				<h2><?php esc_html_e( 'FAQ(s)', 'bp-redirect' ); ?></h2>
 		<?php $this->bp_redirect_faqs(); ?>
