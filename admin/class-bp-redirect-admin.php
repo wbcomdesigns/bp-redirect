@@ -75,25 +75,25 @@ class BP_Redirect_Admin {
 	 * @access public
 	 */
 	public function bp_redirect_admin_option() {
+		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+			add_menu_page(
+				esc_html__( 'WB Plugins', 'bp-redirect' ),
+				esc_html__( 'WB Plugins', 'bp-redirect' ),
+				'manage_options',
+				'wbcomplugins',
+				array( $this, 'bp_redirect_options_page' ),
+				'dashicons-lightbulb',
+				59
+			);
 
-		add_menu_page(
-			__( 'WB Plugins', 'bp-redirect' ),
-			__( 'WB Plugins', 'bp-redirect' ),
-			'manage_options',
-			'wbcomplugins',
-			array( $this, 'bp_redirect_options_page' ),
-			'dashicons-lightbulb',
-			59
-		);
-
-		add_submenu_page(
-			'wbcomplugins',
-			__( 'General', 'bp-redirect' ),
-			__( ' General ', 'bp-redirect' ),
-			'manage_options',
-			'wbcomplugins'
-		);
-
+			add_submenu_page(
+				'wbcomplugins',
+				esc_html__( 'General', 'bp-redirect' ),
+				esc_html__( ' General ', 'bp-redirect' ),
+				'manage_options',
+				'wbcomplugins'
+			);
+		}
 		add_submenu_page(
 			'wbcomplugins',
 			esc_html__( 'BP Redirect', 'bp-redirect' ),
