@@ -35,10 +35,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		$spinner_src   = includes_url() . 'images/spinner.gif';
 		$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
-		
 		$bp_pages      = bp_get_option( 'bp-pages' );
 		$bp_pages_ids  = array_values( $bp_pages );
 		$loginSequence = $member_types;
+
 		if ( ! empty( $saved_setting ) ) {
 			if ( array_key_exists( 'loginSequence', $saved_setting ) ) {
 				$seq = explode( ',', $saved_setting['loginSequence'] );
@@ -77,23 +77,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		?>
+
 		<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible">
 			<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
 			<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>
 		</div>
 		<div class="wbcom-tab-content">
-		
+		<?php
+		if ( ! empty( $loginSequence ) ) {
+			?>
+
 		<form method="post">
 		<div class="enable_disable_btn">
 	<label for="bp-redirect" class="enable_disable_setting">
-		<?php esc_html_e( 'Enable Setting For Buddypress Member Type', 'bp-redirect' ); ?></label>
+			<?php esc_html_e( 'Enable Setting For Buddypress Member Type', 'bp-redirect' ); ?></label>
 		<input type="checkbox" class="wppd-ui-toggle" id="bp_red_enable_disable" name="member_type_btn_value" value="Yes"<?php ( isset( $saved_setting['member_type_btn_value'] ) ) ? checked( $saved_setting['member_type_btn_value'], 'Yes' ) : ''; ?>>
 	</div>
 		</form>
 		<div class="bpr-row" 
-		<?php
-				if ( ! isset( $saved_setting['member_type_btn_value'] ) ) {
-					?>
+			<?php
+			if ( ! isset( $saved_setting['member_type_btn_value'] ) ) {
+				?>
   style="display:none" <?php } ?>>
 			<div class="row">
 				<div class="bpr-col-6">
@@ -104,16 +108,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="bpr-col-6">
 				<!-- Logout Settings -->
 				<h2><?php esc_html_e( 'Buddypress Logout Redirect Settings', 'bp-redirect' ); ?></h2>
-		<?php $this->bp_redirect_plugin_logout_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+			<?php $this->bp_redirect_plugin_logout_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
 			</div>
 			</div>
 			<div class="bpr-col-12" id="bpr-faq-section">
 				<!-- FAQ(s) -->
 				<h2><?php esc_html_e( 'FAQ(s)', 'bp-redirect' ); ?></h2>
-		<?php $this->bp_redirect_faqs(); ?>
+			<?php $this->bp_redirect_faqs(); ?>
 			</div>
 		</div>
 		<p>
 			<button id="bp-redirect-settings-submit" class="button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
 		</p>
+		<?php } else { ?>
+			<h2><?php esc_html_e( 'Buddypress Member Type Not Exist, Create Member Type Click On The Link -: ' ); ?><a href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=bp_member_type' ) ); ?>" target="_blank"><?php esc_html_e( 'Click Here', 'bp-redirect' ); ?></a></h2>
+			<?php } ?>
 	</div>
+	
