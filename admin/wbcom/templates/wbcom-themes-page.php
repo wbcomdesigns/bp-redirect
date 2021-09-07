@@ -10,19 +10,19 @@
 							<img src="<?php echo esc_url( WOO_DOCUMENT_PREVIEW_PRO_URL . 'admin/wbcom/assets/imgs/reign.jpg' ); ?>" alt="Avatar" class="image" style="width:100%">
 						</div>
 						<div class="wbcom-demo-title">
-							<h2><?php esc_html_e( 'Reign Theme', 'woo-document-preview-pro' ); ?></h2>
+							<h2><?php esc_html_e( 'Reign Theme', 'bp-redirect' ); ?></h2>
 							<ul class="wbcom_theme_features_list">
-								<li><?php esc_html_e( 'Multiple Member Directory Layout', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Multiple Member Header Layout', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Multiple Group Directory Layout', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Multiple Group Header Layout', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'BuddyPress Customization Options', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'BuddyPress Extra Widgets', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Inbuilt Social Profile Module', 'woo-document-preview-pro' ); ?></li>
+								<li><?php esc_html_e( 'Multiple Member Directory Layout', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Multiple Member Header Layout', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Multiple Group Directory Layout', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Multiple Group Header Layout', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'BuddyPress Customization Options', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'BuddyPress Extra Widgets', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Inbuilt Social Profile Module', 'bp-redirect' ); ?></li>
 							</ul>
 							<div class="wbcom-middle">
-								<a href="https://wbcomdesigns.com/downloads/reign-buddypress-theme/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase" target="_blank"><?php esc_html_e( 'Purchase', 'woo-document-preview-pro' ); ?></a>
-								<a target="_blank" href="http://try.wbcomdesigns.com/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button"><?php esc_html_e( 'Preview', 'woo-document-preview-pro' ); ?></a>
+								<a href="https://wbcomdesigns.com/downloads/reign-buddypress-theme/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase" target="_blank"><?php esc_html_e( 'Purchase', 'bp-redirect' ); ?></a>
+								<a target="_blank" href="http://try.wbcomdesigns.com/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button"><?php esc_html_e( 'Preview', 'bp-redirect' ); ?></a>
 							</div>
 						</div>
 					</div>
@@ -35,19 +35,19 @@
 							<img src="<?php echo esc_url( WOO_DOCUMENT_PREVIEW_PRO_URL . 'admin/wbcom/assets/imgs/learnmate.jpg' ); ?>" alt="Avatar" class="image" style="width:100%">
 						</div>
 						<div class="wbcom-demo-title">
-							<h2><?php esc_html_e( 'LearnMate Solution', 'woo-document-preview-pro' ); ?></h2>
+							<h2><?php esc_html_e( 'LearnMate Solution', 'bp-redirect' ); ?></h2>
 							<ul class="wbcom_theme_features_list">
-								<li><?php esc_html_e( 'Add Review to your course', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Course Coming Soon', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Grid And List Layout', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Learndash/LifterLMS Extra Widgets', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Unparalleled Course Layout', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Awesome Learndash/LifterLMS Pages', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Distraction Free Reading', 'woo-document-preview-pro' ); ?></li>
+								<li><?php esc_html_e( 'Add Review to your course', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Course Coming Soon', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Grid And List Layout', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Learndash/LifterLMS Extra Widgets', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Unparalleled Course Layout', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Awesome Learndash/LifterLMS Pages', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Distraction Free Reading', 'bp-redirect' ); ?></li>
 							</ul>
 							<div class="wbcom-middle">
-								<a href="https://wbcomdesigns.com/downloads/learnmate-learndash/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase" target="_blank"><?php esc_html_e( 'Purchase', 'woo-document-preview-pro' ); ?></a>
-								<a target="_blank" href="https://try.wbcomdesigns.com/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button" ><?php esc_html_e( 'Preview', 'woo-document-preview-pro' ); ?></a>
+								<a href="https://wbcomdesigns.com/downloads/learnmate-learndash/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase" target="_blank"><?php esc_html_e( 'Purchase', 'bp-redirect' ); ?></a>
+								<a target="_blank" href="https://try.wbcomdesigns.com/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button" ><?php esc_html_e( 'Preview', 'bp-redirect' ); ?></a>
 							</div>
 						</div>
 					</div>
@@ -60,17 +60,17 @@
 							<img src="<?php echo esc_url( WOO_DOCUMENT_PREVIEW_PRO_URL . 'admin/wbcom/assets/imgs/storemate.jpg' ); ?>" alt="Avatar" class="image" style="width:100%">
 						</div>
 						<div class="wbcom-demo-title">
-							<h2><?php esc_html_e( 'StoreMate Solution', 'woo-document-preview-pro' ); ?></h2>
+							<h2><?php esc_html_e( 'StoreMate Solution', 'bp-redirect' ); ?></h2>
 							<ul class="wbcom_theme_features_list">
-								<li><?php esc_html_e( 'Dokan Extra Widgets', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Unique Single Product Page Customization', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Awesome WooCommerce Pages', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Grid And List Layout', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Automated Mega Menu Support', 'woo-document-preview-pro' ); ?></li>
+								<li><?php esc_html_e( 'Dokan Extra Widgets', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Unique Single Product Page Customization', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Awesome WooCommerce Pages', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Grid And List Layout', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Automated Mega Menu Support', 'bp-redirect' ); ?></li>
 							</ul>
 							<div class="wbcom-middle">
-								<a target="_blank" href="https://wbcomdesigns.com/downloads/storemate-dokan/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'Purchase', 'woo-document-preview-pro' ); ?></a>
-								<a target="_blank" href="http://try.wbcomdesigns.com/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button"><?php esc_html_e( 'Preview', 'woo-document-preview-pro' ); ?></a>
+								<a target="_blank" href="https://wbcomdesigns.com/downloads/storemate-dokan/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'Purchase', 'bp-redirect' ); ?></a>
+								<a target="_blank" href="http://try.wbcomdesigns.com/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button"><?php esc_html_e( 'Preview', 'bp-redirect' ); ?></a>
 							</div>
 						</div>
 					</div>
@@ -83,16 +83,16 @@
 							<img src="<?php echo esc_url( WOO_DOCUMENT_PREVIEW_PRO_URL . 'admin/wbcom/assets/imgs/jobmate.jpg ' ); ?>" alt="Avatar" class="image" style="width:100%">
 						</div>
 						<div class="wbcom-demo-title">
-							<h2><?php esc_html_e( 'Jobmate Theme', 'woo-document-preview-pro' ); ?></h2>
+							<h2><?php esc_html_e( 'Jobmate Theme', 'bp-redirect' ); ?></h2>
 							<ul class="wbcom_theme_features_list">
-								<li><?php esc_html_e( 'Simple live searching and filtering', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Unique Job listing Page', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Awesome Resume list Page', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Outstanding all job maanger pagesLayout', 'woo-document-preview-pro' ); ?></li>
+								<li><?php esc_html_e( 'Simple live searching and filtering', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Unique Job listing Page', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Awesome Resume list Page', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Outstanding all job maanger pagesLayout', 'bp-redirect' ); ?></li>
 							</ul>
 							<div class="wbcom-middle">
-								<a target="_blank" href="https://wbcomdesigns.com/downloads/jobmate-theme/" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'Purchase', 'woo-document-preview-pro' ); ?></a>
-								<a target="_blank" href="http://try.wbcomdesigns.com/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button"><?php esc_html_e( 'Preview', 'woo-document-preview-pro' ); ?></a>
+								<a target="_blank" href="https://wbcomdesigns.com/downloads/jobmate-theme/" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'Purchase', 'bp-redirect' ); ?></a>
+								<a target="_blank" href="http://try.wbcomdesigns.com/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button"><?php esc_html_e( 'Preview', 'bp-redirect' ); ?></a>
 							</div>
 						</div>
 					</div>
@@ -105,17 +105,17 @@
 							<img src="<?php echo esc_url( WOO_DOCUMENT_PREVIEW_PRO_URL . 'admin/wbcom/assets/imgs/buddyx.jpg' ); ?>" alt="Avatar" class="image" style="width:100%">
 						</div>
 						<div class="wbcom-demo-title">
-							<h2><?php esc_html_e( 'BuddyX Theme', 'woo-document-preview-pro' ); ?></h2>
+							<h2><?php esc_html_e( 'BuddyX Theme', 'bp-redirect' ); ?></h2>
 							<ul class="wbcom_theme_features_list">
-								<li><?php esc_html_e( 'Responsive BuddyPress Theme', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Site Ready In One-Click', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Members and Groups Layout', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'WooCommerce Ready', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Supported Muitiple Plugins', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Suitable for All Devices', 'woo-document-preview-pro' ); ?></li>
+								<li><?php esc_html_e( 'Responsive BuddyPress Theme', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Site Ready In One-Click', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Members and Groups Layout', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'WooCommerce Ready', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Supported Muitiple Plugins', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Suitable for All Devices', 'bp-redirect' ); ?></li>
 							</ul>
 							<div class="wbcom-middle">
-								<a target="_blank" href="https://wbcomdesigns.com/downloads/buddyx-theme/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'View', 'woo-document-preview-pro' ); ?></a>
+								<a target="_blank" href="https://wbcomdesigns.com/downloads/buddyx-theme/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'View', 'bp-redirect' ); ?></a>
 							</div>
 						</div>
 					</div>
@@ -128,15 +128,15 @@
 							<img src="<?php echo esc_url( WOO_DOCUMENT_PREVIEW_PRO_URL . 'admin/wbcom/assets/imgs/knowx.jpg' ); ?>" alt="Avatar" class="image" style="width:100%">
 						</div>
 						<div class="wbcom-demo-title">
-							<h2><?php esc_html_e( 'KnowX Theme', 'woo-document-preview-pro' ); ?></h2>
+							<h2><?php esc_html_e( 'KnowX Theme', 'bp-redirect' ); ?></h2>
 							<ul class="wbcom_theme_features_list">
-								<li><?php esc_html_e( 'Free WordPress Theme', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Site Ready In One-Click', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Create Knowledge base', 'woo-document-preview-pro' ); ?></li>
-								<li><?php esc_html_e( 'Suitable for All Devices', 'woo-document-preview-pro' ); ?></li>
+								<li><?php esc_html_e( 'Free WordPress Theme', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Site Ready In One-Click', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Create Knowledge base', 'bp-redirect' ); ?></li>
+								<li><?php esc_html_e( 'Suitable for All Devices', 'bp-redirect' ); ?></li>
 							</ul>
 							<div class="wbcom-middle">
-								<a target="_blank" href="https://wbcomdesigns.com/downloads/knowx-theme/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'View', 'woo-document-preview-pro' ); ?></a>
+								<a target="_blank" href="https://wbcomdesigns.com/downloads/knowx-theme/?utm_source=wporg&utm_medium=plugins&utm_campaign=bp" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'View', 'bp-redirect' ); ?></a>
 							</div>
 						</div>
 					</div>

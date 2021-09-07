@@ -7,7 +7,7 @@
 		$free_plugins      = $wbcom_setting_obj->wbcom_all_free_plugins();
 		$paid_plugins      = $wbcom_setting_obj->wbcom_all_paid_plugins();
 		?>
-		<h4 class="wbcom-plugin-heading"><?php esc_html_e( 'Paid Addons', 'woo-document-preview-pro' ); ?></h4>
+		<h4 class="wbcom-plugin-heading"><?php esc_html_e( 'Paid Addons', 'bp-redirect' ); ?></h4>
 		<div class="reign-demos-wrapper reign-importer-section">
 			<div class="reign-demos-inner-wrapper wbcom-plugins-inner-wrapper">
 				<?php
@@ -26,7 +26,7 @@
 								<div class="activation_button_wrap">
 									<a href="<?php echo esc_url( $plugin_details['download_url'] ); ?>" class="wb_btn wb_btn_default" target="_blank" >
 										<i class="fa fa-eye"></i>
-										<?php esc_html_e( 'View', 'woo-document-preview-pro' ); ?>
+										<?php esc_html_e( 'View', 'bp-redirect' ); ?>
 									</a>
 								</div>
 							</div>
@@ -35,21 +35,21 @@
 				<?php } ?>
 			</div>
 		</div>
-		<h4 class="wbcom-plugin-heading"><?php esc_html_e( 'Free Addons', 'woo-document-preview-pro' ); ?></h4>
+		<h4 class="wbcom-plugin-heading"><?php esc_html_e( 'Free Addons', 'bp-redirect' ); ?></h4>
 		<div class="reign-demos-wrapper reign-importer-section">
 			<div class="reign-demos-inner-wrapper wbcom-plugins-inner-wrapper">
 				<?php
 				foreach ( $free_plugins as $key => $plugin_details ) {
 					if ( 'not_installed' == $plugin_details['status'] ) {
-						$plugin_btn_text = esc_html__( 'Install', 'woo-document-preview-pro' );
+						$plugin_btn_text = esc_html__( 'Install', 'bp-redirect' );
 						$toggle_class    = 'fa fa-toggle-off';
 						$plugin_action   = 'install_plugin';
 					} elseif ( 'installed' == $plugin_details['status'] ) {
-						$plugin_btn_text = esc_html__( 'Activate', 'woo-document-preview-pro' );
+						$plugin_btn_text = esc_html__( 'Activate', 'bp-redirect' );
 						$toggle_class    = 'fa fa-toggle-off';
 						$plugin_action   = 'activate_plugin';
 					} else {
-						$plugin_btn_text = esc_html__( 'Deactivate', 'woo-document-preview-pro' );
+						$plugin_btn_text = esc_html__( 'Deactivate', 'bp-redirect' );
 						$toggle_class    = 'fa fa-toggle-on';
 						$plugin_action   = 'deactivate_plugin';
 					}
