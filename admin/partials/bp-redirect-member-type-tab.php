@@ -94,7 +94,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<input type="checkbox" class="wppd-ui-toggle" id="bp_red_enable_disable" name="member_type_btn_value" value="Yes"<?php ( isset( $saved_setting['member_type_btn_value'] ) ) ? checked( $saved_setting['member_type_btn_value'], 'Yes' ) : ''; ?>>
 	</div>
 		</form>
-		<div class="bpr-row" 
+		<div class="bpr-row"
 			<?php
 			if ( ! isset( $saved_setting['member_type_btn_value'] ) ) {
 				?>
@@ -102,7 +102,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="row">
 				<div class="bpr-col-6">
 				<!-- login Settings -->
-				<h2><?php esc_html_e( 'Buddypress Login Redirect Settings', 'bp-redirect' ); ?></h2>				
+				<h2><?php esc_html_e( 'Buddypress Login Redirect Settings', 'bp-redirect' ); ?></h2>
 				<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
 				</div>
 		<div class="bpr-col-6">
@@ -121,7 +121,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<button id="bp-redirect-settings-submit" class="button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
 		</p>
 		<?php } else { ?>
-			<h2><?php esc_html_e( 'Buddypress Member Type Not Exist, Create Member Type Click On The Link -: ' ); ?><a href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=bp_member_type' ) ); ?>" target="_blank"><?php esc_html_e( 'Click Here', 'bp-redirect' ); ?></a></h2>
+			<h2><?php esc_html_e( 'Buddypress Member Type Not Exist, Create Member Type Click On The Link -: ','bp-redirect' ); ?><a href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=bp_member_type' ) ); ?>" target="_blank"><?php esc_html_e( 'Click Here', 'bp-redirect' ); ?></a></h2>
 			<?php } ?>
 	</div>
-	

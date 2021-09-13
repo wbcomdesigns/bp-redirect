@@ -512,7 +512,7 @@ class BP_Redirect_Admin {
 					$wp_page_url = get_permalink( $wp_page_id );
 					?>
 												<option value="<?php echo esc_attr( $wp_page_url ); ?>" <?php selected( $logout_url, $wp_page_url ); ?> >
-					<?php echo esc_html_e( get_the_title( $wp_page_id ) ); ?>
+					<?php echo esc_html( get_the_title( $wp_page_id ) ); ?>
 												</option>
 					<?php
 				}
