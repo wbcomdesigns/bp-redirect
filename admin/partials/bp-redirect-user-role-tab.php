@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$bp_pages      = bp_get_option( 'bp-pages' );
 		$bp_pages_ids  = array_values( $bp_pages );
 		$loginSequence = $this->get_editable_roles();
-		
+
 if ( ! empty( $saved_setting ) ) {
 	if ( array_key_exists( 'loginSequence', $saved_setting ) ) {
 		$seq = explode( ',', $saved_setting['loginSequence'] );
@@ -74,13 +74,15 @@ if ( ! empty( $saved_setting ) ) {
 		<div class="enable_disable_btn">
 	<label for="bp-redirect" class="enable_disable_setting">
 		<?php esc_html_e( 'Enable Setting For User Role', 'bp-redirect' ); ?></label>
-		<input type="checkbox" class="wppd-ui-toggle" id="bp_role_enable_disable" name="role_btn_value" value="on"<?php ( isset( $saved_setting['role_btn_value'] ) ) ? checked( $saved_setting['role_btn_value'], 'on' ) : ''; ?>>
+		<input type="checkbox" class="wppd-ui-toggle" id="bp_role_enable_disable" name="role_btn_value" value="yes"<?php ( isset( $saved_setting['role_btn_value'] ) ) ? checked( $saved_setting['role_btn_value'], 'yes' ) : ''; ?>>
+		<input type="hidden" name="bp_enable_disable_role_checkbox" value="<?php echo ( isset( $saved_setting['role_btn_value'] ) ) ? esc_attr( $saved_setting['role_btn_value'] ) : 'no'; ?>">
 	</div>
 		</form>
 
-		<div class="bpr-row" <?php
-				if ( ! isset( $saved_setting['role_btn_value'] ) ) {
-					?>
+		<div class="bpr-row" 
+		<?php
+		if ( ! isset( $saved_setting['role_btn_value'] ) || 'no' === $saved_setting['role_btn_value'] ) {
+			?>
   style="display:none" <?php } ?>>
 			<div class="row">
 				<div class="bpr-col-6">
