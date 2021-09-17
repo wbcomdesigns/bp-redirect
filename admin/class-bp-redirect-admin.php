@@ -512,7 +512,7 @@ class BP_Redirect_Admin {
 					$wp_page_url = get_permalink( $wp_page_id );
 					?>
 												<option value="<?php echo esc_attr( $wp_page_url ); ?>" <?php selected( $logout_url, $wp_page_url ); ?> >
-					<?php echo esc_html( get_the_title( $wp_page_id ) ); ?>
+					<?php echo esc_html_e( get_the_title( $wp_page_id ), 'bp-redirect' ); ?>
 												</option>
 					<?php
 				}
@@ -541,20 +541,48 @@ class BP_Redirect_Admin {
 	public function bp_redirect_save_admin_settings() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bp-js-admin-ajax-nonce' ) ) {
 			if ( isset( $_POST['action'] ) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
+				$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
 				parse_str( $_POST['login_details'], $login_form_data );
 				parse_str( $_POST['logout_details'], $logout_form_data );
-				parse_str( $_POST['enable_disable_setting'], $enable_disable_setting );
-				parse_str( $_POST['enable_disable_role_setting'], $enable_disable_role_setting );
-				$login_details       = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
-				$logout_details      = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
-				$member_type_setting = filter_var_array( $enable_disable_setting, FILTER_SANITIZE_STRING );
-				$role_setting        = filter_var_array( $enable_disable_role_setting, FILTER_SANITIZE_STRING );
-				$setting_arr         = array_merge( $login_details, $logout_details, $member_type_setting, $role_setting );
-				if ( ! empty( $setting_arr ) && ! empty( $_POST['loginSequence'] ) ) {
-					$setting_arr['loginSequence']  = sanitize_text_field( $_POST['loginSequence'] );
-					$setting_arr['logoutSequence'] = sanitize_text_field( $_POST['logoutSequence'] );
-					bp_update_option( 'bp_redirect_admin_settings', $setting_arr );
+				// parse_str( $_POST['enable_disable_setting'], $enable_disable_setting );
+				// parse_str( $_POST['enable_disable_role_setting'], $enable_disable_role_setting );
+				$login_details  = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
+				$logout_details = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
+				// $member_type_setting = filter_var_array( $enable_disable_setting, FILTER_SANITIZE_STRING );
+				// $role_setting        = filter_var_array( $enable_disable_role_setting, FILTER_SANITIZE_STRING );
+				$login_array_keys  = array();
+				$logout_array_keys = array();
+				if ( ! empty( $saved_setting ) && $saved_setting['bp_login_redirect_settings'] && isset( $saved_setting['bp_logout_redirect_settings'] ) ) {
+					$login_array_keys  = array_keys( $saved_setting['bp_login_redirect_settings'] );
+					$logout_array_keys = array_keys( $saved_setting['bp_logout_redirect_settings'] );
+				} else {
+					$saved_setting = array();
 				}
+				foreach ( $login_details['bp_login_redirect_settings'] as $key => $lgn_detail ) {
+					if ( in_array( $key, $login_array_keys, true ) ) {
+						unset( $saved_setting['bp_login_redirect_settings'][ $key ] );
+						$saved_setting['bp_login_redirect_settings'][ $key ] = $lgn_detail;
+					} else {
+						$saved_setting['bp_login_redirect_settings'][ $key ] = $lgn_detail;
+					}
+				}
+				foreach ( $logout_details['bp_logout_redirect_settings'] as $key => $lgt_detail ) {
+					if ( in_array( $key, $logout_array_keys, true ) ) {
+						unset( $saved_setting['bp_logout_redirect_settings'][ $key ] );
+						$saved_setting['bp_logout_redirect_settings'][ $key ] = $lgt_detail;
+					} else {
+						$saved_setting['bp_logout_redirect_settings'][ $key ] = $lgt_detail;
+					}
+				}
+				if ( isset( $_POST['enable_disable_setting'] ) && '' !== $_POST['enable_disable_setting'] ) {
+					$saved_setting['member_type_btn_value'] = sanitize_text_field( $_POST['enable_disable_setting'] );
+				}
+				if ( isset( $_POST['enable_disable_role_setting'] ) && '' !== $_POST['enable_disable_role_setting'] ) {
+					$saved_setting['role_btn_value'] = sanitize_text_field( $_POST['enable_disable_role_setting'] );
+				}
+				$saved_setting['loginSequence']  = sanitize_text_field( $_POST['loginSequence'] );
+				$saved_setting['logoutSequence'] = sanitize_text_field( $_POST['logoutSequence'] );
+				bp_update_option( 'bp_redirect_admin_settings', $saved_setting );
 			}
 		}
 		exit;
