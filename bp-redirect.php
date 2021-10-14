@@ -10,7 +10,7 @@
  * Plugin Name:       Wbcom Designs - BuddyPress Redirect
  * Plugin URI:        https://wbcomdesigns.com/contact/
  * Description:       This plugin allows login and logout redirect according to the user role.
- * Version:           1.3.0
+ * Version:           1.5.0
  * Author:            Wbcom Designs <admin@wbcomdesigns.com>
  * Author URI:        https://wbcomdesigns.com/contact/
  * License:           GPL-2.0+
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 if ( ! defined( 'REDIRECT_PLUGIN_VERSION' ) ) {
-	define( 'REDIRECT_PLUGIN_VERSION', '1.3.0' );
+	define( 'REDIRECT_PLUGIN_VERSION', '1.5.0' );
 }
 
 if ( ! defined( 'BP_REDIRECT_PLUGIN_PATH' ) ) {
@@ -150,7 +150,7 @@ function bpr_same_network_config() {
  */
 function bpr_plugin_links( $links ) {
 	$bplock_links = array(
-		'<a href="' . admin_url( 'admin.php?page=bp_redirect_settings' ) . '">' . __( 'Settings', 'bp-redirect' ) . '</a>',
+		'<a href="' . admin_url( 'admin.php?page=bp-redirect' ) . '">' . __( 'Settings', 'bp-redirect' ) . '</a>',
 		'<a href="https://wbcomdesigns.com/contact/" target="_blank" title="' . __( 'Go for any custom development.', 'bp-redirect' ) . '">' . __( 'Support', 'bp-redirect' ) . '</a>',
 	);
 	return array_merge( $links, $bplock_links );
@@ -207,9 +207,26 @@ function bpr_requires_buddypress() {
 		add_action( 'admin_notices', 'bpr_required_plugin_admin_notice' );
 		unset( $_GET['activate'] );
 	}
+
 }
 
 add_action( 'admin_init', 'bpr_requires_buddypress' );
+
+/**
+ * Redirect to plugin settings page after activated.
+ *
+ * @param string $plugin Get a plugin base url.
+ */
+function bp_redirect_activation_redirect_settings( $plugin ) {
+	if ( class_exists( 'Buddypress' ) ) {
+		if ( plugin_basename( __FILE__ ) === $plugin ) {
+			wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
+			exit;
+		}
+	}
+}
+add_action( 'activated_plugin', 'bp_redirect_activation_redirect_settings' );
+
 /**
  * Throw an Alert to tell the Admin why it didn't activate.
  *

@@ -59,18 +59,22 @@ class BP_Redirect_Public {
 	 *  @access public
 	 */
 	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
-		global $wp_roles;
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
-			$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
-			$setting       = $saved_setting['bp_login_redirect_settings'];
-			$url           = array();
-			foreach ( $wp_roles->roles as $key => $val ) {
-				if ( in_array( $key, $user->roles ) ) {
-					if ( ! empty( $setting ) ) {
-						$url[] = $this->bpr_login_redirect_according_settings( $key, $setting, $redirect_to, $request, $user );
-					} else {
-						$url[] = $this->bpr_redirect_general( $user );
-					}
+			$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );
+			$setting          = $saved_setting['bp_login_redirect_settings'];
+			$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID ) : '';
+			$user_data        = get_userdata( $user->ID );
+			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles[0] : '';
+			$url              = array();
+			if ( ! empty( $setting ) ) {
+				if ( array_key_exists( $user_member_type, $setting ) ) {
+					$bp_member_key = $user_member_type;
+					$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+				} elseif ( array_key_exists( $user_role, $setting ) ) {
+					$bp_member_key = $user_role;
+					$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+				} else {
+					$url[] = $this->bpr_redirect_general( $user );
 				}
 			}
 			if ( is_array( $url ) && isset( $url[0] ) ) {
@@ -250,30 +254,31 @@ class BP_Redirect_Public {
 	 *  @access public
 	 */
 	public function bp_logout_redirection_front( $redirect_to, $request = '', $user = '' ) {
-		global $wp_roles;
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
-			$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
-			$setting       = $saved_setting['bp_logout_redirect_settings'];
-			$roles         = $wp_roles->roles;
-			foreach ( $roles as $key => $val ) {
-				$current_user_role = $user->roles;
-				if ( $current_user_role[0] === $key ) {
-					if ( ! empty( $setting ) ) {
-						$url = $this->bpr_logout_redirect_according_settings( $key, $setting, $redirect_to, $request, $user );
-						return $url;
-					} else {
-						if ( isset( $user->roles ) && is_array( $user->roles ) ) {
-							// check for admins.
-							if ( in_array( 'administrator', $user->roles ) ) {
-								// redirect them to the default place.
-								return esc_url( admin_url() );
-							} else {
-								return esc_url( home_url() );
-							}
-						}
-					}
+			$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );
+			$setting          = $saved_setting['bp_logout_redirect_settings'];
+			$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID ) : '';
+			$user_data        = get_userdata( $user->ID );
+			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles[0] : '';
+			$url              = array();
+			if ( ! empty( $setting ) ) {
+				if ( array_key_exists( $user_member_type, $setting ) ) {
+					$bp_member_key = $user_member_type;
+					$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+				} elseif ( array_key_exists( $user_role, $setting ) ) {
+					$bp_member_key = $user_role;
+					$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+				} else {
+					$url[] = $this->bpr_redirect_general( $user );
 				}
 			}
+			if ( is_array( $url ) && isset( $url[0] ) ) {
+				$url_headers = $this->get_url_status( $url[0] );
+			}
+			if ( '404' === $url_headers ) {
+				$url[0] = get_home_url();
+			}
+			return $url[0];
 		}
 	}
 
