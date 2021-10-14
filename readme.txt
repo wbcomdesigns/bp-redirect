@@ -3,8 +3,8 @@ Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/donate/
 Tags: login redirect, buddypress redirect
 Requires at least: 3.0.1
-Tested up to: 5.7.0
-Stable tag: 1.3.0
+Tested up to: 5.8.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,17 @@ No, BP Redirect plugin is not required BuddyPress plugin to be active.
 2. The screenshot shows the admin settings to change roles sequence by drag & drop and corresponds to screenshot-2.(png|jpg|jpeg|gif).
 
 == Changelog ==
+
+= 1.5.0 =
+* Fix: general tab issue
+* Fix: setting and redirect url when plugin activate
+* Fix: member type not exist issue in admin option
+* Fix: dashboard FAQ section
+* Fix: dashboard UI Section
+* Fix: #22 - Fixed member type redirect issue
+* Fix: dropdown option issue when click on radio button
+* Fix: Save enable button value
+* Fix: Add enable button css and js
 
 = 1.3.0 =
 * Fix: (#8) Fixed all BuddyPress Components are not showing in the dropdown

@@ -61,17 +61,139 @@ class BP_Redirect_Admin {
 	}
 
 	/**
+	 * Define the plugin slug
+	 *
+	 * @var string $plugin_slug
+	 */
+	private $plugin_slug = 'bp-redirect';
+
+	/**
 	 * Builds plugin admin menu and pages
 	 *
 	 * @since  1.0.0
 	 * @author Wbcom Designs <admin@wbcomdesigns.com>
 	 * @access public
 	 */
-	public function admin_menu() {
+	public function bp_redirect_admin_option() {
+		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+			add_menu_page(
+				esc_html__( 'WB Plugins', 'bp-redirect' ),
+				esc_html__( 'WB Plugins', 'bp-redirect' ),
+				'manage_options',
+				'wbcomplugins',
+				array( $this, 'bp_redirect_options_page' ),
+				'dashicons-lightbulb',
+				59
+			);
 
-		add_menu_page( __( 'BP Redirect Setting Page', 'bp-redirect' ), __( 'BP Redirect', 'bp-redirect' ), 'manage_options', 'bp_redirect_settings', array( $this, 'bp_redirect_settings_page' ), 'dashicons-external' );
+			add_submenu_page(
+				'wbcomplugins',
+				esc_html__( 'General', 'bp-redirect' ),
+				esc_html__( ' General ', 'bp-redirect' ),
+				'manage_options',
+				'wbcomplugins'
+			);
+		}
+		add_submenu_page(
+			'wbcomplugins',
+			esc_html__( 'BP Redirect', 'bp-redirect' ),
+			esc_html__( 'BP Redirect', 'bp-redirect' ),
+			'manage_options',
+			'bp-redirect',
+			array( $this, 'bp_redirect_options_page' )
+		);
+	}
 
-		add_submenu_page( 'bp_redirect_settings', __( 'General', 'bp-redirect' ), __( ' General ', 'bp-redirect' ), 'manage_options', 'bp_redirect_settings' );
+
+
+	/**
+	 * Actions performed to create a submenu page content.
+	 *
+	 * @since    1.0.0
+	 * @access public
+	 */
+	public function bp_redirect_options_page() {
+		global $allowedposttags;
+		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'bp-redirect-welcome';
+		?>
+		<div class="wrap">
+					<hr class="wp-header-end">
+					<div class="wbcom-wrap">
+			<div class="lrc-header">
+		<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+				<h1 class="wbcom-plugin-heading">
+		<?php esc_html_e( 'Bp Redirect Settings', 'bp-redirect' ); ?>
+				</h1>
+			</div>
+		<?php settings_errors(); ?>
+			<div class="wbcom-admin-settings-page">
+		<?php
+		$this->bp_redirect_settings_tabs();
+		do_settings_sections( $tab );
+		?>
+			</div>
+					</div>
+		</div>
+		<?php
+	}
+
+
+	/**
+	 * Actions performed to create tabs on the sub menu page.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @access public
+	 */
+	public function bp_redirect_settings_tabs() {
+		$current_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'bp-redirect-welcome';
+		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
+		foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
+			$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
+			echo '<li><a class="nav-tab ' . esc_attr( $active ) . '" href="?page=' . esc_attr( $this->plugin_slug ) . '&tab=' . esc_attr( $tab_key ) . '">' . esc_html__( $tab_caption, 'bp-redirect' ) . '</a></li>';
+		}
+		echo '</div></ul></div>';
+	}
+
+
+	/**
+	 * Actions performed on loading plugin settings
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @author   Wbcom Designs
+	 */
+	public function bp_redirect_init_plugin_settings() {
+		$this->plugin_settings_tabs['bp-redirect-welcome'] = __( 'Welcome', 'bp-redirect' );
+		add_settings_section( 'bp-redirect-welcome-section', ' ', array( $this, 'bp_redirect_admin_welcome_content' ), 'bp-redirect-welcome' );
+		$this->plugin_settings_tabs['bp-redirect-role-settings'] = __( 'Redirect For User Role', 'bp-redirect' );
+		register_setting( 'bp_redirect_role_admin_settings', 'bp_redirect_settings_role' );
+		add_settings_section( 'bp-redirect-role', ' ', array( $this, 'bp_redirect_role_admin_settings_content' ), 'bp-redirect-role-settings' );
+		$this->plugin_settings_tabs['bp-redirect-mem-type-settings'] = __( 'Redirect For Member Type', 'bp-redirect' );
+		register_setting( 'bp_redirect_mem_type_admin_settings', 'bp_redirect_settings_mem_type' );
+		add_settings_section( 'bp-redirect-role', ' ', array( $this, 'bp_redirect_mem_type_settings_content' ), 'bp-redirect-mem-type-settings' );
+	}
+
+	/**
+	 * Include buddypress multivender integration admin welcome setting tab content file.
+	 */
+	public function bp_redirect_admin_welcome_content() {
+		include_once dirname( __FILE__ ) . '/partials/bp-redirect-welcome-page.php';
+	}
+
+	/**
+	 * This function is for that include admin option file
+	 **/
+	public function bp_redirect_role_admin_settings_content() {
+		include_once dirname( __FILE__ ) . '/partials/bp-redirect-user-role-tab.php';
+	}
+
+
+	/**
+	 * This function is for that include admin option file
+	 **/
+	public function bp_redirect_mem_type_settings_content() {
+		include_once dirname( __FILE__ ) . '/partials/bp-redirect-member-type-tab.php';
 	}
 
 	/**
@@ -91,10 +213,8 @@ class BP_Redirect_Admin {
 	 * @since 1.0.0
 	 */
 	public function enqueue_scripts() {
-
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-accordion' );
-
 		wp_enqueue_script( 'bp-redirect-admin', plugin_dir_url( __FILE__ ) . 'assets/js/bp-redirect-admin.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script(
 			'bp-redirect-admin',
@@ -107,85 +227,6 @@ class BP_Redirect_Admin {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 		}
 
-	}
-
-
-	/**
-	 * Builds plugin admin setting page
-	 *
-	 * @since  1.0.0
-	 * @author Wbcom Designs <admin@wbcomdesigns.com>
-	 * @access public
-	 */
-	public function bp_redirect_settings_page() {
-		$spinner_src   = includes_url() . 'images/spinner.gif';
-		$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
-
-		$bp_pages      = bp_get_option( 'bp-pages' );
-		$bp_pages_ids  = array_values( $bp_pages );
-		$loginSequence = $this->get_editable_roles();
-		if ( ! empty( $saved_setting ) ) {
-			if ( array_key_exists( 'loginSequence', $saved_setting ) ) {
-				$seq = explode( ',', $saved_setting['loginSequence'] );
-				foreach ( $seq as $key => $val ) {
-					$val_arr     = explode( '-', $val );
-					$seq[ $key ] = $val_arr[1];
-				}
-				if ( ! empty( $seq ) ) {
-					uksort(
-						$loginSequence,
-						function ( $key1, $key2 ) use ( $seq ) {
-							return ( array_search( $key1, $seq ) > array_search( $key2, $seq ) );
-						}
-					);
-				}
-			}
-		}
-
-		$logoutSequence = $this->get_editable_roles();
-		if ( ! empty( $saved_setting ) ) {
-			if ( array_key_exists( 'logoutSequence', $saved_setting ) ) {
-				$logoutseq = explode( ',', $saved_setting['logoutSequence'] );
-				foreach ( $logoutseq as $key => $val ) {
-					$val_arr           = explode( '-', $val );
-					$logoutseq[ $key ] = $val_arr[1];
-				}
-				if ( ! empty( $logoutseq ) ) {
-					uksort(
-						$logoutSequence,
-						function ( $logoutkey1, $logoutkey2 ) use ( $logoutseq ) {
-							return ( array_search( $logoutkey1, $logoutseq ) > array_search( $logoutkey2, $logoutseq ) );
-						}
-					);
-				}
-			}
-		}
-
-		?>
-		<h1><?php esc_html_e( 'BP Redirect Settings', 'bp-redirect' ); ?></h1>
-		<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible">
-			<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
-			<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>
-		</div>
-		<div class="bpr-row">
-			<div class="bpr-col-8">
-				<!-- login Settings -->
-				<h2><?php esc_html_e( 'Login Redirect Settings', 'bp-redirect' ); ?></h2>
-		<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
-				<!-- Logout Settings -->
-				<h2><?php esc_html_e( 'Logout Redirect Settings', 'bp-redirect' ); ?></h2>
-		<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
-			</div>
-			<div class="bpr-col-4" id="bpr-faq-section">
-				<!-- FAQ(s) -->
-				<h2><?php esc_html_e( 'FAQ(s)', 'bp-redirect' ); ?></h2>
-		<?php $this->bp_redirect_faqs(); ?>
-			</div>
-		</div>
-		<p>
-			<button id="bp-redirect-settings-submit" class="button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
-		</p>
-		<?php
 	}
 
 	/**
@@ -361,7 +402,7 @@ class BP_Redirect_Admin {
 					$option  = '<option value="' . get_page_link( $page->ID ) . '">';
 					$option .= $page->post_title;
 					$option .= '</option>';
-					echo esc_html( $option );
+					echo $option;
 				}
 			}
 			?>
@@ -382,7 +423,7 @@ class BP_Redirect_Admin {
 					$wp_page_url = get_permalink( $wp_page_id );
 					?>
 												<option value="<?php echo $wp_page_url; ?>" <?php selected( $login_url, $wp_page_url ); ?> >
-					<?php echo esc_html( get_the_title( $wp_page_id ) ); ?>
+					<?php echo get_the_title( $wp_page_id ); ?>
 												</option>
 					<?php
 				}
@@ -471,7 +512,7 @@ class BP_Redirect_Admin {
 					$wp_page_url = get_permalink( $wp_page_id );
 					?>
 												<option value="<?php echo esc_attr( $wp_page_url ); ?>" <?php selected( $logout_url, $wp_page_url ); ?> >
-					<?php echo esc_html_e( get_the_title( $wp_page_id ) ); ?>
+					<?php echo esc_html( get_the_title( $wp_page_id ) ); ?>
 												</option>
 					<?php
 				}
@@ -489,23 +530,6 @@ class BP_Redirect_Admin {
 		<?php
 	}
 
-	/**
-	 * Registers BP Redirect settings
-	 *
-	 * This is used because register_setting() isn't available until the "admin_init" hook.
-	 *
-	 * @since  1.0.0
-	 * @author Wbcom Designs <admin@wbcomdesigns.com>
-	 * @access public
-	 */
-	public function admin_init() {
-
-		// Register setting.
-		register_setting( 'bp_redirect_settings', 'bp_redirect_settings', array( $this, 'save_settings' ) );
-
-		// Add sections.
-		add_settings_section( 'general', __( 'General', 'bp-redirect' ), '__return_false', $this->options_key );
-	}
 
 	/**
 	 *  Actions performed for saving admin settings.
@@ -519,9 +543,13 @@ class BP_Redirect_Admin {
 			if ( isset( $_POST['action'] ) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
 				parse_str( $_POST['login_details'], $login_form_data );
 				parse_str( $_POST['logout_details'], $logout_form_data );
-				$login_details  = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
-				$logout_details = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
-				$setting_arr    = array_merge( $login_details, $logout_details );
+				parse_str( $_POST['enable_disable_setting'], $enable_disable_setting );
+				parse_str( $_POST['enable_disable_role_setting'], $enable_disable_role_setting );
+				$login_details       = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
+				$logout_details      = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
+				$member_type_setting = filter_var_array( $enable_disable_setting, FILTER_SANITIZE_STRING );
+				$role_setting        = filter_var_array( $enable_disable_role_setting, FILTER_SANITIZE_STRING );
+				$setting_arr         = array_merge( $login_details, $logout_details, $member_type_setting, $role_setting );
 				if ( ! empty( $setting_arr ) && ! empty( $_POST['loginSequence'] ) ) {
 					$setting_arr['loginSequence']  = sanitize_text_field( $_POST['loginSequence'] );
 					$setting_arr['logoutSequence'] = sanitize_text_field( $_POST['logoutSequence'] );
@@ -531,6 +559,7 @@ class BP_Redirect_Admin {
 		}
 		exit;
 	}
+
 
 	/**
 	 *  Display faq(s)
@@ -594,4 +623,6 @@ class BP_Redirect_Admin {
 
 		<?php
 	}
+
+
 }

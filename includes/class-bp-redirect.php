@@ -74,7 +74,6 @@ class BP_Redirect {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		$this->bp_redirect_initialize_updater();
 
 	}
 
@@ -119,6 +118,11 @@ class BP_Redirect {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-bp-redirect-public.php';
 
+		/**
+		* The add WBCOM wrapper framework for admin options.
+		*/
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
+
 		$this->loader = new BP_Redirect_Loader();
 
 	}
@@ -153,8 +157,8 @@ class BP_Redirect {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_init' );
-		$this->loader->add_action( bp_core_admin_hook(), $plugin_admin, 'admin_menu' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'bp_redirect_init_plugin_settings' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'bp_redirect_admin_option' );
 		$this->loader->add_action( 'wp_ajax_bp_redirect_admin_settings', $plugin_admin, 'bp_redirect_save_admin_settings' );
 	}
 
@@ -171,22 +175,6 @@ class BP_Redirect {
 
 		$this->loader->add_filter( 'login_redirect', $plugin_public, 'bp_login_redirection_front', 10, 3 );
 		$this->loader->add_filter( 'logout_redirect', $plugin_public, 'bp_logout_redirection_front', 10, 3 );
-	}
-
-	/**
-	 * Initialize plugin updater
-	 *
-	 * @since    1.2.0
-	 */
-	public function bp_redirect_initialize_updater() {
-		if ( class_exists( 'Puc_v4_Factory' ) ) {
-			$bpmh_export_impoer_updater = Puc_v4_Factory::buildUpdateChecker(
-				'https://demos.wbcomdesigns.com/exporter/free-plugins/bp-redirect.json',
-				BP_REDIRECT_PLUGIN_FILE,
-				'bp-redirect'
-			);
-		}
-
 	}
 
 	/**
