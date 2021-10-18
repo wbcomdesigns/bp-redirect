@@ -114,6 +114,9 @@ style="display:none" <?php } ?>>
 	<p>
 		<button id="bp-redirect-settings-submit" class="button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
 	</p>
+	<div id="bpredirect-settings_updated-footer" class="" style="display:none">
+		<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>		
+	</div>
 	<?php } else { ?>
 		<h2><?php esc_html_e( 'Buddypress Member Type Not Exist, Create Member Type Click On The Link -: ' , 'bp-redirect' ); ?><a href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=bp_member_type' ) ); ?>" target="_blank"><?php esc_html_e( 'Click Here', 'bp-redirect' ); ?></a></h2>
 		<?php } ?>
