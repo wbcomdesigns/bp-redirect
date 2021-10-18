@@ -1406,6 +1406,11 @@ a.ui-button:active,
   margin-bottom: 10px;
 }
 
+.bp-redirect-settings-spinner {
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
 #bpredirect-settings_updated,
 .bp-redirect-settings-spinner {
   display: none;
