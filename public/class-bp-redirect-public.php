@@ -66,11 +66,13 @@ class BP_Redirect_Public {
 			$user_data        = get_userdata( $user->ID );
 			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles[0] : '';
 			$url              = array();
+			
 			if ( ! empty( $setting ) ) {
-				if ( array_key_exists( $user_member_type, $setting ) ) {
+				if ( array_key_exists( $user_member_type, $setting ) && isset($saved_setting['member_type_btn_value']) && $saved_setting['member_type_btn_value'] == 'yes' ) {
 					$bp_member_key = $user_member_type;
 					$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-				} elseif ( array_key_exists( $user_role, $setting ) ) {
+					echo "sdfsdfsd";
+				} elseif ( array_key_exists( $user_role, $setting ) && isset($saved_setting['role_btn_value']) && $saved_setting['role_btn_value'] == 'yes' ) {
 					$bp_member_key = $user_role;
 					$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
 				} else {
@@ -262,10 +264,10 @@ class BP_Redirect_Public {
 			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles[0] : '';
 			$url              = array();
 			if ( ! empty( $setting ) ) {
-				if ( array_key_exists( $user_member_type, $setting ) ) {
+				if ( array_key_exists( $user_member_type, $setting ) && isset($saved_setting['member_type_btn_value']) && $saved_setting['member_type_btn_value'] == 'yes' ) {
 					$bp_member_key = $user_member_type;
 					$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-				} elseif ( array_key_exists( $user_role, $setting ) ) {
+				} elseif ( array_key_exists( $user_role, $setting ) && isset($saved_setting['role_btn_value']) && $saved_setting['role_btn_value'] == 'yes' ) {
 					$bp_member_key = $user_role;
 					$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
 				} else {
