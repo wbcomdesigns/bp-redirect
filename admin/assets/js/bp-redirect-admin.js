@@ -96,6 +96,8 @@ jQuery(document).ready(function($) {
       function() {
         jQuery(".bp-redirect-settings-spinner").hide();
         jQuery("#bpredirect-settings_updated").show();
+        jQuery("#bpredirect-settings_updated-footer").show();
+        jQuery("#bpredirect-settings_updated-footer").addClass( 'updated settings-error notice ' );
       }
     );
   });
