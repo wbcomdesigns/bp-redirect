@@ -96,11 +96,6 @@ if ( ! empty( $saved_setting ) ) {
 			<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
 				</div>
 				</div>
-			<div class="bpr-col-12" id="bpr-faq-section">
-				<!-- FAQ(s) -->
-				<h2><?php esc_html_e( 'FAQ(s)', 'bp-redirect' ); ?></h2>
-		<?php $this->bp_redirect_faqs(); ?>
-			</div>
 		</div>
 		<p>
 			<button id="bp-redirect-settings-submit" class="button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
