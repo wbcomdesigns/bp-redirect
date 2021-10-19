@@ -244,3 +244,16 @@ function bpr_required_plugin_admin_notice() {
 		unset( $_GET['activate'] );
 	}
 }
+
+/**
+ * redirect to plugin settings page after activated
+ */
+
+add_action( 'activated_plugin', 'bpr_activation_redirect_settings' );
+function bpr_activation_redirect_settings( $plugin ){
+
+	if( $plugin == plugin_basename( __FILE__ ) && class_exists( 'Buddypress' ) ) {
+		wp_redirect( admin_url( 'admin.php?page=bp-redirect' ) ) ;
+		exit;
+	}
+} 

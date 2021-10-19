@@ -1406,6 +1406,11 @@ a.ui-button:active,
   margin-bottom: 10px;
 }
 
+.bp-redirect-settings-spinner {
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
 #bpredirect-settings_updated,
 .bp-redirect-settings-spinner {
   display: none;
@@ -1571,33 +1576,6 @@ a.ui-button:active,
   display: block!important;
 }
 
-#bpr-faq-section .bpr-row {
-    padding: 12px 20px;
-    box-shadow: 0 0 15px #f7f7f7;
-    margin: 15px 0;
-    border: 1px solid #e4e4e4;
-    overflow: auto;
-    border-radius: 8px;
-    transition: all 0.3s;
-    background: #f9f9f9;
-}
-#bpr-faq-section .bpr-row:hover {
-    box-shadow: 0 2px 15px #dcdcdc;
-    cursor: pointer;
-}
-#bpr-faq-section h2 {
-  margin-bottom: 0;
-  font-size: 20px;
-}
-#bpr-faq-section .bpr-ques {
-    font-size: 15px;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-#bpr-faq-section .bpr-ans {
-    font-size: 16px;
-}
-
 input[type="checkbox"].bp-redirect-toggle-checkbox {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1749,4 +1727,80 @@ input[type="checkbox"].wppd-ui-toggle:checked:after {
     width: 100%;
   }
 
+}
+
+/*************** SUPPORT ***************/
+
+.bpr-adming-setting{
+	float: left;
+	width: 90%;
+}
+button.bpr-accordion {
+	background-color: hsl(0, 0%, 87%);
+	border: medium none;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	color: hsl(0, 0%, 27%);
+	cursor: pointer;
+	font-size: 15px;
+	margin: 0 5%;
+	outline: medium none;
+	padding: 15px 20px;
+	text-align: left;
+	transition: all 0.4s ease 0s;
+	width: 90%;
+}
+button.bpr-accordion.active, button.bpr-accordion:hover {
+	background-color: hsl(207, 90%, 54%);
+	color:white;
+}
+.bpr-panel {
+	padding: 0 18px;
+	background-color: white;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	margin:0px 5%;
+}
+button.bpr-accordion::after {
+	color: hsl(0, 0%, 47%);
+	content: "+";
+	float: right;
+	font-size: 13px;
+	font-weight: bold;
+	margin-left: 5px;
+}
+button.bpr-accordion::after:hover {
+	color: white;
+}
+button.bpr-accordion.active::after {
+	content: "−";
+	color:white;
+}
+.bpr-accordion-row {
+	clear: both;
+	overflow: hidden;
+	padding-bottom: 5px;
+}
+.bpr-tab-header h3{
+	margin-left: 5%;
+}
+.bpr-header {
+	float: left;
+	width: 100%;
+	padding: 10px 0px;
+}
+.bpr-header .bpr-plugin-heading {
+	float: left;
+	margin: 0px;
+}
+.bpr-header .bpr-extra-actions {
+	float: right;
+	padding-bottom: 10px;
+}
+.notice-success, div.updated {
+	clear: both;
+}
+.bpr-selection-tags a{
+	text-decoration: none;
 }
