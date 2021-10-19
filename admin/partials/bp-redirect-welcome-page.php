@@ -37,7 +37,7 @@
 					<div class="col">
 						<h3><span class="dashicons dashicons-book"></span><?php esc_html_e( 'Documentation', 'bp-redirect' ); ?></h3>
 						<p><?php esc_html_e( 'We have prepared an extensive guide on BuddyPress Redirect to learn all aspects of the plugin. You will find most of your answers here.', 'bp-redirect' ); ?></p>
-						<a href="<?php echo esc_url( '' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'bp-redirect' ); ?></a>
+						<a href="<?php echo esc_url( 'https://wbcomdesigns.com/docs/buddypress-free-addons/buddypress-redirect/' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'bp-redirect' ); ?></a>
 					</div>
 
 					<div class="col">

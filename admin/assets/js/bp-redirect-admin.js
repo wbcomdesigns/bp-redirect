@@ -60,8 +60,14 @@ jQuery(document).ready(function($) {
     var global_settings_form = jQuery("#bpr-global-settings-form").serialize();
     var login_settings_form = jQuery("#bpr-login-settings-form").serialize();
     var logout_settings_form = jQuery("#bpr-logout-settings-form").serialize();
-    var enable_disable_setting = jQuery("#bp_red_enable_disable").serialize();
-    var enable_disable_role_setting = jQuery("#bp_role_enable_disable").serialize();
+    var enable_disable_setting = '';
+    var enable_disable_role_setting = '';
+    if( jQuery('input[name="bp_enable_disable_member_checkbox"]').length ) {
+      enable_disable_setting = jQuery('input[name="bp_enable_disable_member_checkbox"]').val();
+    }
+    if( jQuery('input[name="bp_enable_disable_role_checkbox"]').length ) {
+      enable_disable_role_setting = jQuery('input[name="bp_enable_disable_role_checkbox"]').val();
+    }
     jQuery("#bpr-login-settings-form .group").each(function() {
       if (jQuery(this).attr('id').trim() != '') {
         loginRoleSequence.push(jQuery(this).attr('id'));
@@ -90,6 +96,8 @@ jQuery(document).ready(function($) {
       function() {
         jQuery(".bp-redirect-settings-spinner").hide();
         jQuery("#bpredirect-settings_updated").show();
+        jQuery("#bpredirect-settings_updated-footer").show();
+        jQuery("#bpredirect-settings_updated-footer").addClass( 'updated settings-error notice ' );
       }
     );
   });
@@ -98,8 +106,13 @@ jQuery(document).ready(function () {
   jQuery('#bp_red_enable_disable').on('click', function () {
     if (jQuery(this).prop("checked") == true) {
       jQuery('.bpr-row').show(500);
+      jQuery('input[name="bp_enable_disable_member_checkbox"]').val('yes');
+      jQuery('input[name="bp_enable_disable_role_checkbox"]').val('yes');
     } else {
+      jQuery(this).val('no');
       jQuery('.bpr-row').hide(500);
+      jQuery('input[name="bp_enable_disable_member_checkbox"]').val('no');
+      jQuery('input[name="bp_enable_disable_role_checkbox"]').val('no');
     }
   });
 });
@@ -107,8 +120,40 @@ jQuery(document).ready(function () {
   jQuery('#bp_role_enable_disable').on('click', function () {
     if (jQuery(this).prop("checked") == true) {
       jQuery('.bpr-row').show(500);
+      jQuery('input[name="bp_enable_disable_member_checkbox"]').val('yes');
+      jQuery('input[name="bp_enable_disable_role_checkbox"]').val('yes');
     } else {
       jQuery('.bpr-row').hide(500);
+      jQuery('input[name="bp_enable_disable_member_checkbox"]').val('no');
+      jQuery('input[name="bp_enable_disable_role_checkbox"]').val('no');
     }
   });
 });
+
+(function( $ ) {
+	'use strict';
+
+	// Support tab
+	$( document ).ready( function(){
+		var acc = document.getElementsByClassName("bpr-accordion");
+		var i;
+		for (i = 0; i < acc.length; i++) {
+			acc[i].onclick = function () {
+				this.classList.toggle("active");
+				var panel = this.nextElementSibling;
+				if (panel.style.maxHeight) {
+					panel.style.maxHeight = null;
+				} else {
+					panel.style.maxHeight = panel.scrollHeight + "px";
+				}
+			}
+		}
+		$(document).on(
+			'click', '.bpr-accordion', function () {
+				return false;
+			}
+		);
+
+	});
+
+})( jQuery );
