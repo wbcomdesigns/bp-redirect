@@ -172,10 +172,10 @@ class BP_Redirect_Admin {
 		$this->plugin_settings_tabs['bp-redirect-mem-type-settings'] = __( 'Redirect For Member Type', 'bp-redirect' );
 		register_setting( 'bp_redirect_mem_type_admin_settings', 'bp_redirect_settings_mem_type' );
 		add_settings_section( 'bp-redirect-role', ' ', array( $this, 'bp_redirect_mem_type_settings_content' ), 'bp-redirect-mem-type-settings' );
-		
-                $this->plugin_settings_tabs['bp-redirect-faq'] = __( 'FAQ', 'bp-redirect' );
-                register_setting( 'bp-redirect-faq', 'bp-redirect-faq' );
-                add_settings_section( 'bp-redirect-faq-section', ' ', array( $this, 'bp_redirect_faq_content' ), 'bp-redirect-faq' );
+
+				$this->plugin_settings_tabs['bp-redirect-faq'] = __( 'FAQ', 'bp-redirect' );
+				register_setting( 'bp-redirect-faq', 'bp-redirect-faq' );
+				add_settings_section( 'bp-redirect-faq-section', ' ', array( $this, 'bp_redirect_faq_content' ), 'bp-redirect-faq' );
 	}
 
 	/**
@@ -413,7 +413,7 @@ class BP_Redirect_Admin {
 					$option  = '<option value="' . get_page_link( $page->ID ) . '">';
 					$option .= $page->post_title;
 					$option .= '</option>';
-					echo $option;
+					echo $option;//phpcs:ignore
 				}
 			}
 			?>
@@ -433,8 +433,8 @@ class BP_Redirect_Admin {
 				foreach ( $wp_page_ids as $wp_page_id ) {
 					$wp_page_url = get_permalink( $wp_page_id );
 					?>
-												<option value="<?php echo $wp_page_url; ?>" <?php selected( $login_url, $wp_page_url ); ?> >
-					<?php echo get_the_title( $wp_page_id ); ?>
+												<option value="<?php echo esc_url( $wp_page_url ); ?>" <?php selected( $login_url, $wp_page_url ); ?> >
+					<?php echo esc_html( get_the_title( $wp_page_id ) ); ?>
 												</option>
 					<?php
 				}
