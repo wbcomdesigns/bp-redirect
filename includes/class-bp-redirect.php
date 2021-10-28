@@ -122,7 +122,7 @@ class BP_Redirect {
 		/**
 		* The add WBCOM wrapper framework for admin options.
 		*/
-		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/class-wbcom-admin-settings.php';
 
 		$this->loader = new BP_Redirect_Loader();
 
