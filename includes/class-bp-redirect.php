@@ -74,7 +74,6 @@ class BP_Redirect {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		$this->bp_redirect_initialize_updater();
 
 	}
 
@@ -176,22 +175,6 @@ class BP_Redirect {
 
 		$this->loader->add_filter( 'login_redirect', $plugin_public, 'bp_login_redirection_front', 10, 3 );
 		$this->loader->add_filter( 'logout_redirect', $plugin_public, 'bp_logout_redirection_front', 10, 3 );
-	}
-
-	/**
-	 * Initialize plugin updater
-	 *
-	 * @since    1.2.0
-	 */
-	public function bp_redirect_initialize_updater() {
-		if ( class_exists( 'Puc_v4_Factory' ) ) {
-			$bpmh_export_impoer_updater = Puc_v4_Factory::buildUpdateChecker(
-				'https://demos.wbcomdesigns.com/exporter/free-plugins/bp-redirect.json',
-				BP_REDIRECT_PLUGIN_FILE,
-				'bp-redirect'
-			);
-		}
-
 	}
 
 	/**

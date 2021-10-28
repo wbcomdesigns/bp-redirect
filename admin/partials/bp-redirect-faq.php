@@ -11,7 +11,7 @@
 ?>
 <div class="wbcom-tab-content" id="bpr-faq-section">
 		<div class="bp-redirect-tab-header"><h3><?php esc_html_e( 'FAQ(s)', 'bp-redirect' ); ?></h3></div>
-		
+
 	<div class="bpr-accordion-row">
 		<button class="bpr-accordion">
 			<?php esc_html_e( 'Is this plugin requires another plugin?', 'bp-redirect' ); ?>
@@ -54,6 +54,14 @@
 	</div>
 	<div class="bpr-accordion-row">
 		<button class="bpr-accordion">
+			<?php esc_html_e( 'Can I use user role and member type redirection both?', 'bp-redirect' ); ?>
+		</button>
+		<div class="bpr-panel">
+			<p><?php esc_html_e( "There will be no conflict, but It's advised to use either User role redirection or Member type redirection at a time.", 'bp-redirect' ); ?></p>
+		</div>
+	</div>
+	<div class="bpr-accordion-row">
+		<button class="bpr-accordion">
 			<?php esc_html_e( 'Where do I ask for support?', 'bp-redirect' ); ?>
 		</button>
 		<div class="bpr-panel">
@@ -61,4 +69,3 @@
 		</div>
 	</div>
 </div>
-
