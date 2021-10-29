@@ -62,17 +62,17 @@ class BP_Redirect_Public {
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
 			$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );
 			$setting          = $saved_setting['bp_login_redirect_settings'];
-			$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID, false ) : array();			
+			$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID, false ) : array();
 			$user_data        = get_userdata( $user->ID );
-			$user_role        = ! empty( $user_data->roles) ? $user_data->roles : array();
-			$url              = array();			
+			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles : array();
+			$url              = array();
 			if ( ! empty( $setting ) ) {
-				if ( !empty(array_intersect_key( array_flip($user_member_type), $setting )) && isset($saved_setting['member_type_btn_value']) && $saved_setting['member_type_btn_value'] == 'yes' ) {
+				if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
 					$bp_member_key = $user_member_type;
-					
-					$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-					
-				} elseif ( !empty(array_intersect_key( array_flip($user_role), $setting )) && isset($saved_setting['role_btn_value']) && $saved_setting['role_btn_value'] == 'yes' ) {
+
+					$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+
+				} elseif ( ! empty( array_intersect_key( array_flip( $user_role ), $setting ) ) && isset( $saved_setting['role_btn_value'] ) && 'yes' == $saved_setting['role_btn_value'] ) {
 					$bp_member_key = $user_role;
 					$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
 				} else {
@@ -85,7 +85,7 @@ class BP_Redirect_Public {
 			if ( '404' === $url_headers ) {
 				$url[0] = get_home_url();
 			}
-			
+
 			return $url[0];
 		}
 	}
@@ -129,35 +129,35 @@ class BP_Redirect_Public {
 		$login_type_val  = '';
 		$login_component = '';
 		$login_url       = '';
-		$login_urls      = array();		
-		
-		if ( !empty(array_intersect_key( array_flip($key), $setting )) ) {
-			
-			$key_lists = array_intersect_key( array_flip($key), $setting );
-			foreach( $key_lists as $k=>$val ){
-				
+		$login_urls      = array();
+
+		if ( ! empty( array_intersect_key( array_flip( $key ), $setting ) ) ) {
+
+			$key_lists = array_intersect_key( array_flip( $key ), $setting );
+			foreach ( $key_lists as $k => $val ) {
+
 				if ( array_key_exists( 'login_type', $setting[ $k ] ) ) {
 					$login_component = $setting[ $k ]['login_component'];
 					$login_url       = $setting[ $k ]['login_url'];
-					$login_type_val = $setting[ $k ]['login_type'];
-					if ( 'referer' === $login_type_val ) {						
-						$login_urls[] = $this->bp_login_redirect_referer( $login_component, $redirect_to, $request, $user );						
+					$login_type_val  = $setting[ $k ]['login_type'];
+					if ( 'referer' === $login_type_val ) {
+						$login_urls[] = $this->bp_login_redirect_referer( $login_component, $redirect_to, $request, $user );
 					} else {
 						if ( ! empty( $login_url ) && 'custom' === $login_type_val ) {
-							$login_urls[] =  esc_url( $login_url );
+							$login_urls[] = esc_url( $login_url );
 						} else {
 							$login_urls[] = $this->bpr_redirect_general( $user );
-							
+
 						}
 					}
 				}
 			}
-			
-			if ( empty($login_urls) ) {
-				$url = $this->bpr_redirect_general( $user );				
+
+			if ( empty( $login_urls ) ) {
+				$url = $this->bpr_redirect_general( $user );
 				return $url;
 			} else {
-				return (count($login_urls) == 1 )? $login_urls[0] : bp_core_get_user_domain( $user->ID ) . 'activity/' ;
+				return ( count( $login_urls ) == 1 ) ? $login_urls[0] : bp_core_get_user_domain( $user->ID ) . 'activity/';
 			}
 		}
 	}
@@ -170,7 +170,7 @@ class BP_Redirect_Public {
 	 * @param  string $user Get a user role.
 	 */
 	public function bp_login_redirect_referer( $login_component, $redirect_to, $request, $user ) {
-		
+
 		if ( ! empty( $login_component ) && 'profile' === $login_component ) {
 			$redirect_url = $this->bpr_login_redirect_to_profile( $redirect_to, $request, $user );
 			return esc_url( $redirect_url );
@@ -178,7 +178,7 @@ class BP_Redirect_Public {
 			$redirect_url = $this->bpr_login_redirect_to_member_activity( $redirect_to, $request, $user );
 			return esc_url( $redirect_url );
 		} elseif ( ! empty( $login_component ) && 'groups' === $login_component ) {
-			$redirect_url = $this->bpr_login_redirect_to_groups_page( $redirect_to, $request, $user );			
+			$redirect_url = $this->bpr_login_redirect_to_groups_page( $redirect_to, $request, $user );
 			return esc_url( $redirect_url );
 		} elseif ( ! empty( $login_component ) ) {
 			return esc_url( $login_component );
@@ -230,8 +230,8 @@ class BP_Redirect_Public {
 	 *  @access public
 	 */
 	public function bpr_login_redirect_to_groups_page( $redirect_to, $request, $user ) {
-		$bp_pages  = get_option( 'bp-pages');
-		$url = get_permalink( $bp_pages['groups']);
+		$bp_pages = get_option( 'bp-pages' );
+		$url      = get_permalink( $bp_pages['groups'] );
 		return $url;
 	}
 
@@ -274,10 +274,10 @@ class BP_Redirect_Public {
 			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles[0] : '';
 			$url              = array();
 			if ( ! empty( $setting ) ) {
-				if ( array_key_exists( $user_member_type, $setting ) && isset($saved_setting['member_type_btn_value']) && $saved_setting['member_type_btn_value'] == 'yes' ) {
+				if ( array_key_exists( $user_member_type, $setting ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
 					$bp_member_key = $user_member_type;
 					$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-				} elseif ( array_key_exists( $user_role, $setting ) && isset($saved_setting['role_btn_value']) && $saved_setting['role_btn_value'] == 'yes' ) {
+				} elseif ( array_key_exists( $user_role, $setting ) && isset( $saved_setting['role_btn_value'] ) && 'yes' == $saved_setting['role_btn_value'] ) {
 					$bp_member_key = $user_role;
 					$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
 				} else {

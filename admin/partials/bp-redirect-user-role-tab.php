@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide an admin area view for the vendor's settings page.
  *
@@ -11,12 +10,10 @@
  * @package    BuddyPress Redirect
  * @subpackage bp-redirect/admin/partials
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-
-
 ?>
 
 <?php
@@ -83,7 +80,7 @@ if ( ! empty( $saved_setting ) ) {
 		<?php
 		if ( ! isset( $saved_setting['role_btn_value'] ) || 'no' === $saved_setting['role_btn_value'] ) {
 			?>
-  style="display:none" <?php } ?>>
+		style="display:none" <?php } ?>>
 			<div class="row">
 				<div class="bpr-col-6">
 				<!-- login Settings -->
@@ -104,7 +101,6 @@ if ( ! empty( $saved_setting ) ) {
 			<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>		
 		</div>
 	</div>
-		
 
 
 

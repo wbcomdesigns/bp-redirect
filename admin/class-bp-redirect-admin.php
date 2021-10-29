@@ -553,14 +553,10 @@ class BP_Redirect_Admin {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bp-js-admin-ajax-nonce' ) ) {
 			if ( isset( $_POST['action'] ) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
 				$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
-				parse_str( $_POST['login_details'], $login_form_data );
-				parse_str( $_POST['logout_details'], $logout_form_data );
-				// parse_str( $_POST['enable_disable_setting'], $enable_disable_setting );
-				// parse_str( $_POST['enable_disable_role_setting'], $enable_disable_role_setting );
-				$login_details  = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
-				$logout_details = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
-				// $member_type_setting = filter_var_array( $enable_disable_setting, FILTER_SANITIZE_STRING );
-				// $role_setting        = filter_var_array( $enable_disable_role_setting, FILTER_SANITIZE_STRING );
+				parse_str( wp_unslash( $_POST['login_details'] ), $login_form_data ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				parse_str( wp_unslash( $_POST['logout_details'] ), $logout_form_data ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$login_details     = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
+				$logout_details    = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
 				$login_array_keys  = array();
 				$logout_array_keys = array();
 				if ( ! empty( $saved_setting ) && $saved_setting['bp_login_redirect_settings'] && isset( $saved_setting['bp_logout_redirect_settings'] ) ) {
@@ -586,13 +582,17 @@ class BP_Redirect_Admin {
 					}
 				}
 				if ( isset( $_POST['enable_disable_setting'] ) && '' !== $_POST['enable_disable_setting'] ) {
-					$saved_setting['member_type_btn_value'] = sanitize_text_field( $_POST['enable_disable_setting'] );
+					$saved_setting['member_type_btn_value'] = sanitize_text_field( wp_unslash( $_POST['enable_disable_setting'] ) );
 				}
 				if ( isset( $_POST['enable_disable_role_setting'] ) && '' !== $_POST['enable_disable_role_setting'] ) {
-					$saved_setting['role_btn_value'] = sanitize_text_field( $_POST['enable_disable_role_setting'] );
+					$saved_setting['role_btn_value'] = sanitize_text_field( wp_unslash( $_POST['enable_disable_role_setting'] ) );
 				}
-				$saved_setting['loginSequence']  = sanitize_text_field( $_POST['loginSequence'] );
-				$saved_setting['logoutSequence'] = sanitize_text_field( $_POST['logoutSequence'] );
+				if ( isset( $_POST['loginSequence'] ) && '' !== $_POST['loginSequence'] ) {
+					$saved_setting['loginSequence'] = sanitize_text_field( wp_unslash( $_POST['loginSequence'] ) );
+				}
+				if ( isset( $_POST['logoutSequence'] ) && '' !== $_POST['logoutSequence'] ) {
+					$saved_setting['logoutSequence'] = sanitize_text_field( wp_unslash( $_POST['logoutSequence'] ) );
+				}
 				bp_update_option( 'bp_redirect_admin_settings', $saved_setting );
 			}
 		}
