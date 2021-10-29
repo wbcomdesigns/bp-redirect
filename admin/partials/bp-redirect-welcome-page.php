@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a admin area view for the plugin welcome page.
  *
@@ -11,6 +10,10 @@
  * @package    bp-redirect
  * @subpackage bp-redirect/admin/partials
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->

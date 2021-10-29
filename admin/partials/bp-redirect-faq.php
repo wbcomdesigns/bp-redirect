@@ -8,6 +8,10 @@
  *
  * @package BP_Redirect
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <div class="wbcom-tab-content" id="bpr-faq-section">
 		<div class="bp-redirect-tab-header"><h3><?php esc_html_e( 'FAQ(s)', 'bp-redirect' ); ?></h3></div>

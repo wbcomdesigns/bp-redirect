@@ -203,7 +203,6 @@ function run_bp_redirect() {
 function bpr_requires_buddypress() {
 	if ( ! class_exists( 'Buddypress' ) ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-		// deactivate_plugins('buddypress-polls/buddypress-polls.php');.
 		add_action( 'admin_notices', 'bpr_required_plugin_admin_notice' );
 		unset( $_GET['activate'] );
 	}
@@ -237,7 +236,7 @@ function bpr_required_plugin_admin_notice() {
 	$bpquotes_plugin = esc_html__( 'BP Redirect', 'bp-redirect' );
 	$bp_plugin       = esc_html__( 'BuddyPress', 'bp-redirect' );
 	echo '<div class="error"><p>';
-	/* translators: BP Redirect */
+	/* translators: BP Redirect, %2$s: BuddyPress */
 	echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-redirect' ), '<strong>' . esc_html( $bpquotes_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
 	echo '</p></div>';
 	if ( isset( $_GET['activate'] ) ) {
@@ -246,14 +245,15 @@ function bpr_required_plugin_admin_notice() {
 }
 
 /**
- * redirect to plugin settings page after activated
+ * Redirect to plugin settings page after activated.
+ *
+ * @param string $plugin Path to the plugin file relative to the plugins directory.
  */
+function bpr_activation_redirect_settings( $plugin ) {
 
-add_action( 'activated_plugin', 'bpr_activation_redirect_settings' );
-function bpr_activation_redirect_settings( $plugin ){
-
-	if( $plugin == plugin_basename( __FILE__ ) && class_exists( 'Buddypress' ) ) {
-		wp_redirect( admin_url( 'admin.php?page=bp-redirect' ) ) ;
+	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'Buddypress' ) ) {
+		wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
 		exit;
 	}
-} 
+}
+add_action( 'activated_plugin', 'bpr_activation_redirect_settings' );
