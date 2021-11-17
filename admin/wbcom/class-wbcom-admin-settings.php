@@ -38,8 +38,8 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 * @access public
 		 */
 		public function wbcom_do_plugin_action() {
-			$action = ! empty( $_POST['plugin_action'] ) ? $_POST['plugin_action'] : false;
-			$slug   = ! empty( $_POST['plugin_slug'] ) ? $_POST['plugin_slug'] : false;
+			$action = ! empty( $_POST['plugin_action'] ) ? sanitize_text_field( wp_unslash( $_POST['plugin_action'] ) ) : false;
+			$slug   = ! empty( $_POST['plugin_slug'] ) ? sanitize_text_field( wp_unslash( $_POST['plugin_slug'] ) ) : false;
 
 			if ( 'install_plugin' == $action ) {
 				$this->wbcom_do_plugin_install( $slug );
