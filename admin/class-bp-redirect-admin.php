@@ -114,7 +114,7 @@ class BP_Redirect_Admin {
 	 */
 	public function bp_redirect_options_page() {
 		global $allowedposttags;
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'bp-redirect-welcome';
+		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bp-redirect-welcome';
 		?>
 		<div class="wrap">
 					<hr class="wp-header-end">
@@ -146,7 +146,7 @@ class BP_Redirect_Admin {
 	 * @access public
 	 */
 	public function bp_redirect_settings_tabs() {
-		$current_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'bp-redirect-welcome';
+		$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bp-redirect-welcome';
 		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 		foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
 			$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
@@ -553,8 +553,8 @@ class BP_Redirect_Admin {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bp-js-admin-ajax-nonce' ) ) {
 			if ( isset( $_POST['action'] ) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
 				$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
-				parse_str( wp_unslash( $_POST['login_details'] ), $login_form_data ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				parse_str( wp_unslash( $_POST['logout_details'] ), $logout_form_data ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				parse_str( wp_unslash( filter_input( INPUT_POST, 'login_details', FILTER_SANITIZE_STRING ) ), $login_form_data );
+				parse_str( wp_unslash( filter_input( INPUT_POST, 'logout_details', FILTER_SANITIZE_STRING ) ), $logout_form_data );
 				$login_details     = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
 				$logout_details    = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
 				$login_array_keys  = array();
