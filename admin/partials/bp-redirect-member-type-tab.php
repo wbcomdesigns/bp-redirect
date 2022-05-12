@@ -118,6 +118,13 @@ style="display:none" <?php } ?>>
 		<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>		
 	</div>
 	<?php } else { ?>
-		<h2><?php esc_html_e( 'Buddypress Member Type Not Exist, Create Member Type Click On The Link -: ', 'bp-redirect' ); ?><a href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=bp_member_type' ) ); ?>" target="_blank"><?php esc_html_e( 'Click Here', 'bp-redirect' ); ?></a></h2>
+		<h2>
+			<?php esc_html_e( 'Buddypress Member Type Not Exist, Create Member Type Click On The Link -: ', 'bp-redirect' ); ?>
+			<?php if ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) { ?>				
+				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=bp-member-type' ) ); ?>" target="_blank"><?php esc_html_e( 'Click Here', 'bp-redirect' ); ?></a>
+			<?php } elseif ( class_exists( 'BuddyPress' ) ) { ?>
+				<a href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=bp_member_type' ) ); ?>" target="_blank"><?php esc_html_e( 'Click Here', 'bp-redirect' ); ?></a>
+			<?php } ?>
+		</h2>
 		<?php } ?>
 </div>
