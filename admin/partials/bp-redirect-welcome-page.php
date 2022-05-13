@@ -20,16 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wbcom-tab-content">
 	<div class="wbcom-welcome-main-wrapper">
 		<div class="wbcom-welcome-head">
-			<h2 class="wbcom-welcome-title"><?php esc_html_e( 'BP Redirect', 'bp-redirect' ); ?></h2>
+			<h2 class="wbcom-welcome-title"><?php esc_html_e( 'BuddyPress Redirect', 'bp-redirect' ); ?></h2>
 			<p class="wbcom-welcome-description"><?php esc_html_e( 'BuddyPress Redirect plugin redirects user to their profile on a login and logout.', 'bp-redirect' ); ?></p>
 		</div><!-- .wbcom-welcome-head -->
 
 		<div class="wbcom-welcome-content">
-
-			<div class="wbcom-video-link-wrapper">
-
-			</div>
-
 			<div class="wbcom-welcome-support-info">
 				<h3><?php esc_html_e( 'Help &amp; Support Resources', 'bp-redirect' ); ?></h3>
 				<p><?php esc_html_e( 'Here are all the resources you may need to get help from us. Documentation is usually the best place to start. Should you require help anytime, our customer care team is available to assist you at the support center.', 'bp-redirect' ); ?></p>

@@ -61,22 +61,27 @@ if ( ! empty( $saved_setting ) ) {
 }
 
 ?>
+
 		<div class="wbcom-tab-content">
+		<div class="wbcom-welcome-main-wrapper">
+		<div class="wbcom-welcome-head">
+			<h2 class="wbcom-welcome-title"><?php esc_html_e( 'Redirect For User Role', 'bp-redirect' ); ?></h2>
+		</div><!-- .wbcom-welcome-head -->
+		<div class="wbcom-welcome-content">			
 		<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible">
 			<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
 			<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>
 		</div>
-
-		<form method="post">
+		<form class="user-role-setting" method="post">
 		<div class="enable_disable_btn">
-	<label for="bp-redirect" class="enable_disable_setting">
-		<?php esc_html_e( 'Enable Setting For User Role', 'bp-redirect' ); ?></label>
-		<input type="checkbox" class="wppd-ui-toggle" id="bp_role_enable_disable" name="role_btn_value" value="yes"<?php ( isset( $saved_setting['role_btn_value'] ) ) ? checked( $saved_setting['role_btn_value'], 'yes' ) : ''; ?>>
-		<input type="hidden" name="bp_enable_disable_role_checkbox" value="<?php echo ( isset( $saved_setting['role_btn_value'] ) ) ? esc_attr( $saved_setting['role_btn_value'] ) : 'no'; ?>">
-	</div>
+		<label for="bp-redirect" class="enable_disable_setting">
+			<?php esc_html_e( 'Enable Setting For User Role', 'bp-redirect' ); ?></label>
+			<input type="checkbox" class="wppd-ui-toggle" id="bp_role_enable_disable" name="role_btn_value" value="yes"<?php ( isset( $saved_setting['role_btn_value'] ) ) ? checked( $saved_setting['role_btn_value'], 'yes' ) : ''; ?>>
+			<input type="hidden" name="bp_enable_disable_role_checkbox" value="<?php echo ( isset( $saved_setting['role_btn_value'] ) ) ? esc_attr( $saved_setting['role_btn_value'] ) : 'no'; ?>">
+		</div>
 		</form>
 
-		<div class="bpr-row" 
+		<div class="bpr-row bpr-row-wrapper" 
 		<?php
 		if ( ! isset( $saved_setting['role_btn_value'] ) || 'no' === $saved_setting['role_btn_value'] ) {
 			?>
@@ -101,7 +106,8 @@ if ( ! empty( $saved_setting ) ) {
 			<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>		
 		</div>
 	</div>
-
+</div>
+</div>
 
 
 

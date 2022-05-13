@@ -74,13 +74,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 	}
 
-	?>
-
+	?>	
+	<div class="wbcom-tab-content">
+	<div class="wbcom-welcome-main-wrapper">
+		<div class="wbcom-welcome-head">
+			<h2 class="wbcom-welcome-title"><?php esc_html_e( 'Redirect For Member Type', 'bp-redirect' ); ?></h2>
+		</div><!-- .wbcom-welcome-head -->
+		<div class="wbcom-content-bp-redirect">
 	<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible">
 		<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
 		<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>
-	</div>
-	<div class="wbcom-tab-content">
+	</div>	
 	<?php
 	if ( ! empty( $loginSequence ) ) {
 		?>
@@ -127,4 +131,6 @@ style="display:none" <?php } ?>>
 			<?php } ?>
 		</h2>
 		<?php } ?>
+</div>
+</div>
 </div>
