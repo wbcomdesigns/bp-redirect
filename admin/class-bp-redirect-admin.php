@@ -122,7 +122,7 @@ class BP_Redirect_Admin {
 			<div class="lrc-header">
 		<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 				<h1 class="wbcom-plugin-heading">
-		<?php esc_html_e( 'Bp Redirect Settings', 'bp-redirect' ); ?>
+		<?php esc_html_e( 'BuddyPress Redirect', 'bp-redirect' ); ?>
 				</h1>
 			</div>
 		<?php settings_errors(); ?>

@@ -5,6 +5,40 @@
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
 /* Layout helpers
 ----------------------------------*/
+.wbcom-welcome-main-wrapper {
+  position: relative;
+  font-size: 15px;
+  background: #f6f6f6;
+  padding: 0 15px 15px;
+  margin: 25px 0;
+}
+.wbcom-welcome-head h2.wbcom-welcome-title,
+.bplock-tab-header h3,
+.bp-redirect-tab-header h3 {
+  padding: 18px 25px;
+  font-size: 15px;
+  background: #2094F3;
+  color: #fff;
+  margin: 0 -15px 20px;
+}
+.wbcom-video-link-wrapper {
+  flex-wrap: wrap;
+  display: flex;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  align-items: center;
+  background: #fff;
+  padding: 10px;
+}
+.wbcom-welcome-support-info{
+  box-shadow: none;
+}
+.wbcom-content-bp-redirect {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #eee;
+}
+
 .ui-helper-hidden {
   display: none;
 }
@@ -103,8 +137,9 @@
 }
 
 .ui-accordion .ui-accordion-content {
-  padding: 1em;
+  padding: 1em 1.3em !important;
   border-top: 0;
+  background-color: #f9f9f9;
   overflow: auto;
 }
 
@@ -1417,8 +1452,11 @@ a.ui-button:active,
 }
 
 .ui-accordion .ui-accordion-header {
-  background: #fff none repeat scroll 0 0;
-  padding: 10px;
+  background: #ececec none repeat scroll 0 0;
+  border: none;
+  border-radius: 0;
+  margin: 0 !important;
+  padding: .8em .8em .8em 2em !important;
 }
 
 .ui-accordion .ui-accordion-header-active {
@@ -1713,9 +1751,19 @@ input[type="checkbox"].wppd-ui-toggle:checked:after {
   background-color: #2271b1;
 }
 
-.enable_disable_btn{
-  margin-bottom: 25px;
+form.user-role-setting .enable_disable_btn,
+.bpr-row.bpr-row-wrapper {
+    background: #fff;
+    padding: 20px;
+    margin: 0;
+    border: 1px solid #eee;
 }
+
+.bpr-row.bpr-row-wrapper{
+  margin-top: 30px;
+}
+
+
 .enable_disable_setting{
   font-size: 20px;
     font-weight: 500;
@@ -1738,17 +1786,16 @@ input[type="checkbox"].wppd-ui-toggle:checked:after {
 button.bpr-accordion {
 	background-color: hsl(0, 0%, 87%);
 	border: medium none;
-	border-top-right-radius: 10px;
-	border-top-left-radius: 10px;
 	color: hsl(0, 0%, 27%);
 	cursor: pointer;
 	font-size: 15px;
-	margin: 0 5%;
+	margin: 0;
+  font-weight: 500;
 	outline: medium none;
 	padding: 15px 20px;
 	text-align: left;
 	transition: all 0.4s ease 0s;
-	width: 90%;
+	width: 100%;
 }
 button.bpr-accordion.active, button.bpr-accordion:hover {
 	background-color: hsl(207, 90%, 54%);
@@ -1760,13 +1807,13 @@ button.bpr-accordion.active, button.bpr-accordion:hover {
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.2s ease-out;
-	margin:0px 5%;
+	margin:0px;
 }
 button.bpr-accordion::after {
-	color: hsl(0, 0%, 47%);
+	color:#fff;
 	content: "+";
 	float: right;
-	font-size: 13px;
+	font-size:18px;
 	font-weight: bold;
 	margin-left: 5px;
 }
@@ -1776,6 +1823,8 @@ button.bpr-accordion::after:hover {
 button.bpr-accordion.active::after {
 	content: "−";
 	color:white;
+  font-size:18px;
+	font-weight: bold;
 }
 .bpr-accordion-row {
 	clear: both;

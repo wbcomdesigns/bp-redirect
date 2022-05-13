@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="wbcom-tab-content" id="bpr-faq-section">
+	<div class="wbcom-welcome-main-wrapper">
 		<div class="bp-redirect-tab-header"><h3><?php esc_html_e( 'FAQ(s)', 'bp-redirect' ); ?></h3></div>
-
 	<div class="bpr-accordion-row">
 		<button class="bpr-accordion">
 			<?php esc_html_e( 'Is this plugin requires another plugin?', 'bp-redirect' ); ?>
@@ -72,4 +72,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<p><?php esc_html_e( 'Please visit', 'bp-redirect' ); ?> <a href="<?php echo esc_url( 'https://wbcomdesigns.com/contact/' ); ?>" title="<?php esc_attr( 'Wbcom Designs' ); ?>" target="_blank" ><?php esc_html_e( 'Wbcom Designs', 'bp-redirect' ); ?></a> <?php esc_html_e( 'for any query related to plugin and BuddyPress.', 'bp-redirect' ); ?></p>
 		</div>
 	</div>
+</div>
 </div>
