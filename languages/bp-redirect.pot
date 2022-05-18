@@ -1,14 +1,14 @@
-# Copyright (C) 2021
+# Copyright (C) 2022
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-13 09:45:10+00:00\n"
+"POT-Creation-Date: 2022-05-18 05:11:59+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Varun Dubey\n"
 "Language-Team: Wbcom Designs\n"
 "Language: en\n"
@@ -37,12 +37,13 @@ msgid " General "
 msgstr ""
 
 #: admin/class-bp-redirect-admin.php:99 admin/class-bp-redirect-admin.php:100
-#: admin/partials/bp-redirect-welcome-page.php:20 bp-redirect.php:237
+#: bp-redirect.php:235
 msgid "BP Redirect"
 msgstr ""
 
 #: admin/class-bp-redirect-admin.php:125
-msgid "Bp Redirect Settings"
+#: admin/partials/bp-redirect-welcome-page.php:23
+msgid "BuddyPress Redirect"
 msgstr ""
 
 #: admin/class-bp-redirect-admin.php:167
@@ -50,208 +51,537 @@ msgid "Welcome"
 msgstr ""
 
 #: admin/class-bp-redirect-admin.php:169
+#: admin/partials/bp-redirect-user-role-tab.php:68
 msgid "Redirect For User Role"
 msgstr ""
 
 #: admin/class-bp-redirect-admin.php:172
+#: admin/partials/bp-redirect-member-type-tab.php:81
 msgid "Redirect For Member Type"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:318 admin/class-bp-redirect-admin.php:332
+#: admin/class-bp-redirect-admin.php:176
+msgid "FAQ"
+msgstr ""
+
+#: admin/class-bp-redirect-admin.php:329 admin/class-bp-redirect-admin.php:343
 msgid "BuddyPress Component"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:343 admin/class-bp-redirect-admin.php:487
+#: admin/class-bp-redirect-admin.php:354 admin/class-bp-redirect-admin.php:498
 msgid "Page"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:353 admin/class-bp-redirect-admin.php:497
+#: admin/class-bp-redirect-admin.php:364 admin/class-bp-redirect-admin.php:508
 msgid "None"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:363
+#: admin/class-bp-redirect-admin.php:374
 msgid "Select"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:371
+#: admin/class-bp-redirect-admin.php:382
 msgid "Member Profile"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:380
+#: admin/class-bp-redirect-admin.php:391
 msgid "Member Activity"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:391
+#: admin/class-bp-redirect-admin.php:402
 msgid "Groups"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:576
+#: admin/partials/bp-redirect-faq.php:18
+msgid "FAQ(s)"
+msgstr ""
+
+#: admin/partials/bp-redirect-faq.php:21
 msgid "Is this plugin requires another plugin?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:579
+#: admin/partials/bp-redirect-faq.php:24
 msgid "Yes, this plugin requires BuddyPress plugin."
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:584
+#: admin/partials/bp-redirect-faq.php:29
 msgid ""
 "Where it redirects if no option selected or in the case of empty custom URL "
 "field?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:587
+#: admin/partials/bp-redirect-faq.php:32
 msgid "In that case, plugin follows default redirection rule."
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:592
+#: admin/partials/bp-redirect-faq.php:37
 msgid ""
 "Where it redirects, when we select \"Member profile\" in BuddyPress "
 "Component dropdown?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:595
+#: admin/partials/bp-redirect-faq.php:40
 msgid "It redirects to logged in member's profile page"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:600
+#: admin/partials/bp-redirect-faq.php:45
 msgid ""
 "Where it redirects, when we select \"Member activity\" in BuddyPress "
 "Component dropdown?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:603
+#: admin/partials/bp-redirect-faq.php:48
 msgid "It redirects to logged in member's activity page"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:608
+#: admin/partials/bp-redirect-faq.php:53
 msgid ""
 "Where it redirects, when we select \"Activity\" in BuddyPress Component "
 "dropdown?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:611
+#: admin/partials/bp-redirect-faq.php:56
 msgid "It redirects to logged in site wide activity page"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:616
+#: admin/partials/bp-redirect-faq.php:61
+msgid "Can I use user role and member type redirection both?"
+msgstr ""
+
+#: admin/partials/bp-redirect-faq.php:64
+msgid ""
+"There will be no conflict, but It's advised to use either User role "
+"redirection or Member type redirection at a time."
+msgstr ""
+
+#: admin/partials/bp-redirect-faq.php:69
 msgid "Where do I ask for support?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:619
-msgid ""
-"Please visit <a href='http://wbcomdesigns.com/contact' rel='nofollow'>Wbcom "
-"Designs</a> for any query related to plugin and BuddyPress."
+#: admin/partials/bp-redirect-faq.php:72
+msgid "Please visit"
 msgstr ""
 
-#: admin/partials/bp-redirect-member-type-tab.php:82
-#: admin/partials/bp-redirect-user-role-tab.php:69
+#: admin/partials/bp-redirect-faq.php:72
+msgid "Wbcom Designs"
+msgstr ""
+
+#: admin/partials/bp-redirect-faq.php:72
+msgid "for any query related to plugin and BuddyPress."
+msgstr ""
+
+#: admin/partials/bp-redirect-member-type-tab.php:85
+#: admin/partials/bp-redirect-member-type-tab.php:122
+#: admin/partials/bp-redirect-user-role-tab.php:72
+#: admin/partials/bp-redirect-user-role-tab.php:106
 msgid "Settings saved."
 msgstr ""
 
-#: admin/partials/bp-redirect-member-type-tab.php:83
-#: admin/partials/bp-redirect-user-role-tab.php:70
+#: admin/partials/bp-redirect-member-type-tab.php:86
+#: admin/partials/bp-redirect-user-role-tab.php:73
 msgid "Dismiss this notice."
 msgstr ""
 
-#: admin/partials/bp-redirect-member-type-tab.php:93
+#: admin/partials/bp-redirect-member-type-tab.php:95
 msgid "Enable Setting For Buddypress Member Type"
 msgstr ""
 
-#: admin/partials/bp-redirect-member-type-tab.php:105
+#: admin/partials/bp-redirect-member-type-tab.php:108
 msgid "Buddypress Login Redirect Settings"
 msgstr ""
 
-#: admin/partials/bp-redirect-member-type-tab.php:110
+#: admin/partials/bp-redirect-member-type-tab.php:113
 msgid "Buddypress Logout Redirect Settings"
 msgstr ""
 
-#: admin/partials/bp-redirect-member-type-tab.php:116
-#: admin/partials/bp-redirect-user-role-tab.php:99
-msgid "FAQ(s)"
-msgstr ""
-
-#: admin/partials/bp-redirect-member-type-tab.php:121
-#: admin/partials/bp-redirect-user-role-tab.php:104
+#: admin/partials/bp-redirect-member-type-tab.php:119
+#: admin/partials/bp-redirect-user-role-tab.php:103
 msgid "Save Settings"
 msgstr ""
 
-#: admin/partials/bp-redirect-member-type-tab.php:124
+#: admin/partials/bp-redirect-member-type-tab.php:126
 msgid "Buddypress Member Type Not Exist, Create Member Type Click On The Link -: "
 msgstr ""
 
-#: admin/partials/bp-redirect-member-type-tab.php:124
+#: admin/partials/bp-redirect-member-type-tab.php:128
+#: admin/partials/bp-redirect-member-type-tab.php:130
 msgid "Click Here"
 msgstr ""
 
-#: admin/partials/bp-redirect-user-role-tab.php:76
+#: admin/partials/bp-redirect-user-role-tab.php:78
 msgid "Enable Setting For User Role"
 msgstr ""
 
-#: admin/partials/bp-redirect-user-role-tab.php:88
+#: admin/partials/bp-redirect-user-role-tab.php:92
 msgid "Login Redirect Settings"
 msgstr ""
 
-#: admin/partials/bp-redirect-user-role-tab.php:93
+#: admin/partials/bp-redirect-user-role-tab.php:97
 msgid "Logout Redirect Settings"
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:21
+#: admin/partials/bp-redirect-welcome-page.php:24
 msgid ""
 "BuddyPress Redirect plugin redirects user to their profile on a login and "
 "logout."
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:31
+#: admin/partials/bp-redirect-welcome-page.php:29
 msgid "Help &amp; Support Resources"
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:32
+#: admin/partials/bp-redirect-welcome-page.php:30
 msgid ""
 "Here are all the resources you may need to get help from us. Documentation "
 "is usually the best place to start. Should you require help anytime, our "
 "customer care team is available to assist you at the support center."
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:38
+#: admin/partials/bp-redirect-welcome-page.php:36
 msgid "Documentation"
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:39
+#: admin/partials/bp-redirect-welcome-page.php:37
 msgid ""
 "We have prepared an extensive guide on BuddyPress Redirect to learn all "
 "aspects of the plugin. You will find most of your answers here."
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:40
+#: admin/partials/bp-redirect-welcome-page.php:38
 msgid "Read Documentation"
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:44
+#: admin/partials/bp-redirect-welcome-page.php:42
 msgid "Support Center"
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:45
+#: admin/partials/bp-redirect-welcome-page.php:43
 msgid ""
 "We strive to offer the best customer care via our support center. Once your "
 "theme is activated, you can ask us for help anytime."
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:46
+#: admin/partials/bp-redirect-welcome-page.php:44
 msgid "Get Support"
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:50
+#: admin/partials/bp-redirect-welcome-page.php:48
 msgid "Got Feedback?"
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:51
+#: admin/partials/bp-redirect-welcome-page.php:49
 msgid ""
 "We want to hear about your experience with the plugin. We would also love "
 "to hear any suggestions you may for future updates."
 msgstr ""
 
-#: admin/partials/bp-redirect-welcome-page.php:52
+#: admin/partials/bp-redirect-welcome-page.php:50
 msgid "Send Feedback"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:164
+msgid "Custom Font Uploader"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:166
+msgid ""
+"It also allows you to upload your own custom font to your site and use them "
+"using custom css."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:172
+msgid "BuddyPress Activity Filter"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:174
+msgid "Admin can set default and customised activities to be listed on front-end."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:180
+msgid "BuddyPress Activity Social Share"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:182
+msgid ""
+"This plugin allows anyone easily share BuddyPress Activites on major social "
+"media (Facebook, Twitter, Google+, Linkedin )."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:188
+msgid "BuddyPress Create Group Type"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:190
+msgid "It will help to create group type for BuddyPress Groups."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:196
+msgid "BuddyPress Member Reviews"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:198
+msgid ""
+"This plugin allows only site members to add reviews to the buddypress "
+"members on the site and even rate the member’s profile out of 5 points with "
+"multiple review criteria."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:204
+msgid "BuddyPress Group Reviews"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:206
+msgid ""
+"This plugin allows the BuddyPress Members to give reviews to the BuddyPress "
+"groups on the site. The review form allows the users to give text review, "
+"even rate the group on the basis of multiple criterias."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:212
+msgid "BuddyPress Favorite Notification"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:214
+msgid ""
+"BuddyPress Favorite Notification adds a notification for BuddyPress "
+"activity."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:220
+msgid "Custom Email Options"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:222
+msgid "Override default email options of Worpdress."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:228
+msgid "BuddyPress Checkins"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:230
+msgid ""
+"This plugin allows BuddyPress members to share their location when they are "
+"posting activities, you can add places where you visited, nearby locations "
+"based on google places."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:236
+msgid "BuddyPress Job Manager"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:238
+msgid ""
+"Incorporates BuddyPress with the WP Job Manager plugin by creating specific "
+"tabs in employer’s and candidate’s profiles."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:244
+msgid "BuddyPress user ToDo List"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:246
+msgid ""
+"This plugin allows you to create your personal task list with timestamp. "
+"You can mark them complete when you are done with them. It will also send "
+"reminder when you have any overdue task."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:252
+msgid "Shortcodes for BuddyPress"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:254
+msgid ""
+"This plugin will add an extended feature to the big name “BuddyPress” that "
+"will generate Shortcode for Listing Activity Streams , Members and Groups "
+"on any post/page in website."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:260
+msgid "Woo Open Graph"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:262
+msgid ""
+"This plugin will add an extended feature to the big name “WooCommerce” that "
+"will adds well executed and accurate Open Graph Meta Tags to your site with "
+"title,description and WooCommerce featured image."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:268
+msgid "BuddyPress Lock"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:270
+msgid ""
+"This plugin allows the administrator to lock the certain parts of their "
+"site. It help to create private BuddyPress community by locking certain "
+"BuddyPress Components, WordPress Pages, Custom Post Types for public view "
+"without using any membership plugin."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:276
+msgid "Woo Audio Preview"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:278
+msgid ""
+"This plugin Allows playing the audio files in sample mode to prevent "
+"unauthorized downloading of the audio files. It helps to display sample "
+"files at single product page."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:284
+msgid "WordPress System Log"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:286
+msgid ""
+"This plugin helps administrators of the site see their environment on which "
+"the site is currently running that includes WordPress environment, tha "
+"database it requires, Server Environment and the plugins installed and "
+"activated on the site."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:292
+msgid "BP Post From Anywhere"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:294
+msgid ""
+"This plugin will generate shortcode and widgets for post updates section "
+"for activities so you can post update from anywhere, it might be sidebar, "
+"some page or any template file."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:300
+msgid "Woo Document Preview"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:302
+msgid ""
+"This will allow you to add document preview at single product page. Which "
+"helps to offer more better idea when you are selling ebooks, pdf or some "
+"documents."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:308
+msgid "WordPress Media Category"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:310
+msgid ""
+"This plugin helps administrators of the site categorize their wordpress "
+"media."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:316
+msgid "Woo Price Quotes"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:318
+msgid ""
+"This plugin helps in quoting the products that admin wishes to hide its "
+"purchasing details."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:336
+msgid "BuddyPress Moderation Pro"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:337
+msgid ""
+"BuddyPress Community Moderation offers a solution for site owners to keep "
+"their communities straight. With community policing strategy, members of "
+"the community have an option for moderation sitewide by attaching flags to "
+"content created within the various components."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:342
+msgid "BuddyPress Polls"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:343
+msgid ""
+"Use BuddyPress Polls plugin to create polls inside the activity, let your "
+"user response to your polls. Members can create pools like activities, "
+"easily votes on them."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:348
+msgid "BuddyPress Resume Manager"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:349
+msgid ""
+"BuddyPress Resume Manager adds a separate BuddyPress Resume menu at a "
+"user’s BuddyPress Profile Page to display individual member resume. We have "
+"added predefined fields for the resumes and site admin and enable and "
+"disable them."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:354
+msgid "BuddyPress Profanity"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:355
+msgid ""
+"Use BuddyPress Profanity plugin to censor content in your community! Easily "
+"Censor all the unwanted words in activities, private messages contents by "
+"specifying a list of keywords to be filtered."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:360
+msgid "BuddyPress Private Community Pro"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:361
+msgid ""
+"This plugin offers a lockdown for BuddyPress Component and will ask users "
+"to log in go further to check profile or any other protected details."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:366
+msgid "BuddyPress Profile Pro"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:367
+msgid ""
+"This plugin gives you the power to extend BuddyPress Profiles with repeater "
+"fields and groups. You can easily add multiple field groups and display "
+"them at member’s profile."
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:463
+msgid "Activate"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:464
+msgid "Deactivate"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:495
+#: admin/wbcom/class-wbcom-admin-settings.php:496
+#: admin/wbcom/class-wbcom-admin-settings.php:593
+msgid "Our Plugins"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:503
+#: admin/wbcom/class-wbcom-admin-settings.php:504
+#: admin/wbcom/class-wbcom-admin-settings.php:599
+msgid "Our Themes"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:511
+#: admin/wbcom/class-wbcom-admin-settings.php:512
+#: admin/wbcom/class-wbcom-admin-settings.php:605
+#: admin/wbcom/templates/wbcom-support-page.php:5 bp-redirect.php:154
+msgid "Support"
+msgstr ""
+
+#: admin/wbcom/class-wbcom-admin-settings.php:587 bp-redirect.php:153
+msgid "Settings"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-plugins-page.php:10
@@ -259,6 +589,7 @@ msgid "Paid Addons"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-plugins-page.php:29
+#: admin/wbcom/templates/wbcom-plugins-page.php:42
 #: admin/wbcom/templates/wbcom-themes-page.php:118
 #: admin/wbcom/templates/wbcom-themes-page.php:139
 msgid "View"
@@ -266,27 +597,6 @@ msgstr ""
 
 #: admin/wbcom/templates/wbcom-plugins-page.php:38
 msgid "Free Addons"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:44
-msgid "Install"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:48
-#: admin/wbcom/wbcom-admin-settings.php:484
-msgid "Activate"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:52
-#: admin/wbcom/wbcom-admin-settings.php:485
-msgid "Deactivate"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:5
-#: admin/wbcom/wbcom-admin-settings.php:532
-#: admin/wbcom/wbcom-admin-settings.php:533
-#: admin/wbcom/wbcom-admin-settings.php:626 bp-redirect.php:154
-msgid "Support"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:7
@@ -488,296 +798,6 @@ msgstr ""
 msgid "Create Knowledge base"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:185
-msgid "Custom Font Uploader"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:187
-msgid ""
-"It also allows you to upload your own custom font to your site and use them "
-"using custom css."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:193
-msgid "BuddyPress Activity Filter"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:195
-msgid "Admin can set default and customised activities to be listed on front-end."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:201
-msgid "BuddyPress Activity Social Share"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:203
-msgid ""
-"This plugin allows anyone easily share BuddyPress Activites on major social "
-"media (Facebook, Twitter, Google+, Linkedin )."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:209
-msgid "BuddyPress Create Group Type"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:211
-msgid "It will help to create group type for BuddyPress Groups."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:217
-msgid "BuddyPress Member Reviews"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:219
-msgid ""
-"This plugin allows only site members to add reviews to the buddypress "
-"members on the site and even rate the member’s profile out of 5 points with "
-"multiple review criteria."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:225
-msgid "BuddyPress Group Reviews"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:227
-msgid ""
-"This plugin allows the BuddyPress Members to give reviews to the BuddyPress "
-"groups on the site. The review form allows the users to give text review, "
-"even rate the group on the basis of multiple criterias."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:233
-msgid "BuddyPress Favorite Notification"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:235
-msgid ""
-"BuddyPress Favorite Notification adds a notification for BuddyPress "
-"activity."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:241
-msgid "Custom Email Options"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:243
-msgid "Override default email options of Worpdress."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:249
-msgid "BuddyPress Checkins"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:251
-msgid ""
-"This plugin allows BuddyPress members to share their location when they are "
-"posting activities, you can add places where you visited, nearby locations "
-"based on google places."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:257
-msgid "BuddyPress Job Manager"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:259
-msgid ""
-"Incorporates BuddyPress with the WP Job Manager plugin by creating specific "
-"tabs in employer’s and candidate’s profiles."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:265
-msgid "BuddyPress user ToDo List"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:267
-msgid ""
-"This plugin allows you to create your personal task list with timestamp. "
-"You can mark them complete when you are done with them. It will also send "
-"reminder when you have any overdue task."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:273
-msgid "Shortcodes for BuddyPress"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:275
-msgid ""
-"This plugin will add an extended feature to the big name “BuddyPress” that "
-"will generate Shortcode for Listing Activity Streams , Members and Groups "
-"on any post/page in website."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:281
-msgid "Woo Open Graph"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:283
-msgid ""
-"This plugin will add an extended feature to the big name “WooCommerce” that "
-"will adds well executed and accurate Open Graph Meta Tags to your site with "
-"title,description and WooCommerce featured image."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:289
-msgid "BuddyPress Lock"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:291
-msgid ""
-"This plugin allows the administrator to lock the certain parts of their "
-"site. It help to create private BuddyPress community by locking certain "
-"BuddyPress Components, WordPress Pages, Custom Post Types for public view "
-"without using any membership plugin."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:297
-msgid "Woo Audio Preview"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:299
-msgid ""
-"This plugin Allows playing the audio files in sample mode to prevent "
-"unauthorized downloading of the audio files. It helps to display sample "
-"files at single product page."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:305
-msgid "WordPress System Log"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:307
-msgid ""
-"This plugin helps administrators of the site see their environment on which "
-"the site is currently running that includes WordPress environment, tha "
-"database it requires, Server Environment and the plugins installed and "
-"activated on the site."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:313
-msgid "BP Post From Anywhere"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:315
-msgid ""
-"This plugin will generate shortcode and widgets for post updates section "
-"for activities so you can post update from anywhere, it might be sidebar, "
-"some page or any template file."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:321
-msgid "Woo Document Preview"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:323
-msgid ""
-"This will allow you to add document preview at single product page. Which "
-"helps to offer more better idea when you are selling ebooks, pdf or some "
-"documents."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:329
-msgid "WordPress Media Category"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:331
-msgid ""
-"This plugin helps administrators of the site categorize their wordpress "
-"media."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:337
-msgid "Woo Price Quotes"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:339
-msgid ""
-"This plugin helps in quoting the products that admin wishes to hide its "
-"purchasing details."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:357
-msgid "BuddyPress Moderation Pro"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:358
-msgid ""
-"BuddyPress Community Moderation offers a solution for site owners to keep "
-"their communities straight. With community policing strategy, members of "
-"the community have an option for moderation sitewide by attaching flags to "
-"content created within the various components."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:363
-msgid "BuddyPress Polls"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:364
-msgid ""
-"Use BuddyPress Polls plugin to create polls inside the activity, let your "
-"user response to your polls. Members can create pools like activities, "
-"easily votes on them."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:369
-msgid "BuddyPress Resume Manager"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:370
-msgid ""
-"BuddyPress Resume Manager adds a separate BuddyPress Resume menu at a "
-"user’s BuddyPress Profile Page to display individual member resume. We have "
-"added predefined fields for the resumes and site admin and enable and "
-"disable them."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:375
-msgid "BuddyPress Profanity"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:376
-msgid ""
-"Use BuddyPress Profanity plugin to censor content in your community! Easily "
-"Censor all the unwanted words in activities, private messages contents by "
-"specifying a list of keywords to be filtered."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:381
-msgid "BuddyPress Private Community Pro"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:382
-msgid ""
-"This plugin offers a lockdown for BuddyPress Component and will ask users "
-"to log in go further to check profile or any other protected details."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:387
-msgid "BuddyPress Profile Pro"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:388
-msgid ""
-"This plugin gives you the power to extend BuddyPress Profiles with repeater "
-"fields and groups. You can easily add multiple field groups and display "
-"them at member’s profile."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:516
-#: admin/wbcom/wbcom-admin-settings.php:517
-#: admin/wbcom/wbcom-admin-settings.php:614
-msgid "Our Plugins"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:524
-#: admin/wbcom/wbcom-admin-settings.php:525
-#: admin/wbcom/wbcom-admin-settings.php:620
-msgid "Our Themes"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:608 bp-redirect.php:153
-msgid "Settings"
-msgstr ""
-
 #: bp-redirect-update-checker/Puc/v4p10/Plugin/Ui.php:54
 msgid "View details"
 msgstr ""
@@ -812,12 +832,12 @@ msgstr ""
 msgid "Go for any custom development."
 msgstr ""
 
-#: bp-redirect.php:238
+#: bp-redirect.php:236
 msgid "BuddyPress"
 msgstr ""
 
-#: bp-redirect.php:241
-#. translators: BP Redirect
+#: bp-redirect.php:239
+#. translators: BP Redirect, %2$s: BuddyPress
 msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
 msgstr ""
 
