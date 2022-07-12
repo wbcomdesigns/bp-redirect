@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="wbcom-tab-content" id="bpr-faq-section">
 	<div class="wbcom-welcome-main-wrapper">
-		<div class="wb-ads-tab-header">
+		<div class="wbcom-admin-title-section">
 			<h3><?php esc_html_e( 'FAQ(s) ', 'bp-redirect' ); ?></h3>
 			<input type="hidden" class="wb-ads-tab-active" value="support"/>
 		</div>
