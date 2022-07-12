@@ -62,51 +62,60 @@ if ( ! empty( $saved_setting ) ) {
 
 ?>
 
-		<div class="wbcom-tab-content">
-		<div class="wbcom-welcome-main-wrapper">
-		<div class="wbcom-welcome-head">
-			<h2 class="wbcom-welcome-title"><?php esc_html_e( 'Redirect For User Role', 'bp-redirect' ); ?></h2>
+<div class="wbcom-tab-content">
+	<div class="wbcom-wrapper-admin">
+		<div class="wbcom-admin-title-section">
+			<h3><?php esc_html_e( 'Redirect For User Role', 'bp-redirect' ); ?></h3>
 		</div><!-- .wbcom-welcome-head -->
-		<div class="wbcom-welcome-content">			
-		<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible">
-			<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
-			<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>
-		</div>
-		<form class="user-role-setting" method="post">
-		<div class="enable_disable_btn">
-		<label for="bp-redirect" class="enable_disable_setting">
-			<?php esc_html_e( 'Enable Setting For User Role', 'bp-redirect' ); ?></label>
-			<input type="checkbox" class="wppd-ui-toggle" id="bp_role_enable_disable" name="role_btn_value" value="yes"<?php ( isset( $saved_setting['role_btn_value'] ) ) ? checked( $saved_setting['role_btn_value'], 'yes' ) : ''; ?>>
-			<input type="hidden" name="bp_enable_disable_role_checkbox" value="<?php echo ( isset( $saved_setting['role_btn_value'] ) ) ? esc_attr( $saved_setting['role_btn_value'] ) : 'no'; ?>">
-		</div>
-		</form>
-
-		<div class="bpr-row bpr-row-wrapper" 
-		<?php
-		if ( ! isset( $saved_setting['role_btn_value'] ) || 'no' === $saved_setting['role_btn_value'] ) {
-			?>
-		style="display:none" <?php } ?>>
-			<div class="row">
-				<div class="bpr-col-6">
-				<!-- login Settings -->
-				<h2><?php esc_html_e( 'Login Redirect Settings', 'bp-redirect' ); ?></h2>
-				<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">			
+			<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible">
+				<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
+				<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>
 			</div>
-			<div class="bpr-col-6">
-				<!-- Logout Settings -->
-				<h2><?php esc_html_e( 'Logout Redirect Settings', 'bp-redirect' ); ?></h2>
-			<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
+			<form class="user-role-setting" method="post">
+				<div class="enable_disable_btn wbcom-settings-section-wrap">
+					<label for="bp-redirect" class="enable_disable_setting">
+						<?php esc_html_e( 'Enable Setting For User Role', 'bp-redirect' ); ?>
+					</label>
+					<input type="checkbox" class="wppd-ui-toggle" id="bp_role_enable_disable" name="role_btn_value" value="yes"<?php ( isset( $saved_setting['role_btn_value'] ) ) ? checked( $saved_setting['role_btn_value'], 'yes' ) : ''; ?>>
+					<input type="hidden" name="bp_enable_disable_role_checkbox" value="<?php echo ( isset( $saved_setting['role_btn_value'] ) ) ? esc_attr( $saved_setting['role_btn_value'] ) : 'no'; ?>">
 				</div>
+			</form>
+
+			<div class="bpr-row bpr-row-wrapper wbcom-settings-section-wrap" 
+			<?php
+			if ( ! isset( $saved_setting['role_btn_value'] ) || 'no' === $saved_setting['role_btn_value'] ) {
+				?>
+			style="display:none" <?php } ?>>
+				<div class="row">
+					<div class="bpr-col-12">
+					<!-- login Settings -->
+					<h2><?php esc_html_e( 'Login Redirect Settings', 'bp-redirect' ); ?></h2>
+					<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
 				</div>
-		</div>
-		<p>
-			<button id="bp-redirect-settings-submit" class="button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
-		</p>
-		<div id="bpredirect-settings_updated-footer" class="" style="display:none">
-			<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>		
+					</div>
+			</div>
+			<div class="bpr-row bpr-row-wrapper wbcom-settings-section-wrap" 
+			<?php
+			if ( ! isset( $saved_setting['role_btn_value'] ) || 'no' === $saved_setting['role_btn_value'] ) {
+				?>
+			style="display:none" <?php } ?>>
+				<div class="row">
+				<div class="bpr-col-12">
+					<!-- Logout Settings -->
+					<h2><?php esc_html_e( 'Logout Redirect Settings', 'bp-redirect' ); ?></h2>
+				<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
+					</div>
+					</div>
+			</div>
+			<p>
+				<button id="bp-redirect-settings-submit" class="button button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
+			</p>
+			<div id="bpredirect-settings_updated-footer" class="" style="display:none">
+				<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>		
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 

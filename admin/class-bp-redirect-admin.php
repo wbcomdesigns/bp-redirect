@@ -117,14 +117,23 @@ class BP_Redirect_Admin {
 		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bp-redirect-welcome';
 		?>
 		<div class="wrap">
-					<hr class="wp-header-end">
-					<div class="wbcom-wrap">
-			<div class="lrc-header">
-		<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-				<h1 class="wbcom-plugin-heading">
-		<?php esc_html_e( 'BuddyPress Redirect', 'bp-redirect' ); ?>
-				</h1>
+			<div class="wbcom-bb-plugins-offer-wrapper">
+				<div id="wb_admin_logo">
+					<a href="https://wbcomdesigns.com/downloads/buddypress-community-bundle/" target="_blank">
+						<img src="<?php echo esc_url( BP_REDIRECT_PLUGIN_URL ) . 'admin/wbcom/assets/imgs/wbcom-offer-notice.png'; ?>">
+					</a>
+				</div>
 			</div>
+		<div class="wbcom-wrap bp-member-blog-wrap">
+			<div class="blpro-header">
+					<div class="wbcom_admin_header-wrapper">
+						<div id="wb_admin_plugin_name">
+							<?php esc_html_e( 'BuddyPress Redirect', 'buddypress-member-blog' ); ?>
+							<span><?php printf( __( 'Version %s', 'buddypress-member-blog' ), REDIRECT_PLUGIN_VERSION ); ?></span>
+						</div>
+						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+					</div>
+				</div>
 		<?php settings_errors(); ?>
 			<div class="wbcom-admin-settings-page">
 		<?php
@@ -132,7 +141,7 @@ class BP_Redirect_Admin {
 		do_settings_sections( $tab );
 		?>
 			</div>
-					</div>
+		</div>
 		</div>
 		<?php
 	}
@@ -150,7 +159,7 @@ class BP_Redirect_Admin {
 		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 		foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
 			$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
-			echo '<li><a class="nav-tab ' . esc_attr( $active ) . '" href="?page=' . esc_attr( $this->plugin_slug ) . '&tab=' . esc_attr( $tab_key ) . '">' . esc_html__( $tab_caption, 'bp-redirect' ) . '</a></li>';
+			echo '<li class="' . esc_attr( $tab_key ) . '"><a class="nav-tab ' . esc_attr( $active ) . '" href="?page=' . esc_attr( $this->plugin_slug ) . '&tab=' . esc_attr( $tab_key ) . '">' . esc_html__( $tab_caption, 'bp-redirect' ) . '</a></li>';
 		}
 		echo '</div></ul></div>';
 	}
