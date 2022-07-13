@@ -980,7 +980,7 @@ License style
 .nav-tab-wrapper ul li a.nav-tab:before {
     content: "\f229";
     font-family: dashicons;
-    display: inline-block;
+    display: inline-block !important;
     line-height: normal;
     font-weight: 400;
     font-style: normal;
@@ -1240,6 +1240,7 @@ input:checked+.wb-slider:before {
 .wbcom-faq-section-row:hover p,
 .wbcom-faq-section-row:hover
 button.wbcom-faq-accordion:after,
+.wbcom-faq-section-row:hover .wbcom-faq-panel li,
 .wbcom-faq-section-row:hover button.wbcom-faq-accordion {
     color: #fff;
 }
