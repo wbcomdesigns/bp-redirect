@@ -128,8 +128,8 @@ class BP_Redirect_Admin {
 			<div class="blpro-header">
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
-							<?php esc_html_e( 'BuddyPress Redirect', 'buddypress-member-blog' ); ?>
-							<span><?php printf( __( 'Version %s', 'buddypress-member-blog' ), REDIRECT_PLUGIN_VERSION ); ?></span>
+							<?php esc_html_e( 'BuddyPress Redirect', 'bp-redirect' ); ?>
+							<span><?php printf( __( 'Version %s', 'bp-redirect' ), REDIRECT_PLUGIN_VERSION ); ?></span>
 						</div>
 						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 					</div>
