@@ -1,4 +1,6 @@
-/*Top Offer Notice*/
+/*==============================================
+Wbcom Admin Wrapper Style
+==============================================*/
 .wbcom-bb-plugins-offer-wrapper {
     margin: 40px 10px -10px;
 }
@@ -102,13 +104,31 @@ h4.wbcom-support-section {
 }
 
 .wbcom-settings-section-options select,
-.wbcom-settings-section-options .selectize-input {
+.wbcom-settings-section-options .selectize-input,
+.wbcom-settings-section-options [type="text"],
+.wbcom-settings-section-options [type="number"] {
     border-radius: 7px;
     box-shadow: none;
     height: 40px;
     border-color: #e0e0e0;
     background-color: #fafafa;
+    width: 100%;
 }
+
+.wbcom-settings-section-options input[type=radio] {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ccc;
+    box-shadow: none !important;
+    margin: 0 5px 0px 0px;
+}
+.wbcom-settings-section-options input[type=radio]:checked::before {
+    width: 18px;
+    height: 18px;
+    margin: 4px;
+    background-color: #2a32ef;
+}
+
 
 .wbcom-settings-section-options.wbcom-settings-section-options-flex a.button-secondary {
     height: 40px;
@@ -486,13 +506,13 @@ ul.wbcom-addons-plugins-links li {
     box-shadow: 0px 8px 20px rgba(32, 53, 85, 0.25);
 }
 
-.wbcom-bp-addons-plugins-title-section a.wbcom-addons-button:hover {
-    background: #272B41;
-}
-
 .wbcom-bp-addons-plugins-title-section .wbcom-addons-plugins-links li a:focus {
     box-shadow: none !important;
     outline: none !important;
+}
+
+.wbcom-bp-addons-plugins-title-section a.wbcom-addons-button:hover {
+    background: #272B41;
 }
 
 .wbcom-addon-plugins-inner-wrapper {
@@ -617,7 +637,7 @@ ul.wbcom-addons-plugins-links li {
 
 #wbcom_admin_content_support p {
     font-size: 16px;
-    color: #4c5261;
+    color: #000;
 }
 
 ul#wbcom_support_list {
@@ -1185,6 +1205,92 @@ input:checked+.wb-slider:before {
     background-color: #ffffff;
 }
 
+
+/*=========================
+ FAQ's
+=========================*/
+#wbcom-faq-settings-section {
+    position: relative;
+    margin: 20px 0 0;
+    padding: 20px 30px;
+    box-shadow: none;
+    background: #F6F7FE;
+    font-size: 15px;
+    line-height: 2.1em;
+    overflow: hidden;
+    border-radius: 12px;
+}
+.wbcom-faq-section-row{
+    align-self: flex-start;
+    width: auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px 25px;
+    padding-right: 40px;
+    margin: 12px 0;
+    border: 1px solid rgba(200, 197, 218, 0.50);
+    box-shadow: 0 15px 36px rgba(32, 53, 85, 0.15);
+    transition: all 0.6s ease 0s;
+    position: relative;
+}
+.wbcom-faq-section-row:hover {
+    background-color: #2A32EF;
+    border-color: #2A32EF;
+}
+.wbcom-faq-section-row:hover p,
+.wbcom-faq-section-row:hover
+button.wbcom-faq-accordion:after,
+.wbcom-faq-section-row:hover button.wbcom-faq-accordion {
+    color: #fff;
+}
+button.wbcom-faq-accordion {
+    border: medium none;
+    color: #333;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    outline: medium none;
+    text-align: left;
+    padding: 0;
+    background-color: transparent;
+    transition: all 0.4s ease 0s;
+    width: 100%;
+}
+button.wb-ads-accordion.active, button.wb-ads-accordion:hover {
+    color: #2A32EF;
+}
+div.wbcom-faq-panel {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    margin:0px;
+}
+button.wbcom-faq-accordion::after {
+    color: hsl(0, 0%, 47%);
+    content: "+";
+    float: right;
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 5px;
+    right: 15px;
+    position: absolute;
+    top: 10px;
+}
+button.wbcom-faq-accordion:hover::after {
+    color: white;
+}
+button.wbcom-faq-accordion.active::after {
+    content: "−";
+    color:white;
+}
+.wbcom-faq-admin-row {
+    clear: both;
+}
+div.wbcom-faq-panel p {
+    font-size: 15px;
+    margin: 5px 0 0;
+}
 
 
 
