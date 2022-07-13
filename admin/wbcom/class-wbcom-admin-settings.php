@@ -170,8 +170,8 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 					'wbcom_plugin_installer_params',
 					array(
 						'ajax_url'        => admin_url( 'admin-ajax.php' ),
-						'activate_text'   => esc_html__( 'Activate', 'bp-display-xprofile' ),
-						'deactivate_text' => esc_html__( 'Deactivate', 'bp-display-xprofile' ),
+						'activate_text'   => esc_html__( 'Activate', 'bp-redirect' ),
+						'deactivate_text' => esc_html__( 'Deactivate', 'bp-redirect' ),
 						'nonce'           => wp_create_nonce( 'wbcom_admin_setting_nonce' ),
 					)
 				);
@@ -194,24 +194,24 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		public function wbcom_admin_additional_pages() {
 			add_submenu_page(
 				'wbcomplugins',
-				esc_html__( 'Our Plugins', 'bp-display-xprofile' ),
-				esc_html__( 'Our Plugins', 'bp-display-xprofile' ),
+				esc_html__( 'Our Plugins', 'bp-redirect' ),
+				esc_html__( 'Our Plugins', 'bp-redirect' ),
 				'manage_options',
 				'wbcom-plugins-page',
 				array( $this, 'wbcom_plugins_submenu_page_callback' )
 			);
 			add_submenu_page(
 				'wbcomplugins',
-				esc_html__( 'Our Themes', 'bp-display-xprofile' ),
-				esc_html__( 'Our Themes', 'bp-display-xprofile' ),
+				esc_html__( 'Our Themes', 'bp-redirect' ),
+				esc_html__( 'Our Themes', 'bp-redirect' ),
 				'manage_options',
 				'wbcom-themes-page',
 				array( $this, 'wbcom_themes_submenu_page_callback' )
 			);
 			add_submenu_page(
 				'wbcomplugins',
-				esc_html__( 'Support', 'bp-display-xprofile' ),
-				esc_html__( 'Support', 'bp-display-xprofile' ),
+				esc_html__( 'Support', 'bp-redirect' ),
+				esc_html__( 'Support', 'bp-redirect' ),
 				'manage_options',
 				'wbcom-support-page',
 				array( $this, 'wbcom_support_submenu_page_callback' )
@@ -277,19 +277,19 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 						<li class="wb_admin_nav_item <?php echo esc_attr( $settings_active ); ?>">
 							<a href="<?php echo esc_url( get_admin_url() ) . 'admin.php?page=wbcomplugins'; ?>" id="wb_admin_nav_trigger_settings">
 								<i class="fa fa-sliders"></i>
-								<h4><?php esc_html_e( 'Settings', 'bp-display-xprofile' ); ?></h4>
+								<h4><?php esc_html_e( 'Settings', 'bp-redirect' ); ?></h4>
 							</a>
 						</li>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $plugin_active ); ?>">
 							<a href="<?php echo esc_url( get_admin_url() ) . 'admin.php?page=wbcom-plugins-page'; ?>" id="wb_admin_nav_trigger_extensions">
 								<i class="fa fa-th"></i>
-								<h4><?php esc_html_e( 'Themes & Extension', 'bp-display-xprofile' ); ?></h4>
+								<h4><?php esc_html_e( 'Themes & Extension', 'bp-redirect' ); ?></h4>
 							</a>
 						</li>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $support_active ); ?>">
 							<a href="<?php echo esc_url( get_admin_url() ) . 'admin.php?page=wbcom-support-page'; ?>" id="wb_admin_nav_trigger_support">
 								<i class="fa fa-question-circle"></i>
-								<h4><?php esc_html_e( 'Support', 'bp-display-xprofile' ); ?></h4>
+								<h4><?php esc_html_e( 'Support', 'bp-redirect' ); ?></h4>
 							</a>
 						</li>
 						<?php do_action( 'wbcom_add_header_menu' ); ?>
