@@ -9,8 +9,7 @@
 	<div class="wbcom-wrap wbcom-plugin-wrapper">
 		<div class="wbcom_admin_header-wrapper">
 			<div id="wb_admin_plugin_name">
-				<?php esc_html_e( 'BuddyPress Redirect', 'bp-redirect' ); ?>
-				<span><?php printf( __( 'Version %s', 'bp-redirect' ), REDIRECT_PLUGIN_VERSION ); ?></span>
+				<?php esc_html_e( 'Help & Support', 'bp-redirect' ); ?>
 			</div>
 			<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 		</div>        
