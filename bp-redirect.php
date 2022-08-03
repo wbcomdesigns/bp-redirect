@@ -10,7 +10,7 @@
  * Plugin Name:       Wbcom Designs - BuddyPress Redirect
  * Plugin URI:        https://wbcomdesigns.com/contact/
  * Description:       This plugin allows login and logout redirect according to the user role.
- * Version:           1.7.0
+ * Version:           1.7.1
  * Author:            Wbcom Designs <admin@wbcomdesigns.com>
  * Author URI:        https://wbcomdesigns.com/contact/
  * License:           GPL-2.0+
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 if ( ! defined( 'REDIRECT_PLUGIN_VERSION' ) ) {
-	define( 'REDIRECT_PLUGIN_VERSION', '1.7.0' );
+	define( 'REDIRECT_PLUGIN_VERSION', '1.7.1' );
 }
 
 if ( ! defined( 'BP_REDIRECT_PLUGIN_PATH' ) ) {
