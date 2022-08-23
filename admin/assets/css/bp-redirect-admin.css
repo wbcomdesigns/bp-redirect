@@ -6,32 +6,36 @@
 /* Layout helpers
 ----------------------------------*/
 .wbcom-settings-section-options-heading label {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
+
 .nav-tab-wrapper ul li.bp-redirect-role-settings a.nav-tab:before {
-    content: "\f172";
+  content: "\f172";
 }
+
 .nav-tab-wrapper ul li.bp-redirect-mem-type-settings a.nav-tab:before {
-    content: "\f504";
+  content: "\f504";
 }
+
 .wbcom-settings-section-wrap .bpr-col-12 {
-    padding: 0 !important;
+  padding: 0 !important;
 }
+
 .wbcom-settings-section-wrap .ui-accordion.ui-widget select {
-    border-radius: 7px;
-    box-shadow: none;
-    height: 40px;
-    border-color: #e0e0e0;
-    background-color: #fafafa;
+  border-radius: 7px;
+  box-shadow: none;
+  height: 40px;
+  border-color: #e0e0e0;
+  background-color: #fafafa;
 }
 
 .wbcom-admin-settings-page div#bpredirect-settings_updated {
-    display: none !important;
+  display: none !important;
 }
 
 .wbcom-settings-section-wrap .bpr-col-12 h2 {
-    font-size: 16px;
-    color: #2a32ef;
+  font-size: 16px;
+  color: #2a32ef;
 }
 
 .ui-helper-hidden {
@@ -123,15 +127,15 @@
 }
 
 .ui-accordion .ui-accordion-header {
-    display: block;
-    cursor: pointer;
-    position: relative;
-    margin: 2px 0 0 0;
-    font-size: 100%;
-    border-radius: 10px;
-    padding: 14px 20px !important;
-    border-color: #ddd;
-    font-weight: 600;
+  display: block;
+  cursor: pointer;
+  position: relative;
+  margin: 2px 0 0 0;
+  font-size: 100%;
+  border-radius: 10px;
+  padding: 14px 20px !important;
+  border-color: #ddd;
+  font-weight: 600;
 }
 
 .ui-accordion .ui-accordion-content {
@@ -143,7 +147,7 @@
 }
 
 .ui-accordion .ui-accordion-content .bpr-col-4 {
-    height: 25px;
+  height: 25px;
 }
 
 .ui-autocomplete {
@@ -1441,8 +1445,8 @@ a.ui-button:active,
 }
 
 .bp-redirect-settings-spinner {
-    margin-left: 10px;
-    vertical-align: middle;
+  margin-left: 10px;
+  vertical-align: middle;
 }
 
 #bpredirect-settings_updated,
@@ -1452,9 +1456,9 @@ a.ui-button:active,
 
 
 .ui-accordion .ui-accordion-header-active {
-    background: #2a32ef;
-    border: 1px solid #2a32ef;
-    border-radius: 10px 10px 0 0;
+  background: #2a32ef;
+  border: 1px solid #2a32ef;
+  border-radius: 10px 10px 0 0;
 }
 
 #bpr-login-settings-form .ui-icon,
@@ -1592,7 +1596,7 @@ a.ui-button:active,
 
 @media(max-width: 767px) {
   [class*="bpr-col-"] {
-	width: 100%;
+    width: 100%;
   }
 }
 
@@ -1600,11 +1604,11 @@ a.ui-button:active,
 .bpr-login-custom,
 .bpr-logout-component,
 .bpr-logout-custom {
-  display: none!important;
+  display: none !important;
 }
 
 .bpr_show {
-  display: block!important;
+  display: block !important;
 }
 
 input[type="checkbox"].bp-redirect-toggle-checkbox {
@@ -1699,7 +1703,7 @@ input[type="checkbox"].wppd-ui-toggle:focus {
 
 input[type="checkbox"].wppd-ui-toggle:after {
   content: '';
-  font-size:12px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 32px;
   text-indent: -20px;
@@ -1712,16 +1716,16 @@ input[type="checkbox"].wppd-ui-toggle:after {
 }
 
 input[type="checkbox"].wppd-ui-toggle:before {
-    content: '';
-    width: 18px;
-    height: 18px;
-    display: block;
-    position: absolute;
-    top: 6px;
-    left: 7px;
-    margin: 0;
-    border-radius: 50%;
-    background-color: #ffffff;
+  content: '';
+  width: 18px;
+  height: 18px;
+  display: block;
+  position: absolute;
+  top: 6px;
+  left: 7px;
+  margin: 0;
+  border-radius: 50%;
+  background-color: #ffffff;
 }
 
 input[type="checkbox"].wppd-ui-toggle:checked:before {
@@ -1745,20 +1749,20 @@ input[type="checkbox"].wppd-ui-toggle:checked:after {
 
 form.user-role-setting .enable_disable_btn,
 .bpr-row.bpr-row-wrapper {
-    background: #fff;
-    padding: 20px;
-    margin: 0;
-    border: 1px solid #eee;
+  background: #fff;
+  padding: 20px;
+  margin: 0;
+  border: 1px solid #eee;
 }
 
-.bpr-row.bpr-row-wrapper{
+.bpr-row.bpr-row-wrapper {
   margin-top: 30px;
 }
 
 
-.enable_disable_setting{
+.enable_disable_setting {
   font-size: 16px;
-    font-weight: 500;
+  font-weight: 500;
 }
 
 
@@ -1771,76 +1775,89 @@ form.user-role-setting .enable_disable_btn,
 
 /*************** SUPPORT ***************/
 
-.bpr-adming-setting{
-	float: left;
-	width: 90%;
+.bpr-adming-setting {
+  float: left;
+  width: 90%;
 }
+
 button.bpr-accordion {
-	background-color: hsl(0, 0%, 87%);
-	border: medium none;
-	color: hsl(0, 0%, 27%);
-	cursor: pointer;
-	font-size: 15px;
-	margin: 0;
+  background-color: hsl(0, 0%, 87%);
+  border: medium none;
+  color: hsl(0, 0%, 27%);
+  cursor: pointer;
+  font-size: 15px;
+  margin: 0;
   font-weight: 500;
-	outline: medium none;
-	padding: 15px 20px;
-	text-align: left;
-	transition: all 0.4s ease 0s;
-	width: 100%;
+  outline: medium none;
+  padding: 15px 20px;
+  text-align: left;
+  transition: all 0.4s ease 0s;
+  width: 100%;
 }
 
 .bpr-panel {
-	padding: 0 18px;
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 0.2s ease-out;
-	margin:0px;
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  margin: 0px;
 }
+
 button.bpr-accordion::after {
-	color:#fff;
-	content: "+";
-	float: right;
-	font-size:18px;
-	font-weight: bold;
-	margin-left: 5px;
+  color: #fff;
+  content: "+";
+  float: right;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 5px;
 }
+
 button.bpr-accordion::after:hover {
-	color: white;
+  color: white;
 }
+
 button.bpr-accordion.active::after {
-	content: "−";
-	color:white;
-  font-size:18px;
-	font-weight: bold;
+  content: "−";
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
 }
+
 .bpr-accordion-row {
-	clear: both;
-	overflow: hidden;
-	padding-bottom: 5px;
+  clear: both;
+  overflow: hidden;
+  padding-bottom: 5px;
 }
-.bpr-tab-header h3{
-	margin-left: 5%;
+
+.bpr-tab-header h3 {
+  margin-left: 5%;
 }
+
 .bpr-header {
-	float: left;
-	width: 100%;
-	padding: 10px 0px;
+  float: left;
+  width: 100%;
+  padding: 10px 0px;
 }
+
 .bpr-header .bpr-plugin-heading {
-	float: left;
-	margin: 0px;
+  float: left;
+  margin: 0px;
 }
+
 .bpr-header .bpr-extra-actions {
-	float: right;
-	padding-bottom: 10px;
+  float: right;
+  padding-bottom: 10px;
 }
-.notice-success, div.updated {
-	clear: both;
+
+.notice-success,
+div.updated {
+  clear: both;
 }
-.bpr-selection-tags a{
-	text-decoration: none;
+
+.bpr-selection-tags a {
+  text-decoration: none;
 }
+
 .nav-tab-wrapper ul .bp-redirect-faq a.nav-tab:before {
   content: "\f101" !important;
 }
@@ -1951,4 +1968,9 @@ button.bpr-accordion.active::after {
 
 .nav-tab-wrapper ul .bpmmd_general_settings a:before {
   content: "\f111" !important;
+}
+
+.wbcom-wrap .notice.notice-error.is-dismissible.learndash-license-is-dismissible,
+#wpwrap .notice.notice-error {
+  display: none !important;
 }
