@@ -1436,7 +1436,7 @@ a.ui-button:active,
 #bpr-login-settings-form,
 #bpr-logout-settings-form {
   margin-top: 10px;
-  width: 98%;
+  width: 100%;
 }
 
 #bpr-login-settings-form .group,
@@ -1759,6 +1759,10 @@ form.user-role-setting .enable_disable_btn,
   margin-top: 30px;
 }
 
+.bpr-row.wbcom-settings-section-wrap .row,
+.bpr-row.bpr-row-wrapper .row{
+  margin: 0px;
+}
 
 .enable_disable_setting {
   font-size: 16px;
