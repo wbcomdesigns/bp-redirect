@@ -292,7 +292,7 @@ class BP_Redirect_Public {
 			if ( '404' === $url_headers ) {
 				$url[0] = get_home_url();
 			}
-			return issset( $url[0] ) ? $url[0] : home_url();
+			return isset( $url[0] ) ? $url[0] : home_url();
 		}
 	}
 
