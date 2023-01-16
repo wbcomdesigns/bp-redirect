@@ -60,8 +60,9 @@ class BP_Redirect_Public {
 	 */
 	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
+			$url_headers      = '';
 			$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );
-			$setting          = $saved_setting['bp_login_redirect_settings'];
+			$setting          = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : '';
 			$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID, false ) : array();
 			$user_data        = get_userdata( $user->ID );
 			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles : array();
@@ -82,11 +83,11 @@ class BP_Redirect_Public {
 			if ( is_array( $url ) && isset( $url[0] ) ) {
 				$url_headers = $this->get_url_status( $url[0] );
 			}
+
 			if ( '404' === $url_headers ) {
 				$url[0] = get_home_url();
 			}
-
-			return $url[0];
+			return isset( $url[0] ) ? $url[0] : home_url();
 		}
 	}
 
@@ -267,8 +268,9 @@ class BP_Redirect_Public {
 	 */
 	public function bp_logout_redirection_front( $redirect_to, $request = '', $user = '' ) {
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
+			$url_headers      = '';
 			$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );
-			$setting          = $saved_setting['bp_logout_redirect_settings'];
+			$setting          = isset( $saved_setting['bp_logout_redirect_settings'] ) ? $saved_setting['bp_logout_redirect_settings'] : '';
 			$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID ) : '';
 			$user_data        = get_userdata( $user->ID );
 			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles[0] : '';
@@ -290,7 +292,7 @@ class BP_Redirect_Public {
 			if ( '404' === $url_headers ) {
 				$url[0] = get_home_url();
 			}
-			return $url[0];
+			return issset( $url[0] ) ? $url[0] : home_url();
 		}
 	}
 
