@@ -136,6 +136,7 @@
   padding: 14px 20px !important;
   border-color: #ddd;
   font-weight: 600;
+  padding-right: 20px !important;
 }
 
 .ui-accordion .ui-accordion-content {
@@ -1459,12 +1460,15 @@ a.ui-button:active,
   background: #2a32ef;
   border: 1px solid #2a32ef;
   border-radius: 10px 10px 0 0;
+  color: #fff;
 }
 
 #bpr-login-settings-form .ui-icon,
 #bpr-logout-settings-form .ui-icon,
 #bpr-global-settings-form .ui-icon {
   float: right;
+  position: unset;
+  margin:0;
 }
 
 .tooltip {
