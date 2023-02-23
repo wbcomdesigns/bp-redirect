@@ -210,20 +210,7 @@ function bpr_requires_buddypress() {
 
 add_action( 'admin_init', 'bpr_requires_buddypress' );
 
-/**
- * Redirect to plugin settings page after activated.
- *
- * @param string $plugin Get a plugin base url.
- */
-function bp_redirect_activation_redirect_settings( $plugin ) {
-	if ( class_exists( 'Buddypress' ) ) {
-		if ( plugin_basename( __FILE__ ) === $plugin ) {
-			wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
-			exit;
-		}
-	}
-}
-add_action( 'activated_plugin', 'bp_redirect_activation_redirect_settings' );
+
 
 /**
  * Throw an Alert to tell the Admin why it didn't activate.
@@ -245,11 +232,13 @@ function bpr_required_plugin_admin_notice() {
  *
  * @param string $plugin Path to the plugin file relative to the plugins directory.
  */
-function bpr_activation_redirect_settings( $plugin ) {
+function bp_redirect_activation_redirect_settings( $plugin ) {
 
 	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'Buddypress' ) ) {
-		wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
-		exit;
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) {
+			wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
+			exit;
+		}
 	}
 }
-add_action( 'activated_plugin', 'bpr_activation_redirect_settings' );
+add_action( 'activated_plugin', 'bp_redirect_activation_redirect_settings' );
