@@ -21,12 +21,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if(class_exists( 'Buddypress' )){
 			$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
 			$bp_pages      = bp_get_option( 'bp-pages' );
+			$bp_pages_ids  = array_values( $bp_pages );
 		}else{
 			$saved_setting = '';
 			$bp_pages      = get_pages();
+			$bp_pages_ids  = array_values( $bp_pages );
 		}
 		
-		$bp_pages_ids  = array_values( $bp_pages );
 		$loginSequence = $this->get_editable_roles();
 
 if ( ! empty( $saved_setting ) ) {
@@ -97,7 +98,7 @@ if ( ! empty( $saved_setting ) ) {
 					<div class="bpr-col-12">
 					<!-- login Settings -->
 					<h2><?php esc_html_e( 'Login Redirect Settings', 'bp-redirect' ); ?></h2>
-					<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+					<?php $this->bp_redirect_plugin_global_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
 				</div>
 					</div>
 			</div>
@@ -110,12 +111,12 @@ if ( ! empty( $saved_setting ) ) {
 				<div class="bpr-col-12">
 					<!-- Logout Settings -->
 					<h2><?php esc_html_e( 'Logout Redirect Settings', 'bp-redirect' ); ?></h2>
-				<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
+				<?php $this->bp_redirect_plugin_global_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
 					</div>
 					</div>
 			</div>
 			<p>
-				<button id="bp-redirect-settings-submit" class="button button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
+				<button id="bp-redirect-globel-settings-submit" class="button button-primary" name="bp-redirect-globel-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
 			</p>
 			<div id="bpredirect-settings_updated-footer" class="" style="display:none">
 				<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>		

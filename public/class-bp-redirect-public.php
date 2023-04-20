@@ -61,7 +61,7 @@ class BP_Redirect_Public {
 	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
 			$url_headers      = '';
-			$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );
+			$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );				
 			$setting          = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : '';
 			$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID, false ) : array();
 			$user_data        = get_userdata( $user->ID );
