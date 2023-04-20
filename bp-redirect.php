@@ -56,12 +56,18 @@ if ( ! defined( 'BP_REDIRECT_PLUGIN_BASENAME' ) ) {
  * this plugin requires BuddyPress to be installed and active
  */
 function bpr_plugin_init() {
-	if ( bpr_check_config() ) {
+	if(class_exists( 'Buddypress' )){
+		if ( bpr_check_config() ) {
+			run_bp_redirect();
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bpr_plugin_links' );
+		}
+	}else{
 		run_bp_redirect();
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bpr_plugin_links' );
 	}
+	
 }
-add_action( 'bp_loaded', 'bpr_plugin_init' );
+add_action( 'wp_loaded', 'bpr_plugin_init' );
 
 /**
  * BP Redirect checks the configuration.
@@ -201,10 +207,10 @@ function run_bp_redirect() {
  *  Check if buddypress activate.
  */
 function bpr_requires_buddypress() {
-	if ( ! class_exists( 'Buddypress' ) ) {
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-		add_action( 'admin_notices', 'bpr_required_plugin_admin_notice' );
-	}
+	// if ( ! class_exists( 'Buddypress' ) ) {
+	// 	deactivate_plugins( plugin_basename( __FILE__ ) );
+	// 	add_action( 'admin_notices', 'bpr_required_plugin_admin_notice' );
+	// }
 
 }
 
@@ -234,7 +240,7 @@ function bpr_required_plugin_admin_notice() {
  */
 function bp_redirect_activation_redirect_settings( $plugin ) {
 
-	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'Buddypress' ) ) {
+	if ( plugin_basename( __FILE__ ) === $plugin || class_exists( 'Buddypress' ) ) {
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) {
 			wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
 			exit;

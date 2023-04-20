@@ -16,6 +16,12 @@ jQuery(document).ready(function ($) {
         .children()
         .find(".bpr-login-component")
         .addClass("bpr_show");
+      jQuery(this)
+        .parent()
+        .parent()
+        .children()
+        .find(".bpr-login-cutom-component")
+        .addClass("bpr_show");
     } else if (type == "none") {
       jQuery(this)
         .parent()
@@ -29,6 +35,12 @@ jQuery(document).ready(function ($) {
         .children()
         .find(".bpr-login-component")
         .removeClass("bpr_show");
+      jQuery(this)
+        .parent()
+        .parent()
+        .children()
+        .find(".bpr-login-cutom-component")
+        .removeClass("bpr_show");
     } else {
       jQuery(this)
         .parent()
@@ -41,6 +53,12 @@ jQuery(document).ready(function ($) {
         .parent()
         .children()
         .find(".bpr-login-custom")
+        .addClass("bpr_show");
+      jQuery(this)
+        .parent()
+        .parent()
+        .children()
+        .find(".bpr-login-cutom-component")
         .addClass("bpr_show");
     }
   });
@@ -168,7 +186,65 @@ jQuery(document).ready(function ($) {
       }
     );
   });
+
+
+  jQuery("#bp-redirect-globel-settings-submit").on("click", function () {
+    var loginRoleSequence = [];
+    var logoutRoleSequence = [];
+    var global_settings_form = jQuery("#bpr-global-settings-form").serialize();
+    var login_settings_form = jQuery("#bpr-login-settings-form").serialize();
+    var logout_settings_form = jQuery("#bpr-logout-settings-form").serialize();
+    var enable_disable_setting = "";
+    var enable_disable_role_setting = "";
+    if (jQuery('input[name="bp_enable_disable_member_checkbox"]').length) {
+      enable_disable_setting = jQuery(
+        'input[name="bp_enable_disable_member_checkbox"]'
+      ).val();
+    }
+    if (jQuery('input[name="bp_enable_disable_role_checkbox"]').length) {
+      enable_disable_role_setting = jQuery(
+        'input[name="bp_enable_disable_role_checkbox"]'
+      ).val();
+    }
+    jQuery("#bpr-login-settings-form .group").each(function () {
+      if (jQuery(this).attr("id").trim() != "") {
+        loginRoleSequence.push(jQuery(this).attr("id"));
+      }
+    });
+    jQuery("#bpr-logout-settings-form .group").each(function () {
+      if (jQuery(this).attr("id").trim() != "") {
+        logoutRoleSequence.push(jQuery(this).attr("id"));
+      }
+    });
+    loginRoleSequence = loginRoleSequence.join();
+    logoutRoleSequence = logoutRoleSequence.join();
+    jQuery(".bp-redirect-settings-spinner").show();
+    jQuery.post(
+      ajaxurl,
+      {
+        action: "bp_redirect_global_admin_settings",
+        nonce: bp_redirect_ajax_nonce.nonce,
+        global_details: global_settings_form,
+        enable_disable_setting: enable_disable_setting,
+        enable_disable_role_setting: enable_disable_role_setting,
+        login_details: login_settings_form,
+        logout_details: logout_settings_form,
+        loginSequence: loginRoleSequence,
+        logoutSequence: logoutRoleSequence,
+      },
+      function () {
+        jQuery(".bp-redirect-settings-spinner").hide();
+        jQuery("#bpredirect-settings_updated").show();
+        jQuery("#bpredirect-settings_updated-footer").show();
+        jQuery("#bpredirect-settings_updated-footer").addClass(
+          "updated settings-error notice "
+        );
+      }
+    );
+  });
+
 });
+
 jQuery(document).ready(function () {
   jQuery("#bp_red_enable_disable").on("click", function () {
     if (jQuery(this).prop("checked") == true) {
