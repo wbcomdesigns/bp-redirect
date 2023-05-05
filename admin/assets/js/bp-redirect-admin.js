@@ -192,7 +192,7 @@ jQuery(document).ready(function ($) {
     var loginRoleSequence = [];
     var logoutRoleSequence = [];
     var global_settings_form = jQuery("#bpr-global-settings-form").serialize();
-    var login_settings_form = jQuery("#bpr-login-settings-form").serialize();
+    var login_settings_form = jQuery("#bpr-login-settings-form-global").serialize();
     var logout_settings_form = jQuery("#bpr-logout-settings-form").serialize();
     var enable_disable_setting = "";
     var enable_disable_role_setting = "";
@@ -206,7 +206,7 @@ jQuery(document).ready(function ($) {
         'input[name="bp_enable_disable_role_checkbox"]'
       ).val();
     }
-    jQuery("#bpr-login-settings-form .group").each(function () {
+    jQuery("#bpr-login-settings-form-global .group").each(function () {
       if (jQuery(this).attr("id").trim() != "") {
         loginRoleSequence.push(jQuery(this).attr("id"));
       }
@@ -222,7 +222,7 @@ jQuery(document).ready(function ($) {
     jQuery.post(
       ajaxurl,
       {
-        action: "bp_redirect_global_admin_settings",
+        action: "bp_redirect_admin_settings_global",
         nonce: bp_redirect_ajax_nonce.nonce,
         global_details: global_settings_form,
         enable_disable_setting: enable_disable_setting,

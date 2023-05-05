@@ -59,36 +59,63 @@ class BP_Redirect_Public {
 	 *  @access public
 	 */
 	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
-		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
-			$url_headers      = '';
-			$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );				
-			$setting          = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : '';
-			$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID, false ) : array();
-			$user_data        = get_userdata( $user->ID );
-			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles : array();
-			$url              = array();
-			if ( ! empty( $setting ) ) {
-				if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
-					$bp_member_key = $user_member_type;
-
-					$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-
-				} elseif ( ! empty( array_intersect_key( array_flip( $user_role ), $setting ) ) && isset( $saved_setting['role_btn_value'] ) && 'yes' == $saved_setting['role_btn_value'] ) {
-					$bp_member_key = $user_role;
-					$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-				} else {
-					$url[] = $this->bpr_redirect_general( $user );
+			if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
+				$url_headers      = '';
+				if(class_exists( 'Buddypress' )){					
+					$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );
+					$setting          = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : '';	
+				}else{
+					$saved_setting    = get_option( 'bp_redirect_admin_settings' );
+					$setting          = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : '';	
+					
+					$saved_settings    = get_option( 'bp_redirect_admin_settings_global' );
+					$setting_global   = isset( $saved_settings['bp_login_redirect_settings_global'] ) ? $saved_settings['bp_login_redirect_settings_global'] : '';
+				}		
+				
+				if(class_exists( 'Buddypress' )){					
+					$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID, false ) : array();					
+				}else{
+					$user_member_type = array();
 				}
-			}
-			if ( is_array( $url ) && isset( $url[0] ) ) {
-				$url_headers = $this->get_url_status( $url[0] );
-			}
+				
+				$user_data        = get_userdata( $user->ID );
+				$user_role        = ! empty( $user_data->roles ) ? $user_data->roles : array();
+				// for global rediract chcek the role
+				$user_roles        = ! empty( $user_data->roles ) ? $user_data->roles : array();
+				$url              = array();
+				if ( ! empty( $setting ) ) {
+					
+					if(isset($setting[$user_roles[0]]['login_type']) && $setting[$user_roles[0]]['login_type'] != 'none' && !empty($setting[$user_roles[0]]['login_type'])){
+						if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
+							$bp_member_key = $user_member_type;
 
-			if ( '404' === $url_headers ) {
-				$url[0] = get_home_url();
+							$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+
+						} elseif ( ! empty( array_intersect_key( array_flip( $user_role ), $setting ) ) && isset( $saved_setting['role_btn_value'] ) && 'yes' == $saved_setting['role_btn_value'] ) {
+								$bp_member_key = $user_role;
+								$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );					
+						} else {
+							$url[] = $this->bpr_redirect_general( $user );
+						}
+					}else{
+						$url[] = $setting_global['global']['login_url'];
+					}
+				}else if(!empty($setting_global)){
+
+					$url[] = $setting_global['global']['login_url'];	
+
+				}
+				
+				
+				if ( is_array( $url ) && isset( $url[0] ) ) {
+					$url_headers = $this->get_url_status( $url[0] );
+				}
+
+				if ( '404' === $url_headers ) {
+					$url[0] = get_home_url();
+				}
+				return isset( $url[0] ) ? $url[0] : home_url();
 			}
-			return isset( $url[0] ) ? $url[0] : home_url();
-		}
 	}
 
 	/**
@@ -269,9 +296,18 @@ class BP_Redirect_Public {
 	public function bp_logout_redirection_front( $redirect_to, $request = '', $user = '' ) {
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
 			$url_headers      = '';
-			$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );
+			if(class_exists( 'Buddypress' )){					
+				$saved_setting    = bp_get_option( 'bp_redirect_admin_settings' );	
+			}else{
+				$saved_setting    = get_option( 'bp_redirect_admin_settings_global' );
+			}				
 			$setting          = isset( $saved_setting['bp_logout_redirect_settings'] ) ? $saved_setting['bp_logout_redirect_settings'] : '';
-			$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID ) : '';
+			if(class_exists( 'Buddypress' )){					
+				$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID ) : '';
+			}else{
+				$user_member_type = '';
+			}
+			
 			$user_data        = get_userdata( $user->ID );
 			$user_role        = ! empty( $user_data->roles ) ? $user_data->roles[0] : '';
 			$url              = array();
