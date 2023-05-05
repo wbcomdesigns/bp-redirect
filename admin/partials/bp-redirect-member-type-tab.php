@@ -32,8 +32,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	$spinner_src   = includes_url() . 'images/spinner.gif';
-	$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
-	$bp_pages      = bp_get_option( 'bp-pages' );
+	if(class_exists( 'Buddypress' )){
+		$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
+		$bp_pages      = bp_get_option( 'bp-pages' );
+	}else{
+		$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
+		$bp_pages      = get_pages();
+	}
 	$bp_pages_ids  = array_values( $bp_pages );
 	$loginSequence = $member_types;
 
@@ -41,8 +46,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( array_key_exists( 'loginSequence', $saved_setting ) ) {
 			$seq = explode( ',', $saved_setting['loginSequence'] );
 			foreach ( $seq as $key => $val ) {
-				$val_arr     = explode( '-', $val );
-				$seq[ $key ] = $val_arr[1];
+				$val_arr     = $val;
+				$seq[ $key ] = $val_arr;
 			}
 			if ( ! empty( $seq ) ) {
 				uksort(
@@ -60,8 +65,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( array_key_exists( 'logoutSequence', $saved_setting ) ) {
 			$logoutseq = explode( ',', $saved_setting['logoutSequence'] );
 			foreach ( $logoutseq as $key => $val ) {
-				$val_arr           = explode( '-', $val );
-				$logoutseq[ $key ] = $val_arr[1];
+				$val_arr           = $val;
+				$logoutseq[ $key ] = $val_arr;
 			}
 			if ( ! empty( $logoutseq ) ) {
 				uksort(
