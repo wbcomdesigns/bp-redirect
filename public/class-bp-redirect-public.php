@@ -104,19 +104,23 @@ class BP_Redirect_Public
 					$url[] = $setting_global['global']['login_url'];
 				}
 			} else if (!empty($setting_global)) {
-
 				$url[] = $setting_global['global']['login_url'];
 			}
-
-
-			if (is_array($url) && isset($url[0])) {
-				$url_headers = $this->get_url_status($url[0]);
+			
+			if(isset($url[0]) && !empty($url[0])){
+				if (is_array($url) && isset($url[0])) {
+					$url_headers = $this->get_url_status($url[0]);
+				}
+	
+				if ('404' === $url_headers) {
+					$url[0] = get_home_url();
+				}
+				$url_redirect = isset($url[0]) ? $url[0] : home_url();
+				wp_redirect($url_redirect);
+				exit();
+			}else{
+				return home_url();
 			}
-
-			if ('404' === $url_headers) {
-				$url[0] = get_home_url();
-			}
-			return isset($url[0]) ? $url[0] : home_url();
 		}
 	}
 
@@ -346,13 +350,20 @@ class BP_Redirect_Public
 				$url[] = $setting_global['global']['logout_url'];
 			}
 
-			if (is_array($url) && isset($url[0])) {
-				$url_headers = $this->get_url_status($url[0]);
+			if(isset($url[0]) && !empty($url[0])){
+				if (is_array($url) && isset($url[0])) {
+					$url_headers = $this->get_url_status($url[0]);
+				}
+	
+				if ('404' === $url_headers) {
+					$url[0] = get_home_url();
+				}
+				$url_redirect = isset($url[0]) ? $url[0] : home_url();
+				wp_redirect($url_redirect);
+				exit();
+			}else{
+				return home_url();
 			}
-			if ('404' === $url_headers) {
-				$url[0] = get_home_url();
-			}
-			return isset($url[0]) ? $url[0] : home_url();
 		}
 	}
 
