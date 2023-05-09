@@ -704,6 +704,7 @@ class BP_Redirect_Admin
 															}
 															?>
 									'>
+									
 									<?php if (class_exists('Buddypress')) { ?>
 										<option value=''><?php esc_html_e('Select', 'bp-redirect'); ?></option>
 										<?php if (bp_is_active('members')) { ?>
@@ -735,12 +736,14 @@ class BP_Redirect_Admin
 										}
 									}
 									?>
-
+									
 									<?php
+									
 									if (class_exists('Buddypress')) {
 										$bp_pages = bp_core_get_directory_page_ids();
 										$pages    = get_pages(array('include' => $bp_pages));
 										foreach ($pages as $page) {
+											
 											if ('Activity' === $page->post_title) {
 												$option  = '<option value="' . get_page_link($page->ID) . '">';
 												$option .= $page->post_title;
@@ -757,6 +760,7 @@ class BP_Redirect_Admin
 												$option .= $page->post_title;
 												$option .= '</option>';
 												echo $option; //phpcs:ignore
+												
 											}
 										}
 									}
@@ -772,10 +776,14 @@ class BP_Redirect_Admin
 															}
 															?>
 									'>
+								
+									<option value="" <?php if(empty($login_url)){ echo 'selected';}?>>Select Page</option>
 									<?php
 									if ($wp_page_ids) {
+										$page_url = [];
 										foreach ($wp_page_ids as $wp_page_id) {
 											$wp_page_url = get_permalink($wp_page_id);
+											$page_url[] = $wp_page_url;
 									?>
 											<option value="<?php echo esc_url($wp_page_url); ?>" <?php selected($login_url, $wp_page_url); ?>>
 												<?php echo esc_html(get_the_title($wp_page_id)); ?>
@@ -783,8 +791,12 @@ class BP_Redirect_Admin
 									<?php
 										}
 									}
+									
 									?>
+									<option value="<?php if(!in_array($login_url, $page_url, true)){ echo $login_url; } ?>" <?php if(!in_array($login_url, $page_url, true)){ echo 'selected'; } ?>>Custom URL</option>
 								</select>
+								
+								<input type="url" name="custom-login-url" id="custom-login-url">
 							</div>
 						</div>
 					</div>
@@ -865,10 +877,14 @@ class BP_Redirect_Admin
 													echo 'bpr_show';
 												}
 												?>">
+												
+									<option value="" <?php if(empty($logout_url)){ echo 'selected';}?>>Select Page</option>
 									<?php
 									if ($wp_page_ids) {
+										$page_url = [];
 										foreach ($wp_page_ids as $wp_page_id) {
 											$wp_page_url = get_permalink($wp_page_id);
+											$page_url[] = $wp_page_url;
 									?>
 											<option value="<?php echo esc_attr($wp_page_url); ?>" <?php selected($logout_url, $wp_page_url); ?>>
 												<?php echo esc_html_e(get_the_title($wp_page_id), 'bp-redirect'); ?>
@@ -877,7 +893,10 @@ class BP_Redirect_Admin
 										}
 									}
 									?>
+									<option value="<?php if(!in_array($logout_url, $page_url, true)){ echo $logout_url; } ?>" <?php if(!in_array($logout_url, $page_url, true)){ echo 'selected'; } ?>>Custom URL</option>
 								</select>
+								<input type="url" name="custom-logout-url" id="custom-logout-url">
+								
 							</div>
 						</div>
 					</div>
