@@ -34,6 +34,11 @@
   background-color: #fafafa;
 }
 
+.wbcom-settings-section-wrap .ui-accordion.ui-widget input#custom-login-url,
+.wbcom-settings-section-wrap .ui-accordion.ui-widget input#custom-logout-url {
+  height: 40px;
+}
+
 .wbcom-admin-settings-page div#bpredirect-settings_updated {
   display: none !important;
 }
@@ -1468,6 +1473,7 @@ a.ui-button:active,
   color: #fff;
 }
 
+#bgr-login-accordion  .ui-icon,
 #bpr-login-settings-form .ui-icon,
 #bpr-logout-settings-form .ui-icon,
 #bpr-global-settings-form .ui-icon {
