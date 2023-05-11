@@ -37,14 +37,14 @@ if ( ! empty( $saved_setting ) ) {
 				$val_arr     = $val;
 				$seq[ $key ] = $val_arr;
 		}
-		if ( ! empty( $seq ) ) {
-			uksort(
-				$loginSequence,
-				function ( $key1, $key2 ) use ( $seq ) {
-					return ( array_search( $key1, $seq ) > array_search( $key2, $seq ) );
-				}
-			);
-		}
+		// if ( ! empty( $seq ) ) {
+		// 	uksort(
+		// 		$loginSequence,
+		// 		function ( $key1, $key2 ) use ( $seq ) {
+		// 			return ( array_search( $key1, $seq ) > array_search( $key2, $seq ) );
+		// 		}
+		// 	);
+		// }
 	}
 }
 
@@ -56,14 +56,14 @@ if ( ! empty( $saved_setting ) ) {
 				$val_arr     = $val;
 				$logoutseq[ $key ] = $val_arr;
 		}
-		if ( ! empty( $logoutseq ) ) {
-			uksort(
-				$logoutSequence,
-				function ( $logoutkey1, $logoutkey2 ) use ( $logoutseq ) {
-					return ( array_search( $logoutkey1, $logoutseq ) > array_search( $logoutkey2, $logoutseq ) );
-				}
-			);
-		}
+		// if ( ! empty( $logoutseq ) ) {
+		// 	uksort(
+		// 		$logoutSequence,
+		// 		function ( $logoutkey1, $logoutkey2 ) use ( $logoutseq ) {
+		// 			return ( array_search( $logoutkey1, $logoutseq ) > array_search( $logoutkey2, $logoutseq ) );
+		// 		}
+		// 	);
+		// }
 	}
 }
 
