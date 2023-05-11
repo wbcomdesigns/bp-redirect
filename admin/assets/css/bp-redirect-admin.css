@@ -9,6 +9,11 @@
   text-transform: capitalize;
 }
 
+.nav-tab-wrapper ul li.bp-redirect-global a.nav-tab:before {
+  content: "\f11f";
+  margin-top: 2px;
+}
+
 .nav-tab-wrapper ul li.bp-redirect-role-settings a.nav-tab:before {
   content: "\f172";
 }
