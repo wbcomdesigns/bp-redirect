@@ -74,7 +74,7 @@ if ( ! empty( $saved_setting ) ) {
 <div class="wbcom-tab-content">
 	<div class="wbcom-wrapper-admin">
 		<div class="wbcom-admin-title-section">
-			<h3><?php esc_html_e( 'Redirect For User Role', 'bp-redirect' ); ?></h3>
+			<h3><?php esc_html_e( 'Global Redirection Setting', 'bp-redirect' ); ?></h3>
 		</div><!-- .wbcom-welcome-head -->
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">			
 			<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible">
@@ -84,7 +84,7 @@ if ( ! empty( $saved_setting ) ) {
 			<form class="user-role-setting" method="post">
 				<div class="enable_disable_btn wbcom-settings-section-wrap">
 					<label for="bp-redirect" class="enable_disable_setting">
-						<?php esc_html_e( 'Enable Setting For User Role', 'bp-redirect' ); ?>
+						<?php esc_html_e( 'Enable Global Redirection for all the users', 'bp-redirect' ); ?>
 					</label>
 					<input type="checkbox" class="wppd-ui-toggle" id="bp_role_enable_disable" name="role_btn_value" value="yes"<?php ( isset( $saved_setting['role_btn_value'] ) ) ? checked( $saved_setting['role_btn_value'], 'yes' ) : ''; ?>>
 					<input type="hidden" name="bp_enable_disable_role_checkbox" value="<?php echo ( isset( $saved_setting['role_btn_value'] ) ) ? esc_attr( $saved_setting['role_btn_value'] ) : 'no'; ?>">

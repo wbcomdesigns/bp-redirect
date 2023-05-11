@@ -385,7 +385,7 @@ class BP_Redirect_Public
 		$logout_component = '';
 		$logout_url       = '';
 		if (array_key_exists($key, $setting)) {
-			if (in_array('buddypress/bp-loader.php', apply_filters('active_plugins', bp_get_option('active_plugins')))) {
+			if (in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 				$logout_component = isset($setting[$key]['logout_component']) ? $setting[$key]['logout_component'] : '';
 			}
 			$logout_url = $setting[$key]['logout_url'];
