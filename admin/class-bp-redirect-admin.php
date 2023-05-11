@@ -198,7 +198,7 @@ class BP_Redirect_Admin
 		$this->plugin_settings_tabs['bp-redirect-welcome'] = __('Welcome', 'bp-redirect');
 		add_settings_section('bp-redirect-welcome-section', ' ', array($this, 'bp_redirect_admin_welcome_content'), 'bp-redirect-welcome');
 
-		$this->plugin_settings_tabs['bp-redirect-global'] = __('Global', 'bp-redirect');
+		$this->plugin_settings_tabs['bp-redirect-global'] = __('Global Redirection', 'bp-redirect');
 		add_settings_section('bp-redirect-global-section', ' ', array($this, 'bp_redirect_admin_global_content'), 'bp-redirect-global');
 
 		$this->plugin_settings_tabs['bp-redirect-role-settings'] = __('Redirect For User Role', 'bp-redirect');
@@ -768,7 +768,9 @@ class BP_Redirect_Admin
 								</select>
 							</div>
 							<div class="bpr-col-4">
-								<?php $wp_page_ids = $this->bp_redirect_get_all_page_ids(); ?>
+								<?php $wp_page_ids = $this->bp_redirect_get_all_page_ids(); 
+								
+								?>
 								<select name='<?php echo esc_attr("bp_login_redirect_settings_global[$key][login_url]"); ?>' class='bpr-login-custom
 															<?php
 															if (isset($login_type_val) && 'custom' === $login_type_val) {
@@ -776,8 +778,8 @@ class BP_Redirect_Admin
 															}
 															?>
 									'>
-								
-									<option value="" <?php if(empty($login_url)){ echo 'selected';}?>>Select Page</option>
+								 
+									<option value="" <?php if(empty($login_url) || $login_url == ''){ echo 'selected';}?>>Select Page</option>
 									<?php
 									if ($wp_page_ids) {
 										$page_url = [];
@@ -793,7 +795,7 @@ class BP_Redirect_Admin
 									}
 									
 									?>
-									<option value="<?php if(!in_array($login_url, $page_url, true)){ echo $login_url; } ?>" <?php if(!in_array($login_url, $page_url, true)){ echo 'selected'; } ?>>Custom URL</option>
+									<option value="<?php if(!empty($login_url) && !in_array($login_url, $page_url, true)){ echo $login_url; } ?>" <?php if(!empty($login_url) && !in_array($login_url, $page_url, true)){ echo 'selected'; } ?>>Custom URL</option>
 								</select>
 								
 								<input type="url" name="custom-login-url" id="custom-login-url">
@@ -878,7 +880,7 @@ class BP_Redirect_Admin
 												}
 												?>">
 												
-									<option value="" <?php if(empty($logout_url)){ echo 'selected';}?>>Select Page</option>
+									<option value="" <?php if(empty($logout_url) || $logout_url == ''){ echo 'selected';}?>>Select Page</option>
 									<?php
 									if ($wp_page_ids) {
 										$page_url = [];
@@ -893,7 +895,7 @@ class BP_Redirect_Admin
 										}
 									}
 									?>
-									<option value="<?php if(!in_array($logout_url, $page_url, true)){ echo $logout_url; } ?>" <?php if(!in_array($logout_url, $page_url, true)){ echo 'selected'; } ?>>Custom URL</option>
+									<option value="<?php if(!empty($logout_url) && !in_array($logout_url, $page_url, true)){ echo $logout_url; } ?>" <?php if(!empty($logout_url) && !in_array($logout_url, $page_url, true)){ echo 'selected'; } ?>>Custom URL</option>
 								</select>
 								<input type="url" name="custom-logout-url" id="custom-logout-url">
 								
