@@ -29,6 +29,7 @@
 .wbcom-settings-section-wrap .ui-accordion.ui-widget select {
   border-radius: 7px;
   box-shadow: none;
+  max-width: 100%;
   height: 40px;
   border-color: #e0e0e0;
   background-color: #fafafa;
@@ -36,7 +37,9 @@
 
 .wbcom-settings-section-wrap .ui-accordion.ui-widget input#custom-login-url,
 .wbcom-settings-section-wrap .ui-accordion.ui-widget input#custom-logout-url {
+  width: calc(100% - 15px);
   height: 40px;
+  margin-left: 15px;
 }
 
 .wbcom-admin-settings-page div#bpredirect-settings_updated {
