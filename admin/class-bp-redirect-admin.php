@@ -798,6 +798,8 @@ class BP_Redirect_Admin
 									<option value="<?php if(!empty($login_url) && !in_array($login_url, $page_url, true)){ echo $login_url; } ?>" <?php if(!empty($login_url) && !in_array($login_url, $page_url, true)){ echo 'selected'; } ?>>Custom URL</option>
 								</select>
 								
+							</div>
+							<div class="bpr-col-4">
 								<input type="url" name="custom-login-url" id="custom-login-url">
 							</div>
 						</div>
@@ -897,8 +899,9 @@ class BP_Redirect_Admin
 									?>
 									<option value="<?php if(!empty($logout_url) && !in_array($logout_url, $page_url, true)){ echo $logout_url; } ?>" <?php if(!empty($logout_url) && !in_array($logout_url, $page_url, true)){ echo 'selected'; } ?>>Custom URL</option>
 								</select>
+							</div>
+							<div class="bpr-col-6">
 								<input type="url" name="custom-logout-url" id="custom-logout-url">
-								
 							</div>
 						</div>
 					</div>
