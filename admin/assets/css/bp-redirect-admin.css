@@ -1614,7 +1614,7 @@ a.ui-button:active,
 
 @media(max-width: 767px) {
   [class*="bpr-col-"] {
-    width: 100%;
+	width: 100%;
   }
 }
 
@@ -1793,7 +1793,7 @@ form.user-role-setting .enable_disable_btn,
 
 @media only screen and (max-width: 1300px) {
   .bpr-row .bpr-col-6 {
-    width: 100%;
+	width: 100%;
   }
 
 }

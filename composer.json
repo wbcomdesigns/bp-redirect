@@ -1,0 +1,32 @@
+{
+	"name": "bp-redirect/bp-redirect",
+	"description": "A WordPress Plugin by Wbcom Designs",
+	"type": "library",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Varun Dubey",
+			"email": "varun@wbcomdesigns.com"
+		}
+	],
+	"require": {
+		"php": ">=7.4"
+	},
+	"require-dev": {
+			"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+			"wptrt/wpthemereview": "^0.2.1",
+			"php-parallel-lint/php-parallel-lint": "^1.3",
+			"wp-coding-standards/wpcs": "^2.3",
+			"phpcompatibility/phpcompatibility-wp": "^2.1"
+		},
+		"scripts": {
+			"lint": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor --exclude node_modules --exclude package-lock.json --exclude bp-redirect-update-checker .",
+			"wpcs:scan": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs --ignore=*/vendor/*,*/node_modules/*,*/package-lock.json/*,*/bp-redirect-update-checker/* --standard=WordPress-Extra .",
+			"wpcs:fix": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf --ignore=*/vendor/*,*/node_modules/*,*/package-lock.json/*,*/bp-redirect-update-checker/* --standard=WordPress-Extra ."
+		},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
+}
