@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
 		$bp_pages      = get_pages();
 	}
-	$bp_pages_ids  = array_values( $bp_pages );
+	$bp_pages_ids   = array_values( $bp_pages );
 	$login_sequence = $member_types;
 
 	if ( ! empty( $saved_setting ) ) {

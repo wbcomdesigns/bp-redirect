@@ -145,7 +145,7 @@ class BP_Redirect_Admin {
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
 							<?php esc_html_e( 'BuddyPress Redirect', 'bp-redirect' ); ?>
-							<span><?php printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( REDIRECT_PLUGIN_VERSION )); ?></span>
+							<span><?php printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( REDIRECT_PLUGIN_VERSION ) ); ?></span>
 						</div>
 						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 					</div>
@@ -327,7 +327,7 @@ class BP_Redirect_Admin {
 			<form method="post" id="bpr-login-settings-form">
 				<div id="bgr-login-accordion">
 					<?php foreach ( $roles as $key => $val ) { ?>
-						<div class="group" id="<?php echo esc_attr( 'login-' . $key ); ?>" data-text="<?php echo esc_html($key); ?>">
+						<div class="group" id="<?php echo esc_attr( 'login-' . $key ); ?>" data-text="<?php echo esc_html( $key ); ?>">
 							<h3><?php esc_html_e( $roles[ $key ]['name'], 'bp-redirect' ); ?></h3>
 							<div>
 								<?php
@@ -483,13 +483,13 @@ class BP_Redirect_Admin {
 								</div>
 								<div class="bpr-col-4">
 									<?php $wp_page_ids = $this->bp_redirect_get_all_page_ids(); ?>
-									<select name='<?php echo esc_attr( "bp_login_redirect_settings[$key][login_url]" ); ?>' class='bbr-login-<?php echo esc_html($key); ?> bpr-login-custom
+									<select name='<?php echo esc_attr( "bp_login_redirect_settings[$key][login_url]" ); ?>' class='bbr-login-<?php echo esc_html( $key ); ?> bpr-login-custom
 															<?php
 															if ( isset( $login_type_val ) && 'custom' === $login_type_val ) {
 																echo 'bpr_show';
 															}
 															?>
-									' data-text="<?php echo esc_html($key); ?>">
+									' data-text="<?php echo esc_html( $key ); ?>">
 									<option value="" 
 									<?php
 									if ( empty( $login_url ) || $login_url == '' ) {
@@ -514,7 +514,7 @@ class BP_Redirect_Admin {
 										<option value="
 										<?php
 										if ( ! empty( $login_url ) && ! in_array( $login_url, $page_url, true ) ) {
-											echo esc_html($login_url); }
+											echo esc_html( $login_url ); }
 										?>
 										" 
 						<?php
@@ -525,7 +525,7 @@ class BP_Redirect_Admin {
 									</select>
 								</div>
 								<div class="bpr-col-4">
-									<input type="url" name="custom-login-url" class="custom-login-url bbr-login-custom-<?php echo esc_html($key); ?>" data-text="<?php echo esc_html($key); ?>">
+									<input type="url" name="custom-login-url" class="custom-login-url bbr-login-custom-<?php echo esc_html( $key ); ?>" data-text="<?php echo esc_html( $key ); ?>">
 								</div>
 							</div>
 						</div>
@@ -553,7 +553,7 @@ class BP_Redirect_Admin {
 			<form method="post" id="bpr-logout-settings-form">
 				<div id="bgr-logout-accordion">
 					<?php foreach ( $roles as $key => $val ) { ?>
-						<div class="group" id="<?php echo esc_attr( 'logout-' . $key ); ?>" data-text="<?php echo esc_html($key); ?>">
+						<div class="group" id="<?php echo esc_attr( 'logout-' . $key ); ?>" data-text="<?php echo esc_html( $key ); ?>">
 							<h3><?php esc_html_e( $roles[ $key ]['name'], 'bp-redirect' ); ?></h3>
 							<div>
 								<?php
@@ -597,13 +597,13 @@ class BP_Redirect_Admin {
 
 								<div class="bpr-col-6">
 									<?php $wp_page_ids = $this->bp_redirect_get_all_page_ids(); ?>
-									<select name='<?php echo esc_attr( "bp_logout_redirect_settings[$key][logout_url]" ); ?>' class="bbr-logout-<?php echo esc_html($key); ?> bpr-logout-custom
+									<select name='<?php echo esc_attr( "bp_logout_redirect_settings[$key][logout_url]" ); ?>' class="bbr-logout-<?php echo esc_html( $key ); ?> bpr-logout-custom
 															<?php
 															if ( isset( $logout_type_val ) && 'custom' === $logout_type_val ) {
 																echo 'bpr_show';
 															}
 															?>
-									" data-text="<?php echo esc_html($key); ?>">
+									" data-text="<?php echo esc_html( $key ); ?>">
 									<option value="" 
 									<?php
 									if ( empty( $logout_url ) || $logout_url == '' ) {
@@ -628,7 +628,7 @@ class BP_Redirect_Admin {
 										 <option value="
 										 <?php
 											if ( ! empty( $logout_url ) && ! in_array( $logout_url, $page_url, true ) ) {
-												echo esc_url($logout_url); }
+												echo esc_url( $logout_url ); }
 											?>
 											" 
 						<?php
@@ -639,7 +639,7 @@ class BP_Redirect_Admin {
 									</select>
 								</div>
 								<div class="bpr-col-6">
-									<input type="url" name="custom-logout-url" class="custom-logout-url bbr-logout-custom-<?php echo esc_html($key); ?>" data-text="<?php echo esc_html($key); ?>">
+									<input type="url" name="custom-logout-url" class="custom-logout-url bbr-logout-custom-<?php echo esc_html( $key ); ?>" data-text="<?php echo esc_html( $key ); ?>">
 								</div>
 							</div>
 						</div>
@@ -673,7 +673,7 @@ class BP_Redirect_Admin {
 					//foreach ( $roles as $key => $val ) {
 						$key = 'global';
 					?>
-					<div class="group" id="<?php echo esc_attr( 'login' ); ?>" data-text="<?php echo esc_html($key); ?>">
+					<div class="group" id="<?php echo esc_attr( 'login' ); ?>" data-text="<?php echo esc_html( $key ); ?>">
 						<h3><?php esc_html_e( 'Login Redirect Settings For All Roles', 'bp-redirect' ); ?></h3>
 						<div>
 							<?php
@@ -842,13 +842,13 @@ class BP_Redirect_Admin {
 								$wp_page_ids = $this->bp_redirect_get_all_page_ids();
 
 								?>
-								<select name='<?php echo esc_attr( "bp_login_redirect_settings_global[$key][login_url]" ); ?>' class='bbr-login-<?php echo esc_html($key); ?> bpr-login-custom
+								<select name='<?php echo esc_attr( "bp_login_redirect_settings_global[$key][login_url]" ); ?>' class='bbr-login-<?php echo esc_html( $key ); ?> bpr-login-custom
 															<?php
 															if ( isset( $login_type_val ) && 'custom' === $login_type_val ) {
 																echo 'bpr_show';
 															}
 															?>
-									' data-text="<?php echo esc_html($key); ?>">								 
+									' data-text="<?php echo esc_html( $key ); ?>">								 
 									<option value="" 
 									<?php
 									if ( empty( $login_url ) || $login_url == '' ) {
@@ -873,7 +873,7 @@ class BP_Redirect_Admin {
 									<option value="
 									<?php
 									if ( ! empty( $login_url ) && ! in_array( $login_url, $page_url, true ) ) {
-										echo esc_url($login_url); }
+										echo esc_url( $login_url ); }
 									?>
 									" 
 		<?php
@@ -885,7 +885,7 @@ class BP_Redirect_Admin {
 								
 							</div>
 							<div class="bpr-col-4">
-								<input type="url" name="custom-login-url" class="custom-login-url bbr-login-custom-<?php echo esc_html($key); ?>" data-text="<?php echo esc_html($key); ?>">
+								<input type="url" name="custom-login-url" class="custom-login-url bbr-login-custom-<?php echo esc_html( $key ); ?>" data-text="<?php echo esc_html( $key ); ?>">
 							</div>
 						</div>
 					</div>
@@ -917,7 +917,7 @@ class BP_Redirect_Admin {
 					<?php
 					//foreach ($roles as $key => $val) {
 					?>
-					<div class="group" id="<?php echo esc_attr( 'logout-' . $key ); ?>" data-text="<?php echo esc_html($key); ?>">
+					<div class="group" id="<?php echo esc_attr( 'logout-' . $key ); ?>" data-text="<?php echo esc_html( $key ); ?>">
 						<h3><?php esc_html_e( 'Logout Redirect Settings For All Roles', 'bp-redirect' ); ?></h3>
 						<div>
 							<?php
@@ -965,13 +965,13 @@ class BP_Redirect_Admin {
 
 							<div class="bpr-col-6">
 								<?php $wp_page_ids = $this->bp_redirect_get_all_page_ids(); ?>
-								<select name='<?php echo esc_attr( "bp_logout_redirect_settings_global[$key][logout_url]" ); ?>' class="bbr-logout-<?php echo esc_html($key); ?> bpr-logout-custom
+								<select name='<?php echo esc_attr( "bp_logout_redirect_settings_global[$key][logout_url]" ); ?>' class="bbr-logout-<?php echo esc_html( $key ); ?> bpr-logout-custom
 												<?php
 												if ( isset( $logout_type_val ) && 'custom' === $logout_type_val ) {
 													echo 'bpr_show';
 												}
 												?>
-												" data-text="<?php echo esc_html($key); ?>">
+												" data-text="<?php echo esc_html( $key ); ?>">
 												
 									<option value="" 
 									<?php
@@ -996,7 +996,7 @@ class BP_Redirect_Admin {
 									<option value="
 									<?php
 									if ( ! empty( $logout_url ) && ! in_array( $logout_url, $page_url, true ) ) {
-										echo esc_url($logout_url); }
+										echo esc_url( $logout_url ); }
 									?>
 									" 
 		<?php
@@ -1007,7 +1007,7 @@ class BP_Redirect_Admin {
 								</select>
 							</div>
 							<div class="bpr-col-6">
-								<input type="url" name="custom-logout-url" class="custom-logout-url bbr-logout-custom-<?php echo esc_html($key); ?>" data-text="<?php echo esc_html($key); ?>">
+								<input type="url" name="custom-logout-url" class="custom-logout-url bbr-logout-custom-<?php echo esc_html( $key ); ?>" data-text="<?php echo esc_html( $key ); ?>">
 							</div>
 						</div>
 					</div>
