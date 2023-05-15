@@ -80,9 +80,10 @@ class BP_Redirect_Public {
 			// for global rediract chcek the role
 			$user_roles = ! empty( $user_data->roles ) ? $user_data->roles : array();
 			$url        = array();
+			$user_roles = isset($user_roles[0]) ? $user_roles[0] : '';
 			if ( ! empty( $setting ) ) {
 
-				if ( isset( $setting[ $user_roles[0] ]['login_type'] ) && $setting[ $user_roles[0] ]['login_type'] != 'none' && ! empty( $setting[ $user_roles[0] ]['login_type'] ) ) {
+				if ( isset( $setting[ $user_roles ]['login_type'] ) && $setting[ $user_roles ]['login_type'] != 'none' && ! empty( $setting[ $user_roles ]['login_type'] ) ) {
 					if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
 						$bp_member_key = $user_member_type;
 
@@ -312,8 +313,9 @@ class BP_Redirect_Public {
 			// for global rediract chcek the role
 			$user_roles = ! empty( $user_data->roles ) ? $user_data->roles : array();
 			$url        = array();
+			$user_roles = isset($user_roles[0]) ? $user_roles[0]: ''
 			if ( ! empty( $setting ) ) {
-				if ( isset( $setting[ $user_roles[0] ]['logout_type'] ) && $setting[ $user_roles[0] ]['logout_type'] != 'none' && ! empty( $setting[ $user_roles[0] ]['logout_type'] ) ) {
+				if ( isset( $setting[ $user_roles ]['logout_type'] ) && $setting[ $user_roles ]['logout_type'] != 'none' && ! empty( $setting[ $user_roles ]['logout_type'] ) ) {
 					if ( array_key_exists( $user_member_type, $setting ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
 						$bp_member_key = $user_member_type;
 						$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );

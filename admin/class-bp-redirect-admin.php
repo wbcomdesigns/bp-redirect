@@ -525,7 +525,7 @@ class BP_Redirect_Admin {
 									</select>
 								</div>
 								<div class="bpr-col-4">
-									<input type="url" name="custom-login-url" class="custom-login-url bbr-login-custom-<?php echo esc_html($key); ?>" data-text="<?php echo $key; ?>">
+									<input type="url" name="custom-login-url" class="custom-login-url bbr-login-custom-<?php echo esc_html($key); ?>" data-text="<?php echo esc_html($key); ?>">
 								</div>
 							</div>
 						</div>
@@ -873,7 +873,7 @@ class BP_Redirect_Admin {
 									<option value="
 									<?php
 									if ( ! empty( $login_url ) && ! in_array( $login_url, $page_url, true ) ) {
-										echo $login_url; }
+										echo esc_url($login_url); }
 									?>
 									" 
 		<?php
