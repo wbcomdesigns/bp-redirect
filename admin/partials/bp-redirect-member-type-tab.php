@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$bp_pages      = get_pages();
 	}
 	$bp_pages_ids  = array_values( $bp_pages );
-	$loginSequence = $member_types;
+	$login_sequence = $member_types;
 
 	if ( ! empty( $saved_setting ) ) {
 		if ( array_key_exists( 'loginSequence', $saved_setting ) ) {
@@ -51,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 			// if ( ! empty( $seq ) ) {
 			// 	uksort(
-			// 		$loginSequence,
+			// 		$login_sequence,
 			// 		function ( $key1, $key2 ) use ( $seq ) {
 			// 			return ( array_search( $key1, $seq ) > array_search( $key2, $seq ) );
 			// 		}
@@ -60,7 +60,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 	}
 
-	$logoutSequence = $member_types;
+	$logout_sequence = $member_types;
 	if ( ! empty( $saved_setting ) ) {
 		if ( array_key_exists( 'logoutSequence', $saved_setting ) ) {
 			$logoutseq = explode( ',', $saved_setting['logoutSequence'] );
@@ -70,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 			// if ( ! empty( $logoutseq ) ) {
 			// 	uksort(
-			// 		$logoutSequence,
+			// 		$logout_sequence,
 			// 		function ( $logoutkey1, $logoutkey2 ) use ( $logoutseq ) {
 			// 			return ( array_search( $logoutkey1, $logoutseq ) > array_search( $logoutkey2, $logoutseq ) );
 			// 		}
@@ -91,7 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>
 			</div>	
 			<?php
-			if ( ! empty( $loginSequence ) ) {
+			if ( ! empty( $login_sequence ) ) {
 				?>
 			<form method="post">
 				<div class="enable_disable_btn wbcom-settings-section-wrap">
@@ -111,7 +111,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="bpr-col-12">
 					<!-- login Settings -->
 					<h2><?php esc_html_e( 'Buddypress Login Redirect Settings', 'bp-redirect' ); ?></h2>				
-						<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+						<?php $this->bp_redirect_plugin_login_settings( $login_sequence, $bp_pages_ids, $saved_setting ); ?>
 					</div>
 				</div>
 			</div>
@@ -124,7 +124,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="bpr-col-12">
 					<!-- Logout Settings -->
 					<h2><?php esc_html_e( 'Buddypress Logout Redirect Settings', 'bp-redirect' ); ?></h2>
-						<?php $this->bp_redirect_plugin_logout_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+						<?php $this->bp_redirect_plugin_logout_settings( $login_sequence, $bp_pages_ids, $saved_setting ); ?>
 				</div>
 				</div>
 			</div>

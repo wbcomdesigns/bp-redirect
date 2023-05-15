@@ -27,7 +27,7 @@ if ( class_exists( 'Buddypress' ) ) {
 }
 
 		$bp_pages_ids  = array_values( $bp_pages );
-		$loginSequence = $this->get_editable_roles();
+		$login_sequence = $this->get_editable_roles();
 
 if ( ! empty( $saved_setting ) ) {
 	if ( array_key_exists( 'loginSequence', $saved_setting ) ) {
@@ -39,7 +39,7 @@ if ( ! empty( $saved_setting ) ) {
 		}
 		// if ( ! empty( $seq ) ) {
 		// 	uksort(
-		// 		$loginSequence,
+		// 		$login_sequence,
 		// 		function ( $key1, $key2 ) use ( $seq ) {
 		// 			return ( array_search( $key1, $seq ) > array_search( $key2, $seq ) );
 		// 		}
@@ -48,7 +48,7 @@ if ( ! empty( $saved_setting ) ) {
 	}
 }
 
-		$logoutSequence = $this->get_editable_roles();
+		$logout_sequence = $this->get_editable_roles();
 if ( ! empty( $saved_setting ) ) {
 	if ( array_key_exists( 'logoutSequence', $saved_setting ) ) {
 		$logoutseq = explode( ',', $saved_setting['logoutSequence'] );
@@ -58,7 +58,7 @@ if ( ! empty( $saved_setting ) ) {
 		}
 		// if ( ! empty( $logoutseq ) ) {
 		// 	uksort(
-		// 		$logoutSequence,
+		// 		$logout_sequence,
 		// 		function ( $logoutkey1, $logoutkey2 ) use ( $logoutseq ) {
 		// 			return ( array_search( $logoutkey1, $logoutseq ) > array_search( $logoutkey2, $logoutseq ) );
 		// 		}
@@ -98,7 +98,7 @@ if ( ! empty( $saved_setting ) ) {
 					<div class="bpr-col-12">
 					<!-- login Settings -->
 					<h2><?php esc_html_e( 'Login Redirect Settings', 'bp-redirect' ); ?></h2>
-					<?php $this->bp_redirect_plugin_login_settings( $loginSequence, $bp_pages_ids, $saved_setting ); ?>
+					<?php $this->bp_redirect_plugin_login_settings( $login_sequence, $bp_pages_ids, $saved_setting ); ?>
 				</div>
 					</div>
 			</div>
@@ -111,7 +111,7 @@ if ( ! empty( $saved_setting ) ) {
 				<div class="bpr-col-12">
 					<!-- Logout Settings -->
 					<h2><?php esc_html_e( 'Logout Redirect Settings', 'bp-redirect' ); ?></h2>
-				<?php $this->bp_redirect_plugin_logout_settings( $logoutSequence, $bp_pages_ids, $saved_setting ); ?>
+				<?php $this->bp_redirect_plugin_logout_settings( $logout_sequence, $bp_pages_ids, $saved_setting ); ?>
 					</div>
 					</div>
 			</div>
