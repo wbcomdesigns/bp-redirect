@@ -65,17 +65,12 @@ class BP_Redirect_Public
 	{
 		if (!is_wp_error($user) && !empty($user)) {
 			$url_headers      = '';
-			if (class_exists('Buddypress')) {
-				$saved_setting    = bp_get_option('bp_redirect_admin_settings');
-				$setting          = isset($saved_setting['bp_login_redirect_settings']) ? $saved_setting['bp_login_redirect_settings'] : '';
-			} else {
-				$saved_setting    = get_option('bp_redirect_admin_settings');
-				$setting          = isset($saved_setting['bp_login_redirect_settings']) ? $saved_setting['bp_login_redirect_settings'] : '';
-
-				$saved_settings    = get_option('bp_redirect_admin_settings_global');
-				$setting_global   = isset($saved_settings['bp_login_redirect_settings_global']) ? $saved_settings['bp_login_redirect_settings_global'] : '';
-			}
-
+		
+			$saved_setting    = get_option('bp_redirect_admin_settings');
+			$setting          = isset($saved_setting['bp_login_redirect_settings']) ? $saved_setting['bp_login_redirect_settings'] : '';
+			$saved_settings    = get_option('bp_redirect_admin_settings_global');
+			$setting_global   = isset($saved_settings['bp_login_redirect_settings_global']) ? $saved_settings['bp_login_redirect_settings_global'] : '';
+		
 			if (class_exists('Buddypress')) {
 				$user_member_type = (false !== bp_get_member_type($user->ID)) ? bp_get_member_type($user->ID, false) : array();
 			} else {
@@ -101,7 +96,7 @@ class BP_Redirect_Public
 						$url[] = $this->bpr_redirect_general($user);
 					}
 				} else {
-					$url[] = $setting_global['global']['login_url'];
+					$url[] = $setting_global['global']['login_url'];					
 				}
 			} else if (!empty($setting_global)) {
 				$url[] = $setting_global['global']['login_url'];
@@ -309,17 +304,13 @@ class BP_Redirect_Public
 	{
 		if (!is_wp_error($user) && !empty($user)) {
 			$url_headers      = '';
-			if (class_exists('Buddypress')) {
-				$saved_setting    = bp_get_option('bp_redirect_admin_settings');
-				$setting          = isset($saved_setting['bp_logout_redirect_settings']) ? $saved_setting['bp_logout_redirect_settings'] : '';
-			} else {
-				$saved_setting    = get_option('bp_redirect_admin_settings');
-				$setting          = isset($saved_setting['bp_logout_redirect_settings']) ? $saved_setting['bp_logout_redirect_settings'] : '';
+			
+			$saved_setting    = get_option('bp_redirect_admin_settings');
+			$setting          = isset($saved_setting['bp_logout_redirect_settings']) ? $saved_setting['bp_logout_redirect_settings'] : '';
 
-				$saved_settings    = get_option('bp_redirect_admin_settings_global');
-				$setting_global   = isset($saved_settings['bp_logout_redirect_settings_global']) ? $saved_settings['bp_logout_redirect_settings_global'] : '';
-			}
-
+			$saved_settings    = get_option('bp_redirect_admin_settings_global');
+			$setting_global   = isset($saved_settings['bp_logout_redirect_settings_global']) ? $saved_settings['bp_logout_redirect_settings_global'] : '';
+		
 			if (class_exists('Buddypress')) {
 				$user_member_type = (false !== bp_get_member_type($user->ID)) ? bp_get_member_type($user->ID) : '';
 			} else {

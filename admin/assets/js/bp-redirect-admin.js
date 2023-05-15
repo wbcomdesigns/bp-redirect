@@ -1,10 +1,20 @@
 jQuery(document).ready(function ($) {
+
+  jQuery('input.custom-login-url').hide();
   jQuery(".bp_redi_login_type").on("click", function () {
     var id = jQuery(this).attr("id");
     var type = id.split("_").pop();
-    jQuery('input#custom-login-url').hide();
+    jQuery('input.custom-login-url').hide();
 
     if (type == "referer") {
+      jQuery(this)
+        .parent()
+        .parent()
+        .parent()
+        .children()
+        .find(".custom-login-url")
+        .addClass("bpr_hide");
+
       jQuery(this)
         .parent()
         .parent()
@@ -26,6 +36,14 @@ jQuery(document).ready(function ($) {
 
     } else if (type == "none") {
       jQuery(this)
+      .parent()
+      .parent()
+      .parent()
+      .children()
+      .find(".custom-login-url")
+      .addClass("bpr_hide");
+     
+      jQuery(this)
         .parent()
         .parent()
         .children()
@@ -44,6 +62,14 @@ jQuery(document).ready(function ($) {
         .find(".bpr-login-cutom-component")
         .removeClass("bpr_show");
     } else {
+      jQuery(this)
+        .parent()
+        .parent()
+        .parent()
+        .children()
+        .find(".custom-login-url")
+        .removeClass("bpr_hide");
+
       jQuery(this)
         .parent()
         .parent()
@@ -64,48 +90,88 @@ jQuery(document).ready(function ($) {
         .addClass("bpr_show");
     }
     jQuery('select.bpr-login-custom.bpr_show').change(function(){
-      
-      var option = jQuery("select.bpr-login-custom.bpr_show option:selected").text();
-      if(option == 'Custom URL'){
-        jQuery('input#custom-login-url').show();
-        jQuery('input#custom-login-url').keyup(function(){
-          var custonurl = jQuery('input#custom-login-url').val();
-          var option = jQuery("select.bpr-login-custom.bpr_show option:selected").val(custonurl);
+      var datatext = jQuery(this).data('text');
+      var option = jQuery("select.bbr-login-"+datatext+" option:selected").text();
+      if(option == 'Custom URL'){        
+        jQuery('input.bbr-login-custom-'+datatext ).show();
+        jQuery('input.bbr-login-custom-'+datatext).keyup(function(){
+          var custonurl = jQuery('input.bbr-login-custom-'+datatext).val();
+          jQuery("select.bbr-login-"+datatext+" option:selected").val(custonurl);
         });
         
       }
     });
+    
   });
 
-  var option = jQuery("select.bpr-login-custom option:selected").text();
-  if(option == 'Custom URL'){
-    var option_val = jQuery("select.bpr-login-custom option:selected").val();
-    jQuery('input#custom-login-url').show();
-    jQuery('input#custom-login-url').val(option_val);
-    
-  }else{
-    jQuery('input#custom-login-url').hide();
+  var options = jQuery('select.bbr-login-global.bpr-login-custom.bpr_show option:selected').text();
+  if(options == 'Custom URL'){
+    var optionsval = jQuery('select.bbr-login-global.bpr-login-custom.bpr_show option:selected').val();
+    jQuery('input.custom-login-url').show();
+    jQuery('input.custom-login-url').val(optionsval);
   }
 
-  jQuery('select.bpr-login-custom').change(function(){      
-    var option = jQuery("select.bpr-login-custom option:selected").text();
+  var options = jQuery('.bbr-login-administrator option:selected').text();
+  if(options == 'Custom URL'){
+    var optionsval = jQuery('.bbr-login-administrator option:selected').val();
+    jQuery('input.custom-login-url').show();
+    jQuery('input.custom-login-url').val(optionsval);
+  }
+
+  jQuery(".group").on("click", function () {
+    var grouptext = jQuery(this).data('text');
+    var option = jQuery("select.bbr-login-"+grouptext+" option:selected").text();
+    
     if(option == 'Custom URL'){
-      jQuery('input#custom-login-url').show();
-      jQuery('input#custom-login-url').keyup(function(){
-        var custonurl = jQuery('input#custom-login-url').val();
-        var option = jQuery("select.bpr-login-custom option:selected").val(custonurl);
-      });
+      var option_val = jQuery("select.bbr-login-"+grouptext+" option:selected").val();
+      jQuery('input.bbr-login-custom-'+grouptext ).show();
+      jQuery('input.bbr-login-custom-'+grouptext ).val(option_val);
+      
     }else{
-      jQuery('input#custom-login-url').val();
-      jQuery('input#custom-login-url').hide();
+      jQuery('input.custom-login-url').hide();
     }
   });
 
+
+
+  jQuery('input.custom-login-url').keyup(function(){
+    var datatext = jQuery(this).data('text');
+    var custonurl = jQuery('input.bbr-login-custom-'+datatext).val();
+    jQuery("select.bbr-login-"+datatext+" option:selected").val(custonurl);
+  });
+
+  jQuery('select.bpr-login-custom').change(function(){      
+    var datatext = jQuery(this).data('text');
+      var option = jQuery("select.bbr-login-"+datatext+" option:selected").text();
+
+    if(option == 'Custom URL'){
+       jQuery('input.bbr-login-custom-'+datatext ).show();
+       jQuery('input.bbr-login-custom-'+datatext).keyup(function(){
+        var custonurl = jQuery('input.bbr-login-custom-'+datatext).val();
+        jQuery("select.bbr-login-"+datatext+" option:selected").val(custonurl);
+      });
+    }else{
+      jQuery('input.bbr-login-custom-'+datatext).val();
+      jQuery('input.custom-login-url').hide();
+    }
+  });
+
+
+
+  jQuery('input.custom-logout-url').hide();
   jQuery(".bp_redi_logout_type").on("click", function () {
-    jQuery('input#custom-logout-url').hide();
+    jQuery('input.custom-logout-url').hide();
     var id = jQuery(this).attr("id");
     var type = id.split("_").pop();
     if (type == "referer") {
+      jQuery(this)
+        .parent()
+        .parent()
+        .parent()
+        .children()
+        .find(".custom-logout-url")
+        .addClass("bpr_hide");
+
       jQuery(this)
         .parent()
         .parent()
@@ -122,6 +188,14 @@ jQuery(document).ready(function ($) {
       jQuery(this)
         .parent()
         .parent()
+        .parent()
+        .children()
+        .find(".custom-logout-url")
+        .addClass("bpr_hide");
+
+      jQuery(this)
+        .parent()
+        .parent()
         .children()
         .find(".bpr-logout-custom")
         .removeClass("bpr_show");
@@ -132,6 +206,14 @@ jQuery(document).ready(function ($) {
         .find(".bpr-logout-component")
         .removeClass("bpr_show");
     } else {
+      jQuery(this)
+        .parent()
+        .parent()
+        .parent()
+        .children()
+        .find(".custom-logout-url")
+        .removeClass("bpr_hide");
+
       jQuery(this)
         .parent()
         .parent()
@@ -147,39 +229,71 @@ jQuery(document).ready(function ($) {
     }
 
     jQuery('select.bpr-logout-custom.bpr_show').change(function(){
-      
-      var option = jQuery("select.bpr-logout-custom.bpr_show option:selected").text();
-      if(option == 'Custom URL'){
-        jQuery('input#custom-logout-url').show();
-        jQuery('input#custom-logout-url').keyup(function(){
-          var custonurl = jQuery('input#custom-logout-url').val();
-          var option = jQuery("select.bpr-logout-custom.bpr_show option:selected").val(custonurl);
+      var datatext = jQuery(this).data('text');
+      var option = jQuery("select.bbr-logout-"+datatext+" option:selected").text();
+      if(option == 'Custom URL'){        
+        jQuery('input.bbr-logout-custom-'+datatext ).show();
+        jQuery('input.bbr-logout-custom-'+datatext).keyup(function(){
+          var custonurl = jQuery('input.bbr-logout-custom-'+datatext).val();
+          jQuery("select.bbr-logout-"+datatext+" option:selected").val(custonurl);
         });
         
       }
     });
+
+    var option = jQuery("select.bpr-logout-custom.bpr_show option:selected").text();
+      if(option == 'Custom URL'){
+        jQuery('input.custom-logout-url').show();
+      }
   });
 
-  var option = jQuery("select.bpr-logout-custom.bpr_show option:selected").text();
-  if(option == 'Custom URL'){
-    var option_val = jQuery("select.bpr-logout-custom.bpr_show option:selected").val();
-    jQuery('input#custom-logout-url').show();
-    jQuery('input#custom-logout-url').val(option_val);
-  }else{
-    jQuery('input#custom-logout-url').hide();
+  var options = jQuery('select.bbr-logout-global.bpr-logout-custom.bpr_show option:selected').text();
+  if(options == 'Custom URL'){
+    jQuery('input.custom-logout-url').show();
+    var opval = jQuery('select.bbr-logout-global.bpr-logout-custom.bpr_show option:selected').val();
+    jQuery('input.custom-logout-url').val(opval);
   }
-  
-  jQuery('select.bpr-logout-custom.bpr_show').change(function(){      
-    var option = jQuery("select.bpr-logout-custom.bpr_show option:selected").text();
+
+  var options = jQuery('.bbr-logout-administrator option:selected').text();
+  if(options == 'Custom URL'){
+    var optionsval = jQuery('.bbr-logout-administrator option:selected').val();
+    jQuery('input.custom-logout-url').show();
+    jQuery('input.custom-logout-url').val(optionsval);
+  }
+
+  jQuery(".group").on("click", function () {
+    var grouptext = jQuery(this).data('text');
+    var option = jQuery("select.bbr-logout-"+grouptext+" option:selected").text();
+    
     if(option == 'Custom URL'){
-      jQuery('input#custom-logout-url').show();
-      jQuery('input#custom-logout-url').keyup(function(){
-        var custonurl = jQuery('input#custom-logout-url').val();
-        var option = jQuery("select.bpr-logout-custom.bpr_show option:selected").val(custonurl);
-      });      
+      var option_val = jQuery("select.bbr-logout-"+grouptext+" option:selected").val();
+      jQuery('input.bbr-logout-custom-'+grouptext ).show();
+      jQuery('input.bbr-logout-custom-'+grouptext ).val(option_val);
+      
     }else{
-      jQuery('input#custom-logout-url').val();
-      jQuery('input#custom-logout-url').hide();
+      jQuery('input.custom-logout-url').hide();
+    }
+  });
+  
+  jQuery('input.custom-logout-url').keyup(function(){
+    var datatext = jQuery(this).data('text');
+    var custonurl = jQuery('input.bbr-logout-custom-'+datatext).val();
+    jQuery("select.bbr-logout-"+datatext+" option:selected").val(custonurl);
+  });
+
+  jQuery('select.bpr-logout-custom').change(function(){      
+    var datatext = jQuery(this).data('text');
+      var option = jQuery("select.bbr-logout-"+datatext+" option:selected").text();
+
+    if(option == 'Custom URL'){
+       jQuery('input.bbr-logout-custom-'+datatext ).show();
+       jQuery('input.bbr-logout-custom-'+datatext).keyup(function(){
+        var custonurl = jQuery('input.bbr-logout-custom-'+datatext).val();
+        jQuery("select.bbr-logout-"+datatext+" option:selected").val(custonurl);
+      });
+    }else{
+      jQuery('input.bbr-logout-custom-'+datatext).val();
+      jQuery('input.custom-logout-url').hide();
     }
   });
 
