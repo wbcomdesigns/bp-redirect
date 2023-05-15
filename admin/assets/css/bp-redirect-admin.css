@@ -35,8 +35,8 @@
   background-color: #fafafa;
 }
 
-.wbcom-settings-section-wrap .ui-accordion.ui-widget input#custom-login-url,
-.wbcom-settings-section-wrap .ui-accordion.ui-widget input#custom-logout-url {
+.wbcom-settings-section-wrap .ui-accordion.ui-widget input.custom-login-url,
+.wbcom-settings-section-wrap .ui-accordion.ui-widget input.custom-logout-url {
   width: calc(100% - 15px);
   height: 40px;
   margin-left: 15px;
@@ -1627,6 +1627,9 @@ a.ui-button:active,
 
 .bpr_show {
   display: block !important;
+}
+.bpr_hide{
+  display:none !important;
 }
 
 input[type="checkbox"].bp-redirect-toggle-checkbox {
