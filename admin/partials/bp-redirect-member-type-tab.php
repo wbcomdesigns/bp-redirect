@@ -31,11 +31,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	}
 
-	$spinner_src   = includes_url() . 'images/spinner.gif';
-	if(class_exists( 'Buddypress' )){
+	$spinner_src = includes_url() . 'images/spinner.gif';
+	if ( class_exists( 'Buddypress' ) ) {
 		$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
 		$bp_pages      = bp_get_option( 'bp-pages' );
-	}else{
+	} else {
 		$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
 		$bp_pages      = get_pages();
 	}

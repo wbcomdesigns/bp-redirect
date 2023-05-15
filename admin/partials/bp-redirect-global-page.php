@@ -17,18 +17,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <?php
-		$spinner_src   = includes_url() . 'images/spinner.gif';
-		
+		$spinner_src = includes_url() . 'images/spinner.gif';
+
 		$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
 		$bp_pages      = get_pages();
 		$bp_pages_ids  = array_values( $bp_pages );
-		
+
 		$loginSequence = $this->get_editable_roles();
 
 if ( ! empty( $saved_setting ) ) {
 	if ( array_key_exists( 'loginSequence', $saved_setting ) ) {
 		$seq = explode( ',', $saved_setting['loginSequence'] );
-		
+
 		foreach ( $seq as $key => $val ) {
 				$val_arr     = $val;
 				$seq[ $key ] = $val_arr;
@@ -49,9 +49,9 @@ if ( ! empty( $saved_setting ) ) {
 	if ( array_key_exists( 'logoutSequence', $saved_setting ) ) {
 		$logoutseq = explode( ',', $saved_setting['logoutSequence'] );
 		foreach ( $logoutseq as $key => $val ) {
-				$val_arr     = $val;
+				$val_arr           = $val;
 				$logoutseq[ $key ] = $val_arr;
-			
+
 		}
 		// if ( ! empty( $logoutseq ) ) {
 		// 	uksort(
