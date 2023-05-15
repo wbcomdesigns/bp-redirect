@@ -637,14 +637,14 @@ class BP_Redirect_Admin
 			<form method="post" id="bpr-login-settings-form-global">
 				<div id="bgr-login-accordion">
 					<?php //foreach ( $roles as $key => $val ) { 
+						$key = 'global';
 					?>
 					<div class="group" id="<?php echo esc_attr('login'); ?>" data-text="<?php echo $key; ?>">
 						<h3><?php esc_html_e('Login Redirect Settings For All Roles', 'bp-redirect'); ?></h3>
 						<div>
 							<?php
 							$login_component = '';
-							$login_url       = '';
-							$key = 'global';
+							$login_url       = '';							
 
 							if (!empty($saved_setting) && isset($saved_setting['bp_login_redirect_settings_global'])) {
 								if (isset($saved_setting['bp_login_redirect_settings_global']) && !empty($saved_setting['bp_login_redirect_settings_global'])) {
