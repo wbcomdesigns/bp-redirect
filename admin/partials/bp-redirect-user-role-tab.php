@@ -26,7 +26,7 @@ if ( class_exists( 'Buddypress' ) ) {
 	$bp_pages      = get_pages();
 }
 
-		$bp_pages_ids  = array_values( $bp_pages );
+		$bp_pages_ids   = array_values( $bp_pages );
 		$login_sequence = $this->get_editable_roles();
 
 if ( ! empty( $saved_setting ) ) {
