@@ -451,6 +451,18 @@ class BP_Redirect_Admin {
 												</option>
 												<?php
 											}
+											if ( bp_is_active( 'activity' ) ) {
+												?>
+												<option value="activity" 
+												<?php
+												if ( 'activity' === $login_component ) {
+													echo "selected = 'selected'";
+												}
+												?>
+																		><?php esc_html_e( 'Activity', 'bp-redirect' ); ?>
+												</option>
+												<?php
+											}											
 										}
 										?>
 
@@ -804,6 +816,19 @@ class BP_Redirect_Admin {
 											</option>
 											<?php
 										}
+
+										if ( bp_is_active( 'activity' ) ) {
+											?>
+											<option value="activity" 
+											<?php
+											if ( 'activity' === $login_component ) {
+												echo "selected = 'selected'";
+											}
+											?>
+																	><?php esc_html_e( 'Activity', 'bp-redirect' ); ?>
+											</option>
+											<?php
+										}
 									}
 									?>
 									
@@ -825,7 +850,7 @@ class BP_Redirect_Admin {
 										$bp_pages = get_pages();
 										$pages    = get_pages( array( 'include' => $bp_pages ) );
 										foreach ( $pages as $page ) {
-											if ( 'Activity' === $page->post_title ) {
+											if ( 'Activity' === $page->post_title ) {												
 												$option  = '<option value="' . get_page_link( $page->ID ) . '">';
 												$option .= $page->post_title;
 												$option .= '</option>';
