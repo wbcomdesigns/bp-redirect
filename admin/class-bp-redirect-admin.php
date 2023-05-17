@@ -451,45 +451,34 @@ class BP_Redirect_Admin {
 												</option>
 												<?php
 											}
-											if ( bp_is_active( 'activity' ) ) {
-												?>
-												<option value="activity" 
-												<?php
-												if ( 'activity' === $login_component ) {
-													echo "selected = 'selected'";
-												}
-												?>
-																		><?php esc_html_e( 'Activity', 'bp-redirect' ); ?>
-												</option>
-												<?php
-											}											
+																					
 										}
 										?>
 
 										<?php
-										if ( class_exists( 'Buddypress' ) ) {
-											$bp_pages = bp_core_get_directory_page_ids();
-											$pages    = get_pages( array( 'include' => $bp_pages ) );
-											foreach ( $pages as $page ) {
-												if ( 'Activity' === $page->post_title ) {
-													$option  = '<option value="' . get_page_link( $page->ID ) . '">';
-													$option .= $page->post_title;
-													$option .= '</option>';
-													echo $option; //phpcs:ignore
+											if ( class_exists( 'Buddypress' ) ) {
+												$bp_pages = bp_core_get_directory_page_ids();
+												$pages    = get_pages( array( 'include' => $bp_pages ) );
+												foreach ( $pages as $page ) {
+													if ( 'Activity' === $page->post_title ) {													
+														$option  = "<option value='" . get_page_link( $page->ID ) . "'  selected='". selected( $login_url, get_page_link( $page->ID ) )."'>";
+														$option .= $page->post_title;
+														$option .= '</option>';
+														echo $option; //phpcs:ignore
+													}
+												}
+											} else {
+												$bp_pages = get_pages();
+												$pages    = get_pages( array( 'include' => $bp_pages ) );
+												foreach ( $pages as $page ) {
+													if ( 'Activity' === $page->post_title ) {
+														$option  = "<option value='" . get_page_link( $page->ID ) . "'  selected='". selected( $login_url, get_page_link( $page->ID ) )."'>";
+														$option .= $page->post_title;
+														$option .= '</option>';
+														echo $option; //phpcs:ignore
+													}
 												}
 											}
-										} else {
-											$bp_pages = get_pages();
-											$pages    = get_pages( array( 'include' => $bp_pages ) );
-											foreach ( $pages as $page ) {
-												if ( 'Activity' === $page->post_title ) {
-													$option  = '<option value="' . get_page_link( $page->ID ) . '">';
-													$option .= $page->post_title;
-													$option .= '</option>';
-													echo $option; //phpcs:ignore
-												}
-											}
-										}
 										?>
 									</select>
 								</div>
@@ -816,19 +805,6 @@ class BP_Redirect_Admin {
 											</option>
 											<?php
 										}
-
-										if ( bp_is_active( 'activity' ) ) {
-											?>
-											<option value="activity" 
-											<?php
-											if ( 'activity' === $login_component ) {
-												echo "selected = 'selected'";
-											}
-											?>
-																	><?php esc_html_e( 'Activity', 'bp-redirect' ); ?>
-											</option>
-											<?php
-										}
 									}
 									?>
 									
@@ -840,7 +816,7 @@ class BP_Redirect_Admin {
 										foreach ( $pages as $page ) {
 
 											if ( 'Activity' === $page->post_title ) {
-												$option  = '<option value="' . get_page_link( $page->ID ) . '">';
+												$option  = "<option value='" . get_page_link( $page->ID ) . "'  selected='". selected( $login_url, get_page_link( $page->ID ) )."'>";
 												$option .= $page->post_title;
 												$option .= '</option>';
 												echo $option; //phpcs:ignore
@@ -851,7 +827,7 @@ class BP_Redirect_Admin {
 										$pages    = get_pages( array( 'include' => $bp_pages ) );
 										foreach ( $pages as $page ) {
 											if ( 'Activity' === $page->post_title ) {												
-												$option  = '<option value="' . get_page_link( $page->ID ) . '">';
+												$option  = "<option value='" . get_page_link( $page->ID ) . "'  selected='". selected( $login_url, get_page_link( $page->ID ) )."'>";
 												$option .= $page->post_title;
 												$option .= '</option>';
 												echo $option; //phpcs:ignore
