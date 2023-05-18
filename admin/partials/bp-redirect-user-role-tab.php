@@ -18,13 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php
 		$spinner_src = includes_url() . 'images/spinner.gif';
-if ( class_exists( 'Buddypress' ) ) {
-	$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
-	$bp_pages      = bp_get_option( 'bp-pages' );
-} else {
-	$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
-	$bp_pages      = get_pages();
-}
+		$saved_setting = get_option( 'bp_redirect_admin_settings' );
+		$bp_pages      = get_pages();
 
 		$bp_pages_ids   = array_values( $bp_pages );
 		$login_sequence = $this->get_editable_roles();
