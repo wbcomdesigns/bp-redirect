@@ -335,7 +335,7 @@ class BP_Redirect_Admin {
 								$login_url       = '';
 								if ( ! empty( $saved_setting ) && isset( $saved_setting['bp_login_redirect_settings'] ) ) {
 									$setting = $saved_setting['bp_login_redirect_settings'];
-
+									
 									if ( array_key_exists( $key, $setting ) ) {
 										if ( array_key_exists( 'login_type', $setting[ $key ] ) ) {
 											$login_type_val = $setting[ $key ]['login_type'];
@@ -346,6 +346,8 @@ class BP_Redirect_Admin {
 										$login_url = $setting[ $key ]['login_url'];
 									}
 								}
+
+								 
 
 								if ( is_multisite() ) {
 									// Makes sure the plugin is defined before trying to use it.
@@ -483,7 +485,8 @@ class BP_Redirect_Admin {
 									</select>
 								</div>
 								<div class="bpr-col-4">
-									<?php $wp_page_ids = $this->bp_redirect_get_all_page_ids(); ?>
+									
+									<?php $wp_page_ids = $this->bp_redirect_get_all_page_ids(); ?>									
 									<select name='<?php echo esc_attr( "bp_login_redirect_settings[$key][login_url]" ); ?>' class='bbr-login-<?php echo esc_html( $key ); ?> bpr-login-custom
 															<?php
 															if ( isset( $login_type_val ) && 'custom' === $login_type_val ) {
