@@ -211,7 +211,7 @@ if ( ! class_exists( 'Puc_v4p10_Plugin_Ui', false ) ) :
 		 */
 		public function displayManualCheckResult() {
 			if ( isset( $_GET['puc_update_check_result'], $_GET['puc_slug'] ) && ( $_GET['puc_slug'] == $this->updateChecker->slug ) ) {
-				$status      = strval( $_GET['puc_update_check_result'] );
+				$status      = strval( esc_html($_GET['puc_update_check_result']) );
 				$title       = $this->updateChecker->getInstalledPackage()->getPluginTitle();
 				$noticeClass = 'updated notice-success';
 				$details     = '';
@@ -227,14 +227,14 @@ if ( ! class_exists( 'Puc_v4p10_Plugin_Ui', false ) ) :
 					$details = $this->formatManualCheckErrors( get_site_transient( $this->manualCheckErrorTransient ) );
 					delete_site_transient( $this->manualCheckErrorTransient );
 				} else {
-					$message     = sprintf( __( 'Unknown update checker status "%s"', 'bp-redirect' ), htmlentities( $status ) );
+					$message     = sprintf( __( 'Unknown update checker status "%s"', 'bp-redirect' ), esc_html( $status ) );
 					$noticeClass = 'error notice-error';
 				}
 				printf(
 					'<div class="notice %s is-dismissible"><p>%s</p>%s</div>',
-					$noticeClass,
-					apply_filters( $this->updateChecker->getUniqueName( 'manual_check_message' ), $message, $status ),
-					$details
+					esc_html($noticeClass),
+					apply_filters( $this->updateChecker->getUniqueName( 'manual_check_message' ), esc_html($message), esc_html($status) ),
+					esc_html($details)
 				);
 			}
 		}

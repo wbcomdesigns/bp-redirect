@@ -158,7 +158,7 @@ if ( ! class_exists( 'Puc_v4p10_DebugBar_Panel', false ) && class_exists( 'Debug
 			} elseif ( $value === null ) {
 				$value = '<code>null</code>';
 			}
-			printf( '<tr><th scope="row">%1$s</th> <td>%2$s</td></tr>', $name, $value );
+			printf( '<tr><th scope="row">%1$s</th> <td>%2$s</td></tr>', esc_html($name), esc_html($value) );
 		}
 	}
 
