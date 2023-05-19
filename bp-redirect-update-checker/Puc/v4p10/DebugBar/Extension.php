@@ -64,7 +64,7 @@ if ( ! class_exists( 'Puc_v4p10_DebugBar_Extension', false ) ) :
 			$update = $this->updateChecker->checkForUpdates();
 			if ( $update !== null ) {
 				echo 'An update is available:';
-				echo '<pre>', htmlentities( print_r( $update, true ) ), '</pre>';
+				echo '<pre>', esc_html( print_r( $update, true ) ), '</pre>';
 			} else {
 				echo 'No updates found.';
 			}
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Puc_v4p10_DebugBar_Extension', false ) ) :
 				foreach ( array_values( $errors ) as $num => $item ) {
 					$wpError = $item['error'];
 					/** @var WP_Error $wpError */
-					printf( '<h4>%d) %s</h4>', $num + 1, esc_html( $wpError->get_error_message() ) );
+					printf( '<h4>%d) %s</h4>', esc_html($num) + 1, esc_html( $wpError->get_error_message() ) );
 
 					echo '<dl>';
 					printf( '<dt>Error code:</dt><dd><code>%s</code></dd>', esc_html( $wpError->get_error_code() ) );
@@ -98,8 +98,8 @@ if ( ! class_exists( 'Puc_v4p10_DebugBar_Extension', false ) ) :
 							// Status code.
 							printf(
 								'<dt>HTTP status:</dt><dd><code>%d %s</code></dd>',
-								wp_remote_retrieve_response_code( $item['httpResponse'] ),
-								wp_remote_retrieve_response_message( $item['httpResponse'] )
+								esc_html(wp_remote_retrieve_response_code( $item['httpResponse'] )),
+								esc_html(wp_remote_retrieve_response_message( $item['httpResponse'] ))
 							);
 
 							// Headers.
