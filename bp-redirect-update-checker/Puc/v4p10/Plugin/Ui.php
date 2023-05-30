@@ -211,7 +211,9 @@ if ( ! class_exists( 'Puc_v4p10_Plugin_Ui', false ) ) :
 		 */
 		public function displayManualCheckResult() {
 			if ( isset( $_GET['puc_update_check_result'], $_GET['puc_slug'] ) && ( $_GET['puc_slug'] == $this->updateChecker->slug ) ) {
-				$status      = strval( esc_html($_GET['puc_update_check_result']) );
+				$puc_update_check_result = wp_unslash( $_GET['my_data'] );
+				$puc_update_check_result = sanitize_text_field($puc_update_check_result);
+				$status      = strval( esc_html($puc_update_check_result) );
 				$title       = $this->updateChecker->getInstalledPackage()->getPluginTitle();
 				$noticeClass = 'updated notice-success';
 				$details     = '';
@@ -233,7 +235,7 @@ if ( ! class_exists( 'Puc_v4p10_Plugin_Ui', false ) ) :
 				printf(
 					'<div class="notice %s is-dismissible"><p>%s</p>%s</div>',
 					esc_html($noticeClass),
-					apply_filters( $this->updateChecker->getUniqueName( 'manual_check_message' ), esc_html($message), esc_html($status) ),
+					apply_filters( $this->updateChecker->getUniqueName( 'manual_check_message' ), $message, $status ),
 					esc_html($details)
 				);
 			}
