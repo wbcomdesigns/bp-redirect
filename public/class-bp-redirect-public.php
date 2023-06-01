@@ -330,17 +330,20 @@ class BP_Redirect_Public {
 			} else {
 				$user_member_type = array();
 			}
-
+			
 			$user_data = get_userdata( $user->ID );
 			$user_role = ! empty( $user_data->roles ) ? $user_data->roles : array();
 			// for global rediract chcek the role
 			$user_roles = ! empty( $user_data->roles ) ? $user_data->roles : array();
+			$search = array_search('bbp_participant', $user_roles); // Find the key associated with 'value2'
+			if ($search !== false) {
+				unset($user_roles[$search]); // Remove the element with the found key
+			}
 			$userrole_key = array_key_last($user_roles);
-		
 			$url        = array();
 			if ( ! empty( $setting ) ) {
 				if(!empty($user_member_type) ||  isset( $setting[ $user_roles[$userrole_key] ]['logout_type'] ) && $setting[ $user_roles[$userrole_key] ]['logout_type'] != 'none' && ! empty( $setting[ $user_roles[$userrole_key] ]['logout_type'] ) ){
-						
+					
 					if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
 						$bp_member_key = $user_member_type;	
 						$url[] = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );	
@@ -392,8 +395,12 @@ class BP_Redirect_Public {
 		$logout_type_val  = '';
 		$logout_component = '';
 		$logout_url       = '';
-		if ( array_intersect_key( array_flip( array( $key ) ), $setting ) ) {
-			$key = array_key_last(array_flip( array( $key ) ));
+		if (!is_array($key)) {
+			$key = array($key);
+		}
+
+		if ( array_intersect_key( array_flip($key), $setting ) ) {
+			$key = array_key_last(array_flip($key));
 			if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 				$logout_component = isset( $setting[ $key ]['logout_component'] ) ? $setting[ $key ]['logout_component'] : '';
 			}
