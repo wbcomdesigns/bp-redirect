@@ -95,13 +95,29 @@ class BP_Redirect_Public {
 						$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
 						
 					} else {
-						$url[] = $setting_global['global']['login_url'];
+						if($setting_global['global']['login_type'] != 'custom'){
+							$bp_member_key = array('global');
+							$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
+						}else{
+							$url[] = $setting_global['global']['login_url'];
+						}
 					}
 				}else {
-					$url[] = $setting_global['global']['login_url'];
+					if($setting_global['global']['login_type'] != 'custom'){
+						$bp_member_key = array('global');
+						$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
+					}else{
+						$url[] = $setting_global['global']['login_url'];
+					}
 				}
 			} elseif ( ! empty( $setting_global ) ) {
-				$url[] = $setting_global['global']['login_url'];
+				if($setting_global['global']['login_type'] != 'custom'){
+					$bp_member_key = array('global');
+					$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
+				}else{
+					$url[] = $setting_global['global']['login_url'];
+				}
+
 			}
 
 			if ( isset( $url[0] ) && ! empty( $url[0] ) ) {
