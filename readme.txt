@@ -3,8 +3,8 @@ Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/donate/
 Tags: login redirect, buddypress redirect
 Requires at least: 3.0.1
-Tested up to: 6.1.1
-Stable tag: 1.7.2
+Tested up to: 6.2.0
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
