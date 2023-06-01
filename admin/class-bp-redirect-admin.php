@@ -462,18 +462,7 @@ class BP_Redirect_Admin {
 												$bp_pages = bp_core_get_directory_page_ids();
 												$pages    = get_pages( array( 'include' => $bp_pages ) );
 												foreach ( $pages as $page ) {
-													if ( 'Activity' === $page->post_title ) {													
-														$option  = "<option value='" . get_page_link( $page->ID ) . "'  selected='". selected( $login_url, get_page_link( $page->ID ) )."'>";
-														$option .= $page->post_title;
-														$option .= '</option>';
-														echo $option; //phpcs:ignore
-													}
-												}
-											} else {
-												$bp_pages = get_pages();
-												$pages    = get_pages( array( 'include' => $bp_pages ) );
-												foreach ( $pages as $page ) {
-													if ( 'Activity' === $page->post_title ) {
+													if ( 'activity' === $login_component ) {													
 														$option  = "<option value='" . get_page_link( $page->ID ) . "'  selected='". selected( $login_url, get_page_link( $page->ID ) )."'>";
 														$option .= $page->post_title;
 														$option .= '</option>';
@@ -818,26 +807,14 @@ class BP_Redirect_Admin {
 										$pages    = get_pages( array( 'include' => $bp_pages ) );
 										foreach ( $pages as $page ) {
 
-											if ( 'Activity' === $page->post_title ) {
+											if ( 'activity' === $login_component ) {
 												$option  = "<option value='" . get_page_link( $page->ID ) . "'  selected='". selected( $login_url, get_page_link( $page->ID ) )."'>";
 												$option .= $page->post_title;
 												$option .= '</option>';
 												echo $option; //phpcs:ignore
 											}
 										}
-									} else {
-										$bp_pages = get_pages();
-										$pages    = get_pages( array( 'include' => $bp_pages ) );
-										foreach ( $pages as $page ) {
-											if ( 'Activity' === $page->post_title ) {												
-												$option  = "<option value='" . get_page_link( $page->ID ) . "'  selected='". selected( $login_url, get_page_link( $page->ID ) )."'>";
-												$option .= $page->post_title;
-												$option .= '</option>';
-												echo $option; //phpcs:ignore
-
-											}
-										}
-									}
+									} 
 									?>
 								</select>
 							</div>
