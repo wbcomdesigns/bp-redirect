@@ -240,10 +240,10 @@ function bpr_required_plugin_admin_notice() {
  */
 function bp_redirect_activation_redirect_settings( $plugin ) {
 
-	if ( plugin_basename( __FILE__ ) === $plugin || class_exists( 'Buddypress' ) ) {
+	if ( plugin_basename( __FILE__ ) === $plugin) {
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin ) {
-			wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
-			exit;
+				wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect&redirects=1' ) );
+				exit;		
 		}
 	}
 }
