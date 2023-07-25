@@ -355,7 +355,9 @@ class BP_Redirect_Public {
 						$url[] = $setting_global['global']['logout_url'];
 					}
 				}else{
-					$url[] = $setting_global['global']['logout_url'];
+					if( ! empty( $setting_global ) ){
+						$url[] = $setting_global['global']['logout_url'];
+					}
 				}
 			} elseif ( ! empty( $setting_global ) ) {
 
