@@ -200,6 +200,8 @@ function run_bp_redirect() {
 	require plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect.php';
 	$plugin = new BP_Redirect();
 	$plugin->run();
+	 require_once __DIR__ . '/vendor/autoload.php';
+	HardG\BuddyPress120URLPolyfills\Loader::init();
 
 }
 
