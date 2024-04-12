@@ -1020,10 +1020,10 @@ class BP_Redirect_Admin {
 					$saved_setting = get_option( 'bp_redirect_admin_settings' );
 				}
 
-				parse_str( wp_unslash( filter_input( INPUT_POST, 'login_details', FILTER_SANITIZE_STRING ) ), $login_form_data );
-				parse_str( wp_unslash( filter_input( INPUT_POST, 'logout_details', FILTER_SANITIZE_STRING ) ), $logout_form_data );
-				$login_details     = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
-				$logout_details    = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
+				parse_str( wp_unslash( filter_input( INPUT_POST, 'login_details', FILTER_UNSAFE_RAW ) ), $login_form_data );
+				parse_str( wp_unslash( filter_input( INPUT_POST, 'logout_details', FILTER_UNSAFE_RAW ) ), $logout_form_data );
+				$login_details     = filter_var_array( $login_form_data, FILTER_UNSAFE_RAW );
+				$logout_details    = filter_var_array( $logout_form_data, FILTER_UNSAFE_RAW );
 				$login_array_keys  = array();
 				$logout_array_keys = array();
 				if ( ! empty( $saved_setting ) && $saved_setting['bp_login_redirect_settings'] && isset( $saved_setting['bp_logout_redirect_settings'] ) ) {
@@ -1079,10 +1079,10 @@ class BP_Redirect_Admin {
 					$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
 				}
 
-				parse_str( wp_unslash( filter_input( INPUT_POST, 'login_details', FILTER_SANITIZE_STRING ) ), $login_form_data );
-				parse_str( wp_unslash( filter_input( INPUT_POST, 'logout_details', FILTER_SANITIZE_STRING ) ), $logout_form_data );
-				$login_details     = filter_var_array( $login_form_data, FILTER_SANITIZE_STRING );
-				$logout_details    = filter_var_array( $logout_form_data, FILTER_SANITIZE_STRING );
+				parse_str( wp_unslash( filter_input( INPUT_POST, 'login_details', FILTER_UNSAFE_RAW ) ), $login_form_data );
+				parse_str( wp_unslash( filter_input( INPUT_POST, 'logout_details', FILTER_UNSAFE_RAW ) ), $logout_form_data );
+				$login_details     = filter_var_array( $login_form_data, FILTER_UNSAFE_RAW );
+				$logout_details    = filter_var_array( $logout_form_data, FILTER_UNSAFE_RAW );
 				$login_array_keys  = array();
 				$logout_array_keys = array();
 				if ( ! empty( $saved_setting ) && $saved_setting['bp_login_redirect_settings_global'] && isset( $saved_setting['bp_logout_redirect_settings_global'] ) ) {
