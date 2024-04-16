@@ -1,14 +1,14 @@
-# Copyright (C) 2023
+# Copyright (C) 2024
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-25 10:03:15+00:00\n"
+"POT-Creation-Date: 2024-04-16 11:26:37+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Varun Dubey\n"
 "Language-Team: Wbcom Designs\n"
 "Language: en\n"
@@ -37,7 +37,7 @@ msgid " General "
 msgstr ""
 
 #: admin/class-bp-redirect-admin.php:101 admin/class-bp-redirect-admin.php:102
-#: bp-redirect.php:228
+#: bp-redirect.php:230
 msgid "BP Redirect"
 msgstr ""
 
@@ -977,11 +977,11 @@ msgstr ""
 msgid "Go for any custom development."
 msgstr ""
 
-#: bp-redirect.php:229
+#: bp-redirect.php:231
 msgid "BuddyPress"
 msgstr ""
 
-#: bp-redirect.php:232
+#: bp-redirect.php:234
 #. translators: BP Redirect, %2$s: BuddyPress
 msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
 msgstr ""
