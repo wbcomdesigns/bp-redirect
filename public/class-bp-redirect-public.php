@@ -78,46 +78,45 @@ class BP_Redirect_Public {
 			$user_data = get_userdata( $user->ID );
 			$user_role = ! empty( $user_data->roles ) ? $user_data->roles : array();
 			// for global rediract chcek the role
-			$user_roles = ! empty( $user_data->roles ) ? $user_data->roles : array();
-			$userrole_key = array_key_last($user_role);
-			$url        = array();
-			
+			$user_roles   = ! empty( $user_data->roles ) ? $user_data->roles : array();
+			$userrole_key = array_key_first( $user_role );
+			$url          = array();
+
 			if ( ! empty( $setting ) ) {
 
-				if(!empty($user_member_type) || isset( $setting[ $user_roles[$userrole_key] ]['login_type'] ) && $setting[ $user_roles[$userrole_key] ]['login_type'] != 'none' && ! empty( $setting[ $user_roles[$userrole_key] ]['login_type'] )){
-					
+				if ( ! empty( $user_member_type ) || isset( $setting[ $user_roles[ $userrole_key ] ]['login_type'] ) && $setting[ $user_roles[ $userrole_key ] ]['login_type'] != 'none' && ! empty( $setting[ $user_roles[ $userrole_key ] ]['login_type'] ) ) {
+
 					if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
-						$bp_member_key = $user_member_type;											
-						$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-						
-					}else if ( ! empty( array_intersect_key( array_flip($user_role), $setting ) ) && isset( $saved_setting['role_btn_value'] ) && 'yes' == $saved_setting['role_btn_value'] ) {
+						$bp_member_key = $user_member_type;
+						$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+
+					} elseif ( ! empty( array_intersect_key( array_flip( $user_role ), $setting ) ) && isset( $saved_setting['role_btn_value'] ) && 'yes' == $saved_setting['role_btn_value'] ) {
 						$bp_member_key = $user_role;
 						$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-						
+
 					} else {
-						if($setting_global['global']['login_type'] != 'custom'){
-							$bp_member_key = array('global');
-							$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
-						}else{
+						if ( $setting_global['global']['login_type'] != 'custom' ) {
+							$bp_member_key = array( 'global' );
+							$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
+						} else {
 							$url[] = $setting_global['global']['login_url'];
 						}
 					}
-				}else {
-					if($setting_global['global']['login_type'] != 'custom'){
-						$bp_member_key = array('global');
-						$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
-					}else{
+				} else {
+					if ( $setting_global['global']['login_type'] != 'custom' ) {
+						$bp_member_key = array( 'global' );
+						$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
+					} else {
 						$url[] = $setting_global['global']['login_url'];
 					}
 				}
 			} elseif ( ! empty( $setting_global ) ) {
-				if($setting_global['global']['login_type'] != 'custom'){
-					$bp_member_key = array('global');
-					$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
-				}else{
+				if ( $setting_global['global']['login_type'] != 'custom' ) {
+					$bp_member_key = array( 'global' );
+					$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
+				} else {
 					$url[] = $setting_global['global']['login_url'];
 				}
-
 			}
 
 			if ( isset( $url[0] ) && ! empty( $url[0] ) ) {
@@ -198,16 +197,16 @@ class BP_Redirect_Public {
 					}
 				}
 			}
-			$userrole_key = array_key_last($login_urls);
-			$login_urls = $login_urls[$userrole_key];
+			$userrole_key = array_key_first( $login_urls );
+			$login_urls   = $login_urls[ $userrole_key ];
 
 			if ( empty( $login_urls ) ) {
-			
+
 				$url = $this->bpr_redirect_general( $user );
 				return $url;
 			} else {
-				return esc_url($login_urls);
-				//return ( $login_urls[0] ) ? $login_urls[0] : bp_core_get_user_domain( $user->ID ) . 'activity/';
+				return esc_url( $login_urls );
+				// return ( $login_urls[0] ) ? $login_urls[0] : bp_core_get_user_domain( $user->ID ) . 'activity/';
 			}
 		}
 	}
@@ -330,32 +329,32 @@ class BP_Redirect_Public {
 			} else {
 				$user_member_type = array();
 			}
-			
+
 			$user_data = get_userdata( $user->ID );
 			$user_role = ! empty( $user_data->roles ) ? $user_data->roles : array();
 			// for global rediract chcek the role
 			$user_roles = ! empty( $user_data->roles ) ? $user_data->roles : array();
-			$search = array_search('bbp_participant', $user_roles); // Find the key associated with 'value2'
-			if ($search !== false) {
-				unset($user_roles[$search]); // Remove the element with the found key
+			$search     = array_search( 'bbp_participant', $user_roles ); // Find the key associated with 'value2'
+			if ( $search !== false ) {
+				unset( $user_roles[ $search ] ); // Remove the element with the found key
 			}
-			$userrole_key = array_key_last($user_roles);
-			$url        = array();
+			$userrole_key = array_key_first( $user_roles );
+			$url          = array();
 			if ( ! empty( $setting ) ) {
-				if(!empty($user_member_type) ||  isset( $setting[ $user_roles[$userrole_key] ]['logout_type'] ) && $setting[ $user_roles[$userrole_key] ]['logout_type'] != 'none' && ! empty( $setting[ $user_roles[$userrole_key] ]['logout_type'] ) ){
-					
+				if ( ! empty( $user_member_type ) || isset( $setting[ $user_roles[ $userrole_key ] ]['logout_type'] ) && $setting[ $user_roles[ $userrole_key ] ]['logout_type'] != 'none' && ! empty( $setting[ $user_roles[ $userrole_key ] ]['logout_type'] ) ) {
+
 					if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
-						$bp_member_key = $user_member_type;	
-						$url[] = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );	
-					}else if ( array_key_exists( $user_role[$userrole_key], $setting ) && isset( $saved_setting['role_btn_value'] ) && 'yes' == $saved_setting['role_btn_value'] ) {
-						$bp_member_key = $user_role[$userrole_key];						
-						$url[]  = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-						
+						$bp_member_key = $user_member_type;
+						$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+					} elseif ( array_key_exists( $user_role[ $userrole_key ], $setting ) && isset( $saved_setting['role_btn_value'] ) && 'yes' == $saved_setting['role_btn_value'] ) {
+						$bp_member_key = $user_role[ $userrole_key ];
+						$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+
 					} else {
 						$url[] = $setting_global['global']['logout_url'];
 					}
-				}else{
-					if( ! empty( $setting_global ) ){
+				} else {
+					if ( ! empty( $setting_global ) ) {
 						$url[] = $setting_global['global']['logout_url'];
 					}
 				}
@@ -397,12 +396,12 @@ class BP_Redirect_Public {
 		$logout_type_val  = '';
 		$logout_component = '';
 		$logout_url       = '';
-		if (!is_array($key)) {
-			$key = array($key);
+		if ( ! is_array( $key ) ) {
+			$key = array( $key );
 		}
 
-		if ( array_intersect_key( array_flip($key), $setting ) ) {
-			$key = array_key_last(array_flip($key));
+		if ( array_intersect_key( array_flip( $key ), $setting ) ) {
+			$key = array_key_first( array_flip( $key ) );
 			if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 				$logout_component = isset( $setting[ $key ]['logout_component'] ) ? $setting[ $key ]['logout_component'] : '';
 			}
