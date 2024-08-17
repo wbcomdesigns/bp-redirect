@@ -46,11 +46,15 @@ function bpr_plugin_init()
 	if (class_exists('BuddyPress') && bpr_check_config()) {
 		run_bp_redirect();
 	} else {
+		// Trigger the notice in the admin area if BuddyPress is not active or the config is not right.
 		add_action('admin_notices', 'bpr_requires_buddypress');
 	}
+	// Adding plugin action links to the plugin page.
 	add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'bpr_plugin_links');
 }
-add_action('plugins_loaded', 'bpr_plugin_init');
+// Ensure BuddyPress is fully loaded by the time this runs.
+add_action('wp_loaded', 'bpr_plugin_init');
+
 
 /**
  * BP Redirect checks the configuration.
