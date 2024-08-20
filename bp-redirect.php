@@ -1,5 +1,4 @@
 <?php
-
 /**
  * BP Redirect Plugin allows login and logout redirection based on user roles.
  *
@@ -73,20 +72,18 @@ add_action('wp_loaded', 'bpr_plugin_init');
 /**
  * Check BP Redirect configuration.
  */
-function bpr_check_config()
-{
+function bpr_check_config() {
 	global $bp;
 	$config = array(
 		'blog_status'    => false,
 		'network_active' => false,
 		'network_status' => true,
 	);
-
-	if (get_current_blog_id() === bp_get_root_blog_id()) {
+	if ( get_current_blog_id() === bp_get_root_blog_id() ) {
 		$config['blog_status'] = true;
 	}
 
-	$network_plugins = get_site_option('active_sitewide_plugins', array());
+	$network_plugins = get_site_option( 'active_sitewide_plugins', array() );
 
 	// No Network plugins.
 	if (empty($network_plugins)) {
@@ -165,7 +162,7 @@ function bpr_plugin_links($links)
 		'<a href="' . admin_url('admin.php?page=bp-redirect') . '">' . __('Settings', 'bp-redirect') . '</a>',
 		'<a href="https://wbcomdesigns.com/contact/" target="_blank" title="' . __('Need custom development?', 'bp-redirect') . '">' . __('Support', 'bp-redirect') . '</a>',
 	);
-	return array_merge($links, $bpr_links);
+	return array_merge( $links, $bplock_links );
 }
 
 /**
@@ -186,8 +183,8 @@ function deactivate_bp_redirect()
 	BP_Redirect_Deactivator::deactivate();
 }
 
-register_activation_hook(__FILE__, 'activate_bp_redirect');
-register_deactivation_hook(__FILE__, 'deactivate_bp_redirect');
+register_activation_hook( __FILE__, 'activate_bp_redirect' );
+register_deactivation_hook( __FILE__, 'deactivate_bp_redirect' );
 
 /**
  * Execute the core functionality of the plugin.
