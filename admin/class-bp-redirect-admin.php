@@ -1011,64 +1011,80 @@ class BP_Redirect_Admin {
 	 * @author Wbcom Designs
 	 * @access public
 	 */
-	public function bp_redirect_save_admin_settings() {
-		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bp-js-admin-ajax-nonce' ) ) {
-			if ( isset( $_POST['action'] ) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
-				if ( class_exists( 'Buddypress' ) ) {
-					$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
-				} else {
-					$saved_setting = get_option( 'bp_redirect_admin_settings' );
+	public function bp_redirect_save_admin_settings()
+	{
+		if (
+			isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'bp-js-admin-ajax-nonce')
+		) {
+			if (isset($_POST['action']) && 'bp_redirect_admin_settings' === $_POST['action']) {
+				$saved_setting = class_exists('BuddyPress') ? bp_get_option('bp_redirect_admin_settings') : get_option('bp_redirect_admin_settings');
+
+				parse_str(wp_unslash(filter_input(INPUT_POST, 'login_details', FILTER_UNSAFE_RAW)), $login_form_data);
+				parse_str(wp_unslash(filter_input(INPUT_POST, 'logout_details', FILTER_UNSAFE_RAW)), $logout_form_data);
+				$login_details = filter_var_array($login_form_data, FILTER_UNSAFE_RAW);
+				$logout_details = filter_var_array($logout_form_data, FILTER_UNSAFE_RAW);
+
+				$login_array_keys = ! empty($saved_setting['bp_login_redirect_settings']) ? array_keys($saved_setting['bp_login_redirect_settings']) : array();
+				$logout_array_keys = ! empty($saved_setting['bp_logout_redirect_settings']) ? array_keys($saved_setting['bp_logout_redirect_settings']) : array();
+
+				// Process login details
+				foreach ($login_details['bp_login_redirect_settings'] as $key => $lgn_detail) {
+					if (! isset($lgn_detail['login_type']) || 'none' === $lgn_detail['login_type']) {
+						// Skip saving for 'none' type or if login_type is missing.
+						continue;
+					}
+
+					if (in_array($key, $login_array_keys, true)) {
+						unset($saved_setting['bp_login_redirect_settings'][$key]);
+						$saved_setting['bp_login_redirect_settings'][$key] = $lgn_detail;
+					} else {
+						$saved_setting['bp_login_redirect_settings'][$key] = $lgn_detail;
+					}
 				}
 
-				parse_str( wp_unslash( filter_input( INPUT_POST, 'login_details', FILTER_UNSAFE_RAW ) ), $login_form_data );
-				parse_str( wp_unslash( filter_input( INPUT_POST, 'logout_details', FILTER_UNSAFE_RAW ) ), $logout_form_data );
-				$login_details     = filter_var_array( $login_form_data, FILTER_UNSAFE_RAW );
-				$logout_details    = filter_var_array( $logout_form_data, FILTER_UNSAFE_RAW );
-				$login_array_keys  = array();
-				$logout_array_keys = array();
-				if ( ! empty( $saved_setting ) && $saved_setting['bp_login_redirect_settings'] && isset( $saved_setting['bp_logout_redirect_settings'] ) ) {
-					$login_array_keys  = array_keys( $saved_setting['bp_login_redirect_settings'] );
-					$logout_array_keys = array_keys( $saved_setting['bp_logout_redirect_settings'] );
-				} else {
-					$saved_setting = array();
-				}
-				foreach ( $login_details['bp_login_redirect_settings'] as $key => $lgn_detail ) {
-					if ( in_array( $key, $login_array_keys, true ) ) {
-						unset( $saved_setting['bp_login_redirect_settings'][ $key ] );
-						$saved_setting['bp_login_redirect_settings'][ $key ] = $lgn_detail;
+				// Process logout details
+				foreach ($logout_details['bp_logout_redirect_settings'] as $key => $lgt_detail) {
+					if (! isset($lgt_detail['logout_type']) || 'none' === $lgt_detail['logout_type']) {
+						// Skip saving for 'none' type or if logout_type is missing.
+						continue;
+					}
+
+					if (in_array($key, $logout_array_keys, true)) {
+						unset($saved_setting['bp_logout_redirect_settings'][$key]);
+						$saved_setting['bp_logout_redirect_settings'][$key] = $lgt_detail;
 					} else {
-						$saved_setting['bp_login_redirect_settings'][ $key ] = $lgn_detail;
+						$saved_setting['bp_logout_redirect_settings'][$key] = $lgt_detail;
 					}
 				}
-				foreach ( $logout_details['bp_logout_redirect_settings'] as $key => $lgt_detail ) {
-					if ( in_array( $key, $logout_array_keys, true ) ) {
-						unset( $saved_setting['bp_logout_redirect_settings'][ $key ] );
-						$saved_setting['bp_logout_redirect_settings'][ $key ] = $lgt_detail;
-					} else {
-						$saved_setting['bp_logout_redirect_settings'][ $key ] = $lgt_detail;
-					}
+
+				// Additional settings
+				if (isset($_POST['enable_disable_setting']) && '' !== $_POST['enable_disable_setting']) {
+					$saved_setting['member_type_btn_value'] = sanitize_text_field(wp_unslash($_POST['enable_disable_setting']));
 				}
-				if ( isset( $_POST['enable_disable_setting'] ) && '' !== $_POST['enable_disable_setting'] ) {
-					$saved_setting['member_type_btn_value'] = sanitize_text_field( wp_unslash( $_POST['enable_disable_setting'] ) );
+
+				if (isset($_POST['enable_disable_role_setting']) && '' !== $_POST['enable_disable_role_setting']) {
+					$saved_setting['role_btn_value'] = sanitize_text_field(wp_unslash($_POST['enable_disable_role_setting']));
 				}
-				if ( isset( $_POST['enable_disable_role_setting'] ) && '' !== $_POST['enable_disable_role_setting'] ) {
-					$saved_setting['role_btn_value'] = sanitize_text_field( wp_unslash( $_POST['enable_disable_role_setting'] ) );
+
+				if (isset($_POST['loginSequence']) && '' !== $_POST['loginSequence']) {
+					$saved_setting['loginSequence'] = sanitize_text_field(wp_unslash($_POST['loginSequence']));
 				}
-				if ( isset( $_POST['loginSequence'] ) && '' !== $_POST['loginSequence'] ) {
-					$saved_setting['loginSequence'] = sanitize_text_field( wp_unslash( $_POST['loginSequence'] ) );
+
+				if (isset($_POST['logoutSequence']) && '' !== $_POST['logoutSequence']) {
+					$saved_setting['logoutSequence'] = sanitize_text_field(wp_unslash($_POST['logoutSequence']));
 				}
-				if ( isset( $_POST['logoutSequence'] ) && '' !== $_POST['logoutSequence'] ) {
-					$saved_setting['logoutSequence'] = sanitize_text_field( wp_unslash( $_POST['logoutSequence'] ) );
-				}
-				if ( class_exists( 'Buddypress' ) ) {
-					bp_update_option( 'bp_redirect_admin_settings', $saved_setting );
+
+				// Save the settings back to the database
+				if (class_exists('BuddyPress')) {
+					bp_update_option('bp_redirect_admin_settings', $saved_setting);
 				} else {
-					update_option( 'bp_redirect_admin_settings', $saved_setting );
+					update_option('bp_redirect_admin_settings', $saved_setting);
 				}
 			}
 		}
 		exit;
 	}
+
 
 	function bp_redirect_save_admin_settings_global() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bp-js-admin-ajax-nonce' ) ) {
