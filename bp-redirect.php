@@ -162,8 +162,9 @@ function bpr_plugin_links($links)
 		'<a href="' . admin_url('admin.php?page=bp-redirect') . '">' . __('Settings', 'bp-redirect') . '</a>',
 		'<a href="https://wbcomdesigns.com/contact/" target="_blank" title="' . __('Need custom development?', 'bp-redirect') . '">' . __('Support', 'bp-redirect') . '</a>',
 	);
-	return array_merge( $links, $bplock_links );
+	return array_merge($links, $bpr_links);
 }
+
 
 /**
  * Runs the plugin during activation.
