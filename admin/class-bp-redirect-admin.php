@@ -19,8 +19,6 @@
  */
 class BP_Redirect_Admin {
 
-
-
 	/**
 	 * The ID of this plugin.
 	 *
@@ -46,8 +44,14 @@ class BP_Redirect_Admin {
 	 * @access protected
 	 * @var    string
 	 */
-
 	protected $options_key = 'bp_redirect_setting';
+
+	/**
+	 * Holds the plugin settings tabs.
+	 *
+	 * @var array
+	 */
+	protected $plugin_settings_tabs = array();
 
 	/**
 	 * Initialize the class and set its properties.
