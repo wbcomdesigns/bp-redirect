@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-16 11:26:37+00:00\n"
+"POT-Creation-Date: 2024-08-22 05:11:43+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,91 +24,90 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: admin/class-bp-redirect-admin.php:82 admin/class-bp-redirect-admin.php:83
+#: admin/class-bp-redirect-admin.php:86 admin/class-bp-redirect-admin.php:87
 msgid "WB Plugins"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:93
+#: admin/class-bp-redirect-admin.php:97
 msgid "General"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:94
+#: admin/class-bp-redirect-admin.php:98
 msgid " General "
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:101 admin/class-bp-redirect-admin.php:102
-#: bp-redirect.php:230
+#: admin/class-bp-redirect-admin.php:105 admin/class-bp-redirect-admin.php:106
 msgid "BP Redirect"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:147
+#: admin/class-bp-redirect-admin.php:151
 #: admin/wbcom/templates/wbcom-license-page.php:13
 msgid "BuddyPress Redirect"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:148
+#: admin/class-bp-redirect-admin.php:152
 #: admin/wbcom/templates/wbcom-license-page.php:14
 msgid "Version %s"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:192
+#: admin/class-bp-redirect-admin.php:196
 msgid "Welcome"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:195
+#: admin/class-bp-redirect-admin.php:199
 msgid "Global Redirection"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:198
+#: admin/class-bp-redirect-admin.php:202
 #: admin/partials/bp-redirect-user-role-tab.php:70
 msgid "Redirect For User Role"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:203
+#: admin/class-bp-redirect-admin.php:207
 #: admin/partials/bp-redirect-member-type-tab.php:86
 msgid "Redirect For Member Type"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:208
+#: admin/class-bp-redirect-admin.php:212
 msgid "FAQ"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:367 admin/class-bp-redirect-admin.php:383
-#: admin/class-bp-redirect-admin.php:709 admin/class-bp-redirect-admin.php:725
+#: admin/class-bp-redirect-admin.php:371 admin/class-bp-redirect-admin.php:387
+#: admin/class-bp-redirect-admin.php:713 admin/class-bp-redirect-admin.php:729
 msgid "BuddyPress Component"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:399 admin/class-bp-redirect-admin.php:578
-#: admin/class-bp-redirect-admin.php:742 admin/class-bp-redirect-admin.php:934
+#: admin/class-bp-redirect-admin.php:403 admin/class-bp-redirect-admin.php:582
+#: admin/class-bp-redirect-admin.php:746 admin/class-bp-redirect-admin.php:938
 msgid "Page"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:409 admin/class-bp-redirect-admin.php:588
-#: admin/class-bp-redirect-admin.php:752 admin/class-bp-redirect-admin.php:944
+#: admin/class-bp-redirect-admin.php:413 admin/class-bp-redirect-admin.php:592
+#: admin/class-bp-redirect-admin.php:756 admin/class-bp-redirect-admin.php:948
 msgid "None"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:420 admin/class-bp-redirect-admin.php:764
+#: admin/class-bp-redirect-admin.php:424 admin/class-bp-redirect-admin.php:768
 msgid "Select"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:428 admin/class-bp-redirect-admin.php:772
+#: admin/class-bp-redirect-admin.php:432 admin/class-bp-redirect-admin.php:776
 msgid "Member Profile"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:440 admin/class-bp-redirect-admin.php:784
+#: admin/class-bp-redirect-admin.php:444 admin/class-bp-redirect-admin.php:788
 msgid "Member Activity"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:452 admin/class-bp-redirect-admin.php:796
+#: admin/class-bp-redirect-admin.php:456 admin/class-bp-redirect-admin.php:800
 msgid "Groups"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:670
+#: admin/class-bp-redirect-admin.php:674
 msgid "Login Redirect Settings For All Roles"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:902
+#: admin/class-bp-redirect-admin.php:906
 msgid "Logout Redirect Settings For All Roles"
 msgstr ""
 
@@ -335,11 +334,11 @@ msgstr ""
 
 #: admin/wbcom/class-wbcom-admin-settings.php:196
 #: admin/wbcom/class-wbcom-admin-settings.php:197
-#: admin/wbcom/class-wbcom-admin-settings.php:275 bp-redirect.php:160
+#: admin/wbcom/class-wbcom-admin-settings.php:275 bp-redirect.php:163
 msgid "Support"
 msgstr ""
 
-#: admin/wbcom/class-wbcom-admin-settings.php:263 bp-redirect.php:159
+#: admin/wbcom/class-wbcom-admin-settings.php:263 bp-redirect.php:162
 msgid "Settings"
 msgstr ""
 
@@ -963,27 +962,16 @@ msgstr ""
 msgid "There is no changelog available."
 msgstr ""
 
-#: bp-redirect.php:115 bp-redirect.php:137
-msgid ""
-"BP Redirect requires to be activated on the blog where BuddyPress is "
-"activated."
+#: bp-redirect.php:114 bp-redirect.php:138
+msgid "BP Redirect must be activated on the blog where BuddyPress is active."
 msgstr ""
 
-#: bp-redirect.php:120 bp-redirect.php:148
-msgid "BP Redirect and BuddyPress need to share the same network configuration."
+#: bp-redirect.php:119 bp-redirect.php:150
+msgid "BP Redirect and BuddyPress must share the same network configuration."
 msgstr ""
 
-#: bp-redirect.php:160
-msgid "Go for any custom development."
-msgstr ""
-
-#: bp-redirect.php:231
-msgid "BuddyPress"
-msgstr ""
-
-#: bp-redirect.php:234
-#. translators: BP Redirect, %2$s: BuddyPress
-msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
+#: bp-redirect.php:163
+msgid "Need custom development?"
 msgstr ""
 
 #: bp-redirect-update-checker/Puc/v4p10/Plugin/Ui.php:222
