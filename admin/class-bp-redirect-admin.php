@@ -1009,59 +1009,79 @@ class BP_Redirect_Admin {
 
 
 	/**
-	 *  Actions performed for saving admin settings.
+	 * Actions performed for saving admin settings.
 	 *
 	 * @since  1.0.0
-	 * @author Wbcom Designs
 	 * @access public
 	 */
-	public function bp_redirect_save_admin_settings()
-	{
+	public function bp_redirect_save_admin_settings() {
 		if (
 			isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'bp-js-admin-ajax-nonce')
 		) {
 			if (isset($_POST['action']) && 'bp_redirect_admin_settings' === $_POST['action']) {
+				// Retrieve the existing settings
 				$saved_setting = class_exists('BuddyPress') ? bp_get_option('bp_redirect_admin_settings') : get_option('bp_redirect_admin_settings');
 
+				// Parse the incoming form data
 				parse_str(wp_unslash(filter_input(INPUT_POST, 'login_details', FILTER_UNSAFE_RAW)), $login_form_data);
 				parse_str(wp_unslash(filter_input(INPUT_POST, 'logout_details', FILTER_UNSAFE_RAW)), $logout_form_data);
-				$login_details = filter_var_array($login_form_data, FILTER_UNSAFE_RAW);
-				$logout_details = filter_var_array($logout_form_data, FILTER_UNSAFE_RAW);
 
-				$login_array_keys = ! empty($saved_setting['bp_login_redirect_settings']) ? array_keys($saved_setting['bp_login_redirect_settings']) : array();
-				$logout_array_keys = ! empty($saved_setting['bp_logout_redirect_settings']) ? array_keys($saved_setting['bp_logout_redirect_settings']) : array();
+				// Ensure these variables are arrays
+				$login_details = is_array($login_form_data) ? $login_form_data : [];
+				$logout_details = is_array($logout_form_data) ? $logout_form_data : [];
+
+				// Ensure the saved settings are arrays
+				if (!is_array($saved_setting)) {
+					$saved_setting = [
+						'bp_login_redirect_settings' => [],
+						'bp_logout_redirect_settings' => [],
+					];
+				}
+
+				// Get all roles and member types (including custom ones)
+				$all_roles = array_keys(wp_roles()->roles); // WordPress roles
+				$all_member_types = function_exists('bp_get_member_types') ? bp_get_member_types() : []; // BuddyPress member types
+
+				// Combine roles and member types into a single array
+				$all_keys = array_merge($all_roles, $all_member_types);
+
+				// Initialize missing keys with default values
+				foreach ($all_keys as $key) {
+					if (!isset($saved_setting['bp_login_redirect_settings'][$key])) {
+						$saved_setting['bp_login_redirect_settings'][$key] = [
+							'login_type' => 'none',
+							'login_component' => '',
+							'login_url' => '',
+						];
+					}
+
+					if (!isset($saved_setting['bp_logout_redirect_settings'][$key])) {
+						$saved_setting['bp_logout_redirect_settings'][$key] = [
+							'logout_url' => '',
+						];
+					}
+				}
 
 				// Process login details
 				foreach ($login_details['bp_login_redirect_settings'] as $key => $lgn_detail) {
-					if (! isset($lgn_detail['login_type']) || 'none' === $lgn_detail['login_type']) {
-						// Skip saving for 'none' type or if login_type is missing.
-						continue;
+					// Ensure login_type exists
+					if (!isset($lgn_detail['login_type'])) {
+						$lgn_detail['login_type'] = 'none';
 					}
-
-					if (in_array($key, $login_array_keys, true)) {
-						unset($saved_setting['bp_login_redirect_settings'][$key]);
-						$saved_setting['bp_login_redirect_settings'][$key] = $lgn_detail;
-					} else {
-						$saved_setting['bp_login_redirect_settings'][$key] = $lgn_detail;
-					}
+					
+					$saved_setting['bp_login_redirect_settings'][$key] = $lgn_detail;
 				}
 
 				// Process logout details
 				foreach ($logout_details['bp_logout_redirect_settings'] as $key => $lgt_detail) {
-					if (! isset($lgt_detail['logout_type']) || 'none' === $lgt_detail['logout_type']) {
-						// Skip saving for 'none' type or if logout_type is missing.
-						continue;
+					if (!isset($lgt_detail['logout_type'])) {
+						$lgt_detail['logout_type'] = 'none';
 					}
 
-					if (in_array($key, $logout_array_keys, true)) {
-						unset($saved_setting['bp_logout_redirect_settings'][$key]);
-						$saved_setting['bp_logout_redirect_settings'][$key] = $lgt_detail;
-					} else {
-						$saved_setting['bp_logout_redirect_settings'][$key] = $lgt_detail;
-					}
+					$saved_setting['bp_logout_redirect_settings'][$key] = $lgt_detail;
 				}
 
-				// Additional settings
+				// Process additional settings
 				if (isset($_POST['enable_disable_setting']) && '' !== $_POST['enable_disable_setting']) {
 					$saved_setting['member_type_btn_value'] = sanitize_text_field(wp_unslash($_POST['enable_disable_setting']));
 				}
@@ -1088,6 +1108,7 @@ class BP_Redirect_Admin {
 		}
 		exit;
 	}
+
 
 
 	function bp_redirect_save_admin_settings_global() {
