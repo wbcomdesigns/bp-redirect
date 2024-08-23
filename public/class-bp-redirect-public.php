@@ -303,75 +303,64 @@ class BP_Redirect_Public {
 	}
 
 	/**
-	 *  Actions performed after logout
-	 *
-	 *  @param string $redirect_to Redirect url after logout.
-	 *  @param string $request Request.
-	 *  @param string $user Get a user.
-	 *  @since   1.0.0
-	 *  @author Wbcom Designs
-	 *  @access public
-	 */
-	public function bp_logout_redirection_front( $redirect_to, $request = '', $user = '' ) {
-		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
-			$url_headers = '';
+ * Actions performed after logout.
+ *
+ * @param string $redirect_to Redirect URL after logout.
+ * @param string $request Request URL.
+ * @param WP_User $user User object.
+ * @since 1.0.0
+ * @author Wbcom Designs
+ * @access public
+ */
+public function bp_logout_redirection_front( $redirect_to, $request = '', $user = '' ) {
+    if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
+        $url_headers = '';
 
-			$saved_setting  = get_option( 'bp_redirect_admin_settings' );
-			$setting        = isset( $saved_setting['bp_logout_redirect_settings'] ) ? $saved_setting['bp_logout_redirect_settings'] : '';
-			$saved_settings = get_option( 'bp_redirect_admin_settings_global' );
-			$setting_global = isset( $saved_settings['bp_logout_redirect_settings_global'] ) ? $saved_settings['bp_logout_redirect_settings_global'] : '';
+        $saved_setting  = get_option( 'bp_redirect_admin_settings' );
+        $setting        = isset( $saved_setting['bp_logout_redirect_settings'] ) && is_array( $saved_setting['bp_logout_redirect_settings'] ) ? $saved_setting['bp_logout_redirect_settings'] : [];
+        $saved_settings = get_option( 'bp_redirect_admin_settings_global' );
+        $setting_global = isset( $saved_settings['bp_logout_redirect_settings_global'] ) && is_array( $saved_settings['bp_logout_redirect_settings_global'] ) ? $saved_settings['bp_logout_redirect_settings_global'] : [];
 
-			if ( class_exists( 'Buddypress' ) ) {
-				$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID, false ) : array();
-			} else {
-				$user_member_type = array();
-			}
+        $user_member_type = class_exists( 'Buddypress' ) && function_exists( 'bp_get_member_type' ) ? ( bp_get_member_type( $user->ID, false ) ?: [] ) : [];
 
-			$user_data = get_userdata( $user->ID );
-			$user_roles = ! empty( $user_data->roles ) ? $user_data->roles : array();
+        $user_data = get_userdata( $user->ID );
+        $user_roles = ! empty( $user_data->roles ) ? $user_data->roles : [];
+        $userrole_key = array_key_first( $user_roles );
 
-			// Initialize the URL array
-			$url = array();
+        $url = [];
 
-			if ( ! empty( $setting ) ) {
-				// Check if there are any user member types or if the logout type is not set to 'none'
-				if ( ! empty( $user_member_type ) || ( isset( $setting[ $user_roles[0] ]['logout_type'] ) && $setting[ $user_roles[0] ]['logout_type'] != 'none' ) ) {
+        if ( ! empty( $setting ) ) {
+            if ( ! empty( $user_member_type ) || ( isset( $setting[ $user_roles[ $userrole_key ] ]['logout_type'] ) && $setting[ $user_roles[ $userrole_key ] ]['logout_type'] !== 'none' && ! empty( $setting[ $user_roles[ $userrole_key ] ]['logout_type'] ) ) ) {
+                if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' === $saved_setting['member_type_btn_value'] ) {
+                    $bp_member_key = $user_member_type;
+                    $url[] = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+                } elseif ( array_key_exists( $user_roles[ $userrole_key ], $setting ) && isset( $saved_setting['role_btn_value'] ) && 'yes' === $saved_setting['role_btn_value'] ) {
+                    $bp_member_key = $user_roles[ $userrole_key ];
+                    $url[] = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+                } else {
+                    $url[] = $setting_global['global']['logout_url'] ?? '';
+                }
+            } else {
+                $url[] = $setting_global['global']['logout_url'] ?? '';
+            }
+        } elseif ( ! empty( $setting_global ) ) {
+            $url[] = $setting_global['global']['logout_url'] ?? '';
+        }
 
-					if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' === $saved_setting['member_type_btn_value'] ) {
-						$bp_member_key = $user_member_type;
-						$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
+        if ( isset( $url[0] ) && ! empty( $url[0] ) ) {
+            $url_headers = $this->get_url_status( $url[0] );
 
-					} elseif ( isset( $setting[ $user_roles[0] ] ) && isset( $saved_setting['role_btn_value'] ) && 'yes' === $saved_setting['role_btn_value'] ) {
-						$bp_member_key = $user_roles[0];
-						$url[]         = $this->bpr_logout_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-
-					} else {
-						$url[] = $setting_global['global']['logout_url'];
-					}
-				} else {
-					$url[] = $setting_global['global']['logout_url'];
-				}
-			} elseif ( ! empty( $setting_global ) ) {
-				$url[] = $setting_global['global']['logout_url'];
-			}
-
-			// Check if URL is set and is not empty
-			if ( isset( $url[0] ) && ! empty( $url[0] ) ) {
-				$url_headers = $this->get_url_status( $url[0] );
-
-				if ( '404' === $url_headers ) {
-					$url[0] = get_home_url();
-				}
-
-				$url_redirect = isset( $url[0] ) ? $url[0] : home_url();
-				wp_redirect( $url_redirect );
-				exit();
-			} else {
-				return home_url();
-			}
-		}
-	}
-
+            if ( '404' === $url_headers ) {
+                $url[0] = get_home_url();
+            }
+            $url_redirect = $url[0] ?? home_url();
+            wp_redirect( esc_url( $url_redirect ) );
+            exit();
+        } else {
+            return home_url();
+        }
+    }
+}
 
 	/**
 	 * Logout redirects according to plugin settings.
