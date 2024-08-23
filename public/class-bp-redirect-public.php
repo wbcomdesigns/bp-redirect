@@ -191,7 +191,7 @@ class BP_Redirect_Public {
 			// Get the login settings
 			$login_type_val  = isset( $setting[ $k ]['login_type'] ) ? $setting[ $k ]['login_type'] : 'none';
 			$login_component = isset( $setting[ $k ]['login_component'] ) ? $setting[ $k ]['login_component'] : '';
-			$login_url       = isset( $setting[ $k ]['login_url'] ) ? $setting[ $ k ]['login_url'] : '';
+			$login_url = isset( $setting[$k]['login_url'] ) ? $setting[$k]['login_url'] : '';
 
 			// Handle different login types
 			if ( 'referer' === $login_type_val ) {
