@@ -51,74 +51,71 @@ class BP_Redirect_Public {
 	}
 
 	/**
-	 *  Actions performed after login
+	 * Actions performed after login.
 	 *
-	 *  @param string $redirect_to Redirect after login according to plugin setting.
-	 *  @param string $request Request from user.
-	 *  @param string $user Get a user role.
-	 *  @since   1.0.0
-	 *  @author  Wbcom Designs
-	 *  @access public
+	 * @param string $redirect_to Redirect after login according to plugin setting.
+	 * @param string $request Request from user.
+	 * @param WP_User $user User object.
+	 * @since 1.0.0
+	 * @author Wbcom Designs
+	 * @access public
 	 */
 	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
 			$url_headers = '';
 
-			$saved_setting  = get_option( 'bp_redirect_admin_settings' );
-			$setting        = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : '';
-			$saved_settings = get_option( 'bp_redirect_admin_settings_global' );
-			$setting_global = isset( $saved_settings['bp_login_redirect_settings_global'] ) ? $saved_settings['bp_login_redirect_settings_global'] : '';
+			// Retrieve the saved settings
+			$saved_setting  = get_option( 'bp_redirect_admin_settings', [] );
+			$setting        = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : [];
+			$saved_settings = get_option( 'bp_redirect_admin_settings_global', [] );
+			$setting_global = isset( $saved_settings['bp_login_redirect_settings_global'] ) ? $saved_settings['bp_login_redirect_settings_global'] : [];
 
-			if ( class_exists( 'Buddypress' ) ) {
-				$user_member_type = ( false !== bp_get_member_type( $user->ID ) ) ? bp_get_member_type( $user->ID, false ) : array();
-			} else {
-				$user_member_type = array();
-			}
+			// Get the user member type if BuddyPress is active
+			$user_member_type = class_exists( 'Buddypress' ) && false !== bp_get_member_type( $user->ID ) ? bp_get_member_type( $user->ID, false ) : [];
 
+			// Get the user roles
 			$user_data = get_userdata( $user->ID );
-			$user_role = ! empty( $user_data->roles ) ? $user_data->roles : array();
-			// for global rediract chcek the role
-			$user_roles   = ! empty( $user_data->roles ) ? $user_data->roles : array();
-			$userrole_key = array_key_first( $user_role );
-			$url          = array();
+			$user_roles = ! empty( $user_data->roles ) ? $user_data->roles : [];
 
+			// Initialize URL array
+			$url = [];
+
+			// Check for login settings
 			if ( ! empty( $setting ) ) {
+				// Handle role-based or member-type based redirection
+				if ( ! empty( $user_member_type ) || ( isset( $setting[ $user_roles[0] ]['login_type'] ) && 'none' !== $setting[ $user_roles[0] ]['login_type'] ) ) {
+					// Member type-based redirection
+					if ( ! empty( array_intersect_key( array_flip( (array) $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' === $saved_setting['member_type_btn_value'] ) {
+						$url[] = $this->bpr_login_redirect_according_settings( (array) $user_member_type, $setting, $redirect_to, $request, $user );
 
-				if ( ! empty( $user_member_type ) || isset( $setting[ $user_roles[ $userrole_key ] ]['login_type'] ) && $setting[ $user_roles[ $userrole_key ] ]['login_type'] != 'none' && ! empty( $setting[ $user_roles[ $userrole_key ] ]['login_type'] ) ) {
-
-					if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' == $saved_setting['member_type_btn_value'] ) {
-						$bp_member_key = $user_member_type;
-						$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-
-					} elseif ( ! empty( array_intersect_key( array_flip( $user_role ), $setting ) ) && isset( $saved_setting['role_btn_value'] ) && 'yes' == $saved_setting['role_btn_value'] ) {
-						$bp_member_key = $user_role;
-						$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting, $redirect_to, $request, $user );
-
+					// Role-based redirection
+					} elseif ( ! empty( array_intersect_key( array_flip( $user_roles ), $setting ) ) && isset( $saved_setting['role_btn_value'] ) && 'yes' === $saved_setting['role_btn_value'] ) {
+						$url[] = $this->bpr_login_redirect_according_settings( $user_roles, $setting, $redirect_to, $request, $user );
+					
+					// Global fallback
 					} else {
-						if ( $setting_global['global']['login_type'] != 'custom' ) {
-							$bp_member_key = array( 'global' );
-							$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
+						if ( isset( $setting_global['global']['login_type'] ) && 'custom' !== $setting_global['global']['login_type'] ) {
+							$url[] = $this->bpr_login_redirect_according_settings( [ 'global' ], $setting_global, $redirect_to, $request, $user );
 						} else {
-							$url[] = $setting_global['global']['login_url'];
+							$url[] = $setting_global['global']['login_url'] ?? '';
 						}
 					}
 				} else {
-					if ( $setting_global['global']['login_type'] != 'custom' ) {
-						$bp_member_key = array( 'global' );
-						$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
+					if ( isset( $setting_global['global']['login_type'] ) && 'custom' !== $setting_global['global']['login_type'] ) {
+						$url[] = $this->bpr_login_redirect_according_settings( [ 'global' ], $setting_global, $redirect_to, $request, $user );
 					} else {
-						$url[] = $setting_global['global']['login_url'];
+						$url[] = $setting_global['global']['login_url'] ?? '';
 					}
 				}
 			} elseif ( ! empty( $setting_global ) ) {
-				if ( $setting_global['global']['login_type'] != 'custom' ) {
-					$bp_member_key = array( 'global' );
-					$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
+				if ( isset( $setting_global['global']['login_type'] ) && 'custom' !== $setting_global['global']['login_type'] ) {
+					$url[] = $this->bpr_login_redirect_according_settings( [ 'global' ], $setting_global, $redirect_to, $request, $user );
 				} else {
-					$url[] = $setting_global['global']['login_url'];
+					$url[] = $setting_global['global']['login_url'] ?? '';
 				}
 			}
 
+			// Redirect to the appropriate URL
 			if ( isset( $url[0] ) && ! empty( $url[0] ) ) {
 				if ( is_array( $url ) && isset( $url[0] ) ) {
 					$url_headers = $this->get_url_status( $url[0] );
@@ -135,6 +132,7 @@ class BP_Redirect_Public {
 			}
 		}
 	}
+
 
 	/**
 	 * Give the status of url.
@@ -158,58 +156,58 @@ class BP_Redirect_Public {
 		curl_close( $ch ); // close handle.
 		return $status; // or return $status.
 	}
+	
 	/**
-	 *  Login redirects according plugin settings
+	 * Login redirects according to plugin settings.
 	 *
-	 *  @param string $key Array Key.
-	 *  @param string $setting BP Redirect Setting.
-	 *  @param string $redirect_to Redirect url.
-	 *  @param string $request Request.
-	 *  @param string $user Get a user role.
-	 *  @since 1.0.0
-	 *  @author  Wbcom Designs <admin@wbcomdesigns.com>
-	 *  @access public
+	 * @param array  $key          Array of keys (roles or member types).
+	 * @param array  $setting      BP Redirect settings.
+	 * @param string $redirect_to  Redirect URL.
+	 * @param string $request      Request URL.
+	 * @param WP_User $user        User object.
+	 * @since 1.0.0
+	 * @author Wbcom Designs
+	 * @access public
 	 */
 	public function bpr_login_redirect_according_settings( $key, $setting, $redirect_to, $request, $user ) {
+		$login_urls = [];
 
-		$login_type_val  = '';
-		$login_component = '';
-		$login_url       = '';
-		$login_urls      = array();
+		// Ensure $key is an array
+		if ( ! is_array( $key ) ) {
+			$key = (array) $key;
+		}
 
-		if ( ! empty( array_intersect_key( array_flip( $key ), $setting ) ) ) {
-
-			$key_lists = array_intersect_key( array_flip( $key ), $setting );
-			foreach ( $key_lists as $k => $val ) {
-
-				if ( array_key_exists( 'login_type', $setting[ $k ] ) ) {
-					$login_component = $setting[ $k ]['login_component'];
-					$login_url       = $setting[ $k ]['login_url'];
-					$login_type_val  = $setting[ $k ]['login_type'];
-					if ( 'referer' === $login_type_val ) {
-						$login_urls[] = $this->bp_login_redirect_referer( $login_component, $redirect_to, $request, $user );
-					} else {
-						if ( ! empty( $login_url ) && 'custom' === $login_type_val ) {
-							$login_urls[] = esc_url( $login_url );
-						} else {
-							$login_urls[] = $this->bpr_redirect_general( $user );
-						}
-					}
-				}
+		// Initialize default settings for roles and member types
+		foreach ( $key as $k ) {
+			// Ensure the settings for the role or member type are set
+			if ( ! isset( $setting[ $k ] ) ) {
+				$setting[ $k ] = [
+					'login_type' => 'none',
+					'login_component' => '',
+					'login_url' => '',
+				];
 			}
-			$userrole_key = array_key_first( $login_urls );
-			$login_urls   = $login_urls[ $userrole_key ];
 
-			if ( empty( $login_urls ) ) {
+			// Get the login settings
+			$login_type_val  = isset( $setting[ $k ]['login_type'] ) ? $setting[ $k ]['login_type'] : 'none';
+			$login_component = isset( $setting[ $k ]['login_component'] ) ? $setting[ $k ]['login_component'] : '';
+			$login_url       = isset( $setting[ $k ]['login_url'] ) ? $setting[ $ k ]['login_url'] : '';
 
-				$url = $this->bpr_redirect_general( $user );
-				return $url;
+			// Handle different login types
+			if ( 'referer' === $login_type_val ) {
+				$login_urls[] = $this->bp_login_redirect_referer( $login_component, $redirect_to, $request, $user );
+			} elseif ( 'custom' === $login_type_val && ! empty( $login_url ) ) {
+				$login_urls[] = esc_url( $login_url );
 			} else {
-				return esc_url( $login_urls );
-				// return ( $login_urls[0] ) ? $login_urls[0] : bp_core_get_user_domain( $user->ID ) . 'activity/';
+				// Fallback to a general redirect
+				$login_urls[] = $this->bpr_redirect_general( $user );
 			}
 		}
+
+		// Return the first valid URL found, or fallback to the general redirect
+		return ! empty( $login_urls ) ? esc_url( $login_urls[0] ) : $this->bpr_redirect_general( $user );
 	}
+
 	/**
 	 * BP redirect to referer.
 	 *
