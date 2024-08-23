@@ -374,76 +374,108 @@ class BP_Redirect_Public {
 
 
 	/**
-	 *  Logout redirects according plugin settings
+	 * Logout redirects according to plugin settings.
 	 *
-	 *  @param string $key Array Key.
-	 *  @param string $setting BP Redirect Setting.
-	 *  @param string $redirect_to Redirect url.
-	 *  @param string $request Request.
-	 *  @param string $user Get a user role.
-	 *  @since 1.0.0
-	 *  @author  Wbcom Designs <admin@wbcomdesigns.com>
-	 *  @access public
+	 * @param string $key Array Key.
+	 * @param array $setting BP Redirect Setting.
+	 * @param string $redirect_to Redirect URL.
+	 * @param string $request Request.
+	 * @param WP_User $user Get a user role.
+	 * @since 1.0.0
+	 * @author Wbcom Designs
+	 * @access public
 	 */
 	public function bpr_logout_redirect_according_settings( $key, $setting, $redirect_to, $request, $user ) {
 		$logout_type_val  = '';
 		$logout_component = '';
 		$logout_url       = '';
+
+		// Ensure $key is an array
 		if ( ! is_array( $key ) ) {
 			$key = array( $key );
 		}
 
+		// Check if the key exists in the setting
 		if ( array_intersect_key( array_flip( $key ), $setting ) ) {
 			$key = array_key_first( array_flip( $key ) );
+
+			// Check if BuddyPress is active and set logout component if available
 			if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 				$logout_component = isset( $setting[ $key ]['logout_component'] ) ? $setting[ $key ]['logout_component'] : '';
 			}
-			$logout_url = $setting[ $key ]['logout_url'];
+
+			// Set the logout URL
+			$logout_url = isset( $setting[ $key ]['logout_url'] ) ? $setting[ $key ]['logout_url'] : '';
+
+			// Check if logout_type is set and handle accordingly
 			if ( array_key_exists( 'logout_type', $setting[ $key ] ) ) {
 				$logout_type_val = $setting[ $key ]['logout_type'];
+
 				if ( 'referer' === $logout_type_val ) {
 					$url = $this->bp_logout_redirect_referer( $logout_component, $redirect_to, $request, $user );
 					return $url;
+				} elseif ( ! empty( $logout_url ) && 'custom' === $logout_type_val ) {
+					return esc_url( $logout_url );
 				} else {
-					if ( ! empty( $logout_url ) && 'custom' === $logout_type_val ) {
-						return esc_url( $logout_url );
-					} else {
-						$url = $this->bpr_redirect_general( $user );
-						return $url;
-					}
+					$url = $this->bpr_redirect_general( $user );
+					return $url;
 				}
 			} else {
 				$url = $this->bpr_redirect_general( $user );
 				return $url;
 			}
-		}
-	}
-
-	/**
-	 *  Logout redirects when logout redirect type referer
-	 *
-	 *  @param string $logout_component Check the logout.
-	 *  @param string $redirect_to Redirect url after logout.
-	 *  @param string $request Request.
-	 *  @param string $user Get a user.
-	 *  @since 1.0.0
-	 *  @author  Wbcom Designs <admin@wbcomdesigns.com>
-	 *  @access public
-	 */
-	public function bp_logout_redirect_referer( $logout_component, $redirect_to, $request, $user ) {
-		if ( ! empty( $logout_component ) && 'profile' === $logout_component ) {
-			$redirect_url = $this->bpr_logout_redirect_to_member_profile( $redirect_to, $request, $user );
-			return esc_url( $redirect_url );
-		} elseif ( ! empty( $logout_component ) && 'member_activity' === $logout_component ) {
-			$redirect_url = $this->bpr_logout_redirect_to_member_activity( $redirect_to, $request, $user );
-			return esc_url( $redirect_url );
-		} elseif ( ! empty( $logout_component ) ) {
-			return esc_url( $logout_component );
 		} else {
+			// If key is not found in settings, perform general redirect
 			$url = $this->bpr_redirect_general( $user );
 			return $url;
 		}
 	}
+
+
+	/**
+	 * Logout redirects when logout redirect type is referer.
+	 *
+	 * @param string $logout_component The component or URL to redirect to after logout.
+	 * @param string $redirect_to The default redirect URL.
+	 * @param string $request The original request URL.
+	 * @param WP_User $user The user object.
+	 * @since 1.0.0
+	 * @author Wbcom Designs
+	 * @access public
+	 * @return string The URL to redirect to after logout.
+	 */
+	public function bp_logout_redirect_referer( $logout_component, $redirect_to, $request, $user ) {
+		// Redirect to member profile page
+		if ( ! empty( $logout_component ) && 'profile' === $logout_component ) {
+			$redirect_url = $this->bpr_logout_redirect_to_member_profile( $redirect_to, $request, $user );
+			return esc_url( $redirect_url );
+		}
+
+		// Redirect to member activity page
+		elseif ( ! empty( $logout_component ) && 'member_activity' === $logout_component ) {
+			$redirect_url = $this->bpr_logout_redirect_to_member_activity( $redirect_to, $request, $user );
+			return esc_url( $redirect_url );
+		}
+
+		// Redirect to a custom component or URL
+		elseif ( ! empty( $logout_component ) ) {
+			// If it's a valid URL, redirect to it directly
+			if ( filter_var( $logout_component, FILTER_VALIDATE_URL ) ) {
+				return esc_url( $logout_component );
+			}
+			// Otherwise, treat it as a BuddyPress component slug
+			else {
+				return esc_url( bp_core_get_user_domain( $user->ID ) . $logout_component . '/' );
+			}
+		}
+
+		// Default fallback redirect
+		else {
+			$url = $this->bpr_redirect_general( $user );
+			return esc_url( $url );
+		}
+	}
+
 
 	/**
 	 *  Logout redirects to Member's profile page
