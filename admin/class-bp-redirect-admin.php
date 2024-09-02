@@ -1119,36 +1119,35 @@ class BP_Redirect_Admin {
 				} else {
 					$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
 				}
-	
+
 				parse_str( wp_unslash( filter_input( INPUT_POST, 'login_details', FILTER_UNSAFE_RAW ) ), $login_form_data );
 				parse_str( wp_unslash( filter_input( INPUT_POST, 'logout_details', FILTER_UNSAFE_RAW ) ), $logout_form_data );
 				$login_details     = filter_var_array( $login_form_data, FILTER_UNSAFE_RAW );
 				$logout_details    = filter_var_array( $logout_form_data, FILTER_UNSAFE_RAW );
 				$login_array_keys  = array();
 				$logout_array_keys = array();
-				
-				if ( ! empty( $saved_setting ) && isset( $saved_setting['bp_login_redirect_settings_global'] ) && isset( $saved_setting['bp_logout_redirect_settings_global'] ) ) {
+				if ( ! empty( $saved_setting ) && $saved_setting['bp_login_redirect_settings_global'] && isset( $saved_setting['bp_logout_redirect_settings_global'] ) ) {
 					$login_array_keys  = array_keys( $saved_setting['bp_login_redirect_settings_global'] );
 					$logout_array_keys = array_keys( $saved_setting['bp_logout_redirect_settings_global'] );
 				} else {
 					$saved_setting = array();
 				}
-				
 				foreach ( $login_details['bp_login_redirect_settings_global'] as $key => $lgn_detail ) {
-					if ( 'none' === $lgn_detail['login_type'] ) {
-						$lgn_detail['login_component'] = '';
-						$lgn_detail['login_url'] = '';
+					if ( in_array( $key, $login_array_keys, true ) ) {
+						unset( $saved_setting['bp_login_redirect_settings_global'][ $key ] );
+						$saved_setting['bp_login_redirect_settings_global'][ $key ] = $lgn_detail;
+					} else {
+						$saved_setting['bp_login_redirect_settings_global'][ $key ] = $lgn_detail;
 					}
-					$saved_setting['bp_login_redirect_settings_global'][ $key ] = $lgn_detail;
 				}
-				
 				foreach ( $logout_details['bp_logout_redirect_settings_global'] as $key => $lgt_detail ) {
-					if ( 'none' === $lgt_detail['logout_type'] ) {
-						$lgt_detail['logout_url'] = '';
+					if ( in_array( $key, $logout_array_keys, true ) ) {
+						unset( $saved_setting['bp_logout_redirect_settings_global'][ $key ] );
+						$saved_setting['bp_logout_redirect_settings_global'][ $key ] = $lgt_detail;
+					} else {
+						$saved_setting['bp_logout_redirect_settings_global'][ $key ] = $lgt_detail;
 					}
-					$saved_setting['bp_logout_redirect_settings_global'][ $key ] = $lgt_detail;
 				}
-				
 				if ( isset( $_POST['enable_disable_setting'] ) && '' !== $_POST['enable_disable_setting'] ) {
 					$saved_setting['member_type_btn_value'] = sanitize_text_field( wp_unslash( $_POST['enable_disable_setting'] ) );
 				}
@@ -1169,5 +1168,5 @@ class BP_Redirect_Admin {
 			}
 		}
 		exit;
-	}	
+	}
 }
