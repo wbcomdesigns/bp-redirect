@@ -64,12 +64,9 @@ class BP_Redirect_Public {
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
 			$url_headers = '';
 
-			// Retrieve the saved settings
-			$saved_setting  = get_option( 'bp_redirect_admin_settings', [] );
-			$setting        = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : [];
+			// Retrieve the saved settings			
 			$saved_settings = get_option( 'bp_redirect_admin_settings_global', [] );
-			$setting_global = isset( $saved_settings['bp_login_redirect_settings_global'] ) ? $saved_settings['bp_login_redirect_settings_global'] : [];
-
+			$setting_global = isset( $saved_settings['bp_login_redirect_settings_global'] ) ? $saved_settings['bp_login_redirect_settings_global'] : [];			
 			// Get the user member type if BuddyPress is active
 			$user_member_type = class_exists( 'Buddypress' ) && false !== bp_get_member_type( $user->ID ) ? bp_get_member_type( $user->ID, false ) : [];
 
@@ -81,38 +78,25 @@ class BP_Redirect_Public {
 			$url = [];
 
 			// Check for login settings
-			if ( ! empty( $setting ) ) {
-				// Handle role-based or member-type based redirection
-				if ( ! empty( $user_member_type ) || ( isset( $setting[ $user_roles[0] ]['login_type'] ) && 'none' !== $setting[ $user_roles[0] ]['login_type'] ) ) {
-					// Member type-based redirection
-					if ( ! empty( array_intersect_key( array_flip( (array) $user_member_type ), $setting ) ) && isset( $saved_setting['member_type_btn_value'] ) && 'yes' === $saved_setting['member_type_btn_value'] ) {
+			$saved_setting        = get_option( 'bp_redirect_member_type_admin_settings', [] );
+			$member_role_setting  = get_option( 'bp_redirect_admin_settings', [] );
+			if ( isset( $saved_setting['member_type_btn_value'] ) && 'yes' === $saved_setting['member_type_btn_value'] ) {				
+				$setting        = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : [];
+				if ( ! empty( $setting ) || ! empty( array_intersect_key( array_flip( (array) $user_member_type ), $setting ) ) ) {					
 						$url[] = $this->bpr_login_redirect_according_settings( (array) $user_member_type, $setting, $redirect_to, $request, $user );
-
-					// Role-based redirection
-					} elseif ( ! empty( array_intersect_key( array_flip( $user_roles ), $setting ) ) && isset( $saved_setting['role_btn_value'] ) && 'yes' === $saved_setting['role_btn_value'] ) {
-						$url[] = $this->bpr_login_redirect_according_settings( $user_roles, $setting, $redirect_to, $request, $user );
-					
-					// Global fallback
-					} else {
-						if ( isset( $setting_global['global']['login_type'] ) && 'custom' !== $setting_global['global']['login_type'] ) {
-							$url[] = $this->bpr_login_redirect_according_settings( [ 'global' ], $setting_global, $redirect_to, $request, $user );
-						} else {
-							$url[] = $setting_global['global']['login_url'] ?? '';
-						}
-					}
-				} else {
-					if ( isset( $setting_global['global']['login_type'] ) && 'custom' !== $setting_global['global']['login_type'] ) {
-						$url[] = $this->bpr_login_redirect_according_settings( [ 'global' ], $setting_global, $redirect_to, $request, $user );
-					} else {
-						$url[] = $setting_global['global']['login_url'] ?? '';
-					}
+				} 
+			} elseif ( isset( $member_role_setting['role_btn_value'] ) && 'yes' === $member_role_setting['role_btn_value'] ) {				
+				$saved_setting  = get_option( 'bp_redirect_admin_settings', [] ); 
+				$setting        = isset( $saved_setting['bp_login_redirect_settings'] ) ? $saved_setting['bp_login_redirect_settings'] : [];
+				if ( ! empty( array_intersect_key( array_flip( $user_roles ), $setting ) ) && isset( $saved_setting['role_btn_value'] ) && 'yes' === $saved_setting['role_btn_value'] ) {
+					$url[] = $this->bpr_login_redirect_according_settings( $user_roles, $setting, $redirect_to, $request, $user );	
 				}
-			} elseif ( ! empty( $setting_global ) ) {
+			} elseif( isset( $saved_settings['role_btn_value'] ) && 'yes' === $saved_settings['role_btn_value'] ) {				
 				if ( isset( $setting_global['global']['login_type'] ) && 'custom' !== $setting_global['global']['login_type'] ) {
 					$url[] = $this->bpr_login_redirect_according_settings( [ 'global' ], $setting_global, $redirect_to, $request, $user );
-				} else {
-					$url[] = $setting_global['global']['login_url'] ?? '';
 				}
+			} else {
+				$url[] = $setting_global['global']['login_url'] ?? '';
 			}
 
 			// Redirect to the appropriate URL
