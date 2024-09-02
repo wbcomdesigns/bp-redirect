@@ -362,6 +362,7 @@ jQuery( document ).ready(
 				var global_settings_form        = jQuery( "#bpr-global-settings-form" ).serialize();
 				var login_settings_form         = jQuery( "#bpr-login-settings-form" ).serialize();
 				var logout_settings_form        = jQuery( "#bpr-logout-settings-form" ).serialize();
+				var temp_role_member_type       = $(this).data('attr');
 				var enable_disable_setting      = "";
 				var enable_disable_role_setting = "";
 				if (jQuery( 'input[name="bp_enable_disable_member_checkbox"]' ).length) {
@@ -403,6 +404,7 @@ jQuery( document ).ready(
 						logout_details: logout_settings_form,
 						loginSequence: loginRoleSequence,
 						logoutSequence: logoutRoleSequence,
+						temp_role_member_type: temp_role_member_type,
 					},
 					function () {
 						jQuery( ".bp-redirect-settings-spinner" ).hide();

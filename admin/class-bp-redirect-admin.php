@@ -1014,14 +1014,18 @@ class BP_Redirect_Admin {
 	 * @since  1.0.0
 	 * @access public
 	 */
-	public function bp_redirect_save_admin_settings() {
+	public function bp_redirect_save_admin_settings() {		
 		if (
 			isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'bp-js-admin-ajax-nonce')
 		) {
-			if (isset($_POST['action']) && 'bp_redirect_admin_settings' === $_POST['action']) {
+			if ( isset($_POST['action']) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
 				// Retrieve the existing settings
-				$saved_setting = class_exists('BuddyPress') ? bp_get_option('bp_redirect_admin_settings') : get_option('bp_redirect_admin_settings');
-
+				if ( 'user-role' == $_POST['temp_role_member_type'] ){
+					$saved_setting = get_option('bp_redirect_admin_settings');			
+				} elseif( 'member-type' == $_POST['temp_role_member_type'] ){
+					$saved_setting = get_option('bp_redirect_member_type_admin_settings');			
+				}
+				
 				// Parse the incoming form data
 				parse_str(wp_unslash(filter_input(INPUT_POST, 'login_details', FILTER_UNSAFE_RAW)), $login_form_data);
 				parse_str(wp_unslash(filter_input(INPUT_POST, 'logout_details', FILTER_UNSAFE_RAW)), $logout_form_data);
@@ -1038,12 +1042,12 @@ class BP_Redirect_Admin {
 					];
 				}
 
-				// Get all roles and member types (including custom ones)
-				$all_roles = array_keys(wp_roles()->roles); // WordPress roles
-				$all_member_types = function_exists('bp_get_member_types') ? bp_get_member_types() : []; // BuddyPress member types
-
-				// Combine roles and member types into a single array
-				$all_keys = array_merge($all_roles, $all_member_types);
+				// Get all roles and member types (including custom ones)				
+				if ( 'user-role' == $_POST['temp_role_member_type'] ) {
+					$all_keys = array_keys(wp_roles()->roles); // WordPress roles
+				} else {
+					$all_keys = function_exists('bp_get_member_types') ? bp_get_member_types() : []; // BuddyPress member types
+				}
 
 				// Initialize missing keys with default values
 				foreach ($all_keys as $key) {
@@ -1097,12 +1101,12 @@ class BP_Redirect_Admin {
 				if (isset($_POST['logoutSequence']) && '' !== $_POST['logoutSequence']) {
 					$saved_setting['logoutSequence'] = sanitize_text_field(wp_unslash($_POST['logoutSequence']));
 				}
-
-				// Save the settings back to the database
-				if (class_exists('BuddyPress')) {
-					bp_update_option('bp_redirect_admin_settings', $saved_setting);
-				} else {
+				if ( 'user-role' == $_POST['temp_role_member_type'] ){
+					// Save the user role settings back to the database
 					update_option('bp_redirect_admin_settings', $saved_setting);
+				} elseif( 'member-type' == $_POST['temp_role_member_type'] ){
+					// Save the member type settings back to the database
+					update_option('bp_redirect_member_type_admin_settings', $saved_setting);
 				}
 			}
 		}

@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	$spinner_src = includes_url() . 'images/spinner.gif';
 	if ( class_exists( 'Buddypress' ) ) {
-		$saved_setting = bp_get_option( 'bp_redirect_admin_settings' );
+		$saved_setting = bp_get_option( 'bp_redirect_member_type_admin_settings' );
 		$bp_pages      = bp_get_option( 'bp-pages' );
 	} else {
 		$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
@@ -49,14 +49,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$val_arr     = $val;
 				$seq[ $key ] = $val_arr;
 			}
-			// if ( ! empty( $seq ) ) {
-			// 	uksort(
-			// 		$login_sequence,
-			// 		function ( $key1, $key2 ) use ( $seq ) {
-			// 			return ( array_search( $key1, $seq ) > array_search( $key2, $seq ) );
-			// 		}
-			// 	);
-			// }
 		}
 	}
 
@@ -68,14 +60,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$val_arr           = $val;
 				$logoutseq[ $key ] = $val_arr;
 			}
-			// if ( ! empty( $logoutseq ) ) {
-			// 	uksort(
-			// 		$logout_sequence,
-			// 		function ( $logoutkey1, $logoutkey2 ) use ( $logoutseq ) {
-			// 			return ( array_search( $logoutkey1, $logoutseq ) > array_search( $logoutkey2, $logoutseq ) );
-			// 		}
-			// 	);
-			// }
 		}
 	}
 
@@ -129,7 +113,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 			<p>
-				<button id="bp-redirect-settings-submit" class="button button-primary" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
+				<button id="bp-redirect-settings-submit" class="button button-primary" data-attr="member-type" name="bp-redirect-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
 			</p>
 			<div id="bpredirect-settings_updated-footer" class="" style="display:none">
 				<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>		
