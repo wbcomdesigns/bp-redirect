@@ -119,6 +119,9 @@ class BP_Redirect {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-bp-redirect-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/bp-redirect-functions.php';
+		
+
 		/**
 		* The add WBCOM wrapper framework for admin options.
 		*/
