@@ -6,6 +6,11 @@
  */
 function bp_redirect_update_member_type_data_on_new_key(){
 
+	//get existing user role and member type data
+	$saved_setting = get_option( 'bp_redirect_admin_settings' );
+	if( ! $saved_setting ){
+		return;
+	}
 	// get all member type
 	$terms = get_terms(
 		array(
@@ -14,16 +19,13 @@ function bp_redirect_update_member_type_data_on_new_key(){
 		)
 	);
 
-	//get existing user role and member type data
-	$saved_setting = get_option( 'bp_redirect_admin_settings' );
-
 	//create array for member type data for save
 	$mem_type_setting = array();
 
 	$mem_type_setting = [
 			'bp_login_redirect_settings' => [],
 			'bp_logout_redirect_settings' => [],
-			'member_type_btn_value' =>'',
+			'member_type_btn_value' => '',
 			'loginSequence' =>'',
 			'logoutSequence' =>'',
 		];		
@@ -43,7 +45,7 @@ function bp_redirect_update_member_type_data_on_new_key(){
 			}		
 		}
 
-		$mem_type_setting['member_type_btn_value'] = $saved_setting['member_type_btn_value'];
+		$mem_type_setting['member_type_btn_value'] = isset( $saved_setting['member_type_btn_value'] ) ? $saved_setting['member_type_btn_value'] : '';
 		$mem_type_setting['loginSequence'] = $saved_setting['loginSequence'];
 		$mem_type_setting['logoutSequence'] = $saved_setting['logoutSequence'];
 

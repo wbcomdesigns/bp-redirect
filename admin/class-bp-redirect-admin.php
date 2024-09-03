@@ -1033,7 +1033,7 @@ class BP_Redirect_Admin {
 				// Ensure these variables are arrays
 				$login_details = is_array($login_form_data) ? $login_form_data : [];
 				$logout_details = is_array($logout_form_data) ? $logout_form_data : [];
-
+				
 				// Ensure the saved settings are arrays
 				if (!is_array($saved_setting)) {
 					$saved_setting = [
@@ -1044,13 +1044,13 @@ class BP_Redirect_Admin {
 
 				// Get all roles and member types (including custom ones)				
 				if ( 'user-role' == $_POST['temp_role_member_type'] ) {
-					$all_keys = array_keys(wp_roles()->roles); // WordPress roles
+					$all_keys = array_keys(wp_roles()->roles); // WordPress roles					
 				} else {
-					$all_keys = function_exists('bp_get_member_types') ? bp_get_member_types() : []; // BuddyPress member types
+					$all_keys = function_exists('bp_get_member_types') ? bp_get_member_types() : []; // BuddyPress member types					
 				}
 
 				// Initialize missing keys with default values
-				foreach ($all_keys as $key) {
+				foreach ($all_keys as $key) {										
 					if (!isset($saved_setting['bp_login_redirect_settings'][$key])) {
 						$saved_setting['bp_login_redirect_settings'][$key] = [
 							'login_type' => 'none',
@@ -1075,6 +1075,14 @@ class BP_Redirect_Admin {
 					if( $lgn_detail['login_type'] == 'none' ){
 						$lgn_detail['login_component'] = '';
 						$lgn_detail['login_url'] = '';
+					}
+
+					if( $lgn_detail['login_type'] == 'referer' ){
+						$lgn_detail['login_url'] = '';
+					}
+
+					if( $lgn_detail['login_type'] == 'custom' ){
+						$lgn_detail['login_component'] = '';
 					}
 					
 					$saved_setting['bp_login_redirect_settings'][$key] = $lgn_detail;
@@ -1150,6 +1158,20 @@ class BP_Redirect_Admin {
 					} else {
 						$saved_setting['bp_login_redirect_settings_global'][ $key ] = $lgn_detail;
 					}
+					
+					if( $lgn_detail['login_type'] == 'none' ){						
+						$lgn_detail['login_component'] = '';
+						$lgn_detail['login_url'] = '';
+					}
+
+					if( $lgn_detail['login_type'] == 'referer' ){
+						$lgn_detail['login_url'] = '';
+					}
+
+					if( $lgn_detail['login_type'] == 'custom' ){
+						$lgn_detail['login_component'] = '';
+					}
+					$saved_setting['bp_login_redirect_settings_global'][ $key ] = $lgn_detail;
 				}
 				foreach ( $logout_details['bp_logout_redirect_settings_global'] as $key => $lgt_detail ) {
 					if ( in_array( $key, $logout_array_keys, true ) ) {
@@ -1158,6 +1180,10 @@ class BP_Redirect_Admin {
 					} else {
 						$saved_setting['bp_logout_redirect_settings_global'][ $key ] = $lgt_detail;
 					}
+					if( $lgt_detail['logout_type'] == 'none' ){
+						$lgt_detail['logout_url'] = '';
+					}
+					$saved_setting['bp_logout_redirect_settings_global'][ $key ] = $lgt_detail;
 				}
 				if ( isset( $_POST['enable_disable_setting'] ) && '' !== $_POST['enable_disable_setting'] ) {
 					$saved_setting['member_type_btn_value'] = sanitize_text_field( wp_unslash( $_POST['enable_disable_setting'] ) );
