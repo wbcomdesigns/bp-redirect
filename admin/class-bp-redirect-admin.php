@@ -1072,6 +1072,10 @@ class BP_Redirect_Admin {
 					if (!isset($lgn_detail['login_type'])) {
 						$lgn_detail['login_type'] = 'none';
 					}
+					if( $lgn_detail['login_type'] == 'none' ){
+						$lgn_detail['login_component'] = '';
+						$lgn_detail['login_url'] = '';
+					}
 					
 					$saved_setting['bp_login_redirect_settings'][$key] = $lgn_detail;
 				}
@@ -1080,6 +1084,9 @@ class BP_Redirect_Admin {
 				foreach ($logout_details['bp_logout_redirect_settings'] as $key => $lgt_detail) {
 					if (!isset($lgt_detail['logout_type'])) {
 						$lgt_detail['logout_type'] = 'none';
+					}
+					if( $lgt_detail['logout_type'] == 'none' ){
+						$lgt_detail['logout_url'] = '';
 					}
 
 					$saved_setting['bp_logout_redirect_settings'][$key] = $lgt_detail;
