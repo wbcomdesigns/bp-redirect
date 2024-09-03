@@ -1133,11 +1133,8 @@ class BP_Redirect_Admin {
 	function bp_redirect_save_admin_settings_global() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bp-js-admin-ajax-nonce' ) ) {
 			if ( isset( $_POST['action'] ) && 'bp_redirect_admin_settings_global' === $_POST['action'] ) {
-				if ( class_exists( 'Buddypress' ) ) {
-					$saved_setting = bp_get_option( 'bp_redirect_admin_settings_global' );
-				} else {
-					$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
-				}
+				
+				$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
 
 				parse_str( wp_unslash( filter_input( INPUT_POST, 'login_details', FILTER_UNSAFE_RAW ) ), $login_form_data );
 				parse_str( wp_unslash( filter_input( INPUT_POST, 'logout_details', FILTER_UNSAFE_RAW ) ), $logout_form_data );
@@ -1197,11 +1194,9 @@ class BP_Redirect_Admin {
 				if ( isset( $_POST['logoutSequence'] ) && '' !== $_POST['logoutSequence'] ) {
 					$saved_setting['logoutSequence'] = sanitize_text_field( wp_unslash( $_POST['logoutSequence'] ) );
 				}
-				if ( class_exists( 'Buddypress' ) ) {
-					bp_update_option( 'bp_redirect_admin_settings_global', $saved_setting );
-				} else {
-					update_option( 'bp_redirect_admin_settings_global', $saved_setting );
-				}
+				
+				update_option( 'bp_redirect_admin_settings_global', $saved_setting );
+				
 			}
 		}
 		exit;
