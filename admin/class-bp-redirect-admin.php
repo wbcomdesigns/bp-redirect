@@ -1156,16 +1156,16 @@ class BP_Redirect_Admin {
 						$saved_setting['bp_login_redirect_settings_global'][ $key ] = $lgn_detail;
 					}
 					
-					if( $lgn_detail['login_type'] == 'none' ){						
+					if( isset( $lgn_detail['login_type'] ) && $lgn_detail['login_type'] == 'none' ){						
 						$lgn_detail['login_component'] = '';
 						$lgn_detail['login_url'] = '';
 					}
 
-					if( $lgn_detail['login_type'] == 'referer' ){
+					if( isset( $lgn_detail['login_type'] ) && $lgn_detail['login_type'] == 'referer' ){
 						$lgn_detail['login_url'] = '';
 					}
 
-					if( $lgn_detail['login_type'] == 'custom' ){
+					if( isset( $lgn_detail['login_type'] ) && $lgn_detail['login_type'] == 'custom' ){
 						$lgn_detail['login_component'] = '';
 					}
 					$saved_setting['bp_login_redirect_settings_global'][ $key ] = $lgn_detail;
@@ -1177,7 +1177,7 @@ class BP_Redirect_Admin {
 					} else {
 						$saved_setting['bp_logout_redirect_settings_global'][ $key ] = $lgt_detail;
 					}
-					if( $lgt_detail['logout_type'] == 'none' ){
+					if( isset( $lgt_detail['logout_type'] ) && $lgt_detail['logout_type'] == 'none' ){
 						$lgt_detail['logout_url'] = '';
 					}
 					$saved_setting['bp_logout_redirect_settings_global'][ $key ] = $lgt_detail;
