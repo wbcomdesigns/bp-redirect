@@ -60,7 +60,7 @@ class BP_Redirect_Public {
 	 * @author Wbcom Designs
 	 * @access public
 	 */
-	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {
+	public function bp_login_redirection_front( $redirect_to, $request = '', $user = '' ) {		
 		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {			
 			$url_headers = '';
 
@@ -71,9 +71,10 @@ class BP_Redirect_Public {
 			$user_member_type = class_exists( 'Buddypress' ) && false !== bp_get_member_type( $user->ID ) ? bp_get_member_type( $user->ID, false ) : [];
 
 			// Get the user roles
-			$user_data = get_userdata( $user->ID );
-			$user_roles = ! empty( $user_data->roles ) ? $user_data->roles : [];
-			$userrole_key = array_key_first( $user_roles );			
+			$user_data     = get_userdata( $user->ID );
+			$user_roles    = ! empty( $user_data->roles ) ? $user_data->roles : [];
+			$userrole_key  = array_key_first( $user_roles );
+			$bp_member_key = $user_roles;			
 			// Initialize URL array
 			$url = [];
 
@@ -82,20 +83,24 @@ class BP_Redirect_Public {
 			$mem_login_setting = isset( $mem_type_setting['bp_login_redirect_settings'] ) ? $mem_type_setting['bp_login_redirect_settings'] : [];
 			// Check for login settings for user role.
 			$user_role_setting = get_option( 'bp_redirect_admin_settings', [] );
-			$user_login_setting        = isset( $user_role_setting['bp_login_redirect_settings'] ) ? $user_role_setting['bp_login_redirect_settings'] : '';			
+			$user_login_setting        = isset( $user_role_setting['bp_login_redirect_settings'] ) ? $user_role_setting['bp_login_redirect_settings'] : [];			
 			if ( isset( $user_role_setting['role_btn_value'] ) && 'yes' === $user_role_setting['role_btn_value'] && isset( $user_login_setting[ $user_roles[ $userrole_key ] ]['login_type'] ) && $user_login_setting[ $user_roles[ $userrole_key ] ]['login_type'] != 'none' && ! empty( $user_login_setting[ $user_roles[ $userrole_key ] ]['login_type'] ) ) {				
-				if ( ! empty( array_intersect_key( array_flip( $user_roles ), $user_login_setting ) ) ) {
-					$url[] = $this->bpr_login_redirect_according_settings( $user_roles, $user_login_setting, $redirect_to, $request, $user );	
+				if ( ! empty( array_intersect_key( array_flip( $user_roles ), $user_login_setting ) ) ) {					
+					$bp_member_key = $user_roles;
+					$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $user_login_setting, $redirect_to, $request, $user );					
 				}
 			} elseif ( ! empty( $user_member_type ) && isset( $mem_type_setting['member_type_btn_value'] ) && 'yes' == $mem_type_setting['member_type_btn_value'] && $mem_login_setting[$user_member_type[0]]['login_type'] != 'none' && ! empty( $mem_login_setting[$user_member_type[0]]['login_type'] ) ) {				
 				if ( ! empty( array_intersect_key( array_flip( (array) $user_member_type ), $mem_login_setting ) ) ) {					
-					$url[] = $this->bpr_login_redirect_according_settings( (array) $user_member_type, $mem_login_setting, $redirect_to, $request, $user );					
+					$bp_member_key = (array) $user_member_type;
+					$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $mem_login_setting, $redirect_to, $request, $user );					
 				} 
 			}  elseif( isset( $saved_settings['role_btn_value'] ) && 'yes' === $saved_settings['role_btn_value'] ) {				
 				if ( isset( $setting_global['global']['login_type'] ) ) {
-					$url[] = $this->bpr_login_redirect_according_settings( [ 'global' ], $setting_global, $redirect_to, $request, $user );
+					$bp_member_key = array( 'global' );
+					$url[] = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
 				}
-
+			} else {				
+				$url[]         = $this->bpr_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );				
 			}
 			
 			// Redirect to the appropriate URL
@@ -171,18 +176,18 @@ class BP_Redirect_Public {
 			$login_type_val  = isset( $setting[ $k ]['login_type'] ) ? $setting[ $k ]['login_type'] : 'none';
 			$login_component = isset( $setting[ $k ]['login_component'] ) ? $setting[ $k ]['login_component'] : '';
 			$login_url = isset( $setting[$k]['login_url'] ) ? $setting[$k]['login_url'] : '';
-
+			
 			// Handle different login types
 			if ( 'referer' === $login_type_val ) {
 				$login_urls[] = $this->bp_login_redirect_referer( $login_component, $redirect_to, $request, $user );
 			} elseif ( 'custom' === $login_type_val && ! empty( $login_url ) ) {
 				$login_urls[] = esc_url( $login_url );
-			} else {
+			} else {				
 				// Fallback to a general redirect
 				$login_urls[] = $this->bpr_redirect_general( $user );
 			}
-		}
-
+		}	
+		
 		// Return the first valid URL found, or fallback to the general redirect
 		return ! empty( $login_urls ) ? esc_url( $login_urls[0] ) : $this->bpr_redirect_general( $user );
 	}
@@ -275,8 +280,6 @@ class BP_Redirect_Public {
 			if ( in_array( 'administrator', $user->roles ) ) {
 				// redirect them to the default place.
 				return esc_url( admin_url() );
-			} else {
-				return esc_url( home_url() );
 			}
 		}
 	}
