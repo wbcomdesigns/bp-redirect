@@ -229,7 +229,7 @@ class BP_Redirect_Public {
 	 *  @access public
 	 */
 	public function bpr_login_redirect_to_profile( $redirect_to, $request, $user ) {
-		$url = bp_core_get_user_domain( $user->ID ) . 'profile/';
+		$url = bp_members_get_user_url( $user->ID ) . 'profile/';
 		return $url;
 	}
 
@@ -245,7 +245,7 @@ class BP_Redirect_Public {
 	 *  @access public
 	 */
 	public function bpr_login_redirect_to_member_activity( $redirect_to, $request, $user ) {
-		$url = bp_core_get_user_domain( $user->ID ) . 'activity/';
+		$url = bp_members_get_user_url( $user->ID ) . 'activity/';
 		return $url;
 	}
 
@@ -436,7 +436,7 @@ public function bp_logout_redirection_front( $redirect_to, $request = '', $user 
 			}
 			// Otherwise, treat it as a BuddyPress component slug
 			else {
-				return esc_url( bp_core_get_user_domain( $user->ID ) . $logout_component . '/' );
+				return esc_url( bp_members_get_user_url( $user->ID ) . $logout_component . '/' );
 			}
 		}
 
@@ -459,7 +459,7 @@ public function bp_logout_redirection_front( $redirect_to, $request = '', $user 
 	 *  @access public
 	 */
 	public function bpr_logout_redirect_to_member_profile( $redirect_to, $request, $user ) {
-		$url = bp_core_get_user_domain( $user->ID ) . 'profile/';
+		$url = bp_members_get_user_url( $user->ID ) . 'profile/';
 		return $url;
 	}
 
@@ -474,7 +474,7 @@ public function bp_logout_redirection_front( $redirect_to, $request = '', $user 
 	 *  @access public
 	 */
 	public function bpr_logout_redirect_to_member_activity( $redirect_to, $request, $user ) {
-		$url = bp_core_get_user_domain( $user->ID ) . 'activity/';
+		$url = bp_members_get_user_url( $user->ID ) . 'activity/';
 		return $url;
 	}
 }
