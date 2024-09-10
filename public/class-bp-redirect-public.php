@@ -125,20 +125,24 @@ class BP_Redirect_Public {
 	 * @param  string $timeout Timing.
 	 */
 	public function get_url_status( $url, $timeout = 10 ) {
-		$ch = curl_init();
+		// Set the arguments for wp_remote_get.
+		$args = array(
+			'method'    => 'HEAD', // Perform a HEAD request.
+			'timeout'   => $timeout, // Set the timeout.
+		);
 
-		// set cURL options.
-		$opts = array(
-			CURLOPT_RETURNTRANSFER => true, // do not output to browser.
-			CURLOPT_URL            => $url,            // set URL.
-			CURLOPT_NOBODY         => true,         // do a HEAD request only.
-			CURLOPT_TIMEOUT        => $timeout,
-		);   // set timeout.
-		curl_setopt_array( $ch, $opts );
-		curl_exec( $ch ); // do it!.
-		$status = curl_getinfo( $ch, CURLINFO_HTTP_CODE ); // find HTTP status.
-		curl_close( $ch ); // close handle.
-		return $status; // or return $status.
+		// Make the request using wp_remote_get.
+		$response = wp_remote_get( $url, $args );
+
+		// Check if there's an error.
+		if ( is_wp_error( $response ) ) {
+			return false; // Return false on error.
+		}
+
+		// Get the HTTP status code from the response.
+		$status = wp_remote_retrieve_response_code( $response );
+
+		return $status;
 	}
 	
 	/**
