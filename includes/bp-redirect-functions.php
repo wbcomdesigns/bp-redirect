@@ -33,21 +33,21 @@ function bp_redirect_update_member_type_data_on_new_key(){
 		foreach ( $terms as $key => $tm ) {
 			if( isset( $saved_setting['bp_login_redirect_settings'][$tm->name] ) ){				
 				$mem_type_setting['bp_login_redirect_settings'][$tm->name] = [
-					'login_type' => $saved_setting['bp_login_redirect_settings'][$tm->name]['login_type'],
-					'login_component' => $saved_setting['bp_login_redirect_settings'][$tm->name]['login_component'],
-					'login_url' => $saved_setting['bp_login_redirect_settings'][$tm->name]['login_url'],
+					'login_type' 		=> isset( $saved_setting['bp_login_redirect_settings'][$tm->name]['login_type'] ) ? $saved_setting['bp_login_redirect_settings'][$tm->name]['login_type'] : '',
+					'login_component' 	=> isset( $saved_setting['bp_login_redirect_settings'][$tm->name]['login_component'] ) ? $saved_setting['bp_login_redirect_settings'][$tm->name]['login_component'] : '',
+					'login_url' 		=> isset( $saved_setting['bp_login_redirect_settings'][$tm->name]['login_url'] ) ? $saved_setting['bp_login_redirect_settings'][$tm->name]['login_url'] : '',
 				];
 
 				$mem_type_setting['bp_logout_redirect_settings'][$tm->name] = [
-					'logout_type' => $saved_setting['bp_logout_redirect_settings'][$tm->name]['logout_type'],					
-					'logout_url' => $saved_setting['bp_logout_redirect_settings'][$tm->name]['logout_url'],
+					'logout_type'	=> isset( $saved_setting['bp_logout_redirect_settings'][$tm->name]['logout_type'] ) ? $saved_setting['bp_logout_redirect_settings'][$tm->name]['logout_type'] : '',					
+					'logout_url'	=> isset( $saved_setting['bp_logout_redirect_settings'][$tm->name]['logout_url'] ) ? $saved_setting['bp_logout_redirect_settings'][$tm->name]['logout_url'] : '',
 				];
 			}		
 		}
 
-		$mem_type_setting['member_type_btn_value'] = isset( $saved_setting['member_type_btn_value'] ) ? $saved_setting['member_type_btn_value'] : '';
-		$mem_type_setting['loginSequence'] = $saved_setting['loginSequence'];
-		$mem_type_setting['logoutSequence'] = $saved_setting['logoutSequence'];
+		$mem_type_setting['member_type_btn_value'] 	= isset( $saved_setting['member_type_btn_value'] ) ? $saved_setting['member_type_btn_value'] : '';
+		$mem_type_setting['loginSequence'] 			= isset( $saved_setting['loginSequence'] ) ? $saved_setting['loginSequence'] : '';
+		$mem_type_setting['logoutSequence'] 		= isset( $saved_setting['logoutSequence'] ) ? $saved_setting['logoutSequence'] : '';
 
 		//check flag set or not on the existing setup
 		$check_mem_type_data = get_option( 'flag_member_type_data' );
