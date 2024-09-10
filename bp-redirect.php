@@ -63,12 +63,30 @@ function bpr_plugin_init()
 			add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'bpr_plugin_links');
 		}
 	} else {
-		run_bp_redirect();
+		if( ! function_exists( 'deactivate_plugins' ) ){
+			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		}
 		add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'bpr_plugin_links');
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+		add_action( 'admin_notices', 'bpr_required_plugin_admin_notice' );
 	}
 }
 add_action('wp_loaded', 'bpr_plugin_init');
 
+/**
+ * Throw an Alert to tell the Admin why it didn't activate.
+ *
+ * @author wbcomdesigns
+ * @since  2.3.0
+ */
+function bpr_required_plugin_admin_notice() {
+	$bpmb_plugin = esc_html__( 'BuddyPress Redirect', 'bp-redirect' );
+	$bp_plugin   = esc_html__( 'BuddyPress', 'bp-redirect' );
+	echo '<div class="error"><p>';
+	// translators: %1$s is replaced with the BuddyPress Member Blog and %2$s is replaced with the BuddyPress.
+	echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-redirect' ), '<strong>' . esc_html( $bpmb_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
+	echo '</p></div>';
+}
 /**
  * Check BP Redirect configuration.
  */
@@ -210,9 +228,9 @@ function run_bp_redirect()
 function bp_redirect_activation_redirect_settings($plugin)
 {
 
-	if (plugin_basename(__FILE__) === $plugin) {
+	if (plugin_basename(__FILE__) === $plugin && class_exists( 'Buddypress' )) {
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'activate' && isset($_REQUEST['plugin']) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore
-			wp_safe_redirect(admin_url('admin.php?page=bp-redirect&redirects=1'));
+			wp_safe_redirect(admin_url('admin.php?page=bp-redirect'));
 			exit;
 		}
 	}
