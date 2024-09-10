@@ -1999,3 +1999,8 @@ button.bpr-accordion.active::after {
 #wpwrap .notice.notice-error {
   display: none !important;
 }
+
+
+.wb-plugins_page_bp-redirect #setting-error-tgmpa{
+  display: none;
+}
