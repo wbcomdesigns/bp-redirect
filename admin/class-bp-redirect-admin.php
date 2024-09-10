@@ -120,8 +120,9 @@ class BP_Redirect_Admin {
 		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
 
 		if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
-			remove_all_actions( 'admin_notices' );
-			remove_all_actions( 'all_admin_notices' );
+			remove_action( 'admin_notices', 'bpr_required_plugin_admin_notice' );
+			remove_action( 'admin_notices', 'bpr_same_blog' );
+			remove_action( 'admin_notices', 'bpr_same_network_config' );
 		}
 	}
 
@@ -264,10 +265,8 @@ class BP_Redirect_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function enqueue_scripts() {
-		 wp_enqueue_script( 'jquery-ui-core' );
-		wp_enqueue_script( 'jquery-ui-accordion' );
-		wp_enqueue_script( 'bp-redirect-admin', plugin_dir_url( __FILE__ ) . 'assets/js/bp-redirect-admin.js', array( 'jquery' ), $this->version, false );
+	public function enqueue_scripts() {		 
+		wp_enqueue_script( 'bp-redirect-admin', plugin_dir_url( __FILE__ ) . 'assets/js/bp-redirect-admin.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-accordion' ), $this->version, false );
 		wp_localize_script(
 			'bp-redirect-admin',
 			'bp_redirect_ajax_nonce',
@@ -1018,6 +1017,9 @@ class BP_Redirect_Admin {
 		if (
 			isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'bp-js-admin-ajax-nonce')
 		) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
 			if ( isset($_POST['action']) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
 				// Retrieve the existing settings
 				if ( 'user-role' == $_POST['temp_role_member_type'] ){
@@ -1027,8 +1029,8 @@ class BP_Redirect_Admin {
 				}
 				
 				// Parse the incoming form data
-				parse_str(wp_unslash(filter_input(INPUT_POST, 'login_details', FILTER_UNSAFE_RAW)), $login_form_data);
-				parse_str(wp_unslash(filter_input(INPUT_POST, 'logout_details', FILTER_UNSAFE_RAW)), $logout_form_data);
+				parse_str(wp_unslash(filter_input(INPUT_POST, 'login_details')), $login_form_data);
+				parse_str(wp_unslash(filter_input(INPUT_POST, 'logout_details')), $logout_form_data);
 
 				// Ensure these variables are arrays
 				$login_details = is_array($login_form_data) ? $login_form_data : [];
