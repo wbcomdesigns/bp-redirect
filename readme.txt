@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/donate/
 Tags: login redirect, buddypress redirect
 Requires at least: 3.0.1
 Tested up to: 6.5.2
-Stable tag: 1.8.3
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,16 @@ No, BP Redirect plugin is not required BuddyPress plugin to be active.
 2. The screenshot shows the admin settings to change roles sequence by drag & drop and corresponds to screenshot-2.(png|jpg|jpeg|gif).
 
 == Changelog ==
+= 1.9.0 =
+* Fix: Resolved plugin activation issue and various warnings.
+* Fix: Updated admin section code and improved the handling of profile and activity URLs.
+* Fix: Addressed fatal error and issues with global redirect, console error, and "none" option for login/logout settings.
+* Update: Removed unnecessary option update/get code, optimized login/logout handling, and improved redirection logic.
+* Fix: Added functionality to save member type options on existing setups and ensured proper handling of login component and URL fields.
+* Enhancement: Improved default values for role-based settings, array checks, and fallback mechanisms.
+* Fix: Deprecated warning fixes and refined language clarity in the BP Redirect plugin.
+* Enhancement: Removed unused code and improved consistency in the overall plugin structure.
+
 = 1.8.3 =
 * Fix: Console error
 * Updated: Banner link
