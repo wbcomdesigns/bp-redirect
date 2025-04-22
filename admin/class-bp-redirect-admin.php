@@ -102,8 +102,8 @@ class BP_Redirect_Admin {
 		}
 		add_submenu_page(
 			'wbcomplugins',
-			esc_html__( 'BP Redirect', 'bp-redirect' ),
-			esc_html__( 'BP Redirect', 'bp-redirect' ),
+			esc_html__( 'Redirect', 'bp-redirect' ),
+			esc_html__( 'Redirect', 'bp-redirect' ),
 			'manage_options',
 			'bp-redirect',
 			array( $this, 'bp_redirect_options_page' )
@@ -1126,7 +1126,6 @@ class BP_Redirect_Admin {
 		}
 		exit;
 	}
-
 
 
 	function bp_redirect_save_admin_settings_global() {
