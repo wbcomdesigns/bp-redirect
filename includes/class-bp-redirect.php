@@ -177,6 +177,10 @@ class BP_Redirect {
 	 */
 	private function define_public_hooks() {
 
+		if( class_exists( 'Youzify' ) ) {
+			remove_action( 'wp_logout', 'youzify_redirect_after_logout' );
+		}
+
 		$plugin_public = new BP_Redirect_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_filter( 'login_redirect', $plugin_public, 'bp_login_redirection_front', 10, 3 );
