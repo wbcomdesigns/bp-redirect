@@ -1,4 +1,5 @@
 <?php
+ use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 /**
  * The file that defines the core plugin class
  *
@@ -11,7 +12,6 @@
  * @package    BP_Redirect
  * @subpackage BP_Redirect/includes
  */
-
 /**
  * The core plugin class.
  *
@@ -193,8 +193,8 @@ class BP_Redirect {
 	 * @since    1.2.0
 	 */
 	public function bp_redirect_initialize_updater() {
-		if ( class_exists( 'Puc_v4_Factory' ) ) {
-			$bpmh_export_impoer_updater = Puc_v4_Factory::buildUpdateChecker(
+		if ( class_exists( '\YahnisElsts\PluginUpdateChecker\v5\PucFactory' ) ) {
+			$bpmh_export_impoer_updater = PucFactory::buildUpdateChecker(
 				'https://demos.wbcomdesigns.com/exporter/free-plugins/bp-redirect.json',
 				BP_REDIRECT_PLUGIN_FILE,
 				'bp-redirect'
