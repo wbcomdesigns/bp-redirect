@@ -51,6 +51,7 @@ if (! defined('BP_REDIRECT_PLUGIN_BASENAME')) {
 	define('BP_REDIRECT_PLUGIN_BASENAME', plugin_basename(__FILE__));
 }
 
+require BP_REDIRECT_PLUGIN_PATH . 'plugin-update-checker/plugin-update-checker.php';
 /**
  * Initialize the plugin on plugins loaded.
  * This plugin requires BuddyPress to be installed and active.
