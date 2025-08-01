@@ -61,14 +61,14 @@ class BP_Redirect_Public {
 	 * @access public
 	 */
 	public function bp_redirect_login_redirection_front( $redirect_to, $request = '', $user = '' ) {		
-		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {			
-			$url_headers = '';
+		if ( ! is_wp_error( $user ) && ! empty( $user ) ) {		
 
 			// Retrieve the saved settings for global options.			
 			$saved_settings = get_option( 'bp_redirect_admin_settings_global', [] );
-			$setting_global = isset( $saved_settings['bp_login_redirect_settings_global'] ) ? $saved_settings['bp_login_redirect_settings_global'] : [];			
+			$setting_global = $saved_settings['bp_login_redirect_settings_global'] ?? [];			
 			// Get the user member type if BuddyPress is active
-			$user_member_type = class_exists( 'BuddyPress' ) && false !== bp_get_member_type( $user->ID ) ? bp_get_member_type( $user->ID, false ) : [];
+			$member_type      = bp_get_member_type( $user->ID, false );
+			$user_member_type = class_exists( 'BuddyPress' ) && $member_type ? (array) $member_type : [];
 
 			// Get the user roles
 			$user_data     = get_userdata( $user->ID );
@@ -100,15 +100,12 @@ class BP_Redirect_Public {
 					$url[] = $this->bp_redirect_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );
 				}
 			} else {				
-				$url[]         = $this->bp_redirect_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );				
+				$url[]   = $this->bp_redirect_login_redirect_according_settings( $bp_member_key, $setting_global, $redirect_to, $request, $user );				
 			}
 			
 			// Redirect to the appropriate URL
 			if ( isset( $url[0] ) && ! empty( $url[0] ) ) {
-				if ( is_array( $url ) && isset( $url[0] ) ) {
-					$url_headers = $this->bp_redirect_get_url_status( $url[0] );
-				}
-				$url_redirect = isset( $url[0] ) ? $url[0] : $redirect_to;				
+				$url_redirect = esc_url( $url[0] ?? $redirect_to );				
 				wp_redirect( $url_redirect );
 				exit();
 			} else {				
@@ -117,33 +114,6 @@ class BP_Redirect_Public {
 		}
 	}
 
-
-	/**
-	 * Give the status of url.
-	 *
-	 * @param  string $url Get the url.
-	 * @param  string $timeout Timing.
-	 */
-	public function bp_redirect_get_url_status( $url, $timeout = 10 ) {
-		// Set the arguments for wp_remote_get.
-		$args = array(
-			'method'    => 'HEAD', // Perform a HEAD request.
-			'timeout'   => $timeout, // Set the timeout.
-		);
-
-		// Make the request using wp_remote_get.
-		$response = wp_remote_get( $url, $args );
-
-		// Check if there's an error.
-		if ( is_wp_error( $response ) ) {
-			return false; // Return false on error.
-		}
-
-		// Get the HTTP status code from the response.
-		$status = wp_remote_retrieve_response_code( $response );
-
-		return $status;
-	}
 	
 	/**
 	 * Login redirects according to plugin settings.
@@ -308,8 +278,7 @@ class BP_Redirect_Public {
  */
 public function bp_redirect_logout_redirection_front( $redirect_to, $request = '', $user = '' ) {
     if ( ! is_wp_error( $user ) && ! empty( $user ) ) {
-        $url_headers = '';
-
+        
         // Check for login settings for global options
         $saved_settings = get_option( 'bp_redirect_admin_settings_global' );
         $setting_global = isset( $saved_settings['bp_logout_redirect_settings_global'] ) && is_array( $saved_settings['bp_logout_redirect_settings_global'] ) ? $saved_settings['bp_logout_redirect_settings_global'] : [];
@@ -346,7 +315,6 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 		}
 
         if ( isset( $url[0] ) && ! empty( $url[0] ) ) {
-            $url_headers = $this->bp_redirect_get_url_status( $url[0] );
             $url_redirect = $url[0] ?? $redirect_to;
             wp_redirect( esc_url( $url_redirect ) );
             exit();
@@ -374,16 +342,14 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 		$logout_url       = '';
 
 		// Ensure $key is an array
-		if ( ! is_array( $key ) ) {
-			$key = array( $key );
-		}
-
+		$key = (array) $key;
+		
 		// Check if the key exists in the setting
 		if ( array_intersect_key( array_flip( $key ), $setting ) ) {
-			$key = array_key_first( array_flip( $key ) );
+			$key = reset( $key );
 
 			// Check if BuddyPress is active and set logout component if available
-			if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+			if ( function_exists('buddypress') || defined('BP_VERSION') ) {
 				$logout_component = isset( $setting[ $key ]['logout_component'] ) ? $setting[ $key ]['logout_component'] : '';
 			}
 
@@ -398,20 +364,16 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 					$url = $this->bp_redirect_logout_redirect_referer( $logout_component, $redirect_to, $request, $user );
 					return $url;
 				} elseif ( ! empty( $logout_url ) && 'custom' === $logout_type_val ) {
-					return esc_url( $logout_url );
-				} else {
-					$url = $this->bp_redirect_general( $user );
-					return $url;
+					return esc_url_raw( $logout_url );
 				}
-			} else {
-				$url = $this->bp_redirect_general( $user );
-				return $url;
 			}
-		} else {
-			// If key is not found in settings, perform general redirect
 			$url = $this->bp_redirect_general( $user );
 			return $url;
 		}
+		// If key is not found in settings, perform general redirect
+		$url = $this->bp_redirect_general( $user );
+		return $url;
+		
 	}
 
 
@@ -429,29 +391,29 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 	 */
 	public function bp_redirect_logout_redirect_referer( $logout_component, $redirect_to, $request, $user ) {
 		// Redirect to member profile page
-		if ( ! empty( $logout_component ) && 'profile' === $logout_component ) {
+		if ( 'profile' === $logout_component ) {
 			$redirect_url = $this->bp_redirect_logout_redirect_to_member_profile( $redirect_to, $request, $user );
-			return esc_url( $redirect_url );
+			return esc_url_raw( $redirect_url );
 		}
 
 		// Redirect to member activity page
-		elseif ( ! empty( $logout_component ) && 'member_activity' === $logout_component ) {
+		elseif ( 'member_activity' === $logout_component ) {
 			$redirect_url = $this->bp_redirect_logout_redirect_to_member_activity( $redirect_to, $request, $user );
-			return esc_url( $redirect_url );
+			return esc_url_raw( $redirect_url );
 		}
 
 		// Redirect to a custom component or URL
 		elseif ( ! empty( $logout_component ) ) {
 			// If it's a valid URL, redirect to it directly
 			if ( filter_var( $logout_component, FILTER_VALIDATE_URL ) ) {
-				return esc_url( $logout_component );
+				return esc_url_raw( $logout_component );
 			}
 			// Otherwise, treat it as a BuddyPress component slug
 			else {
 				if ( function_exists( 'bp_members_get_user_url' ) ) {
-					return esc_url( bp_members_get_user_url( $user->ID ) . $logout_component . '/' );
+					return esc_url_raw( bp_members_get_user_url( $user->ID ) . trailingslashit( $logout_component ) );
 				} else {
-					return esc_url( bp_core_get_user_domain( $user->ID ) . $logout_component . '/' );
+					return esc_url_raw( bp_core_get_user_domain( $user->ID ) . trailingslashit( $logout_component ) );
 				}
 			}
 		}
@@ -459,7 +421,7 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 		// Default fallback redirect
 		else {
 			$url = $this->bp_redirect_general( $user );
-			return esc_url( $url );
+			return esc_url_raw( $url );
 		}
 	}
 
@@ -476,12 +438,12 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 	 */
 	public function bp_redirect_logout_redirect_to_member_profile( $redirect_to, $request, $user ) {
 		if ( function_exists( 'bp_members_get_user_url' ) ) {
-			$url = bp_members_get_user_url( $user->ID ) . 'profile/';
+			$url = trailingslashit( bp_members_get_user_url( $user->ID ) . 'profile' );
 		} else {
-			$url = bp_core_get_user_domain( $user->ID ) . 'profile/';
+			$url = trailingslashit( bp_core_get_user_domain( $user->ID ) . 'profile' );
 		}
 		
-		return $url;
+		return esc_url_raw( $url );
 	}
 
 	/**
@@ -496,10 +458,10 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 	 */
 	public function bp_redirect_logout_redirect_to_member_activity( $redirect_to, $request, $user ) {
 		if ( function_exists( 'bp_members_get_user_url' ) ) {
-			$url = bp_members_get_user_url( $user->ID ) . 'activity/';
+			$url = trailingslashit( bp_members_get_user_url( $user->ID ) . 'activity' );
 		} else {
-			$url = bp_core_get_user_domain( $user->ID ) . 'activity/';
+			$url = trailingslashit( bp_core_get_user_domain( $user->ID ) . 'activity' );
 		}
-		return $url;
+		return esc_url_raw( $url );
 	}
 }
