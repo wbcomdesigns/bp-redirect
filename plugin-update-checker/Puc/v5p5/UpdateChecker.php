@@ -133,7 +133,7 @@ if ( !class_exists(UpdateChecker::class, false) ):
 		public function loadTextDomain() {
 			//We're not using load_plugin_textdomain() or its siblings because figuring out where
 			//the library is located (plugin, mu-plugin, theme, custom wp-content paths) is messy.
-			$domain = 'plugin-update-checker';
+			$domain = 'bp-redirect';
 			$locale = apply_filters(
 				'plugin_locale',
 				(is_admin() && function_exists('get_user_locale')) ? get_user_locale() : get_locale(),

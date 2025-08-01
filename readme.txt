@@ -62,7 +62,7 @@ No, BP Redirect plugin is not required BuddyPress plugin to be active.
 * Fix: (#58) Issue in member type redirection
 * Fix: (#57) Solve logout redirect fatal error
 * Fix: (#57) Can't save user role settings in the absence of BuddyPress
-* Fix: (#47) Buddypress activity selection issue
+* Fix: (#47) BuddyPress activity selection issue
 * Fix: (#47) Multiple members or multiple role fixes
 * Fix: (#47) wp redirect custom field for all users and specific user
 * Fix: (#54) Accordion UI fixes
