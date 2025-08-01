@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-11 09:42:25+00:00\n"
+"POT-Creation-Date: 2025-08-01 11:19:55+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,12 +37,12 @@ msgid " General "
 msgstr ""
 
 #: admin/class-bp-redirect-admin.php:105 admin/class-bp-redirect-admin.php:106
-msgid "BP Redirect"
+msgid "Redirect"
 msgstr ""
 
 #: admin/class-bp-redirect-admin.php:149
 #: admin/wbcom/templates/wbcom-license-page.php:10
-#: admin/wbcom/templates/wbcom-plugins-page.php:502 bp-redirect.php:83
+#: admin/wbcom/templates/wbcom-plugins-page.php:502 bp-redirect.php:84
 msgid "BuddyPress Redirect"
 msgstr ""
 
@@ -230,19 +230,19 @@ msgid "Save Settings"
 msgstr ""
 
 #: admin/partials/bp-redirect-member-type-tab.php:83
-msgid "Enable Setting For Buddypress Member Type"
+msgid "Enable Setting For BuddyPress Member Type"
 msgstr ""
 
 #: admin/partials/bp-redirect-member-type-tab.php:97
-msgid "Buddypress Login Redirect Settings"
+msgid "BuddyPress Login Redirect Settings"
 msgstr ""
 
 #: admin/partials/bp-redirect-member-type-tab.php:110
-msgid "Buddypress Logout Redirect Settings"
+msgid "BuddyPress Logout Redirect Settings"
 msgstr ""
 
 #: admin/partials/bp-redirect-member-type-tab.php:123
-msgid "Buddypress Member Type Not Exist, Create Member Type Click On The Link -: "
+msgid "BuddyPress Member Type Not Exist, Create Member Type Click On The Link -: "
 msgstr ""
 
 #: admin/partials/bp-redirect-member-type-tab.php:125
@@ -335,11 +335,11 @@ msgstr ""
 
 #: admin/wbcom/class-wbcom-admin-settings.php:196
 #: admin/wbcom/class-wbcom-admin-settings.php:197
-#: admin/wbcom/class-wbcom-admin-settings.php:275 bp-redirect.php:181
+#: admin/wbcom/class-wbcom-admin-settings.php:275 bp-redirect.php:182
 msgid "Support"
 msgstr ""
 
-#: admin/wbcom/class-wbcom-admin-settings.php:263 bp-redirect.php:180
+#: admin/wbcom/class-wbcom-admin-settings.php:263 bp-redirect.php:181
 msgid "Settings"
 msgstr ""
 
@@ -1137,59 +1137,59 @@ msgid ""
 "guarantee any delay."
 msgstr ""
 
-#: bp-redirect-update-checker/Puc/v4p10/Plugin/Ui.php:54
-msgid "View details"
-msgstr ""
-
-#: bp-redirect-update-checker/Puc/v4p10/Plugin/Ui.php:82
-msgid "More information about %s"
-msgstr ""
-
-#: bp-redirect-update-checker/Puc/v4p10/Plugin/Ui.php:133
-msgid "Check for updates"
-msgstr ""
-
-#: bp-redirect-update-checker/Puc/v4p10/Plugin/Ui.php:232
-msgid "Unknown update checker status \"%s\""
-msgstr ""
-
-#: bp-redirect-update-checker/Puc/v4p10/Vcs/PluginUpdateChecker.php:100
-msgid "There is no changelog available."
-msgstr ""
-
-#: bp-redirect.php:84
+#: bp-redirect.php:85
 msgid "BuddyPress"
 msgstr ""
 
-#: bp-redirect.php:87
+#: bp-redirect.php:88
 #. translators: %1$s is replaced with the BuddyPress Member Blog and %2$s is
 #. replaced with the BuddyPress.
 msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
 msgstr ""
 
-#: bp-redirect.php:132 bp-redirect.php:156
+#: bp-redirect.php:133 bp-redirect.php:157
 msgid "BP Redirect must be activated on the blog where BuddyPress is active."
 msgstr ""
 
-#: bp-redirect.php:137 bp-redirect.php:168
+#: bp-redirect.php:138 bp-redirect.php:169
 msgid "BP Redirect and BuddyPress must share the same network configuration."
 msgstr ""
 
-#: bp-redirect.php:181
+#: bp-redirect.php:182
 msgid "Need custom development?"
 msgstr ""
 
-#: bp-redirect-update-checker/Puc/v4p10/Plugin/Ui.php:222
+#: plugin-update-checker/Puc/v5p5/Plugin/Ui.php:56
+msgid "View details"
+msgstr ""
+
+#: plugin-update-checker/Puc/v5p5/Plugin/Ui.php:79
+msgid "More information about %s"
+msgstr ""
+
+#: plugin-update-checker/Puc/v5p5/Plugin/Ui.php:130
+msgid "Check for updates"
+msgstr ""
+
+#: plugin-update-checker/Puc/v5p5/Plugin/Ui.php:227
+msgid "Unknown update checker status \"%s\""
+msgstr ""
+
+#: plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php:113
+msgid "There is no changelog available."
+msgstr ""
+
+#: plugin-update-checker/Puc/v5p5/Plugin/Ui.php:217
 msgctxt "the plugin title"
 msgid "The %s plugin is up to date."
 msgstr ""
 
-#: bp-redirect-update-checker/Puc/v4p10/Plugin/Ui.php:224
+#: plugin-update-checker/Puc/v5p5/Plugin/Ui.php:219
 msgctxt "the plugin title"
 msgid "A new version of the %s plugin is available."
 msgstr ""
 
-#: bp-redirect-update-checker/Puc/v4p10/Plugin/Ui.php:226
+#: plugin-update-checker/Puc/v5p5/Plugin/Ui.php:221
 msgctxt "the plugin title"
 msgid "Could not determine if updates are available for %s."
 msgstr ""

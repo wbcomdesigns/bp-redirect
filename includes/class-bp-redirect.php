@@ -183,8 +183,8 @@ class BP_Redirect {
 
 		$plugin_public = new BP_Redirect_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_filter( 'login_redirect', $plugin_public, 'bp_login_redirection_front', 10, 3 );
-		$this->loader->add_filter( 'logout_redirect', $plugin_public, 'bp_logout_redirection_front', 10, 3 );
+		$this->loader->add_filter( 'login_redirect', $plugin_public, 'bp_redirect_login_redirection_front', 10, 3 );
+		$this->loader->add_filter( 'logout_redirect', $plugin_public, 'bp_redirect_logout_redirection_front', 10, 3 );
 	}
 
 	/**

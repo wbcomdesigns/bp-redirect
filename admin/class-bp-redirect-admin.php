@@ -120,9 +120,9 @@ class BP_Redirect_Admin {
 		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
 
 		if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
-			remove_action( 'admin_notices', 'bpr_required_plugin_admin_notice' );
-			remove_action( 'admin_notices', 'bpr_same_blog' );
-			remove_action( 'admin_notices', 'bpr_same_network_config' );
+			remove_action( 'admin_notices', 'bp_redirect_required_plugin_admin_notice' );
+			remove_action( 'admin_notices', 'bp_redirect_same_blog' );
+			remove_action( 'admin_notices', 'bp_redirect_same_network_config' );
 		}
 	}
 
@@ -201,7 +201,7 @@ class BP_Redirect_Admin {
 		register_setting( 'bp_redirect_role_admin_settings', 'bp_redirect_settings_role' );
 		add_settings_section( 'bp-redirect-role', ' ', array( $this, 'bp_redirect_role_admin_settings_content' ), 'bp-redirect-role-settings' );
 
-		if ( class_exists( 'Buddypress' ) ) {
+		if ( class_exists( 'BuddyPress' ) ) {
 			$this->plugin_settings_tabs['bp-redirect-mem-type-settings'] = __( 'Redirect For Member Type', 'bp-redirect' );
 			register_setting( 'bp_redirect_mem_type_admin_settings', 'bp_redirect_settings_mem_type' );
 			add_settings_section( 'bp-redirect-role', ' ', array( $this, 'bp_redirect_mem_type_settings_content' ), 'bp-redirect-mem-type-settings' );
@@ -285,7 +285,7 @@ class BP_Redirect_Admin {
 	 * @author Wbcom Designs <admin@wbcomdesigns.com>
 	 * @access public
 	 */
-	public function get_editable_roles() {
+	public function bp_redirect_get_editable_roles() {
 		global $wp_roles;
 
 		$all_roles      = $wp_roles->roles;
@@ -368,7 +368,7 @@ class BP_Redirect_Admin {
 										</div>
 										<?php
 									}
-								} elseif ( class_exists( 'Buddypress' ) ) {
+								} elseif ( class_exists( 'BuddyPress' ) ) {
 
 									if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', bp_get_option( 'active_plugins' ) ) ) ) {
 										?>
@@ -416,7 +416,7 @@ class BP_Redirect_Admin {
 															}
 															?>
 									'>
-										<?php if ( class_exists( 'Buddypress' ) ) { ?>
+										<?php if ( class_exists( 'BuddyPress' ) ) { ?>
 											<option value=''><?php esc_html_e( 'Select', 'bp-redirect' ); ?></option>
 											<?php if ( bp_is_active( 'members' ) ) { ?>
 												<option value="profile" 
@@ -458,7 +458,7 @@ class BP_Redirect_Admin {
 										?>
 
 										<?php
-											if ( class_exists( 'Buddypress' ) ) {
+											if ( class_exists( 'BuddyPress' ) ) {
 												$bp_pages = bp_core_get_directory_page_ids();
 												$pages    = get_pages( array( 'include' => $bp_pages ) );
 												foreach ( $pages as $page ) {
@@ -710,7 +710,7 @@ class BP_Redirect_Admin {
 									</div>
 									<?php
 								}
-							} elseif ( class_exists( 'Buddypress' ) ) {
+							} elseif ( class_exists( 'BuddyPress' ) ) {
 
 								if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', bp_get_option( 'active_plugins' ) ) ) ) {
 									?>
@@ -760,7 +760,7 @@ class BP_Redirect_Admin {
 															?>
 									'>
 									
-									<?php if ( class_exists( 'Buddypress' ) ) { ?>
+									<?php if ( class_exists( 'BuddyPress' ) ) { ?>
 										<option value=''><?php esc_html_e( 'Select', 'bp-redirect' ); ?></option>
 										<?php if ( bp_is_active( 'members' ) ) { ?>
 											<option value="profile" 
@@ -802,7 +802,7 @@ class BP_Redirect_Admin {
 									
 									<?php
 
-									if ( class_exists( 'Buddypress' ) ) {
+									if ( class_exists( 'BuddyPress' ) ) {
 										$bp_pages = bp_core_get_directory_page_ids();
 										$pages    = get_pages( array( 'include' => $bp_pages ) );
 										foreach ( $pages as $page ) {

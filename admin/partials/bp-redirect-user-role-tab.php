@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$bp_pages      = get_pages();
 
 		$bp_pages_ids   = array_values( $bp_pages );
-		$login_sequence = $this->get_editable_roles();
+		$login_sequence = $this->bp_redirect_get_editable_roles();
 
 if ( ! empty( $saved_setting ) ) {
 	if ( array_key_exists( 'loginSequence', $saved_setting ) ) {
@@ -35,7 +35,7 @@ if ( ! empty( $saved_setting ) ) {
 	}
 }
 
-		$logout_sequence = $this->get_editable_roles();
+		$logout_sequence = $this->bp_redirect_get_editable_roles();
 if ( ! empty( $saved_setting ) ) {
 	if ( array_key_exists( 'logoutSequence', $saved_setting ) ) {
 		$logoutseq = explode( ',', $saved_setting['logoutSequence'] );
