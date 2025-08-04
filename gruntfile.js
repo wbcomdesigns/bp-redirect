@@ -46,37 +46,37 @@ module.exports = function (grunt) {
 				rebase: false
 			},
 			admin: {
-				files: [{
-					expand: true,
-					cwd: 'admin/assets/css/', // Source directory for admin CSS files
-					src: ['*.css', '!*.min.css', '!*-rtl.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones
-					dest: 'admin/assets/css/', // Destination directory for minified admin CSS
-					ext: '.min.css', // Extension for minified files
-				},
-				{
-					expand: true,
-					cwd: 'admin/assets/css/', // Source directory for RTL CSS files
-					src: ['*.css', '!*.min.css', '!*-rtl.css', '!vendor/*.css'], // Minify all .css files except already minified ones
-					dest: 'admin/assets/css/', // Destination directory for minified CSS
-					ext: '-rtl.min.css' // Output file extension
-				}],
-			},
+                files: [{
+                    expand: true,
+                    cwd: 'admin/css/', // Source directory for admin CSS files
+                    src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones
+                    dest: 'admin/css/min/', // Destination directory for minified admin CSS
+                    ext: '.min.css', // Extension for minified files
+                },
+                {
+                    expand: true,
+                    cwd: 'admin/css/rtl/', // Source directory for RTL CSS files
+                    src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all .css files except already minified ones
+                    dest: 'admin/css/rtl/', // Destination directory for minified CSS
+                    ext: '.min.css' // Output file extension
+                }],
+            },
 			wbcom: {
-				files: [{
-					expand: true,
-					cwd: 'admin/wbcom/assets/css/', // Source directory for admin CSS files
-					src: ['*.css', '!*.min.css', '!*-rtl.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones
-					dest: 'admin/wbcom/assets/css/', // Destination directory for minified admin CSS
-					ext: '.min.css', // Extension for minified files
-				},
-				{
-					expand: true,
-					cwd: 'admin/wbcom/assets/css/', // Source directory for RTL CSS files
-					src: ['*.css', '!*.min.css', '!*-rtl.css', '!vendor/*.css'], // Minify all .css files except already minified ones
-					dest: 'admin/wbcom/assets/css/', // Destination directory for minified CSS
-					ext: '-rtl.min.css' // Output file extension
-				}],
-			}
+                files: [{
+                    expand: true,
+                    cwd: 'admin/wbcom/assets/css/', // Source directory for admin CSS files
+                    src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones
+                    dest: 'admin/wbcom/assets/css/min/', // Destination directory for minified admin CSS
+                    ext: '.min.css', // Extension for minified files
+                },
+                {
+                    expand: true,
+                    cwd: 'admin/wbcom/assets/css/rtl/', // Source directory for RTL CSS files
+                    src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all .css files except already minified ones
+                    dest: 'admin/wbcom/assets/css/rtl/', // Destination directory for minified CSS
+                    ext: '.min.css' // Output file extension
+                }],
+            },
 		},
 
 		// Task for JavaScript minification
