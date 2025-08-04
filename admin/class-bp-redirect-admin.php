@@ -115,14 +115,19 @@ class BP_Redirect_Admin {
 	 *
 	 * @return void
 	 */
-	public function wbcom_hide_all_admin_notices_from_setting_page() {
+	public function bp_redirect_hide_admin_notices_from_settings_page() {
 		$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'bp-redirect' );
-		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
+		// Get the 'page' parameter from the GET request and sanitize it
+		$wbcom_setting_page = filter_input(INPUT_GET, 'page', FILTER_DEFAULT);
+
+		if ($wbcom_setting_page !== null) {
+			// Sanitize the input by removing any HTML tags and trimming whitespace
+			$wbcom_setting_page = strip_tags(trim($wbcom_setting_page));
+		}
 
 		if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
-			remove_action( 'admin_notices', 'bp_redirect_required_plugin_admin_notice' );
-			remove_action( 'admin_notices', 'bp_redirect_same_blog' );
-			remove_action( 'admin_notices', 'bp_redirect_same_network_config' );
+			remove_all_actions( 'admin_notices' );
+			remove_all_actions( 'all_admin_notices' );
 		}
 	}
 
@@ -256,7 +261,10 @@ class BP_Redirect_Admin {
 	public function enqueue_styles() {
 
 		$admin_css = bp_redirect_get_asset_filename( 'admin/assets/css', 'bp-redirect-admin' );
-		if( $admin_css ) {
+		
+		$plugin_setting = ( isset( $_GET['page'] ) && ( 'bp-redirect' === $_GET['page'] || 'wbcomplugins' === $_GET['page'] ) ) ? true : false; //phpcs:ignore
+		
+		if( $admin_css && $plugin_setting ) {
 			wp_register_style( $this->bp_redirect, plugin_dir_url( __DIR__ ) . $admin_css, array(), $this->version, 'all' );
 		
 			wp_enqueue_style( $this->bp_redirect );
@@ -276,7 +284,9 @@ class BP_Redirect_Admin {
 
 		$admin_js = bp_redirect_get_asset_filename( 'admin/assets/js', 'bp-redirect-admin' );
 
-		if( $admin_js ) {
+		$plugin_setting = ( isset( $_GET['page'] ) && ( 'bp-redirect' === $_GET['page'] || 'wbcomplugins' === $_GET['page'] ) ) ? true : false; //phpcs:ignore
+
+		if( $admin_js && $plugin_setting ) {
 			
 			wp_register_script( 'bp-redirect-admin-js', plugin_dir_url( __DIR__ ) . $admin_js, array( 'jquery', 'jquery-ui-core', 'jquery-ui-accordion' ), $this->version, false );
 
