@@ -254,7 +254,13 @@ class BP_Redirect_Admin {
 	 * @since 1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->bp_redirect, plugin_dir_url( __FILE__ ) . 'assets/css/bp-redirect-admin.css', array(), $this->version, 'all' );
+
+		$admin_css = bp_redirect_get_asset_filename( 'admin/assets/css', 'bp-redirect-admin' );
+		if( $admin_css ) {
+			wp_register_style( $this->bp_redirect, plugin_dir_url( __DIR__ ) . $admin_css, array(), $this->version, 'all' );
+		
+			wp_enqueue_style( $this->bp_redirect );
+		}
 	}
 
 	/**
@@ -263,16 +269,26 @@ class BP_Redirect_Admin {
 	 * @since 1.0.0
 	 */
 	public function enqueue_scripts() {		 
-		wp_enqueue_script( 'bp-redirect-admin', plugin_dir_url( __FILE__ ) . 'assets/js/bp-redirect-admin.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-accordion' ), $this->version, false );
-		wp_localize_script(
-			'bp-redirect-admin',
-			'bp_redirect_ajax_nonce',
-			array(
-				'nonce' => wp_create_nonce( 'bp-js-admin-ajax-nonce' ),
-			)
-		);
+
 		if ( ! wp_script_is( 'jquery-ui-sortable', 'enqueued' ) ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
+		}
+
+		$admin_js = bp_redirect_get_asset_filename( 'admin/assets/js', 'bp-redirect-admin' );
+
+		if( $admin_js ) {
+			
+			wp_register_script( 'bp-redirect-admin-js', plugin_dir_url( __DIR__ ) . $admin_js, array( 'jquery', 'jquery-ui-core', 'jquery-ui-accordion' ), $this->version, false );
+
+			wp_enqueue_script( 'bp-redirect-admin-js' );
+
+			wp_localize_script(
+				'bp-redirect-admin-js',
+				'bp_redirect_ajax_nonce',
+				array(
+					'nonce' => wp_create_nonce( 'bp-js-admin-ajax-nonce' ),
+				)
+			);
 		}
 	}
 

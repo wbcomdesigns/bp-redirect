@@ -141,29 +141,42 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			}
 			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) ) {
 
-				wp_register_script(
-					$handle    = 'wbcom_admin_setting_js',
-					$src       = BP_REDIRECT_PLUGIN_URL . 'admin/wbcom/assets/js/wbcom-admin-setting.js',
-					$deps      = array( 'jquery' ),
-					$ver       = time(),
-					$in_footer = true
-				);
-				wp_localize_script(
-					'wbcom_admin_setting_js',
-					'wbcom_plugin_installer_params',
-					array(
-						'ajax_url'        => admin_url( 'admin-ajax.php' ),
-						'activate_text'   => esc_html__( 'Activate', 'bp-redirect' ),
-						'deactivate_text' => esc_html__( 'Deactivate', 'bp-redirect' ),
-						'nonce'           => wp_create_nonce( 'wbcom_admin_setting_nonce' ),
-					)
-				);
-				wp_enqueue_script( 'wbcom_admin_setting_js' );
+				$wbcom_js  = bp_redirect_get_asset_filename( 'admin/wbcom/assets/js', 'wbcom-admin-setting' );
+				if( $wbcom_js ) { 
+					wp_register_script(
+						$handle    = 'wbcom_admin_setting_js',
+						$src       = BP_REDIRECT_PLUGIN_URL . $wbcom_js,
+						$deps      = array( 'jquery' ),
+						$ver       = time(),
+						$in_footer = true
+					);
 
+					wp_enqueue_script( 'wbcom_admin_setting_js' );
+					
+					wp_localize_script(
+						'wbcom_admin_setting_js',
+						'wbcom_plugin_installer_params',
+						array(
+							'ajax_url'        => admin_url( 'admin-ajax.php' ),
+							'activate_text'   => esc_html__( 'Activate', 'bp-redirect' ),
+							'deactivate_text' => esc_html__( 'Deactivate', 'bp-redirect' ),
+							'nonce'           => wp_create_nonce( 'wbcom_admin_setting_nonce' ),
+						)
+					);
+				
+				}
 			}
 
 			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
-				wp_enqueue_style( 'wbcom-admin-setting-css', BP_REDIRECT_PLUGIN_URL . 'admin/wbcom/assets/css/wbcom-admin-setting.css' );
+
+				$wbcom_css  = bp_redirect_get_asset_filename( 'admin/wbcom/assets/css', 'wbcom-admin-setting' );
+
+				if( $wbcom_css ) {
+					wp_register_style( 'wbcom-admin-setting-css', BP_REDIRECT_PLUGIN_URL . $wbcom_css );
+					
+					wp_enqueue_style( 'wbcom-admin-setting-css' );
+				}
+				
 			}
 
 		}
