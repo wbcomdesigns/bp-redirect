@@ -59,3 +59,58 @@ function bp_redirect_update_member_type_data_on_new_key(){
 		}
 }
 add_action('admin_init','bp_redirect_update_member_type_data_on_new_key');
+
+
+/**
+ * Get asset filename with intelligent fallback
+ *
+ * @since    1.9.1
+ * @param    string $type     Asset type ('css' or 'js')
+ * @param    string $filename Base filename without extension
+ * @return   string|false     Full filename with path or false if not found
+ */
+function bp_redirect_get_asset_filename($type, $filename) {
+
+	$css_file_paths = array( 'admin/assets/css', 'admin/wbcom/assets/css' );
+	// Determine if we should use minified files
+	$use_minified = !(defined('SCRIPT_DEBUG') && SCRIPT_DEBUG);
+	// Determine if RTL is needed (only for CSS)
+	$is_rtl = in_array( $type, $css_file_paths ) ? is_rtl() : false;
+	
+	// Build the base directory path
+	$base_dir = plugin_dir_path(__DIR__) . $type . '/';
+	
+	// Array of file variants to try in order of preference
+	$variants = array();
+
+	if ( in_array( $type, $css_file_paths ) ) {
+		if ($is_rtl && $use_minified) {
+			$variants[] = $filename . '-rtl.min.css';      // 1st preference: RTL minified
+			$variants[] = $filename . '-rtl.css';          // 2nd preference: RTL non-minified
+		} elseif ($is_rtl && !$use_minified) {
+			$variants[] = $filename . '-rtl.css';          // 1st preference: RTL non-minified
+		} elseif (!$is_rtl && $use_minified) {
+			$variants[] = $filename . '.min.css';          // 1st preference: LTR minified
+			$variants[] = $filename . '.css';              // 2nd preference: LTR non-minified
+		} else {
+			$variants[] = $filename . '.css';              // 1st preference: LTR non-minified
+		}
+	} else { // JavaScript
+		if ($use_minified) {
+			$variants[] = $filename . '.min.js';           // 1st preference: minified
+			$variants[] = $filename . '.js';               // 2nd preference: non-minified
+		} else {
+			$variants[] = $filename . '.js';               // 1st preference: non-minified
+		}
+	}	
+
+	// Check each variant in order
+	foreach ($variants as $variant) {
+		if (file_exists($base_dir . $variant)) {
+			return $type . '/' . $variant;
+		}
+	}
+	
+	// No valid file found
+	return false;
+}
