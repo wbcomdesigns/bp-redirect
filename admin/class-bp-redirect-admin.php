@@ -122,7 +122,7 @@ class BP_Redirect_Admin {
 
 		if ($wbcom_setting_page !== null) {
 			// Sanitize the input by removing any HTML tags and trimming whitespace
-			$wbcom_setting_page = strip_tags(trim($wbcom_setting_page));
+			$wbcom_setting_page = wp_strip_all_tags(trim($wbcom_setting_page));
 		}
 
 		if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
@@ -331,7 +331,7 @@ class BP_Redirect_Admin {
 		$page_ids = wp_cache_get( 'all_page_ids', 'posts' );
 
 		if ( ! is_array( $page_ids ) ) {
-			$page_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s'", 'page', 'publish' ) );
+			$page_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s AND post_status = %s", 'page', 'publish' ) );
 			wp_cache_add( 'all_page_ids', $page_ids, 'posts' );
 		}
 		
@@ -360,6 +360,7 @@ class BP_Redirect_Admin {
 								<?php
 								$login_component = '';
 								$login_url       = '';
+								$login_type_val  = '';
 								if ( ! empty( $saved_setting ) && isset( $saved_setting['bp_login_redirect_settings'] ) ) {
 									$setting = $saved_setting['bp_login_redirect_settings'];
 									
@@ -906,9 +907,9 @@ class BP_Redirect_Admin {
 			}
 			if ( isset($_POST['action']) && 'bp_redirect_admin_settings' === $_POST['action'] ) {
 				// Retrieve the existing settings
-				if ( 'user-role' === $_POST['temp_role_member_type'] ){
+				if ( isset( $_POST['temp_role_member_type'] ) && 'user-role' === $_POST['temp_role_member_type'] ){
 					$saved_setting = get_option('bp_redirect_admin_settings');			
-				} elseif( 'member-type' === $_POST['temp_role_member_type'] ){
+				} elseif( isset( $_POST['temp_role_member_type'] ) && 'member-type' === $_POST['temp_role_member_type'] ){
 					$saved_setting = get_option('bp_redirect_member_type_admin_settings');			
 				}
 				
@@ -929,7 +930,7 @@ class BP_Redirect_Admin {
 				}
 
 				// Get all roles and member types (including custom ones)				
-				if ( 'user-role' === $_POST['temp_role_member_type'] ) {
+				if ( isset( $_POST['temp_role_member_type'] ) && 'user-role' === $_POST['temp_role_member_type'] ) {
 					$all_keys = array_keys(wp_roles()->roles); // WordPress roles					
 				} else {
 					$all_keys = function_exists('bp_get_member_types') ? bp_get_member_types() : []; // BuddyPress member types					
@@ -1002,10 +1003,10 @@ class BP_Redirect_Admin {
 				if (isset($_POST['logoutSequence']) && '' !== $_POST['logoutSequence']) {
 					$saved_setting['logoutSequence'] = sanitize_text_field(wp_unslash($_POST['logoutSequence']));
 				}
-				if ( 'user-role' == $_POST['temp_role_member_type'] ){
+				if ( isset( $_POST['temp_role_member_type'] ) && 'user-role' == $_POST['temp_role_member_type'] ){
 					// Save the user role settings back to the database
 					update_option('bp_redirect_admin_settings', $saved_setting);
-				} elseif( 'member-type' == $_POST['temp_role_member_type'] ){
+				} elseif( isset( $_POST['temp_role_member_type'] ) && 'member-type' == $_POST['temp_role_member_type'] ){
 					// Save the member type settings back to the database
 					update_option('bp_redirect_member_type_admin_settings', $saved_setting);
 				}
