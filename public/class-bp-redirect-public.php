@@ -177,13 +177,13 @@ class BP_Redirect_Public {
 	public function bp_redirect_login_redirect_referer( $login_component, $redirect_to, $request, $user ) {
 
 		if ( ! empty( $login_component ) && 'profile' === $login_component ) {
-			$redirect_url = $this->bp_redirect_login_redirect_to_profile( $redirect_to, $request, $user );
+			$redirect_url = $this->bp_redirect_handle_login_redirection( $redirect_to, $request, $user, 'profile' );
 			return esc_url( $redirect_url );
 		} elseif ( ! empty( $login_component ) && 'member_activity' === $login_component ) {
-			$redirect_url = $this->bp_redirect_login_redirect_to_member_activity( $redirect_to, $request, $user );
+			$redirect_url = $this->bp_redirect_handle_login_redirection( $redirect_to, $request, $user, 'activity' );
 			return esc_url( $redirect_url );
 		} elseif ( ! empty( $login_component ) && 'groups' === $login_component ) {
-			$redirect_url = $this->bp_redirect_login_redirect_to_groups_page( $redirect_to, $request, $user );
+			$redirect_url = $this->bp_redirect_handle_login_redirection( $redirect_to, $request, $user, 'groups' );
 			return esc_url( $redirect_url );
 		} elseif ( ! empty( $login_component ) ) {
 			return esc_url( $login_component );
@@ -192,61 +192,7 @@ class BP_Redirect_Public {
 			return $url;
 		}
 	}
-	/**
-	 *  Login redirects to Member's profile page
-	 *
-	 *  @param  string $redirect_to Redirect url.
-	 *  @param  string $request Request.
-	 *  @param  string $user user id.
-	 *  @since 1.0.0
-	 *  @author  Wbcom Designs <admin@wbcomdesigns.com>
-	 *  @access public
-	 */
-	public function bp_redirect_login_redirect_to_profile( $redirect_to, $request, $user ) {
-		if ( function_exists( 'bp_members_get_user_url' ) ) {
-			$url = bp_members_get_user_url( $user->ID ) . 'profile/';
-		} else {
-			$url = bp_core_get_user_domain( $user->ID ) . 'profile/';
-		}
-		return $url;
-	}
 
-	/**
-	 *  Login redirects to Member's activity page
-	 *
-	 *  @param  string $redirect_to Redirect url.
-	 *  @param  string $request Request.
-	 *  @param  string $user user id.
-	 *
-	 *  @since 1.0.0
-	 *  @author  Wbcom Designs <admin@wbcomdesigns.com>
-	 *  @access public
-	 */
-	public function bp_redirect_login_redirect_to_member_activity( $redirect_to, $request, $user ) {
-		if ( function_exists( 'bp_members_get_user_url' ) ) {
-			$url = bp_members_get_user_url( $user->ID ) . 'activity/';
-		} else {
-			$url = bp_core_get_user_domain( $user->ID ) . 'activity/';
-		}
-		return $url;
-	}
-
-	/**
-	 *  Login redirects to Group's  Directory page
-	 *
-	 *  @param  string $redirect_to Redirect url.
-	 *  @param  string $request Request.
-	 *  @param  string $user user id.
-	 *
-	 *  @since 1.0.0
-	 *  @author  Wbcom Designs <admin@wbcomdesigns.com>
-	 *  @access public
-	 */
-	public function bp_redirect_login_redirect_to_groups_page( $redirect_to, $request, $user ) {
-		$bp_pages = get_option( 'bp-pages' );
-		$url      = get_permalink( $bp_pages['groups'] );
-		return $url;
-	}
 
 	/**
 	 *  Default redirect when no redirect url found
@@ -291,7 +237,6 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 
         $url = [];
      
-
 		// Check for login settings for member type
 		$mem_type_setting  = get_option( 'bp_redirect_member_type_admin_settings', [] );
 		$mem_logout_setting = isset( $mem_type_setting['bp_logout_redirect_settings'] ) ? $mem_type_setting['bp_logout_redirect_settings'] : [];
@@ -305,8 +250,8 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 			}
 		} elseif ( ! empty( $user_member_type ) && isset( $mem_type_setting['member_type_btn_value'] ) && 'yes' === $mem_type_setting['member_type_btn_value'] && $mem_logout_setting[$user_member_type[0]]['logout_type'] != 'none' && ! empty( $mem_logout_setting[$user_member_type[0]]['logout_type'] ) ) {			
 			if ( ! empty( array_intersect_key( array_flip( $user_member_type ), $mem_logout_setting ) ) ) {									
-					 $bp_member_key = $user_member_type;
-                     $url[] = $this->bp_redirect_logout_redirect_according_settings( $bp_member_key, $mem_logout_setting, $redirect_to, $request, $user );
+				$bp_member_key = $user_member_type;
+				$url[] = $this->bp_redirect_logout_redirect_according_settings( $bp_member_key, $mem_logout_setting, $redirect_to, $request, $user );
 			} 
 		}  elseif( isset( $saved_settings['role_btn_value'] ) && 'yes' === $saved_settings['role_btn_value'] ) {			
 			if ( isset( $setting_global['global']['logout_type'] ) && 'custom' == $setting_global['global']['logout_type'] ) {				
@@ -316,7 +261,7 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 
         if ( isset( $url[0] ) && ! empty( $url[0] ) ) {
             $url_redirect = $url[0] ?? $redirect_to;
-            wp_redirect( esc_url( $url_redirect ) );
+            wp_safe_redirect( esc_url( $url_redirect ) );
             exit();
         } else {
             return $redirect_to;
@@ -392,13 +337,13 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 	public function bp_redirect_logout_redirect_referer( $logout_component, $redirect_to, $request, $user ) {
 		// Redirect to member profile page
 		if ( 'profile' === $logout_component ) {
-			$redirect_url = $this->bp_redirect_logout_redirect_to_member_profile( $redirect_to, $request, $user );
+			$redirect_url = $this->bp_redirect_handle_logout_redirection( $redirect_to, $request, $user, 'profile' );
 			return esc_url_raw( $redirect_url );
 		}
 
 		// Redirect to member activity page
 		elseif ( 'member_activity' === $logout_component ) {
-			$redirect_url = $this->bp_redirect_logout_redirect_to_member_activity( $redirect_to, $request, $user );
+			$redirect_url = $this->bp_redirect_handle_logout_redirection( $redirect_to, $request, $user, 'activity' );
 			return esc_url_raw( $redirect_url );
 		}
 
@@ -410,11 +355,8 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 			}
 			// Otherwise, treat it as a BuddyPress component slug
 			else {
-				if ( function_exists( 'bp_members_get_user_url' ) ) {
-					return esc_url_raw( bp_members_get_user_url( $user->ID ) . trailingslashit( $logout_component ) );
-				} else {
-					return esc_url_raw( bp_core_get_user_domain( $user->ID ) . trailingslashit( $logout_component ) );
-				}
+				$redirect_url = $this->bp_redirect_handle_logout_redirection( $redirect_to, $request, $user, $logout_component );
+				return esc_url_raw( $redirect_url );
 			}
 		}
 
@@ -425,43 +367,47 @@ public function bp_redirect_logout_redirection_front( $redirect_to, $request = '
 		}
 	}
 
-
 	/**
-	 *  Logout redirects to Member's profile page
+	 *  Handles redirection after user logout.
 	 *
 	 *  @param string $redirect_to Redirect url after logout.
 	 *  @param string $request Request.
 	 *  @param string $user Get a user.
-	 *  @since 1.0.0
-	 *  @author  Wbcom Designs <admin@wbcomdesigns.com>
-	 *  @access public
+	 *  @param string $logout_component Component to redirect to.
+	 *  @since 1.9.1
 	 */
-	public function bp_redirect_logout_redirect_to_member_profile( $redirect_to, $request, $user ) {
+	public function bp_redirect_handle_logout_redirection( $redirect_to, $request, $user, $logout_component ) {
 		if ( function_exists( 'bp_members_get_user_url' ) ) {
-			$url = trailingslashit( bp_members_get_user_url( $user->ID ) . 'profile' );
+			$url = trailingslashit( bp_members_get_user_url( $user->ID ) . $logout_component );
 		} else {
-			$url = trailingslashit( bp_core_get_user_domain( $user->ID ) . 'profile' );
+			$url = trailingslashit( bp_core_get_user_domain( $user->ID ) . $logout_component );
 		}
 		
 		return esc_url_raw( $url );
 	}
 
 	/**
-	 *  Logout redirects to Member's activity page
+	 *  Handles redirection after user login.
 	 *
-	 *  @param string $redirect_to Redirect url after logout.
+	 *  @param string $redirect_to Redirect url after login.
 	 *  @param string $request Request.
 	 *  @param string $user Get a user.
-	 *  @since 1.0.0
-	 *  @author  Wbcom Designs <admin@wbcomdesigns.com>
-	 *  @access public
+	 *  @param string $login_component Component to redirect to.
+	 *  @since 1.9.1
 	 */
-	public function bp_redirect_logout_redirect_to_member_activity( $redirect_to, $request, $user ) {
+	public function bp_redirect_handle_login_redirection( $redirect_to, $request, $user, $login_component ) {
 		if ( function_exists( 'bp_members_get_user_url' ) ) {
-			$url = trailingslashit( bp_members_get_user_url( $user->ID ) . 'activity' );
+			$url = trailingslashit( bp_members_get_user_url( $user->ID ) . $login_component );
 		} else {
-			$url = trailingslashit( bp_core_get_user_domain( $user->ID ) . 'activity' );
+			$url = trailingslashit( bp_core_get_user_domain( $user->ID ) . $login_component );
+		} 
+
+		if( 'groups' === $login_component ) {
+			$bp_pages = get_option( 'bp-pages' );
+			$url      = get_permalink( $bp_pages['groups'] );
 		}
+		
 		return esc_url_raw( $url );
 	}
+
 }
