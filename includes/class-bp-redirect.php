@@ -165,7 +165,7 @@ class BP_Redirect {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'bp_redirect_admin_option' );
 		$this->loader->add_action( 'wp_ajax_bp_redirect_admin_settings', $plugin_admin, 'bp_redirect_save_admin_settings' );
 		$this->loader->add_action( 'wp_ajax_bp_redirect_admin_settings_global', $plugin_admin, 'bp_redirect_save_admin_settings_global' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'wbcom_hide_all_admin_notices_from_setting_page' );
+		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'bp_redirect_hide_admin_notices_from_settings_page' );
 	}
 
 	/**
