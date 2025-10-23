@@ -56,10 +56,6 @@ if ( ! empty( $saved_setting ) ) {
 			<h3><?php esc_html_e( 'Global Redirection Setting', 'bp-redirect' ); ?></h3>
 		</div><!-- .wbcom-welcome-head -->
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">			
-			<div id="bpredirect-settings_updated" class="updated settings-error notice is-dismissible">
-				<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
-				<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>
-			</div>
 			<form class="user-role-setting" method="post">
 				<div class="enable_disable_btn wbcom-settings-section-wrap">
 					<label for="bp-redirect" class="enable_disable_setting">
@@ -99,8 +95,9 @@ if ( ! empty( $saved_setting ) ) {
 			<p>
 				<button id="bp-redirect-globel-settings-submit" class="button button-primary" name="bp-redirect-globel-settings-submit"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button><img src="<?php echo esc_url( $spinner_src, 'bp-redirect' ); ?>" class="bp-redirect-settings-spinner" />
 			</p>
-			<div id="bpredirect-settings_updated-footer" class="" style="display:none">
-				<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>		
+			<div id="bpredirect-settings_updated-footer" class="is-dismissible" style="display:none">
+				<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>	
+				<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'bp-redirect' ); ?></span></button>	
 			</div>
 		</div>
 	</div>

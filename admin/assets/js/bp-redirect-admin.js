@@ -408,7 +408,6 @@ jQuery( document ).ready(
 					},
 					function () {
 						jQuery( ".bp-redirect-settings-spinner" ).hide();
-						jQuery( "#bpredirect-settings_updated" ).show();
 						jQuery( "#bpredirect-settings_updated-footer" ).show();
 						jQuery( "#bpredirect-settings_updated-footer" ).addClass(
 							"updated settings-error notice "
@@ -470,7 +469,6 @@ jQuery( document ).ready(
 					},
 					function () {
 						jQuery( ".bp-redirect-settings-spinner" ).hide();
-						jQuery( "#bpredirect-settings_updated" ).show();
 						jQuery( "#bpredirect-settings_updated-footer" ).show();
 						jQuery( "#bpredirect-settings_updated-footer" ).addClass(
 							"updated settings-error notice "
@@ -547,6 +545,11 @@ jQuery( document ).ready(
 					return false;
 				}
 			);
+
+
+			jQuery(document).on('click', '.notice-dismiss', function() {
+				jQuery(this).closest('#bpredirect-settings_updated-footer').fadeOut();
+			});
 		}
 	);
 })( jQuery );
