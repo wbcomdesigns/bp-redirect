@@ -69,6 +69,11 @@ function bp_redirect_plugin_init()
 		}
 		add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'bp_redirect_plugin_links');
 		deactivate_plugins( plugin_basename( __FILE__ ) );
+			
+		if( isset( $_GET['activate'] ) ) { //phpcs:ignore
+			unset( $_GET['activate'] );
+		}
+
 		add_action( 'admin_notices', 'bp_redirect_required_plugin_admin_notice' );
 	}
 }
