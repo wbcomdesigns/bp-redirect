@@ -666,7 +666,7 @@ class BP_Redirect_Admin {
 			<?php
 			$login_component = '';
 			$login_url       = '';
-			$login_type_val  = '';
+			$login_type_val  = 'none';
 
 			if ( ! empty( $saved_setting ) && isset( $saved_setting['bp_login_redirect_settings'.$global_key] ) ) {
 				if ( ! empty( $saved_setting['bp_login_redirect_settings'.$global_key] ) ) {
@@ -836,7 +836,7 @@ class BP_Redirect_Admin {
 			<?php
 			$logout_component = '';
 			$logout_url       = '';
-			$logout_type_val  = '';
+			$logout_type_val  = 'none';
 
 			if ( ! empty( $saved_setting ) && isset( $saved_setting['bp_logout_redirect_settings'.$global_key] ) ) {
 				if ( ! empty( $saved_setting['bp_logout_redirect_settings'.$global_key] ) ) {
