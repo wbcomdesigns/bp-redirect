@@ -292,13 +292,13 @@ class BP_Redirect_Admin {
 
 			wp_enqueue_script( 'bp-redirect-admin-js' );
 
-			wp_localize_script(
+		wp_localize_script(
 				'bp-redirect-admin-js',
-				'bp_redirect_ajax_nonce',
-				array(
-					'nonce' => wp_create_nonce( 'bp-js-admin-ajax-nonce' ),
-				)
-			);
+			'bp_redirect_ajax_nonce',
+			array(
+				'nonce' => wp_create_nonce( 'bp-js-admin-ajax-nonce' ),
+			)
+		);
 		}
 	}
 
@@ -334,7 +334,7 @@ class BP_Redirect_Admin {
 			$page_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s AND post_status = %s", 'page', 'publish' ) );
 			wp_cache_add( 'all_page_ids', $page_ids, 'posts' );
 		}
-		
+
 		return array_map( 'absint', $page_ids );
 	}
 
@@ -414,7 +414,7 @@ class BP_Redirect_Admin {
 				<div id="bgr-login-accordion">
 					<?php
 					
-					$key = 'global';
+						$key = 'global';
 					?>
 					<div class="group" id="<?php echo esc_attr( 'login' ); ?>" data-text="<?php echo esc_attr( $key ); ?>">
 						<h3><?php esc_html_e( 'Login Redirect Settings For All Roles', 'bp-redirect' ); ?></h3>
@@ -660,17 +660,17 @@ class BP_Redirect_Admin {
 	 * @since 1.9.1
 	 * @return void
 	 */
-	public function bp_redirect_render_login_settings_fields( $roles, $bp_pages_ids, $saved_setting, $key, $global_key ) { 
-		?>
+	public function bp_redirect_render_login_settings_fields( $roles, $bp_pages_ids, $saved_setting, $key, $suffix ) { ?>
 		<div>
 			<?php
 			$login_component = '';
 			$login_url       = '';
 			$login_type_val  = 'none';
-
-			if ( ! empty( $saved_setting ) && isset( $saved_setting['bp_login_redirect_settings'.$global_key] ) ) {
-				if ( ! empty( $saved_setting['bp_login_redirect_settings'.$global_key] ) ) {
-					$setting = $saved_setting['bp_login_redirect_settings'.$global_key];
+			
+			if ( ! empty( $saved_setting ) && isset( $saved_setting['bp_login_redirect_settings'.$suffix] ) ) {
+				if ( isset( $saved_setting['bp_login_redirect_settings'.$suffix] ) && ! empty( $saved_setting['bp_login_redirect_settings'.$suffix] ) ) {
+					
+					$setting = $saved_setting['bp_login_redirect_settings'.$suffix];
 
 					if ( isset( $setting ) && ! empty( $setting ) ) {
 						if ( array_key_exists( $key, $setting ) ) {
@@ -691,79 +691,64 @@ class BP_Redirect_Admin {
 				if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 					include_once ABSPATH . '/wp-admin/includes/plugin.php';
 				}
-				if ( class_exists( 'BuddyPress' ) ) {
+				if ( is_plugin_active_for_network( 'buddypress/bp-loader.php' ) === true ) {
 					?>
 					<div class="bpr-col-4">
-						<input name='<?php echo esc_attr( "bp_login_redirect_settings".$global_key."[$key][login_type]" ); ?>' id='<?php echo esc_attr( 'bp_login_redirect_settings'.$global_key.'_' . $key . '_login_type_referer' ); ?>' value="referer" type="radio" class="bp_redi_login_type" <?php checked( $login_type_val, 'referer' ) ; ?> >
-						<label for="<?php echo esc_attr( 'bp_login_redirect_settings'.$global_key.'_' . $key . '_login_type_referer' ); ?>"><?php esc_html_e( 'BuddyPress Component', 'bp-redirect' ); ?></label>
+						<input name='<?php echo esc_attr( "bp_login_redirect_settings".$suffix."[$key][login_type]" ); ?>' id='<?php echo esc_attr( 'bp_login_redirect_settings'.$suffix.'_' . $key . '_login_type_referer' ); ?>' value="referer" type="radio" class="bp_redi_login_type" <?php if ( isset( $login_type_val ) && 'referer' === $login_type_val ) { echo "checked = 'checked'"; } ?> >
+						<label for="<?php echo esc_attr( 'bp_login_redirect_settings'.$suffix.'_' . $key . '_login_type_referer' ); ?>"><?php esc_html_e( 'BuddyPress Component', 'bp-redirect' ); ?></label>
 					</div>
 					<?php
 				}
-			} elseif ( class_exists( 'BuddyPress' ) ) {
-				
-				?>
-				<div class="bpr-col-4">
-					<input name='<?php echo esc_attr( "bp_login_redirect_settings".$global_key."[$key][login_type]" ); ?>' id='<?php echo esc_attr( 'bp_login_redirect_settings'.$global_key.'_' . $key . '_login_type_referer' ); ?>' value="referer" type="radio" class="bp_redi_login_type" <?php checked( $login_type_val, 'referer' ); ?> >
-
-					<label for="<?php echo esc_attr( 'bp_login_redirect_settings'.$global_key.'_' . $key . '_login_type_referer' ); ?>"><?php esc_html_e( 'BuddyPress Component', 'bp-redirect' ); ?></label>
-				</div>
-				<?php
-				
+			} elseif ( class_exists( 'Buddypress' ) ) {
+				if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', bp_get_option( 'active_plugins' ) ) ) ) { ?>
+					<div class="bpr-col-4">
+						<input name='<?php echo esc_attr( "bp_login_redirect_settings".$suffix."[$key][login_type]" ); ?>' id='<?php echo esc_attr( 'bp_login_redirect_settings'.$suffix.'_' . $key . '_login_type_referer' ); ?>' value="referer" type="radio" class="bp_redi_login_type" <?php if ( isset( $login_type_val ) && 'referer' === $login_type_val ) { echo "checked = 'checked'"; } ?> >
+						<label for="<?php echo esc_attr( 'bp_login_redirect_settings'.$suffix.'_' . $key . '_login_type_referer' ); ?>"><?php esc_html_e( 'BuddyPress Component', 'bp-redirect' ); ?></label>
+					</div>
+					<?php
+				}
 			}
 			?>
 			<div class="bpr-col-4">
-
-				<input name='<?php echo esc_attr( "bp_login_redirect_settings".$global_key."[$key][login_type]" ); ?>' id='<?php echo esc_attr( 'bp_login_redirect_settings'.$global_key.'_' . $key . '_login_type_custom' ); ?>' value="custom" type="radio" class="bp_redi_login_type" 
-				<?php checked( $login_type_val, 'custom' ); ?> >
-				<label for="<?php echo esc_attr( 'bp_login_redirect_settings'.$global_key.'_' . $key . '_login_type_custom' ); ?>"><?php esc_html_e( 'Page', 'bp-redirect' ); ?></label>
+				<input name='<?php echo esc_attr( "bp_login_redirect_settings".$suffix."[$key][login_type]" ); ?>' id='<?php echo esc_attr( 'bp_login_redirect_settings'.$suffix.'_' . $key . '_login_type_custom' ); ?>' value="custom" type="radio" class="bp_redi_login_type" <?php if ( isset( $login_type_val ) && 'custom' === $login_type_val ) { echo "checked = 'checked'"; } ?> >	
+				<label for="<?php echo esc_attr( 'bp_login_redirect_settings'.$suffix.'_' . $key . '_login_type_custom' ); ?>"><?php esc_html_e( 'Page', 'bp-redirect' ); ?></label>
 			</div>
 			<div class="bpr-col-4">
-				<input name='<?php echo esc_attr( "bp_login_redirect_settings".$global_key."[$key][login_type]" ); ?>' id='<?php echo esc_attr( 'bp_login_redirect_settings'.$global_key.'_' . $key . '_login_type_none' ); ?>' value="none" type="radio" class="bp_redi_login_type" 
-				<?php checked( $login_type_val, 'none' ); ?> >
-				<label for="<?php echo esc_attr( 'bp_login_redirect_settings'.$global_key.'_' . $key . '_login_type_none' ); ?>"><?php esc_html_e( 'None', 'bp-redirect' ); ?></label>
+				<input name='<?php echo esc_attr( "bp_login_redirect_settings".$suffix."[$key][login_type]" ); ?>' id='<?php echo esc_attr( 'bp_login_redirect_settings'.$suffix.'_' . $key . '_login_type_none' ); ?>' value="none" type="radio" class="bp_redi_login_type" <?php if ( isset( $login_type_val ) && 'none' === $login_type_val ) { echo "checked = 'checked'"; } ?> >
+				<label for="<?php echo esc_attr( 'bp_login_redirect_settings'.$suffix.'_' . $key . '_login_type_none' ); ?>"><?php esc_html_e( 'None', 'bp-redirect' ); ?></label>
 			</div>
 			<div class="bpr-col-4">
-				<select name='<?php echo esc_attr( "bp_login_redirect_settings".$global_key."[$key][login_component]" ); ?>' class='bpr-login-component
-					<?php
-						if ( isset( $login_type_val ) && 'referer' === $login_type_val ) {
-							echo 'bpr_show';
-						}
-					?> ' >
-					
-					<?php if ( class_exists( 'BuddyPress' ) ) { ?>
+				<select name='<?php echo esc_attr( "bp_login_redirect_settings".$suffix."[$key][login_component]" ); ?>' class='bpr-login-component <?php if ( isset( $login_type_val ) && 'referer' === $login_type_val ) { echo 'bpr_show'; } ?> '>
+					<?php if ( class_exists( 'Buddypress' ) ) { ?>
 						<option value=''><?php esc_html_e( 'Select', 'bp-redirect' ); ?></option>
 						<?php if ( bp_is_active( 'members' ) ) { ?>
-							<option value="profile" <?php selected( $login_component, 'profile' ); ?>> 
+							<option value="profile" <?php if ( 'profile' === $login_component ) { echo "selected = 'selected'";	} ?> >
 								<?php esc_html_e( 'Member Profile', 'bp-redirect' ); ?>
 							</option>
 							<?php
 						}
-						if ( bp_is_active( 'activity' ) ) {
-							?>
-							<option value="member_activity" <?php selected( $login_component, 'member_activity' ); ?> > 
+						if ( bp_is_active( 'activity' ) ) { ?>
+							<option value="member_activity" <?php if ( 'member_activity' === $login_component ) { echo "selected = 'selected'"; } ?> >
 								<?php esc_html_e( 'Member Activity', 'bp-redirect' ); ?>
 							</option>
 							<?php
 						}
-						if ( bp_is_active( 'groups' ) ) {
-							?>
-							<option value="groups" <?php selected( $login_component, 'groups' ); ?> >
+						if ( bp_is_active( 'groups' ) ) { ?>
+							<option value="groups" <?php if ( 'groups' === $login_component ) { echo "selected = 'selected'"; } ?> >
 								<?php esc_html_e( 'Groups', 'bp-redirect' ); ?>
 							</option>
 							<?php
 						}
-					}
-					?>
+					} ?>
 					
 					<?php
 
-					if ( class_exists( 'BuddyPress' ) ) {
+					if ( class_exists( 'Buddypress' ) ) {
 						$bp_pages = bp_core_get_directory_page_ids();
 						$pages    = get_pages( array( 'include' => $bp_pages ) );
 						foreach ( $pages as $page ) {
-
 							if ( 'activity' === $login_component ) {
-								$option  = "<option value='" . get_page_link( $page->ID ) . selected( $login_url, get_page_link( $page->ID ) )."'>";
+								$option  = "<option value='" . get_page_link( $page->ID ) . "'  selected='". selected( $login_url, get_page_link( $page->ID ) )."'>";
 								$option .= $page->post_title;
 								$option .= '</option>';
 								echo $option; //phpcs:ignore
@@ -774,19 +759,10 @@ class BP_Redirect_Admin {
 				</select>
 			</div>
 			<div class="bpr-col-4">
-				<?php
-				$wp_page_ids = $this->bp_redirect_get_all_page_ids();
-
-				?>
-				<select name='<?php echo esc_attr( "bp_login_redirect_settings".$global_key."[$key][login_url]" ); ?>' class='bbr-login-<?php echo esc_attr( $key ); ?> bpr-login-custom
-					<?php
-					if ( isset( $login_type_val ) && 'custom' === $login_type_val ) {
-						echo 'bpr_show';
-					}
-					?> ' data-text="<?php echo esc_attr( $key ); ?>">								 
-					<option value="" <?php selected( $login_url, '' ); ?>>
-						<?php esc_html_e( 'Select Page', 'bp-redirect' )?> 
-					</option>
+				<?php $wp_page_ids = $this->bp_redirect_get_all_page_ids(); ?>
+				<select name='<?php echo esc_attr( "bp_login_redirect_settings".$suffix."[$key][login_url]" ); ?>' class='bbr-login-<?php echo esc_html( $key ); ?> bpr-login-custom <?php if ( isset( $login_type_val ) && 'custom' === $login_type_val ) { echo 'bpr_show'; } ?> ' data-text="<?php echo esc_html( $key ); ?>">								 
+					<option value="" <?php if ( empty( $login_url ) || $login_url == '' ) { echo 'selected'; } ?> >
+						<?php echo esc_attr( 'Select Page') ?></option>
 					<?php
 					if ( $wp_page_ids ) {
 						$page_url = array();
@@ -802,21 +778,14 @@ class BP_Redirect_Admin {
 					}
 
 					?>
-					<option value=" <?php
-						if ( ! empty( $login_url ) && ! in_array( $login_url, $page_url, true ) ) {
-							echo esc_url( $login_url ); 
-						} ?> " 
-						<?php selected( ! in_array( $login_url, $page_url, true ), true ); ?> >
-						<?php esc_html_e( 'Custom URL', 'bp-redirect' ); ?> 
-					</option>
+					<option value=" <?php if ( ! empty( $login_url ) && ! in_array( $login_url, $page_url, true ) ) { echo esc_url( $login_url ); } ?> " <?php if ( ! empty( $login_url ) && ! in_array( $login_url, $page_url, true ) ) { echo 'selected'; } ?> >Custom URL</option>
 				</select>
 				
 			</div>
 			<div class="bpr-col-4">
-				<input type="url" name="custom-login-url" class="custom-login-url bbr-login-custom-<?php echo esc_attr( $key ); ?>" data-text="<?php echo esc_attr( $key ); ?>">
+				<input type="url" name="custom-login-url" class="custom-login-url bbr-login-custom-<?php echo esc_html( $key ); ?>" data-text="<?php echo esc_html( $key ); ?>">
 			</div>
-		</div>
-		<?php				
+		</div><?php 
 	}
 
 	/**
@@ -830,81 +799,70 @@ class BP_Redirect_Admin {
 	 * @since 1.9.1
 	 * @return void
 	 */
-	public function bp_redirect_render_logout_settings_fields( $roles, $bp_pages_ids, $saved_setting, $key, $global_key ) {
-		?>
+	public function bp_redirect_render_logout_settings_fields( $roles, $bp_pages_ids, $saved_setting, $key, $suffix ) { ?>
 		<div>
 			<?php
-			$logout_component = '';
-			$logout_url       = '';
-			$logout_type_val  = 'none';
-
-			if ( ! empty( $saved_setting ) && isset( $saved_setting['bp_logout_redirect_settings'.$global_key] ) ) {
-				if ( ! empty( $saved_setting['bp_logout_redirect_settings'.$global_key] ) ) {
-					$setting = $saved_setting['bp_logout_redirect_settings'.$global_key];
-					if ( isset( $setting ) && ! empty( $setting ) ) {
-						if ( array_key_exists( $key, $setting ) ) {
-							if ( array_key_exists( 'logout_type', $setting[ $key ] ) ) {
-								$logout_type_val = $setting[ $key ]['logout_type'];
+				$logout_component = '';
+				$logout_url       = '';
+				$logout_type_val  = 'none';
+				if ( ! empty( $saved_setting ) && isset( $saved_setting['bp_login_redirect_settings'.$suffix] ) ) {
+					if ( isset( $saved_setting['bp_logout_redirect_settings'.$suffix] ) && ! empty( $saved_setting['bp_logout_redirect_settings'.$suffix] ) ) {
+						$setting = $saved_setting['bp_logout_redirect_settings'.$suffix];
+						if ( isset( $setting ) && ! empty( $setting ) ) {
+							if ( array_key_exists( $key, $setting ) ) {
+								if ( array_key_exists( 'logout_type', $setting[ $key ] ) ) {
+									$logout_type_val = $setting[ $key ]['logout_type'];
+								}
+								if ( ! empty( $setting[ $key ]['logout_component'] ) ) {
+									$logout_component = $setting[ $key ]['logout_component'];
+								}
+								$logout_url = $setting[ $key ]['logout_url'];
 							}
-							if ( ! empty( $setting[ $key ]['logout_component'] ) ) {
-								$logout_component = $setting[ $key ]['logout_component'];
-							}
-							$logout_url = $setting[ $key ]['logout_url'];
 						}
 					}
-				}
-			}
-			?>
+				} ?>
 			<div class="bpr-col-6">
-				<input name='<?php echo esc_attr( "bp_logout_redirect_settings".$global_key."[$key][logout_type]" ); ?>' id='<?php echo esc_attr( 'bp_logout_redirect_settings_' . $key . '_logout_type_custom' ); ?>' value="custom" type="radio" class="bp_redi_logout_type" 
-				<?php checked( $logout_type_val, 'custom' ); ?> >
-				<label for="<?php echo esc_attr( 'bp_logout_redirect_settings'.$global_key.'_' . $key . '_logout_type_custom' ); ?>"><?php esc_html_e( 'Page', 'bp-redirect' ); ?></label>
+				<input name='<?php echo esc_attr( "bp_logout_redirect_settings".$suffix."[$key][logout_type]" ); ?>' id='<?php echo esc_attr( 'bp_logout_redirect_settings_' . $key . '_logout_type_custom' ); ?>' value="custom" type="radio" class="bp_redi_logout_type" <?php if ( isset( $logout_type_val ) && 'custom' === $logout_type_val ) { echo "checked = 'checked'"; } ?> >
+					<label for="<?php echo esc_attr( 'bp_logout_redirect_settings'.$suffix.'_' . $key . '_logout_type_custom' ); ?>"><?php esc_html_e( 'Page', 'bp-redirect' ); ?></label>
 			</div>
 			<div class="bpr-col-6">
-				<input name='<?php echo esc_attr( "bp_logout_redirect_settings".$global_key."[$key][logout_type]" ); ?>' id='<?php echo esc_attr( 'bp_logout_redirect_settings_' . $key . '_logout_type_none' ); ?>' value="none" type="radio" class="bp_redi_logout_type" 
-				<?php checked( $logout_type_val, 'none' ) ; ?> >
-				<label for="<?php echo esc_attr( 'bp_logout_redirect_settings'.$global_key.'_' . $key . '_logout_type_none' ); ?>"><?php esc_html_e( 'None', 'bp-redirect' ); ?></label>
+				<input name='<?php echo esc_attr( "bp_logout_redirect_settings".$suffix."[$key][logout_type]" ); ?>' id='<?php echo esc_attr( 'bp_logout_redirect_settings_' . $key . '_logout_type_none' ); ?>' value="none" type="radio" class="bp_redi_logout_type" <?php if ( isset( $logout_type_val ) && 'none' === $logout_type_val ) { echo "checked = 'checked'"; } ?> >
+					<label for="<?php echo esc_attr( 'bp_logout_redirect_settings'.$suffix.'_' . $key . '_logout_type_none' ); ?>"><?php esc_html_e( 'None', 'bp-redirect' ); ?></label>
 			</div>
-
 			<div class="bpr-col-6">
 				<?php $wp_page_ids = $this->bp_redirect_get_all_page_ids(); ?>
-				<select name='<?php echo esc_attr( "bp_logout_redirect_settings".$global_key."[$key][logout_url]" ); ?>' class="bbr-logout-<?php echo esc_attr( $key ); ?> bpr-logout-custom
-					<?php
-					if ( isset( $logout_type_val ) && 'custom' === $logout_type_val ) {
-						echo 'bpr_show';
-					}
-					?> " data-text="<?php echo esc_attr( $key ); ?>" >
-								
-					<option value="" <?php selected( $logout_url, '' ); ?> > 
-						<?php esc_html_e( 'Select Page', 'bp-redirect' ); ?></option>
-					<?php
-					if ( $wp_page_ids ) {
-						$page_url = array();
-						foreach ( $wp_page_ids as $wp_page_id ) {
-							$wp_page_url = get_permalink( $wp_page_id );
-							$page_url[]  = $wp_page_url;
-							?>
-							<option value="<?php echo esc_attr( $wp_page_url ); ?>" <?php selected( $logout_url, $wp_page_url ); ?>>
-								<?php echo esc_html_e( get_the_title( $wp_page_id ), 'bp-redirect' ); ?>
-							</option>
-							<?php
-						}
-					}
-					?>
-					<option value="
-						<?php
-						if ( ! empty( $logout_url ) && ! in_array( $logout_url, $page_url, true ) ) {
-							echo esc_url( $logout_url ); 
-						}
-						?> " <?php selected( ! in_array( $logout_url, $page_url, true ), true ); ?> > 
-						<?php esc_html_e( 'Custom URL', 'bp-redirect' ); ?> 
-					</option>
-				</select>
-			</div>
-			<div class="bpr-col-6">
-				<input type="url" name="custom-logout-url" class="custom-logout-url bbr-logout-custom-<?php echo esc_attr( $key ); ?>" data-text="<?php echo esc_attr( $key ); ?>">
-			</div>
-		</div>
+				<select name='<?php echo esc_attr( "bp_logout_redirect_settings".$suffix."[$key][logout_url]" ); ?>' class="bbr-logout-<?php echo esc_html( $key ); ?> bpr-logout-custom <?php if ( isset( $logout_type_val ) && 'custom' === $logout_type_val ) { echo 'bpr_show'; } ?> " data-text="<?php echo esc_html( $key ); ?>">
+					<option value=""  <?php if ( empty( $logout_url ) || $logout_url == '' ) { echo 'selected'; } ?> > Select Page </option>
+									<?php
+									if ( $wp_page_ids ) {
+										$page_url = array();
+										foreach ( $wp_page_ids as $wp_page_id ) {
+											$wp_page_url = get_permalink( $wp_page_id );
+											$page_url[]  = $wp_page_url;
+											?>
+											<option value="<?php echo esc_attr( $wp_page_url ); ?>" <?php selected( $logout_url, $wp_page_url ); ?>>
+												<?php echo esc_html_e( get_the_title( $wp_page_id ), 'bp-redirect' ); ?>
+											</option>
+											<?php
+										}
+									}
+									?>
+									<option value="
+									<?php
+									if ( ! empty( $logout_url ) && ! in_array( $logout_url, $page_url, true ) ) {
+										echo esc_url( $logout_url ); }
+									?>
+									" 
 		<?php
-	}
+		if ( ! empty( $logout_url ) && ! in_array( $logout_url, $page_url, true ) ) {
+										echo 'selected'; }
+		?>
+>Custom URL</option>
+								</select>
+							</div>
+							<div class="bpr-col-6">
+								<input type="url" name="custom-logout-url" class="custom-logout-url bbr-logout-custom-<?php echo esc_html( $key ); ?>" data-text="<?php echo esc_html( $key ); ?>">
+							</div>
+						</div>
+	<?php }
 }
