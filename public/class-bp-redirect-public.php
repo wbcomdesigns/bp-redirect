@@ -106,7 +106,7 @@ class BP_Redirect_Public {
 			// Redirect to the appropriate URL
 			if ( isset( $url[0] ) && ! empty( $url[0] ) ) {
 				$url_redirect = esc_url( $url[0] ?? $redirect_to );				
-				wp_redirect( $url_redirect );
+				wp_safe_redirect( $url_redirect );
 				exit();
 			} else {				
 				return $redirect_to;
