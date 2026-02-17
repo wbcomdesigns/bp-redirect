@@ -206,16 +206,19 @@ class BP_Redirect_Admin {
 		add_settings_section( 'bp-redirect-global-section', ' ', array( $this, 'bp_redirect_admin_global_content' ), 'bp-redirect-global' );
 
 		$this->plugin_settings_tabs['bp-redirect-role-settings'] = esc_html__( 'Redirect For User Role', 'bp-redirect' );
+		// phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing
 		register_setting( 'bp_redirect_role_admin_settings', 'bp_redirect_settings_role' );
 		add_settings_section( 'bp-redirect-user-role', ' ', array( $this, 'bp_redirect_role_admin_settings_content' ), 'bp-redirect-role-settings' );
 
 		if ( class_exists( 'BuddyPress' ) ) {
 			$this->plugin_settings_tabs['bp-redirect-mem-type-settings'] = esc_html__( 'Redirect For Member Type', 'bp-redirect' );
+			// phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing
 			register_setting( 'bp_redirect_mem_type_admin_settings', 'bp_redirect_settings_mem_type' );
 			add_settings_section( 'bp-redirect-member-type', ' ', array( $this, 'bp_redirect_mem_type_settings_content' ), 'bp-redirect-mem-type-settings' );
 		}
 
 		$this->plugin_settings_tabs['bp-redirect-faq'] = esc_html__( 'FAQ', 'bp-redirect' );
+		// phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing
 		register_setting( 'bp-redirect-faq', 'bp-redirect-faq' );
 		add_settings_section( 'bp-redirect-faq-section', ' ', array( $this, 'bp_redirect_faq_content' ), 'bp-redirect-faq' );
 	}
