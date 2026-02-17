@@ -1,5 +1,9 @@
 <?php
- use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 /**
  * The file that defines the core plugin class
  *
