@@ -32,12 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	$spinner_src = includes_url() . 'images/spinner.gif';
+	$saved_setting = get_option( 'bp_redirect_member_type_admin_settings' );
 	if ( class_exists( 'BuddyPress' ) && function_exists( 'bp_get_option' ) ) {
-		$saved_setting = bp_get_option( 'bp_redirect_member_type_admin_settings' );
-		$bp_pages      = bp_get_option( 'bp-pages' );
+		$bp_pages = bp_get_option( 'bp-pages' );
 	} else {
-		$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
-		$bp_pages      = get_pages();
+		$bp_pages = array();
 	}
 	$bp_pages_ids   = array_values( $bp_pages );
 	$login_sequence = $member_types;
