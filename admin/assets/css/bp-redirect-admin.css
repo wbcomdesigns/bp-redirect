@@ -9,17 +9,26 @@
   text-transform: capitalize;
 }
 
-.nav-tab-wrapper ul li.bp-redirect-global a.nav-tab:before {
+.nav-tab-wrapper ul li.wbcom-redirect-welcome a.nav-tab:before {
+  content: "\f155";
+  margin-top: 2px;
+}
+
+.nav-tab-wrapper ul li.wbcom-redirect-global a.nav-tab:before {
   content: "\f11f";
   margin-top: 2px;
 }
 
-.nav-tab-wrapper ul li.bp-redirect-role-settings a.nav-tab:before {
+.nav-tab-wrapper ul li.wbcom-redirect-roles a.nav-tab:before {
   content: "\f172";
 }
 
-.nav-tab-wrapper ul li.bp-redirect-mem-type-settings a.nav-tab:before {
+.nav-tab-wrapper ul li[class*="wbcom-redirect-integration-"] a.nav-tab:before {
   content: "\f504";
+}
+
+.nav-tab-wrapper ul li.wbcom-redirect-faq a.nav-tab:before {
+  content: "\f101";
 }
 
 .wbcom-settings-section-wrap .bpr-col-12 {
@@ -1882,9 +1891,7 @@ div.updated {
   text-decoration: none;
 }
 
-.nav-tab-wrapper ul .bp-redirect-faq a.nav-tab:before {
-  content: "\f101" !important;
-}
+/* Legacy tab selectors kept for backward compat */
 
 /*========================================
 FAQ Section
@@ -1988,4 +1995,94 @@ button.bpr-accordion.active::after {
 
 .wb-plugins_page_bp-redirect #setting-error-tgmpa{
   display: none;
+}
+
+/*========================================
+  v2.1.0 — Redirect Form Controls
+========================================*/
+.wbcom-redirect-config {
+  margin: 10px 0 20px;
+  padding: 10px 0;
+}
+
+.wbcom-redirect-type-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: 12px;
+}
+
+.wbcom-redirect-type-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.wbcom-redirect-type-options input[type="radio"] {
+  margin: 0;
+}
+
+.wbcom-redirect-field {
+  margin-top: 8px;
+  padding: 8px 0 0 0;
+}
+
+.wbcom-redirect-field select {
+  min-width: 280px;
+  max-width: 100%;
+  height: 40px;
+  border-radius: 7px;
+  box-shadow: none;
+  border-color: #e0e0e0;
+  background-color: #fafafa;
+}
+
+.wbcom-redirect-field input[type="url"] {
+  width: 100%;
+  max-width: 500px;
+  height: 40px;
+  border-radius: 7px;
+  box-shadow: none;
+  border-color: #e0e0e0;
+  background-color: #fafafa;
+}
+
+.wbcom-redirect-field select optgroup {
+  font-weight: 600;
+  color: #333;
+}
+
+.wbcom-redirect-spinner {
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.wbcom-redirect-notice {
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-left: 4px solid #46b450;
+  background: #fff;
+}
+
+.wbcom-redirect-form h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 15px 0 5px;
+  color: #23282d;
+}
+
+@media (max-width: 600px) {
+  .wbcom-redirect-type-options {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .wbcom-redirect-field select,
+  .wbcom-redirect-field input[type="url"] {
+    width: 100%;
+    max-width: 100%;
+  }
 }
