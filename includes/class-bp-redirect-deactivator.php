@@ -29,7 +29,5 @@ class BP_Redirect_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
 	}
-
 }
