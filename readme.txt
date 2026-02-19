@@ -41,6 +41,10 @@ No, BP Redirect plugin is not required BuddyPress plugin to be active.
 * Fix: Added notice dismiss functionality.
 * Fix: Resolved default selected options related issue.
 * Fix: Removed activation notice when activation failed.
+* Fix: Fixed admin CSS not loading when other Wbcom plugins are active.
+* Fix: Fixed logout settings not displaying saved values in admin.
+* Fix: Fixed member type settings read/write mismatch on multisite.
+* Fix: Fixed member type tab reading wrong option key in fallback.
 * Enhancement: Optimized code in admin and public classes.
 * Enhancement: Resolved PHPCS errors and managed RTL fixes.
 * Enhancement: Implemented conditions for enqueuing scripts.
