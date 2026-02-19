@@ -1,4 +1,11 @@
 <?php
+/**
+ * Helper functions: asset loader and v2.0.0 migration.
+ *
+ * @package Wbcom_Redirect
+ * @since   2.1.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

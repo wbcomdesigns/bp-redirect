@@ -118,10 +118,10 @@
 			e.preventDefault();
 			$(this).toggleClass('active');
 			var panel = $(this).next('.bpr-panel');
-			if (panel.css('max-height') && panel.css('max-height') !== 'none') {
-				panel.css('max-height', '');
+			if (panel[0].style.maxHeight) {
+				panel[0].style.maxHeight = '';
 			} else {
-				panel.css('max-height', panel.prop('scrollHeight') + 'px');
+				panel[0].style.maxHeight = panel.prop('scrollHeight') + 'px';
 			}
 		});
 

@@ -1,26 +1,45 @@
 <?php
+/**
+ * WooCommerce integration — My Account, Shop, Checkout, Orders destinations.
+ *
+ * @package Wbcom_Redirect
+ * @since   2.1.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class Wbcom_Redirect_WooCommerce
+ *
+ * @since 2.1.0
+ */
 class Wbcom_Redirect_WooCommerce extends Wbcom_Redirect_Integration {
 
+	/**
+	 * Constructor — self-registers with the integration registry.
+	 */
 	public function __construct() {
 		Wbcom_Redirect_Integration_Registry::instance()->register( $this );
 	}
 
+	/** {@inheritDoc} */
 	public function get_slug() {
 		return 'woocommerce';
 	}
 
+	/** {@inheritDoc} */
 	public function get_name() {
 		return __( 'WooCommerce', 'bp-redirect' );
 	}
 
+	/** {@inheritDoc} */
 	public function is_available() {
 		return class_exists( 'WooCommerce' );
 	}
 
+	/** {@inheritDoc} */
 	public function get_destinations() {
 		return array(
 			new Wbcom_Redirect_Destination( 'woocommerce.my-account', __( 'My Account', 'bp-redirect' ), 'woocommerce' ),
@@ -30,6 +49,7 @@ class Wbcom_Redirect_WooCommerce extends Wbcom_Redirect_Integration {
 		);
 	}
 
+	/** {@inheritDoc} */
 	public function resolve_url( $destination_slug, $user ) {
 		switch ( $destination_slug ) {
 			case 'my-account':

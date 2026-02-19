@@ -1,4 +1,11 @@
 <?php
+/**
+ * Abstract base class for redirect integrations.
+ *
+ * @package Wbcom_Redirect
+ * @since   2.1.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

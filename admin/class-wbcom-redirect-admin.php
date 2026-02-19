@@ -1,15 +1,59 @@
 <?php
+/**
+ * Admin settings page, AJAX handlers, and shared form renderer.
+ *
+ * @package Wbcom_Redirect
+ * @since   2.1.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class Wbcom_Redirect_Admin
+ *
+ * Manages the plugin settings page under WB Plugins, renders tabs
+ * (Welcome, Global, Roles, integration types, FAQ), and handles AJAX save.
+ *
+ * @since 2.1.0
+ */
 class Wbcom_Redirect_Admin {
 
+	/**
+	 * Plugin slug.
+	 *
+	 * @var string
+	 */
 	private $plugin_name;
+
+	/**
+	 * Plugin version.
+	 *
+	 * @var string
+	 */
 	private $version;
+
+	/**
+	 * Admin page slug (matches the existing menu item).
+	 *
+	 * @var string
+	 */
 	private $plugin_slug = 'bp-redirect';
+
+	/**
+	 * Registered admin tabs keyed by slug.
+	 *
+	 * @var array
+	 */
 	private $tabs = array();
 
+	/**
+	 * Constructor.
+	 *
+	 * @param string $plugin_name Plugin slug.
+	 * @param string $version     Plugin version.
+	 */
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
@@ -93,7 +137,10 @@ class Wbcom_Redirect_Admin {
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
 							<?php esc_html_e( 'Login Logout Redirect', 'bp-redirect' ); ?>
-							<span><?php printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( WBCOM_REDIRECT_VERSION ) ); ?></span>
+							<span><?php
+						/* translators: %s is the plugin version number */
+						printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( WBCOM_REDIRECT_VERSION ) );
+						?></span>
 						</div>
 						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 					</div>
