@@ -79,7 +79,6 @@ class BP_Redirect {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->bp_redirect_initialize_updater();
-
 	}
 
 	/**
@@ -104,35 +103,33 @@ class BP_Redirect {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bp-redirect-loader.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-bp-redirect-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bp-redirect-i18n.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-bp-redirect-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-bp-redirect-admin.php';
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-bp-redirect-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-bp-redirect-public.php';
+		require_once plugin_dir_path( __DIR__ ) . 'public/class-bp-redirect-public.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/bp-redirect-functions.php';
-		
+		require_once plugin_dir_path( __DIR__ ) . 'includes/bp-redirect-functions.php';
 
 		/**
 		* The add WBCOM wrapper framework for admin options.
 		*/
-		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/class-wbcom-admin-settings.php';
+		include_once plugin_dir_path( __DIR__ ) . 'admin/wbcom/class-wbcom-admin-settings.php';
 
 		$this->loader = new BP_Redirect_Loader();
-
 	}
 
 	/**
@@ -149,7 +146,6 @@ class BP_Redirect {
 		$plugin_i18n = new BP_Redirect_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -181,7 +177,7 @@ class BP_Redirect {
 	 */
 	private function define_public_hooks() {
 
-		if( class_exists( 'Youzify' ) ) {
+		if ( class_exists( 'Youzify' ) ) {
 			remove_action( 'wp_logout', 'youzify_redirect_after_logout' );
 		}
 
@@ -204,7 +200,6 @@ class BP_Redirect {
 				'bp-redirect'
 			);
 		}
-
 	}
 
 	/**
@@ -246,5 +241,4 @@ class BP_Redirect {
 	public function get_version() {
 		return $this->version;
 	}
-
 }
