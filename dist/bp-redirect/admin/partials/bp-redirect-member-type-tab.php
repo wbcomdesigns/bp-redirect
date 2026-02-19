@@ -32,12 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	$spinner_src = includes_url() . 'images/spinner.gif';
-	if ( class_exists( 'BuddyPress' ) ) {
-		$saved_setting = bp_get_option( 'bp_redirect_member_type_admin_settings' );
-		$bp_pages      = bp_get_option( 'bp-pages' );
+	$saved_setting = get_option( 'bp_redirect_member_type_admin_settings' );
+	if ( class_exists( 'BuddyPress' ) && function_exists( 'bp_get_option' ) ) {
+		$bp_pages = bp_get_option( 'bp-pages' );
 	} else {
-		$saved_setting = get_option( 'bp_redirect_admin_settings_global' );
-		$bp_pages      = get_pages();
+		$bp_pages = array();
 	}
 	$bp_pages_ids   = array_values( $bp_pages );
 	$login_sequence = $member_types;
@@ -104,7 +103,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="bpr-col-12">
 					<!-- Logout Settings -->
 					<h2><?php esc_html_e( 'BuddyPress Logout Redirect Settings', 'bp-redirect' ); ?></h2>
-						<?php $this->bp_redirect_plugin_logout_settings( $login_sequence, $bp_pages_ids, $saved_setting ); ?>
+						<?php $this->bp_redirect_plugin_logout_settings( $logout_sequence, $bp_pages_ids, $saved_setting ); ?>
 				</div>
 				</div>
 			</div>
