@@ -266,14 +266,24 @@ class BP_Redirect_Admin {
 	 */
 	public function enqueue_styles() {
 
-		$admin_css = bp_redirect_get_asset_filename( 'admin/assets/css', 'bp-redirect-admin' );
-
 		$plugin_setting = ( isset( $_GET['page'] ) && ( 'bp-redirect' === $_GET['page'] || 'wbcomplugins' === $_GET['page'] ) ) ? true : false; //phpcs:ignore
 
-		if ( $admin_css && $plugin_setting ) {
-			wp_register_style( $this->bp_redirect, plugin_dir_url( __DIR__ ) . $admin_css, array(), $this->version, 'all' );
+		if ( ! $plugin_setting ) {
+			return;
+		}
 
+		$admin_css = bp_redirect_get_asset_filename( 'admin/assets/css', 'bp-redirect-admin' );
+		if ( $admin_css ) {
+			wp_register_style( $this->bp_redirect, plugin_dir_url( __DIR__ ) . $admin_css, array(), $this->version, 'all' );
 			wp_enqueue_style( $this->bp_redirect );
+		}
+
+		if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
+			$wbcom_css = bp_redirect_get_asset_filename( 'admin/wbcom/assets/css', 'wbcom-admin-setting' );
+			if ( $wbcom_css ) {
+				wp_register_style( 'wbcom-admin-setting-css', plugin_dir_url( __DIR__ ) . $wbcom_css, array(), $this->version, 'all' );
+				wp_enqueue_style( 'wbcom-admin-setting-css' );
+			}
 		}
 	}
 
@@ -716,7 +726,7 @@ class BP_Redirect_Admin {
 					</div>
 					<?php
 				}
-			} elseif ( class_exists( 'Buddypress' ) ) {
+			} elseif ( class_exists( 'BuddyPress' ) ) {
 				if ( function_exists( 'bp_get_option' ) && in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', bp_get_option( 'active_plugins' ) ), true ) ) {
 					?>
 					<div class="bpr-col-4">
@@ -757,7 +767,7 @@ class BP_Redirect_Admin {
 					echo 'bpr_show'; }
 				?>
 				'>
-					<?php if ( class_exists( 'Buddypress' ) && function_exists( 'bp_is_active' ) ) { ?>
+					<?php if ( class_exists( 'BuddyPress' ) && function_exists( 'bp_is_active' ) ) { ?>
 						<option value=''><?php esc_html_e( 'Select', 'bp-redirect' ); ?></option>
 						<?php if ( bp_is_active( 'members' ) ) { ?>
 							<option value="profile"
@@ -799,7 +809,7 @@ class BP_Redirect_Admin {
 
 					<?php
 
-					if ( class_exists( 'Buddypress' ) && function_exists( 'bp_core_get_directory_page_ids' ) ) {
+					if ( class_exists( 'BuddyPress' ) && function_exists( 'bp_core_get_directory_page_ids' ) ) {
 						$bp_pages = bp_core_get_directory_page_ids();
 						$pages    = get_pages( array( 'include' => $bp_pages ) );
 						foreach ( $pages as $page ) {
@@ -887,8 +897,8 @@ class BP_Redirect_Admin {
 				$logout_component = '';
 				$logout_url       = '';
 				$logout_type_val  = 'none';
-			if ( ! empty( $saved_setting ) && isset( $saved_setting[ 'bp_login_redirect_settings' . $suffix ] ) ) {
-				if ( isset( $saved_setting[ 'bp_logout_redirect_settings' . $suffix ] ) && ! empty( $saved_setting[ 'bp_logout_redirect_settings' . $suffix ] ) ) {
+			if ( ! empty( $saved_setting ) && isset( $saved_setting[ 'bp_logout_redirect_settings' . $suffix ] ) ) {
+				if ( ! empty( $saved_setting[ 'bp_logout_redirect_settings' . $suffix ] ) ) {
 					$setting = $saved_setting[ 'bp_logout_redirect_settings' . $suffix ];
 					if ( isset( $setting ) && ! empty( $setting ) ) {
 						if ( array_key_exists( $key, $setting ) ) {
