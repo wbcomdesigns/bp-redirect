@@ -1,9 +1,18 @@
 <?php
+/**
+ * Priority-chain URL resolver for login and logout redirects.
+ *
+ * @package Wbcom_Redirect
+ * @since   2.1.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
+ * Class Wbcom_Redirect_Resolver
+ *
  * Resolves the redirect URL using the priority chain:
  * User Role > Integration Group Types > Global > WordPress Default
  */

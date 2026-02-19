@@ -1,20 +1,49 @@
 <?php
+/**
+ * Singleton registry for redirect integrations.
+ *
+ * @package Wbcom_Redirect
+ * @since   2.1.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Singleton registry for all redirect integrations.
+ * Class Wbcom_Redirect_Integration_Registry
+ *
+ * Singleton that stores all registered integrations and provides
+ * lookup helpers for active integrations, destinations, and admin tabs.
+ *
+ * @since 2.1.0
  */
 class Wbcom_Redirect_Integration_Registry {
 
+	/**
+	 * Singleton instance.
+	 *
+	 * @var self|null
+	 */
 	private static $instance = null;
 
-	/** @var Wbcom_Redirect_Integration[] */
+	/**
+	 * Registered integration instances keyed by slug.
+	 *
+	 * @var Wbcom_Redirect_Integration[]
+	 */
 	private $integrations = array();
 
+	/**
+	 * Private constructor — use instance() instead.
+	 */
 	private function __construct() {}
 
+	/**
+	 * Get the singleton instance.
+	 *
+	 * @return self
+	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new self();

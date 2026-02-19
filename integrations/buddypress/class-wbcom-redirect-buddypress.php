@@ -1,26 +1,45 @@
 <?php
+/**
+ * BuddyPress integration — Profile, Activity, Groups destinations + Member Types.
+ *
+ * @package Wbcom_Redirect
+ * @since   2.1.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class Wbcom_Redirect_BuddyPress
+ *
+ * @since 2.1.0
+ */
 class Wbcom_Redirect_BuddyPress extends Wbcom_Redirect_Integration {
 
+	/**
+	 * Constructor — self-registers with the integration registry.
+	 */
 	public function __construct() {
 		Wbcom_Redirect_Integration_Registry::instance()->register( $this );
 	}
 
+	/** {@inheritDoc} */
 	public function get_slug() {
 		return 'buddypress';
 	}
 
+	/** {@inheritDoc} */
 	public function get_name() {
 		return __( 'BuddyPress', 'bp-redirect' );
 	}
 
+	/** {@inheritDoc} */
 	public function is_available() {
 		return class_exists( 'BuddyPress' ) || function_exists( 'buddypress' );
 	}
 
+	/** {@inheritDoc} */
 	public function get_destinations() {
 		$destinations = array();
 
@@ -49,6 +68,7 @@ class Wbcom_Redirect_BuddyPress extends Wbcom_Redirect_Integration {
 		return $destinations;
 	}
 
+	/** {@inheritDoc} */
 	public function get_group_types( $user = null ) {
 		if ( ! $user || ! function_exists( 'bp_get_member_type' ) ) {
 			return array();
@@ -58,6 +78,7 @@ class Wbcom_Redirect_BuddyPress extends Wbcom_Redirect_Integration {
 		return $types ? (array) $types : array();
 	}
 
+	/** {@inheritDoc} */
 	public function get_all_group_types() {
 		if ( ! function_exists( 'bp_get_member_types' ) ) {
 			return array();
@@ -71,10 +92,12 @@ class Wbcom_Redirect_BuddyPress extends Wbcom_Redirect_Integration {
 		return $result;
 	}
 
+	/** {@inheritDoc} */
 	public function has_admin_tab() {
 		return $this->is_available() && ! empty( $this->get_all_group_types() );
 	}
 
+	/** {@inheritDoc} */
 	public function resolve_url( $destination_slug, $user ) {
 		switch ( $destination_slug ) {
 			case 'profile':
@@ -95,6 +118,12 @@ class Wbcom_Redirect_BuddyPress extends Wbcom_Redirect_Integration {
 		return false;
 	}
 
+	/**
+	 * Get a user's BuddyPress profile URL with backward compatibility.
+	 *
+	 * @param WP_User $user User object.
+	 * @return string|false
+	 */
 	private function get_user_profile_url( $user ) {
 		if ( function_exists( 'bp_members_get_user_url' ) ) {
 			return bp_members_get_user_url( $user->ID );

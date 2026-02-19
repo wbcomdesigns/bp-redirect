@@ -1,16 +1,50 @@
 <?php
+/**
+ * Core orchestrator for the Login Logout Redirect plugin.
+ *
+ * @package Wbcom_Redirect
+ * @since   2.1.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
+/**
+ * Class Wbcom_Redirect
+ *
+ * Loads dependencies, registers hooks, and bootstraps integrations.
+ *
+ * @since 2.1.0
+ */
 class Wbcom_Redirect {
 
+	/**
+	 * Hook loader instance.
+	 *
+	 * @var Wbcom_Redirect_Loader
+	 */
 	protected $loader;
+
+	/**
+	 * Plugin slug used for text-domain and admin pages.
+	 *
+	 * @var string
+	 */
 	protected $plugin_name;
+
+	/**
+	 * Current plugin version.
+	 *
+	 * @var string
+	 */
 	protected $version;
 
+	/**
+	 * Constructor — loads dependencies and defines hooks.
+	 */
 	public function __construct() {
 		$this->plugin_name = 'bp-redirect';
 		$this->version     = WBCOM_REDIRECT_VERSION;
@@ -23,6 +57,9 @@ class Wbcom_Redirect {
 		$this->init_updater();
 	}
 
+	/**
+	 * Require all core class files.
+	 */
 	private function load_dependencies() {
 		$path = WBCOM_REDIRECT_PLUGIN_PATH;
 
@@ -47,6 +84,9 @@ class Wbcom_Redirect {
 		$this->loader = new Wbcom_Redirect_Loader();
 	}
 
+	/**
+	 * Load and register integration modules.
+	 */
 	private function load_integrations() {
 		$path     = WBCOM_REDIRECT_PLUGIN_PATH . 'integrations/';
 		$registry = Wbcom_Redirect_Integration_Registry::instance();
@@ -67,14 +107,23 @@ class Wbcom_Redirect {
 		}
 	}
 
+	/**
+	 * Register the text-domain loading action.
+	 */
 	private function set_locale() {
 		$this->loader->add_action( 'init', $this, 'load_textdomain' );
 	}
 
+	/**
+	 * Load the plugin text-domain for translations.
+	 */
 	public function load_textdomain() {
 		load_plugin_textdomain( 'bp-redirect', false, dirname( WBCOM_REDIRECT_PLUGIN_BASENAME ) . '/languages/' );
 	}
 
+	/**
+	 * Register all admin-side hooks via the loader.
+	 */
 	private function define_admin_hooks() {
 		$admin = new Wbcom_Redirect_Admin( $this->plugin_name, $this->version );
 
@@ -86,6 +135,9 @@ class Wbcom_Redirect {
 		$this->loader->add_action( 'in_admin_header', $admin, 'hide_admin_notices' );
 	}
 
+	/**
+	 * Register front-end redirect filter hooks.
+	 */
 	private function define_public_hooks() {
 		$public = new Wbcom_Redirect_Public( $this->plugin_name, $this->version );
 
@@ -93,6 +145,9 @@ class Wbcom_Redirect {
 		$this->loader->add_filter( 'logout_redirect', $public, 'handle_logout_redirect', 10, 3 );
 	}
 
+	/**
+	 * Initialize the plugin update checker.
+	 */
 	private function init_updater() {
 		if ( class_exists( '\YahnisElsts\PluginUpdateChecker\v5\PucFactory' ) ) {
 			PucFactory::buildUpdateChecker(
@@ -103,14 +158,27 @@ class Wbcom_Redirect {
 		}
 	}
 
+	/**
+	 * Execute the loader to register all hooks with WordPress.
+	 */
 	public function run() {
 		$this->loader->run();
 	}
 
+	/**
+	 * Get the plugin slug.
+	 *
+	 * @return string
+	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
 	}
 
+	/**
+	 * Get the plugin version.
+	 *
+	 * @return string
+	 */
 	public function get_version() {
 		return $this->version;
 	}

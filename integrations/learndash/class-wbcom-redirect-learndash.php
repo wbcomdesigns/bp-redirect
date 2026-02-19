@@ -1,26 +1,45 @@
 <?php
+/**
+ * LearnDash integration — Student Dashboard and Courses destinations.
+ *
+ * @package Wbcom_Redirect
+ * @since   2.1.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class Wbcom_Redirect_LearnDash
+ *
+ * @since 2.1.0
+ */
 class Wbcom_Redirect_LearnDash extends Wbcom_Redirect_Integration {
 
+	/**
+	 * Constructor — self-registers with the integration registry.
+	 */
 	public function __construct() {
 		Wbcom_Redirect_Integration_Registry::instance()->register( $this );
 	}
 
+	/** {@inheritDoc} */
 	public function get_slug() {
 		return 'learndash';
 	}
 
+	/** {@inheritDoc} */
 	public function get_name() {
 		return __( 'LearnDash', 'bp-redirect' );
 	}
 
+	/** {@inheritDoc} */
 	public function is_available() {
 		return defined( 'LEARNDASH_VERSION' ) || class_exists( 'SFWD_LMS' );
 	}
 
+	/** {@inheritDoc} */
 	public function get_destinations() {
 		return array(
 			new Wbcom_Redirect_Destination( 'learndash.dashboard', __( 'Student Dashboard', 'bp-redirect' ), 'learndash' ),
@@ -28,6 +47,7 @@ class Wbcom_Redirect_LearnDash extends Wbcom_Redirect_Integration {
 		);
 	}
 
+	/** {@inheritDoc} */
 	public function resolve_url( $destination_slug, $user ) {
 		switch ( $destination_slug ) {
 			case 'dashboard':
