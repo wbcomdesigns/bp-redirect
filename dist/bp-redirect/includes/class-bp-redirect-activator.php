@@ -31,17 +31,15 @@ class BP_Redirect_Activator {
 	public static function activate() {
 
 		$bp_redirect_default_settings = array(
-			'role_btn_value' => 'yes'
+			'role_btn_value' => 'yes',
 		);
 
 		$bp_redirect_member_type_default_setting = array(
-			'member_type_btn_value' => 'yes'
+			'member_type_btn_value' => 'yes',
 		);
 
 		update_option( 'bp_redirect_admin_settings', $bp_redirect_default_settings );
 		update_option( 'bp_redirect_admin_settings_global', $bp_redirect_default_settings );
 		update_option( 'bp_redirect_member_type_admin_settings', $bp_redirect_member_type_default_setting );
-
 	}
-
 }

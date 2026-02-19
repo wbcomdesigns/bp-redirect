@@ -20,7 +20,7 @@
  */
 
 // Abort if this file is called directly.
-if (! defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
@@ -31,24 +31,24 @@ if (! defined('ABSPATH')) {
  * @author  Wbcom Designs
  */
 
-if (! defined('REDIRECT_PLUGIN_VERSION')) {
-	define('REDIRECT_PLUGIN_VERSION', '2.0.0');
+if ( ! defined( 'REDIRECT_PLUGIN_VERSION' ) ) {
+	define( 'REDIRECT_PLUGIN_VERSION', '2.0.0' );
 }
 
-if (! defined('BP_REDIRECT_PLUGIN_PATH')) {
-	define('BP_REDIRECT_PLUGIN_PATH', plugin_dir_path(__FILE__));
+if ( ! defined( 'BP_REDIRECT_PLUGIN_PATH' ) ) {
+	define( 'BP_REDIRECT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 }
 
-if (! defined('BP_REDIRECT_PLUGIN_FILE')) {
-	define('BP_REDIRECT_PLUGIN_FILE', __FILE__);
+if ( ! defined( 'BP_REDIRECT_PLUGIN_FILE' ) ) {
+	define( 'BP_REDIRECT_PLUGIN_FILE', __FILE__ );
 }
 
-if (! defined('BP_REDIRECT_PLUGIN_URL')) {
-	define('BP_REDIRECT_PLUGIN_URL', plugin_dir_url(__FILE__));
+if ( ! defined( 'BP_REDIRECT_PLUGIN_URL' ) ) {
+	define( 'BP_REDIRECT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
-if (! defined('BP_REDIRECT_PLUGIN_BASENAME')) {
-	define('BP_REDIRECT_PLUGIN_BASENAME', plugin_basename(__FILE__));
+if ( ! defined( 'BP_REDIRECT_PLUGIN_BASENAME' ) ) {
+	define( 'BP_REDIRECT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 }
 
 require BP_REDIRECT_PLUGIN_PATH . 'plugin-update-checker/plugin-update-checker.php';
@@ -56,20 +56,19 @@ require BP_REDIRECT_PLUGIN_PATH . 'plugin-update-checker/plugin-update-checker.p
  * Initialize the plugin on plugins loaded.
  * This plugin requires BuddyPress to be installed and active.
  */
-function bp_redirect_plugin_init()
-{
-	if (class_exists('BuddyPress')) {
-		if (bp_redirect_check_config()) {
+function bp_redirect_plugin_init() {
+	if ( class_exists( 'BuddyPress' ) ) {
+		if ( bp_redirect_check_config() ) {
 			bp_redirect_start_execution();
-			add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'bp_redirect_plugin_links');
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bp_redirect_plugin_links' );
 		}
 	} else {
-		if( ! function_exists( 'deactivate_plugins' ) ){
-			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		if ( ! function_exists( 'deactivate_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
-		add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'bp_redirect_plugin_links');
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bp_redirect_plugin_links' );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-			
+
 		if( isset( $_GET['activate'] ) ) { //phpcs:ignore
 			unset( $_GET['activate'] );
 		}
@@ -77,7 +76,7 @@ function bp_redirect_plugin_init()
 		add_action( 'admin_notices', 'bp_redirect_required_plugin_admin_notice' );
 	}
 }
-add_action('wp_loaded', 'bp_redirect_plugin_init');
+add_action( 'wp_loaded', 'bp_redirect_plugin_init' );
 
 /**
  * Throw an Alert to tell the Admin why it didn't activate.
@@ -90,7 +89,7 @@ function bp_redirect_required_plugin_admin_notice() {
 	$bp_plugin   = esc_html__( 'BuddyPress', 'bp-redirect' );
 	echo '<div class="error"><p>';
 	// translators: %1$s is replaced with the BuddyPress Member Blog and %2$s is replaced with the BuddyPress.
-	echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-redirect' ), '<strong>' . esc_html( $bpmb_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
+	printf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-redirect' ), '<strong>' . esc_html( $bpmb_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
 	echo '</p></div>';
 }
 /**
@@ -110,40 +109,40 @@ function bp_redirect_check_config() {
 	$network_plugins = get_site_option( 'active_sitewide_plugins', array() );
 
 	// No Network plugins.
-	if (empty($network_plugins)) {
+	if ( empty( $network_plugins ) ) {
 		$check[] = $bp->basename;
 	}
 
 	$check[] = BP_REDIRECT_PLUGIN_BASENAME;
 
 	// Check if the plugins are network activated.
-	$network_active = array_diff($check, array_keys($network_plugins));
+	$network_active = array_diff( $check, array_keys( $network_plugins ) );
 
 	// If the result is 1, your plugin is network activated
 	// and not BuddyPress or vice versa. Configuration is not okay.
-	if (count($network_active) === 1) {
+	if ( count( $network_active ) === 1 ) {
 		$config['network_status'] = false;
 	}
 
 	// Determine if the plugin is network activated to display the appropriate
 	// notice (admin or network admin) for warning messages.
-	$config['network_active'] = isset($network_plugins[BP_REDIRECT_PLUGIN_BASENAME]);
+	$config['network_active'] = isset( $network_plugins[ BP_REDIRECT_PLUGIN_BASENAME ] );
 
 	// If BuddyPress config differs from the bp-activity plugin.
-	if (! $config['blog_status'] || ! $config['network_status']) {
+	if ( ! $config['blog_status'] || ! $config['network_status'] ) {
 
 		$warnings = array();
-		if (! bp_core_do_network_admin() && ! $config['blog_status']) {
-			add_action('admin_notices', 'bp_redirect_same_blog');
-			$warnings[] = __('BP Redirect must be activated on the blog where BuddyPress is active.', 'bp-redirect');
+		if ( ! bp_core_do_network_admin() && ! $config['blog_status'] ) {
+			add_action( 'admin_notices', 'bp_redirect_same_blog' );
+			$warnings[] = __( 'BP Redirect must be activated on the blog where BuddyPress is active.', 'bp-redirect' );
 		}
 
-		if (bp_core_do_network_admin() && ! $config['network_status']) {
-			add_action('admin_notices', 'bp_redirect_same_network_config');
-			$warnings[] = __('BP Redirect and BuddyPress must share the same network configuration.', 'bp-redirect');
+		if ( bp_core_do_network_admin() && ! $config['network_status'] ) {
+			add_action( 'admin_notices', 'bp_redirect_same_network_config' );
+			$warnings[] = __( 'BP Redirect and BuddyPress must share the same network configuration.', 'bp-redirect' );
 		}
 
-		if (! empty($warnings)) {
+		if ( ! empty( $warnings ) ) {
 			return false;
 		}
 	}
@@ -156,10 +155,9 @@ function bp_redirect_check_config() {
  *
  * @return void
  */
-function bp_redirect_same_blog()
-{
+function bp_redirect_same_blog() {
 	echo '<div class="error"><p>'
-		. esc_html(__('BP Redirect must be activated on the blog where BuddyPress is active.', 'bp-redirect'))
+		. esc_html( __( 'BP Redirect must be activated on the blog where BuddyPress is active.', 'bp-redirect' ) )
 		. '</p></div>';
 }
 
@@ -168,10 +166,9 @@ function bp_redirect_same_blog()
  *
  * @return void
  */
-function bp_redirect_same_network_config()
-{
+function bp_redirect_same_network_config() {
 	echo '<div class="error"><p>'
-		. esc_html(__('BP Redirect and BuddyPress must share the same network configuration.', 'bp-redirect'))
+		. esc_html( __( 'BP Redirect and BuddyPress must share the same network configuration.', 'bp-redirect' ) )
 		. '</p></div>';
 }
 
@@ -180,31 +177,28 @@ function bp_redirect_same_network_config()
  *
  * @param string $links Plugin action links.
  */
-function bp_redirect_plugin_links($links)
-{
+function bp_redirect_plugin_links( $links ) {
 	$bpr_links = array(
-		'<a href="' . admin_url('admin.php?page=bp-redirect') . '">' . __('Settings', 'bp-redirect') . '</a>',
-		'<a href="https://wbcomdesigns.com/contact/" target="_blank" title="' . __('Need custom development?', 'bp-redirect') . '">' . __('Support', 'bp-redirect') . '</a>',
+		'<a href="' . admin_url( 'admin.php?page=bp-redirect' ) . '">' . __( 'Settings', 'bp-redirect' ) . '</a>',
+		'<a href="https://wbcomdesigns.com/contact/" target="_blank" title="' . __( 'Need custom development?', 'bp-redirect' ) . '">' . __( 'Support', 'bp-redirect' ) . '</a>',
 	);
-	return array_merge($links, $bpr_links);
+	return array_merge( $links, $bpr_links );
 }
 
 
 /**
  * Runs the plugin during activation.
  */
-function bp_redirect_activate()
-{
-	require_once plugin_dir_path(__FILE__) . 'includes/class-bp-redirect-activator.php';
+function bp_redirect_activate() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-activator.php';
 	BP_Redirect_Activator::activate();
 }
 
 /**
  * Runs the plugin during deactivation.
  */
-function bp_redirect_deactivate()
-{
-	require_once plugin_dir_path(__FILE__) . 'includes/class-bp-redirect-deactivator.php';
+function bp_redirect_deactivate() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect-deactivator.php';
 	BP_Redirect_Deactivator::deactivate();
 }
 
@@ -219,9 +213,8 @@ register_deactivation_hook( __FILE__, 'bp_redirect_deactivate' );
  *
  * @since    1.0.0
  */
-function bp_redirect_start_execution()
-{
-	require plugin_dir_path(__FILE__) . 'includes/class-bp-redirect.php';
+function bp_redirect_start_execution() {
+	require plugin_dir_path( __FILE__ ) . 'includes/class-bp-redirect.php';
 	$plugin = new BP_Redirect();
 	$plugin->run();
 }
@@ -231,13 +224,12 @@ function bp_redirect_start_execution()
  *
  * @param string $plugin Path to the plugin file relative to the plugins directory.
  */
-function bp_redirect_activation_redirect_settings($plugin)
-{
-	if (plugin_basename(__FILE__) === $plugin && class_exists( 'BuddyPress' )) {
+function bp_redirect_activation_redirect_settings( $plugin ) {
+	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'activate' && isset($_REQUEST['plugin']) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore
-			wp_safe_redirect(admin_url('admin.php?page=bp-redirect'));
+			wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
 			exit;
 		}
 	}
 }
-add_action('activated_plugin', 'bp_redirect_activation_redirect_settings');
+add_action( 'activated_plugin', 'bp_redirect_activation_redirect_settings' );
