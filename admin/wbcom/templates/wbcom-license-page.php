@@ -1,5 +1,10 @@
-
 <?php
+/**
+ * Wbcom license page template.
+ *
+ * @package Bp_Redirect
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -14,9 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div id="wb_admin_plugin_name">
 				<?php esc_html_e( 'BuddyPress Redirect', 'bp-redirect' ); ?>
 				<span>
-					<?php 
+					<?php
 						/* translators: %s: plugin version number */
-						printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( REDIRECT_PLUGIN_VERSION ) ); 
+						printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( REDIRECT_PLUGIN_VERSION ) );
 					?>
 				</span>
 			</div>

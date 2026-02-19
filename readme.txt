@@ -98,6 +98,9 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 * New: Auto-migration from v2.0.0 settings.
 * Enhancement: Cleaner settings structure using uniform config shape.
 * Enhancement: Proper wp_send_json_success/error responses for AJAX.
+* Code Quality: Fixed all WordPress Coding Standards (WPCS) violations across all PHP files.
+* Code Quality: Added phpcs:ignore for legacy class naming conventions.
+* Code Quality: Added PHPDoc comments for all integration methods and utility functions.
 
 = 2.0.0 =
 * Fix: Fixed security issue with input sanitization and validation.

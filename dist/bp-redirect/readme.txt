@@ -1,39 +1,107 @@
-=== Wbcom Designs - BuddyPress Redirect ===
+=== Wbcom Designs - Login Logout Redirect ===
 Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/donate/
-Tags: login redirect, buddypress redirect
-Requires at least: 5.0
+Tags: login redirect, logout redirect, role redirect, woocommerce redirect, buddypress redirect
+Requires at least: 5.6
 Tested up to: 6.9
-Stable tag: 2.0.0
+Stable tag: 2.1.0
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+Redirect users after login and logout based on roles. Works standalone with optional BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo support.
+
 == Description ==
 
-This plugin serves the purpose of redirecting to different locations according to the user role. .
+**Login Logout Redirect** is a powerful, free WordPress plugin that lets you control where users are redirected after login and logout based on their roles.
+
+The plugin works **completely standalone** — no third-party plugins required. When BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, or PeepSo are active, additional redirect destinations automatically become available.
+
+= Features =
+
+* **Global Redirect** — Set a default login/logout redirect for all users
+* **Role-Based Redirect** — Configure separate redirects per user role (Administrator, Editor, Subscriber, etc.)
+* **Page or Custom URL** — Redirect to any WordPress page or enter a custom URL
+* **Integration Destinations** — Redirect to BuddyPress profiles, WooCommerce My Account, bbPress forums, and more
+* **Priority Chain** — Role > Integration Group Types > Global > WordPress Default
+* **Auto-Detection** — Integration options appear only when their parent plugin is active
+* **BuddyPress Member Types** — Configure redirects per member type (when BuddyPress is active)
+* **Clean Admin UI** — Unified settings interface with accordion-style role management
+
+= Supported Integrations =
+
+| Integration | Destinations |
+|------------|-------------|
+| BuddyPress | Member Profile, Member Activity, Groups Directory + Member Types |
+| WooCommerce | My Account, Shop, Checkout, Orders |
+| bbPress | Forums, User Profile |
+| Dokan | Vendor Dashboard, Store Page |
+| LearnDash | Student Dashboard, Courses |
+| PeepSo | Profile, Activity Stream |
+
+= How It Works =
+
+1. **Install & Activate** — Plugin works immediately with WordPress defaults
+2. **Configure Global Redirect** — Set where all users go after login/logout
+3. **Configure Role Redirects** — Override globals per role (e.g., send Subscribers to their profile, Vendors to their dashboard)
+4. **Integration Destinations** — When BuddyPress/WooCommerce/etc. are active, their pages appear as destination options
 
 If you need additional help you can contact us for [Custom Development](https://wbcomdesigns.com/contact/).
 
 == Installation ==
 
-1. Upload the entire "bp-redirect" folder to the /wp-content/plugins/ directory.
+1. Upload the "bp-redirect" folder to `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Go to WB Plugins > Redirect to configure settings.
 
 == Frequently Asked Questions ==
 
-= How can we change redirection settings using this plugin ? =
+= Does this plugin require BuddyPress? =
 
-After installation of BP Redirect plugin, a new menu will be added. This menu links to BP Redirect settings page & includes all the redirection settings in admin panel.
+No. This plugin works standalone on any WordPress site. BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo support is automatically enabled when those plugins are active.
 
-= Is this plugin work only with BuddyPress plugin ? =
+= What is the redirect priority order? =
 
-No, BP Redirect plugin is not required BuddyPress plugin to be active.
+User Role > Integration Group Types (e.g. BuddyPress member types) > Global > WordPress Default.
+
+= What happens if no redirect is configured? =
+
+WordPress default behavior applies: admins go to the dashboard, other users go to the home page.
+
+= Can I redirect WooCommerce customers to My Account after login? =
+
+Yes! When WooCommerce is active, "My Account", "Shop", "Checkout", and "Orders" appear as integration destination options.
+
+= Will my v2.0.0 settings be preserved? =
+
+Yes. On first load after updating to v2.1.0, your existing settings are automatically migrated to the new format.
 
 == Screenshots ==
-1. The screenshot shows the admin settings to change redirect on login and logout for different roles and corresponds to screenshot-1.(png|jpg|jpeg|gif).
-2. The screenshot shows the admin settings to change roles sequence by drag & drop and corresponds to screenshot-2.(png|jpg|jpeg|gif).
+
+1. Global Redirection Settings — configure login/logout redirects for all users.
+2. User Role Settings — accordion-style per-role login/logout redirect configuration.
 
 == Changelog ==
+
+= 2.1.0 =
+* Major: Rebuilt as standalone WordPress plugin — no longer requires BuddyPress.
+* New: Integration framework with auto-detection for BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, PeepSo.
+* New: WooCommerce destinations (My Account, Shop, Checkout, Orders).
+* New: bbPress destinations (Forums, User Profile).
+* New: Dokan destinations (Vendor Dashboard, Store Page).
+* New: LearnDash destinations (Student Dashboard, Courses).
+* New: PeepSo destinations (Profile, Activity Stream).
+* New: Priority chain resolver: Role > Group Types > Global > Default.
+* New: Unified redirect settings form (Page / Custom URL / Integration Destination).
+* New: Dynamic admin tabs from active integrations (e.g. BuddyPress Member Types tab).
+* New: Clean admin JS with modern AJAX save.
+* New: Auto-migration from v2.0.0 settings.
+* Enhancement: Cleaner settings structure using uniform config shape.
+* Enhancement: Proper wp_send_json_success/error responses for AJAX.
+* Code Quality: Fixed all WordPress Coding Standards (WPCS) violations across all PHP files.
+* Code Quality: Added phpcs:ignore for legacy class naming conventions.
+* Code Quality: Added PHPDoc comments for all integration methods and utility functions.
+
 = 2.0.0 =
 * Fix: Fixed security issue with input sanitization and validation.
 * Fix: Added security check and updated readme.
@@ -41,6 +109,10 @@ No, BP Redirect plugin is not required BuddyPress plugin to be active.
 * Fix: Added notice dismiss functionality.
 * Fix: Resolved default selected options related issue.
 * Fix: Removed activation notice when activation failed.
+* Fix: Fixed admin CSS not loading when other Wbcom plugins are active.
+* Fix: Fixed logout settings not displaying saved values in admin.
+* Fix: Fixed member type settings read/write mismatch on multisite.
+* Fix: Fixed member type tab reading wrong option key in fallback.
 * Enhancement: Optimized code in admin and public classes.
 * Enhancement: Resolved PHPCS errors and managed RTL fixes.
 * Enhancement: Implemented conditions for enqueuing scripts.
@@ -67,68 +139,9 @@ No, BP Redirect plugin is not required BuddyPress plugin to be active.
 * Fix: BP v12 fixes
 * Fix: phpcs fixes
 
-= 1.8.2 =
-* Fix: (#63) Fatal error when logout
-
-= 1.8.1 =
-* Fix: (#59) wp plugin active redirect issue fix
-* Fix: (#59) Logout redirection with member
-* Fix: (#59) Global login redirection is not working for the BP Component
-* Fix: (#50)Fixed fatal error on user role logout
-* Fix: (#55) PHP fixes
-* Fix: (#58) Issue in member type redirection
-* Fix: (#57) Solve logout redirect fatal error
-* Fix: (#57) Can't save user role settings in the absence of BuddyPress
-* Fix: (#47) BuddyPress activity selection issue
-* Fix: (#47) Multiple members or multiple role fixes
-* Fix: (#47) wp redirect custom field for all users and specific user
-* Fix: (#54) Accordion UI fixes
-* Fix: (#52) Added global setting nav menu icon
-* Fix: (#47) custom URL for login, logout redirection
-* Fix: (#45) BuddyPress Dependency
-* Fix: Plugin redirect issue when multiple plugins activate at the same time
-
-= 1.7.2 =
-* Fix: backend UI issue fixed
-* Fix: Fixed buddyboss admin notice issue
-
-= 1.7.1 =
-* Fix: Updated admin wrapper UI
-
-= 1.7.0 =
-* Fix: Updated Admin UI
-* Fix: (#37) Fixed bp member type link redirection with buddyboss
-
-= 1.6.0 =
-* Fix: Fixed plugin installation issue
-* Fix: Fix phpcs error
-
-= 1.5.0 =
-* Fix: general tab issue
-* Fix: setting and redirect url when plugin activate
-* Fix: member type not exist issue in admin option
-* Fix: dashboard FAQ section
-* Fix: dashboard UI Section
-* Fix: #22 - Fixed member type redirect issue
-* Fix: dropdown option issue when click on radio button
-* Fix: Save enable button value
-* Fix: Add enable button css and js
-
-= 1.3.0 =
-* Fix: (#8) Fixed all BuddyPress Components are not showing in the dropdown
-* Fix: (#9) Fixced Log In and Logout Redirect Settings are not Working
-* Fix: (#7) Fixed PHPCS issues
-
-= 1.2.0 =
-* Fix: Added Licence keys for future auto updates.
-* Fix: Login redirect with latest BuddyPress and BuddyBoss.
-
-= 1.1.0 =
-* Fix: BuddyPress plugin admin notice
-
 = 1.0.0 =
 * Initial release.
 
 == Upgrade Notice ==
-= 1.0.0 =
-This version is the initial version of the plugin with basic review adding functionality.
+= 2.1.0 =
+Major update: Plugin now works standalone without BuddyPress. Adds WooCommerce, bbPress, Dokan, LearnDash, and PeepSo integration support. Settings auto-migrate from v2.0.0.
