@@ -1,4 +1,10 @@
 <?php
+/**
+ * Wbcom plugins page template.
+ *
+ * @package Bp_Redirect
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
