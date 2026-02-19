@@ -1,11 +1,11 @@
 {
   "name": "bp-redirect",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "url": "https://github.com/wbcomdesigns/bp-redirect",
   "license": "GPL-2.0+",
-  "description": "bp-redirect",
+  "description": "Login Logout Redirect — WordPress plugin by Wbcom Designs",
   "devDependencies": {
-    "grunt": "^1.3.0",
+    "grunt": "^1.6.1",
     "grunt-checktextdomain": "^1.0.1",
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-compress": "^2.0.0",
@@ -16,18 +16,19 @@
     "grunt-rtlcss": "^2.0.2",
     "grunt-shell": "^4.0.0",
     "grunt-wp-i18n": "^1.0.3",
-    "load-grunt-tasks": "^3.5.2"
+    "load-grunt-tasks": "^5.1.0"
+  },
+  "overrides": {
+    "minimatch": "^10.2.1",
+    "postcss": "^8.5.6",
+    "glob": "^11.0.2",
+    "rimraf": "^6.1.3"
   },
   "engines": {
-    "node": "16.4.0",
-    "npm": "7.24.2"
+    "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/wbcomdesigns/bp-redirect"
-  },
-  "dependencies": {
-    "grunt-checktextdomain": "^1.0.1",
-    "load-grunt-tasks": "^3.5.2"
   }
 }
