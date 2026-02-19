@@ -164,6 +164,59 @@ module.exports = function (grunt) {
 			}
 		},
 
+		// Task for cleaning dist directory
+		clean: {
+			dist: ['dist/']
+		},
+
+		// Task for copying files to dist
+		copy: {
+			dist: {
+				files: [{
+					expand: true,
+					src: [
+						'**',
+						'!node_modules/**',
+						'!dist/**',
+						'!docs/**',
+						'!marketing/**',
+						'!.git/**',
+						'!.gitignore',
+						'!.editorconfig',
+						'!.eslintrc',
+						'!gruntfile.js',
+						'!package.json',
+						'!package-lock.json',
+						'!readme.md',
+						'!composer.json',
+						'!composer.lock',
+						'!phpcs.xml',
+						'!phpunit.xml',
+						'!tests/**',
+						'!*.log',
+						'!*.map'
+					],
+					dest: 'dist/<%= pkg.name %>/'
+				}]
+			}
+		},
+
+		// Task for creating zip
+		compress: {
+			dist: {
+				options: {
+					archive: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip',
+					mode: 'zip'
+				},
+				files: [{
+					expand: true,
+					cwd: 'dist/',
+					src: ['<%= pkg.name %>/**'],
+					dest: ''
+				}]
+			}
+		},
+
 		// WordPress internationalization
 		makepot: {
 			target: {
@@ -195,4 +248,5 @@ module.exports = function (grunt) {
 	grunt.registerTask('dev', ['build', 'watch']);
 	grunt.registerTask('release', ['checktextdomain', 'rtlcss', 'cssmin', 'uglify', 'shell']);
 	grunt.registerTask('i18n', ['checktextdomain', 'makepot']);
+	grunt.registerTask('dist', ['build', 'shell', 'clean:dist', 'copy:dist', 'compress:dist']);
 };
