@@ -109,16 +109,12 @@ class Wbcom_Redirect {
 
 	/**
 	 * Register the text-domain loading action.
+	 *
+	 * Since WordPress 4.6, translations are loaded automatically for plugins
+	 * hosted on WordPress.org. Manual load_plugin_textdomain() is no longer needed.
 	 */
 	private function set_locale() {
-		$this->loader->add_action( 'init', $this, 'load_textdomain' );
-	}
-
-	/**
-	 * Load the plugin text-domain for translations.
-	 */
-	public function load_textdomain() {
-		load_plugin_textdomain( 'bp-redirect', false, dirname( WBCOM_REDIRECT_PLUGIN_BASENAME ) . '/languages/' );
+		// Intentionally left empty — WordPress handles translations automatically since 4.6.
 	}
 
 	/**
