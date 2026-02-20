@@ -56,8 +56,6 @@ if ( ! defined( 'BP_REDIRECT_PLUGIN_FILE' ) ) {
 	define( 'BP_REDIRECT_PLUGIN_FILE', WBCOM_REDIRECT_PLUGIN_FILE );
 }
 
-require WBCOM_REDIRECT_PLUGIN_PATH . 'plugin-update-checker/plugin-update-checker.php';
-
 /**
  * Plugin activation.
  */

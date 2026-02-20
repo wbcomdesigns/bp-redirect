@@ -10,8 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
-
 /**
  * Class Wbcom_Redirect
  *
@@ -54,7 +52,6 @@ class Wbcom_Redirect {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		$this->init_updater();
 	}
 
 	/**
@@ -139,19 +136,6 @@ class Wbcom_Redirect {
 
 		$this->loader->add_filter( 'login_redirect', $public, 'handle_login_redirect', 10, 3 );
 		$this->loader->add_filter( 'logout_redirect', $public, 'handle_logout_redirect', 10, 3 );
-	}
-
-	/**
-	 * Initialize the plugin update checker.
-	 */
-	private function init_updater() {
-		if ( class_exists( '\YahnisElsts\PluginUpdateChecker\v5\PucFactory' ) ) {
-			PucFactory::buildUpdateChecker(
-				'https://demos.wbcomdesigns.com/exporter/free-plugins/bp-redirect.json',
-				WBCOM_REDIRECT_PLUGIN_FILE,
-				'bp-redirect'
-			);
-		}
 	}
 
 	/**
