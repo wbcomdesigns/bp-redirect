@@ -11,6 +11,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Redirect users after login and logout based on roles. Works standalone with optional BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo support.
 
+== Short Description ==
+
+Redirect users after login and logout by role, with optional BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo destinations.
+
 == Description ==
 
 **Login Logout Redirect** is a powerful, free WordPress plugin that lets you control where users are redirected after login and logout based on their roles.
