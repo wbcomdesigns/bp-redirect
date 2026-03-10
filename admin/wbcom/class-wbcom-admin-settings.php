@@ -135,9 +135,8 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 * @access public
 		 */
 		public function wbcom_enqueue_admin_scripts() {
-			if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-				// phpcs:ignore PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent
-				wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
+			if ( ! wp_style_is( 'dashicons', 'enqueued' ) ) {
+				wp_enqueue_style( 'dashicons' );
 			}
 			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) ) {
 
@@ -146,7 +145,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 					$handle    = 'wbcom_admin_setting_js';
 					$src       = BP_REDIRECT_PLUGIN_URL . $wbcom_js;
 					$deps      = array( 'jquery' );
-					$ver       = time();
+					$ver       = WBCOM_REDIRECT_VERSION;
 					$in_footer = true;
 
 					wp_register_script(
@@ -175,10 +174,12 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
 
-				$wbcom_css = bp_redirect_get_asset_filename( 'admin/wbcom/assets/css', 'wbcom-admin-setting' );
+				$wbcom_css = is_rtl()
+					? 'admin/wbcom/assets/css/wbcom-admin-setting-rtl.css'
+					: 'admin/wbcom/assets/css/wbcom-admin-setting.css';
 
 				if ( $wbcom_css ) {
-					wp_register_style( 'wbcom-admin-setting-css', BP_REDIRECT_PLUGIN_URL . $wbcom_css );
+					wp_register_style( 'wbcom-admin-setting-css', BP_REDIRECT_PLUGIN_URL . $wbcom_css, array(), WBCOM_REDIRECT_VERSION );
 
 					wp_enqueue_style( 'wbcom-admin-setting-css' );
 				}
@@ -308,9 +309,9 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 	 *
 	 * @return void
 	 */
-	function instantiate_wbcom_plugin_manager() { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Legacy architecture.
+	function wbcom_redirect_instantiate_wbcom_plugin_manager() { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Legacy architecture.
 		new Wbcom_Admin_Settings();
 	}
 
-	instantiate_wbcom_plugin_manager();
+	wbcom_redirect_instantiate_wbcom_plugin_manager();
 }
