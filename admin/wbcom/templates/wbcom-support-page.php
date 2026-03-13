@@ -1,4 +1,10 @@
 <?php
+/**
+ * Wbcom support page template.
+ *
+ * @package Bp_Redirect
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -22,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<ul id="wbcom_support_list" class="wbcom_boxes_list">
 				<li class="wbcom_help_support_box">
 					<div class="wbcom_help_support_icon_wrapper">
-						<i class="fa fa-tags"></i>
+						<span class="dashicons dashicons-tickets-alt" aria-hidden="true"></span>
 					</div>
 					<div class="wbcom_help_support_details">
 						<div class="wbcom_help_support_inner_details">
@@ -39,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<li class="wbcom_help_support_box">
 						<div class="wbcom_help_support_icon_wrapper">
-							<i class="fa fa-comments"></i>
+							<span class="dashicons dashicons-format-chat" aria-hidden="true"></span>
 						</div>
 					<div class="wbcom_help_support_details">
 						<div class="wbcom_help_support_inner_details">
