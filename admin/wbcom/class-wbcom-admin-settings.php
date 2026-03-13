@@ -45,7 +45,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				echo esc_html( $display_extention );
 				die;
 			}
-
 		}
 
 		/**
@@ -136,24 +135,29 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 * @access public
 		 */
 		public function wbcom_enqueue_admin_scripts() {
-			if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-				// phpcs:ignore PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent
-				wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
+			if ( ! wp_style_is( 'dashicons', 'enqueued' ) ) {
+				wp_enqueue_style( 'dashicons' );
 			}
 			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) ) {
 
-				$wbcom_js  = bp_redirect_get_asset_filename( 'admin/wbcom/assets/js', 'wbcom-admin-setting' );
-				if( $wbcom_js ) { 
+				$wbcom_js = bp_redirect_get_asset_filename( 'admin/wbcom/assets/js', 'wbcom-admin-setting' );
+				if ( $wbcom_js ) {
+					$handle    = 'wbcom_admin_setting_js';
+					$src       = BP_REDIRECT_PLUGIN_URL . $wbcom_js;
+					$deps      = array( 'jquery' );
+					$ver       = WBCOM_REDIRECT_VERSION;
+					$in_footer = true;
+
 					wp_register_script(
-						$handle    = 'wbcom_admin_setting_js',
-						$src       = BP_REDIRECT_PLUGIN_URL . $wbcom_js,
-						$deps      = array( 'jquery' ),
-						$ver       = time(),
-						$in_footer = true
+						$handle,
+						$src,
+						$deps,
+						$ver,
+						$in_footer
 					);
 
 					wp_enqueue_script( 'wbcom_admin_setting_js' );
-					
+
 					wp_localize_script(
 						'wbcom_admin_setting_js',
 						'wbcom_plugin_installer_params',
@@ -164,22 +168,22 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 							'nonce'           => wp_create_nonce( 'wbcom_admin_setting_nonce' ),
 						)
 					);
-				
+
 				}
 			}
 
 			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
 
-				$wbcom_css  = bp_redirect_get_asset_filename( 'admin/wbcom/assets/css', 'wbcom-admin-setting' );
+				$wbcom_css = is_rtl()
+					? 'admin/wbcom/assets/css/wbcom-admin-setting-rtl.css'
+					: 'admin/wbcom/assets/css/wbcom-admin-setting.css';
 
-				if( $wbcom_css ) {
-					wp_register_style( 'wbcom-admin-setting-css', BP_REDIRECT_PLUGIN_URL . $wbcom_css );
-					
+				if ( $wbcom_css ) {
+					wp_register_style( 'wbcom-admin-setting-css', BP_REDIRECT_PLUGIN_URL . $wbcom_css, array(), WBCOM_REDIRECT_VERSION );
+
 					wp_enqueue_style( 'wbcom-admin-setting-css' );
 				}
-				
 			}
-
 		}
 
 		/**
@@ -252,8 +256,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 * @access public
 		 */
 		public function wbcom_admin_setting_header_html() {
-			$page          = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
-			$plugin_active = $theme_active = $support_active = $settings_active = '';
+			$page            = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
+			$plugin_active   = '';
+			$theme_active    = '';
+			$support_active  = '';
+			$settings_active = '';
 			switch ( $page ) {
 				case 'wbcom-plugins-page':
 					$plugin_active = 'is_active';
@@ -295,12 +302,16 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			</div>
 			<?php
 		}
-
 	}
 
-	function instantiate_wbcom_plugin_manager() {
+	/**
+	 * Instantiate the Wbcom_Admin_Settings class.
+	 *
+	 * @return void
+	 */
+	function wbcom_redirect_instantiate_wbcom_plugin_manager() { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Legacy architecture.
 		new Wbcom_Admin_Settings();
 	}
 
-	instantiate_wbcom_plugin_manager();
+	wbcom_redirect_instantiate_wbcom_plugin_manager();
 }

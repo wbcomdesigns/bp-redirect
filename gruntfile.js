@@ -188,6 +188,7 @@ module.exports = function (grunt) {
 						'!package.json',
 						'!package-lock.json',
 						'!readme.md',
+						'!QA-TESTING.md',
 						'!composer.json',
 						'!composer.lock',
 						'!phpcs.xml',
