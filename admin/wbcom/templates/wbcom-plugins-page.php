@@ -510,7 +510,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div class="wbcom-addons-plugins-card">
 						<div class="wbcom-addons-card-details">
-							<h2><?php esc_html_e( 'BuddyPress Redirect', 'bp-redirect' ); ?></h2>
+							<h2><?php esc_html_e( 'WB Login Logout Redirect', 'bp-redirect' ); ?></h2>
 							<p><?php esc_html_e( 'Redirect users to custom pages after login or logout, based on their user roles, creating a more personalized navigation experience.', 'bp-redirect' ); ?></p>
 							<div class="wbcom-addons-card-button">								
 								<a target="_blank" href="https://wbcomdesigns.com/downloads/buddypress-redirect/" class="wbcom-addons-button"><?php esc_html_e( 'View Details', 'bp-redirect' ); ?></a>
