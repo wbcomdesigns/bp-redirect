@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wbcom-tab-content">
 	<div class="wbcom-welcome-main-wrapper">
 		<div class="wbcom-welcome-head">
-			<p class="wbcom-welcome-description"><?php esc_html_e( 'Login Logout Redirect lets you control where users go after login and logout. Works standalone or with BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo.', 'bp-redirect' ); ?></p>
+			<p class="wbcom-welcome-description"><?php esc_html_e( 'WB Login Logout Redirect lets you control where users go after login and logout based on their roles. Built for BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo.', 'bp-redirect' ); ?></p>
 		</div>
 
 		<div class="wbcom-welcome-content">
