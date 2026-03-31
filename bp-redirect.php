@@ -167,6 +167,15 @@ add_action(
 			$data = json_decode( wp_remote_retrieve_body( $response ) );
 			if ( isset( $data->success ) && $data->success ) {
 				update_option( $activated, 1, false );
+				// Auto-enable usage tracking checkbox.
+				update_option(
+					$option . '_allow_tracking',
+					array(
+						'allowed'   => true,
+						'timestamp' => time(),
+					),
+					false
+				);
 			}
 		}
 	}
