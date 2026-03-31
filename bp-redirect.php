@@ -106,7 +106,9 @@ function wbcom_redirect_activation_redirect( $plugin ) {
 	if ( plugin_basename( __FILE__ ) !== $plugin ) {
 		return;
 	}
-	if ( isset( $_REQUEST['action'] ) && 'activate' === $_REQUEST['action'] && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] === $plugin ) { // phpcs:ignore
+	$action_param = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$plugin_param = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( 'activate' === $action_param && $plugin_param === $plugin ) {
 		wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
 		exit;
 	}
