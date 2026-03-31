@@ -56,12 +56,17 @@ class Wbcom_Redirect_LearnDash extends Wbcom_Redirect_Integration {
 	public function resolve_url( $destination_slug, $user ) {
 		switch ( $destination_slug ) {
 			case 'dashboard':
-				// LearnDash 4.x+ has a dashboard page setting.
-				$page_id = get_option( 'learndash_settings_custom_labels' );
-				// Fallback: try common slug.
-				$dashboard_page = get_page_by_path( 'dashboard' );
-				if ( $dashboard_page ) {
-					return get_permalink( $dashboard_page->ID );
+				// LearnDash 4.x+ stores the dashboard page ID.
+				if ( function_exists( 'learndash_get_page_id' ) ) {
+					$page_id = learndash_get_page_id( 'dashboard' );
+					if ( $page_id ) {
+						return get_permalink( $page_id );
+					}
+				}
+				// Fallback: check the pages_wp settings.
+				$pages_settings = get_option( 'learndash_settings_pages_wp', array() );
+				if ( ! empty( $pages_settings['dashboard'] ) ) {
+					return get_permalink( absint( $pages_settings['dashboard'] ) );
 				}
 				return false;
 
