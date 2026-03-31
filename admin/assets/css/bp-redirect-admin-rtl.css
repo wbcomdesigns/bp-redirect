@@ -10,12 +10,12 @@
 }
 
 .nav-tab-wrapper ul li.wbcom-redirect-welcome a.nav-tab:before {
-	content: "\f155";
+	content: "\f102";
 	margin-top: 2px;
 }
 
 .nav-tab-wrapper ul li.wbcom-redirect-global a.nav-tab:before {
-	content: "\f11f";
+	content: "\f536";
 	margin-top: 2px;
 }
 

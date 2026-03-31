@@ -78,8 +78,8 @@ class Wbcom_Redirect_Admin {
 
 		add_submenu_page(
 			'wbcomplugins',
-			__( 'Redirect', 'bp-redirect' ),
-			__( 'Redirect', 'bp-redirect' ),
+			__( 'Login Redirect', 'bp-redirect' ),
+			__( 'Login Redirect', 'bp-redirect' ),
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'render_settings_page' )
