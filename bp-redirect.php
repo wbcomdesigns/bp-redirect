@@ -9,9 +9,9 @@
  * @package           Wbcom_Redirect
  *
  * @wordpress-plugin
- * Plugin Name:       Wbcom Designs - Login Logout Redirect
+ * Plugin Name:       WB Login Logout Redirect
  * Plugin URI:        https://wbcomdesigns.com/downloads/buddypress-redirect/
- * Description:       Redirect users after login and logout based on user roles, with optional support for BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo.
+ * Description:       Redirect users after login & logout by role — built for BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash & PeepSo.
  * Version:           2.1.0
  * Author:            Wbcom Designs <admin@wbcomdesigns.com>
  * Author URI:        https://wbcomdesigns.com/contact/
@@ -114,3 +114,60 @@ function wbcom_redirect_activation_redirect( $plugin ) {
 	}
 }
 add_action( 'activated_plugin', 'wbcom_redirect_activation_redirect' );
+
+// EDD Software Licensing SDK — free plugin auto-updates with preset key.
+add_action(
+	'edd_sl_sdk_registry',
+	function ( $registry ) {
+		$registry->register(
+			array(
+				'id'      => 'bp-redirect',
+				'url'     => 'https://wbcomdesigns.com',
+				'item_id' => 80951,
+				'version' => WBCOM_REDIRECT_VERSION,
+				'file'    => WBCOM_REDIRECT_PLUGIN_FILE,
+				'license' => 'wbcomfreef2c8a1d7b3e94c6a0f5d2e9b7c1a4e33',
+			)
+		);
+	}
+);
+
+if ( file_exists( WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php' ) ) {
+	require_once WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php';
+}
+
+// Auto-activate the preset license key on first load so updates work.
+add_action(
+	'admin_init',
+	function () {
+		$preset_key = 'wbcomfreef2c8a1d7b3e94c6a0f5d2e9b7c1a4e33';
+		$option     = 'bp_redirect_license_key';
+		$activated  = 'bp_redirect_preset_activated';
+
+		if ( get_option( $activated ) ) {
+			return;
+		}
+
+		update_option( $option, $preset_key, false );
+
+		$response = wp_remote_post(
+			'https://wbcomdesigns.com',
+			array(
+				'timeout' => 15,
+				'body'    => array(
+					'edd_action' => 'activate_license',
+					'license'    => $preset_key,
+					'item_id'    => 80951,
+					'url'        => home_url(),
+				),
+			)
+		);
+
+		if ( ! is_wp_error( $response ) ) {
+			$data = json_decode( wp_remote_retrieve_body( $response ) );
+			if ( isset( $data->success ) && $data->success ) {
+				update_option( $activated, 1, false );
+			}
+		}
+	}
+);
