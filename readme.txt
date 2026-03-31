@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/donate/
 Tags: login redirect, logout redirect, role redirect, woocommerce redirect, buddypress redirect
 Requires at least: 5.6
 Tested up to: 6.9
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -86,6 +86,17 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 2. User Role Settings — accordion-style per-role login/logout redirect configuration.
 
 == Changelog ==
+
+= 2.2.0 =
+* Enhancement: Renamed plugin to "WB Login Logout Redirect" for brand consistency.
+* Enhancement: Full WordPress Coding Standards (WPCS) compliance across all files.
+* Enhancement: Added EDD Software Licensing SDK for automatic updates.
+* Enhancement: Updated admin tab icons for better visual clarity.
+* Enhancement: Unified admin labels and branding throughout the plugin.
+* Fix: Added capability check to wbcom admin AJAX handler for improved security.
+* Fix: Sanitized $_REQUEST access in activation redirect.
+* Fix: Added alt attributes to spinner images for accessibility.
+* Fix: Fixed broken REDIRECT_PLUGIN_VERSION constant in license page.
 
 = 2.1.0 =
 * Major: Rebuilt as standalone WordPress plugin — no longer requires BuddyPress.

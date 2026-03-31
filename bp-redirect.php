@@ -12,7 +12,7 @@
  * Plugin Name:       WB Login Logout Redirect
  * Plugin URI:        https://wbcomdesigns.com/downloads/buddypress-redirect/
  * Description:       Redirect users after login & logout by role — built for BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash & PeepSo.
- * Version:           2.1.0
+ * Version:           2.2.0
  * Author:            Wbcom Designs <admin@wbcomdesigns.com>
  * Author URI:        https://wbcomdesigns.com/contact/
  * License:           GPL-2.0+
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WBCOM_REDIRECT_VERSION' ) ) {
-	define( 'WBCOM_REDIRECT_VERSION', '2.1.0' );
+	define( 'WBCOM_REDIRECT_VERSION', '2.2.0' );
 }
 
 if ( ! defined( 'WBCOM_REDIRECT_PLUGIN_PATH' ) ) {

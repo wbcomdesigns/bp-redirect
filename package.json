@@ -1,9 +1,9 @@
 {
   "name": "bp-redirect",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "url": "https://github.com/wbcomdesigns/bp-redirect",
   "license": "GPL-2.0+",
-  "description": "Login Logout Redirect — WordPress plugin by Wbcom Designs",
+  "description": "Login Logout Redirect \u2014 WordPress plugin by Wbcom Designs",
   "devDependencies": {
     "grunt": "^1.6.1",
     "grunt-checktextdomain": "^1.0.1",

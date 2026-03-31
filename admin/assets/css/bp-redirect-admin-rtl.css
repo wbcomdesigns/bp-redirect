@@ -2076,14 +2076,14 @@ button.bpr-accordion.active::after {
 
 @media (max-width: 600px) {
 	.wbcom-redirect-type-options {
-	flex-direction: column;
-	gap: 6px;
+		flex-direction: column;
+		gap: 6px;
 	}
 
 	.wbcom-redirect-field select,
 	.wbcom-redirect-field input[type="url"] {
-	width: 100%;
-	max-width: 100%;
+		width: 100%;
+		max-width: 100%;
 	}
 }
 /*# sourceMappingURL=bp-redirect-admin-rtl.css.map */
