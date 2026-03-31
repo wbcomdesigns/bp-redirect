@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<span>
 					<?php
 						/* translators: %s: plugin version number */
-						printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( REDIRECT_PLUGIN_VERSION ) );
+						printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( WBCOM_REDIRECT_VERSION ) );
 					?>
 				</span>
 			</div>

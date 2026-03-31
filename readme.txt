@@ -1,4 +1,4 @@
-=== Wbcom Designs - Login Logout Redirect ===
+=== WB Login Logout Redirect ===
 Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/donate/
 Tags: login redirect, logout redirect, role redirect, woocommerce redirect, buddypress redirect
@@ -9,7 +9,7 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Redirect users after login and logout based on roles. Works standalone with optional BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo support.
+Redirect users after login & logout by role — built for BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash & PeepSo.
 
 == Short Description ==
 
