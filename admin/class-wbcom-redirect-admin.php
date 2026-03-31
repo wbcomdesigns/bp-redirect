@@ -136,7 +136,7 @@ class Wbcom_Redirect_Admin {
 				<div class="blpro-header">
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
-							<?php esc_html_e( 'Login Logout Redirect', 'bp-redirect' ); ?>
+							<?php esc_html_e( 'WB Login Logout Redirect', 'bp-redirect' ); ?>
 							<span>
 							<?php
 							/* translators: %s is the plugin version number */

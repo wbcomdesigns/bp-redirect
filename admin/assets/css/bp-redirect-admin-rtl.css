@@ -15,20 +15,20 @@
 }
 
 .nav-tab-wrapper ul li.wbcom-redirect-global a.nav-tab:before {
-	content: "\f536";
+	content: "\f182";
 	margin-top: 2px;
 }
 
 .nav-tab-wrapper ul li.wbcom-redirect-roles a.nav-tab:before {
-	content: "\f172";
+	content: "\f307";
 }
 
 .nav-tab-wrapper ul li[class*="wbcom-redirect-integration-"] a.nav-tab:before {
-	content: "\f504";
+	content: "\f106";
 }
 
 .nav-tab-wrapper ul li.wbcom-redirect-faq a.nav-tab:before {
-	content: "\f101";
+	content: "\f223";
 }
 
 .wbcom-settings-section-wrap .bpr-col-12 {
