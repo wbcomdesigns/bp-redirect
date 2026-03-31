@@ -232,7 +232,7 @@ class Wbcom_Redirect_Admin {
 
 						<p>
 							<button type="button" class="button button-primary wbcom-redirect-save" data-scope="global"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button>
-							<img src="<?php echo esc_url( $spinner_src ); ?>" class="wbcom-redirect-spinner" style="display:none" />
+							<img src="<?php echo esc_url( $spinner_src ); ?>" alt="" class="wbcom-redirect-spinner" style="display:none" />
 						</p>
 						<div class="wbcom-redirect-notice is-dismissible" style="display:none">
 							<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
@@ -294,7 +294,7 @@ class Wbcom_Redirect_Admin {
 
 						<p>
 							<button type="button" class="button button-primary wbcom-redirect-save" data-scope="roles"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button>
-							<img src="<?php echo esc_url( $spinner_src ); ?>" class="wbcom-redirect-spinner" style="display:none" />
+							<img src="<?php echo esc_url( $spinner_src ); ?>" alt="" class="wbcom-redirect-spinner" style="display:none" />
 						</p>
 						<div class="wbcom-redirect-notice is-dismissible" style="display:none">
 							<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
@@ -371,7 +371,7 @@ class Wbcom_Redirect_Admin {
 
 						<p>
 							<button type="button" class="button button-primary wbcom-redirect-save" data-scope="integration" data-integration="<?php echo esc_attr( $integration->get_slug() ); ?>"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button>
-							<img src="<?php echo esc_url( $spinner_src ); ?>" class="wbcom-redirect-spinner" style="display:none" />
+							<img src="<?php echo esc_url( $spinner_src ); ?>" alt="" class="wbcom-redirect-spinner" style="display:none" />
 						</p>
 						<div class="wbcom-redirect-notice is-dismissible" style="display:none">
 							<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>

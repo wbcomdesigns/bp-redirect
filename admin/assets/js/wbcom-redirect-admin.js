@@ -7,7 +7,7 @@
 
 	$(document).ready(function () {
 
-		// ——— Toggle enable/disable ———
+		// ——— Toggle enable/disable ———.
 		$(document).on('click', '.wbcom-redirect-toggle', function () {
 			var $toggle = $(this);
 			var target  = $toggle.data('target');
@@ -22,7 +22,7 @@
 			}
 		});
 
-		// ——— Radio type switching: show/hide relevant fields ———
+		// ——— Radio type switching: show/hide relevant fields ———.
 		$(document).on('change', '.wbcom-redirect-type-radio', function () {
 			var $config = $(this).closest('.wbcom-redirect-config');
 			var type    = $(this).val();
@@ -31,7 +31,7 @@
 			$config.find('.wbcom-redirect-field-' + type).show();
 		});
 
-		// ——— Accordion for role/group-type sections ———
+		// ——— Accordion for role/group-type sections ———.
 		$('[id$="-accordion"]').each(function () {
 			$(this).accordion({
 				heightStyle: 'content',
@@ -51,7 +51,7 @@
 			});
 		});
 
-		// ——— AJAX Save ———
+		// ——— AJAX Save ———.
 		$(document).on('click', '.wbcom-redirect-save', function () {
 			var $btn     = $(this);
 			var $form    = $btn.closest('.wbcom-redirect-form');
@@ -108,12 +108,12 @@
 			});
 		});
 
-		// ——— Dismiss notice ———
+		// ——— Dismiss notice ———.
 		$(document).on('click', '.wbcom-redirect-notice .notice-dismiss', function () {
 			$(this).closest('.wbcom-redirect-notice').fadeOut();
 		});
 
-		// ——— FAQ accordion ———
+		// ——— FAQ accordion ———.
 		$(document).on('click', '.bpr-accordion', function (e) {
 			e.preventDefault();
 			$(this).toggleClass('active');
