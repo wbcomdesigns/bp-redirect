@@ -69,7 +69,10 @@ register_activation_hook( __FILE__, 'wbcom_redirect_activate' );
  * Plugin deactivation.
  */
 function wbcom_redirect_deactivate() {
-	// Nothing to clean up.
+	// Stop the background preset-activation cron if it is still scheduled.
+	if ( defined( 'WBCOM_REDIRECT_PRESET_CRON' ) ) {
+		wp_clear_scheduled_hook( WBCOM_REDIRECT_PRESET_CRON );
+	}
 }
 register_deactivation_hook( __FILE__, 'wbcom_redirect_deactivate' );
 
@@ -115,6 +118,17 @@ function wbcom_redirect_activation_redirect( $plugin ) {
 }
 add_action( 'activated_plugin', 'wbcom_redirect_activation_redirect' );
 
+// Preset license key shipped with this free plugin (enables auto-updates).
+if ( ! defined( 'WBCOM_REDIRECT_PRESET_KEY' ) ) {
+	define( 'WBCOM_REDIRECT_PRESET_KEY', 'wbcomfreef2c8a1d7b3e94c6a0f5d2e9b7c1a4e33' );
+}
+if ( ! defined( 'WBCOM_REDIRECT_PRESET_ITEM_ID' ) ) {
+	define( 'WBCOM_REDIRECT_PRESET_ITEM_ID', 80951 );
+}
+if ( ! defined( 'WBCOM_REDIRECT_PRESET_CRON' ) ) {
+	define( 'WBCOM_REDIRECT_PRESET_CRON', 'wbcom_redirect_activate_preset_license' );
+}
+
 // EDD Software Licensing SDK — free plugin auto-updates with preset key.
 add_action(
 	'edd_sl_sdk_registry',
@@ -123,10 +137,10 @@ add_action(
 			array(
 				'id'      => 'bp-redirect',
 				'url'     => 'https://wbcomdesigns.com',
-				'item_id' => 80951,
+				'item_id' => WBCOM_REDIRECT_PRESET_ITEM_ID,
 				'version' => WBCOM_REDIRECT_VERSION,
 				'file'    => WBCOM_REDIRECT_PLUGIN_FILE,
-				'license' => 'wbcomfreef2c8a1d7b3e94c6a0f5d2e9b7c1a4e33',
+				'license' => WBCOM_REDIRECT_PRESET_KEY,
 			)
 		);
 	}
@@ -136,59 +150,81 @@ if ( file_exists( WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/ed
 	require_once WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php';
 }
 
-// Auto-activate the preset license key on first load so updates work.
-add_action(
-	'admin_init',
-	function () {
-		$preset_key = 'wbcomfreef2c8a1d7b3e94c6a0f5d2e9b7c1a4e33';
-		$option     = 'bp_redirect_license_key';
-		$activated  = 'bp_redirect_preset_activated';
-		$cooldown   = 'bp_redirect_preset_cooldown';
-
-		if ( get_option( $activated ) ) {
-			return;
-		}
-
-		update_option( $option, $preset_key, false );
-
-		// Throttle remote activation retries: if a previous attempt failed,
-		// wait out a cooldown window before calling wbcomdesigns.com again so
-		// a slow/unreachable host can't block admin_init (15s) on every page
-		// load. This only changes retry cadence; the activation still runs and
-		// writes the same options once the remote call succeeds.
-		if ( get_transient( $cooldown ) ) {
-			return;
-		}
-		set_transient( $cooldown, 1, HOUR_IN_SECONDS );
-
-		$response = wp_remote_post(
-			'https://wbcomdesigns.com',
-			array(
-				'timeout' => 15,
-				'body'    => array(
-					'edd_action' => 'activate_license',
-					'license'    => $preset_key,
-					'item_id'    => 80951,
-					'url'        => home_url(),
-				),
-			)
-		);
-
-		if ( ! is_wp_error( $response ) ) {
-			$data = json_decode( wp_remote_retrieve_body( $response ) );
-			if ( isset( $data->success ) && $data->success ) {
-				update_option( $activated, 1, false );
-				delete_transient( $cooldown );
-				// Auto-enable usage tracking checkbox.
-				update_option(
-					$option . '_allow_tracking',
-					array(
-						'allowed'   => true,
-						'timestamp' => time(),
-					),
-					false
-				);
-			}
-		}
+/**
+ * Ensure the preset license key is stored and the background activation is
+ * scheduled. Cheap and HTTP-free, so it is safe to run on every admin load.
+ *
+ * The remote activation itself is performed by a WP-Cron event (see
+ * wbcom_redirect_activate_preset_license()), NOT here — a blocking
+ * wp_remote_post() on admin_init previously made every admin page wait on
+ * wbcomdesigns.com (up to the HTTP timeout) until the preset key activated.
+ * WP-Cron runs in its own non-blocking request, so admin loads are never held.
+ */
+function wbcom_redirect_maybe_schedule_preset_activation() {
+	if ( get_option( 'bp_redirect_preset_activated' ) ) {
+		return;
 	}
-);
+
+	// Store the preset key locally so the License screen reflects it immediately.
+	if ( WBCOM_REDIRECT_PRESET_KEY !== get_option( 'bp_redirect_license_key' ) ) {
+		update_option( 'bp_redirect_license_key', WBCOM_REDIRECT_PRESET_KEY, false );
+	}
+
+	// Defer the remote activation to the background; it retries on each cron
+	// run until it succeeds, then unschedules itself.
+	if ( ! wp_next_scheduled( WBCOM_REDIRECT_PRESET_CRON ) ) {
+		wp_schedule_event( time(), 'twicedaily', WBCOM_REDIRECT_PRESET_CRON );
+	}
+}
+add_action( 'admin_init', 'wbcom_redirect_maybe_schedule_preset_activation' );
+
+/**
+ * Background cron callback: perform the remote preset-license activation.
+ *
+ * Runs inside WP-Cron's own request, so the HTTP timeout never affects a
+ * user-facing admin page. Writes exactly the same options the previous
+ * inline activation wrote, then self-unschedules once activated.
+ */
+function wbcom_redirect_activate_preset_license() {
+	if ( get_option( 'bp_redirect_preset_activated' ) ) {
+		wp_clear_scheduled_hook( WBCOM_REDIRECT_PRESET_CRON );
+		return;
+	}
+
+	if ( WBCOM_REDIRECT_PRESET_KEY !== get_option( 'bp_redirect_license_key' ) ) {
+		update_option( 'bp_redirect_license_key', WBCOM_REDIRECT_PRESET_KEY, false );
+	}
+
+	$response = wp_remote_post(
+		'https://wbcomdesigns.com',
+		array(
+			'timeout' => 15,
+			'body'    => array(
+				'edd_action' => 'activate_license',
+				'license'    => WBCOM_REDIRECT_PRESET_KEY,
+				'item_id'    => WBCOM_REDIRECT_PRESET_ITEM_ID,
+				'url'        => home_url(),
+			),
+		)
+	);
+
+	if ( is_wp_error( $response ) ) {
+		return; // Transient failure — the next scheduled run retries.
+	}
+
+	$data = json_decode( wp_remote_retrieve_body( $response ) );
+	if ( isset( $data->success ) && $data->success ) {
+		update_option( 'bp_redirect_preset_activated', 1, false );
+		// Auto-enable usage tracking checkbox (unchanged data shape).
+		update_option(
+			'bp_redirect_license_key_allow_tracking',
+			array(
+				'allowed'   => true,
+				'timestamp' => time(),
+			),
+			false
+		);
+		wp_clear_scheduled_hook( WBCOM_REDIRECT_PRESET_CRON );
+	}
+}
+add_action( WBCOM_REDIRECT_PRESET_CRON, 'wbcom_redirect_activate_preset_license' );
