@@ -62,6 +62,7 @@ if ( ! function_exists( 'bp_redirect_get_asset_filename' ) ) {
 	 * @param string $filename Base filename without extension.
 	 * @return string|false Full relative path or false if not found.
 	 */
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Intentional backward-compat alias; legacy callers reference the bp_redirect_ name, renaming would break them.
 	function bp_redirect_get_asset_filename( $type, $filename ) {
 		return wbcom_redirect_get_asset_filename( $type, $filename );
 	}

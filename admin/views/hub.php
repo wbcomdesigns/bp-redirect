@@ -9,18 +9,18 @@
  * See references/wbcom-wrapper-migration.md Part 15.
  *
  * @package Wbcom_Redirect
- * @since   2.4.0
+ * @since   2.3.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$submenu_entries = isset( $GLOBALS['submenu']['wbcomplugins'] ) && is_array( $GLOBALS['submenu']['wbcomplugins'] )
+$wbcom_redirect_submenu_entries = isset( $GLOBALS['submenu']['wbcomplugins'] ) && is_array( $GLOBALS['submenu']['wbcomplugins'] )
 	? $GLOBALS['submenu']['wbcomplugins']
 	: array();
 
 // Slugs of the legacy wbcom-wrapper boilerplate helper pages. Filterable
 // so Pro modules or future wrapper slugs can be added.
-$wrapper_helper_slugs = apply_filters(
+$wbcom_redirect_wrapper_helper_slugs = apply_filters(
 	'wbcom_hub_wrapper_helper_slugs',
 	array(
 		'wbcom-plugins-page',
@@ -30,24 +30,24 @@ $wrapper_helper_slugs = apply_filters(
 	)
 );
 
-$wbredir_plugins = array();
-foreach ( $submenu_entries as $entry ) {
-	$slug = isset( $entry[2] ) ? (string) $entry[2] : '';
-	if ( '' === $slug || 'wbcomplugins' === $slug ) {
+$wbcom_redirect_plugins = array();
+foreach ( $wbcom_redirect_submenu_entries as $wbcom_redirect_entry ) {
+	$wbcom_redirect_slug = isset( $wbcom_redirect_entry[2] ) ? (string) $wbcom_redirect_entry[2] : '';
+	if ( '' === $wbcom_redirect_slug || 'wbcomplugins' === $wbcom_redirect_slug ) {
 		continue;
 	}
-	if ( in_array( $slug, $wrapper_helper_slugs, true ) ) {
+	if ( in_array( $wbcom_redirect_slug, $wbcom_redirect_wrapper_helper_slugs, true ) ) {
 		continue;
 	}
-	$wbredir_plugins[] = array(
-		'slug'       => $slug,
-		'menu_title' => isset( $entry[0] ) ? wp_strip_all_tags( (string) $entry[0] ) : $slug,
-		'page_title' => isset( $entry[3] ) ? wp_strip_all_tags( (string) $entry[3] ) : '',
-		'url'        => admin_url( 'admin.php?page=' . rawurlencode( $slug ) ),
+	$wbcom_redirect_plugins[] = array(
+		'slug'       => $wbcom_redirect_slug,
+		'menu_title' => isset( $wbcom_redirect_entry[0] ) ? wp_strip_all_tags( (string) $wbcom_redirect_entry[0] ) : $wbcom_redirect_slug,
+		'page_title' => isset( $wbcom_redirect_entry[3] ) ? wp_strip_all_tags( (string) $wbcom_redirect_entry[3] ) : '',
+		'url'        => admin_url( 'admin.php?page=' . rawurlencode( $wbcom_redirect_slug ) ),
 	);
 }
 
-$plugin_count = count( $wbredir_plugins );
+$wbcom_redirect_plugin_count = count( $wbcom_redirect_plugins );
 ?>
 <div class="wrap wbredir-admin">
 	<header class="wbredir-page-header">
@@ -63,10 +63,10 @@ $plugin_count = count( $wbredir_plugins );
 							_n(
 								'%d Wbcom plugin active on this site.',
 								'%d Wbcom plugins active on this site.',
-								$plugin_count,
+								$wbcom_redirect_plugin_count,
 								'bp-redirect'
 							),
-							$plugin_count
+							$wbcom_redirect_plugin_count
 						)
 					);
 					?>
@@ -75,7 +75,7 @@ $plugin_count = count( $wbredir_plugins );
 		</div>
 	</header>
 
-	<?php if ( 0 === $plugin_count ) : ?>
+	<?php if ( 0 === $wbcom_redirect_plugin_count ) : ?>
 		<div class="wbredir-empty-state">
 			<span class="wbredir-empty-state__icon" aria-hidden="true">
 				<span class="dashicons dashicons-lightbulb"></span>
@@ -87,14 +87,14 @@ $plugin_count = count( $wbredir_plugins );
 		</div>
 	<?php else : ?>
 		<div class="wbredir-hub-grid">
-			<?php foreach ( $wbredir_plugins as $p ) : ?>
-				<a href="<?php echo esc_url( $p['url'] ); ?>" class="wbredir-hub-card">
+			<?php foreach ( $wbcom_redirect_plugins as $wbcom_redirect_p ) : ?>
+				<a href="<?php echo esc_url( $wbcom_redirect_p['url'] ); ?>" class="wbredir-hub-card">
 					<span class="wbredir-hub-card__icon" aria-hidden="true">
 						<span class="dashicons dashicons-admin-plugins"></span>
 					</span>
-					<span class="wbredir-hub-card__title"><?php echo esc_html( $p['menu_title'] ); ?></span>
-					<?php if ( ! empty( $p['page_title'] ) && $p['page_title'] !== $p['menu_title'] ) : ?>
-						<span class="wbredir-hub-card__subtitle"><?php echo esc_html( $p['page_title'] ); ?></span>
+					<span class="wbredir-hub-card__title"><?php echo esc_html( $wbcom_redirect_p['menu_title'] ); ?></span>
+					<?php if ( ! empty( $wbcom_redirect_p['page_title'] ) && $wbcom_redirect_p['page_title'] !== $wbcom_redirect_p['menu_title'] ) : ?>
+						<span class="wbredir-hub-card__subtitle"><?php echo esc_html( $wbcom_redirect_p['page_title'] ); ?></span>
 					<?php endif; ?>
 					<span class="wbredir-hub-card__cta">
 						<?php esc_html_e( 'Open settings', 'bp-redirect' ); ?>

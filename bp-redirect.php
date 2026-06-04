@@ -143,12 +143,23 @@ add_action(
 		$preset_key = 'wbcomfreef2c8a1d7b3e94c6a0f5d2e9b7c1a4e33';
 		$option     = 'bp_redirect_license_key';
 		$activated  = 'bp_redirect_preset_activated';
+		$cooldown   = 'bp_redirect_preset_cooldown';
 
 		if ( get_option( $activated ) ) {
 			return;
 		}
 
 		update_option( $option, $preset_key, false );
+
+		// Throttle remote activation retries: if a previous attempt failed,
+		// wait out a cooldown window before calling wbcomdesigns.com again so
+		// a slow/unreachable host can't block admin_init (15s) on every page
+		// load. This only changes retry cadence; the activation still runs and
+		// writes the same options once the remote call succeeds.
+		if ( get_transient( $cooldown ) ) {
+			return;
+		}
+		set_transient( $cooldown, 1, HOUR_IN_SECONDS );
 
 		$response = wp_remote_post(
 			'https://wbcomdesigns.com',
@@ -167,6 +178,7 @@ add_action(
 			$data = json_decode( wp_remote_retrieve_body( $response ) );
 			if ( isset( $data->success ) && $data->success ) {
 				update_option( $activated, 1, false );
+				delete_transient( $cooldown );
 				// Auto-enable usage tracking checkbox.
 				update_option(
 					$option . '_allow_tracking',
