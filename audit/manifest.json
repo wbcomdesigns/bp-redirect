@@ -1,0 +1,71 @@
+{
+  "plugin": {
+    "slug": "bp-redirect",
+    "name": "WB Login Logout Redirect",
+    "version": "2.3.0",
+    "namespace": "(global functions + Wbcom_Redirect* classes)",
+    "main_file": "bp-redirect.php",
+    "text_domain": "bp-redirect",
+    "prefix": "wbcom_redirect / WBCOM_REDIRECT_ ; admin UI: wbredir / --wbredir-admin-*",
+    "extends": null,
+    "requires": "WordPress 5.6+, PHP 7.4+. Optional integrations: BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash, PeepSo."
+  },
+  "rest": { "namespace": null, "endpoints": [] },
+  "ajax": [
+    { "action": "wbcom_redirect_save_settings", "handler": "Wbcom_Redirect_Admin::ajax_save_settings", "nonce": "wbcom-redirect-admin", "capability": "manage_options", "purpose": "Save settings for any scope (global, roles, integration) — parses a serialized form payload, sanitizes per-scope, writes the matching option." }
+  ],
+  "admin_pages": [
+    { "title": "Login Redirect", "slug": "bp-redirect", "parent": "wbcomplugins", "capability": "manage_options", "source": "admin/class-wbcom-redirect-admin.php (Wbcom_Redirect_Admin)", "tabs": ["welcome (Overview)", "global", "roles", "integration-{slug} (dynamic)", "faq", "license"], "note": "Card-panel admin added in 2.3.0 (replaces the legacy admin/wbcom wrapper). Integration tabs are added dynamically by the registry for active integrations that expose group types (e.g. BuddyPress member types). Settings save via the custom AJAX handler, not options.php." }
+  ],
+  "settings": [
+    { "key": "wbcom_redirect_global", "save": "AJAX (scope=global)", "keys": { "enabled": "yes/no", "login": "{type:none|page|custom_url|integration, page_id, custom_url, integration}", "logout": "same shape" } },
+    { "key": "wbcom_redirect_roles", "save": "AJAX (scope=roles)", "keys": { "enabled": "yes/no", "roles": "{ {role_slug}: {login:{...}, logout:{...}} }" } },
+    { "key": "wbcom_redirect_{integration_slug}", "save": "AJAX (scope=integration)", "keys": { "enabled": "yes/no", "groups": "{ {type_slug}: {login:{...}, logout:{...}} }" } }
+  ],
+  "shortcodes": [],
+  "blocks": [],
+  "post_types": [],
+  "taxonomies": [],
+  "tables": [],
+  "capabilities": [],
+  "cron": [],
+  "wp_cli": [],
+  "hooks_consumed": [
+    { "name": "login_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_login_redirect", "purpose": "Apply the resolved login redirect." },
+    { "name": "logout_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_logout_redirect", "purpose": "Apply the resolved logout redirect." }
+  ],
+  "integrations": {
+    "framework": "integrations/class-wbcom-redirect-integration*.php + a registry (Wbcom_Redirect_Integration_Registry::instance()). Each integration provides destinations and optional group-type admin tabs.",
+    "modules": ["buddypress", "woocommerce", "bbpress", "dokan", "learndash", "peepso"],
+    "loaded": "Each integration file is required on load if present; integrations self-register with the registry."
+  },
+  "edd_license": {
+    "client": "Official EDD Software Licensing SDK (vendor/easy-digital-downloads/edd-sl-sdk, git submodule from vapvarun/edd-sl-sdk)",
+    "item_id": 80951,
+    "model": "Free auto-updates with a preset key — no user-facing license-key field. The License tab surfaces update status only.",
+    "policy": "KEEP the SDK — do NOT replace with the Contact Me custom client (it would be a downgrade). See portfolio memory feedback_edd_sdk_keep_when_present."
+  },
+  "admin_ui": {
+    "pattern": "card-panel (Wbcom shared, prefix wbredir)",
+    "class": "Wbcom_Redirect_Admin (admin/class-wbcom-redirect-admin.php) — single class: chrome + tab renderers + AJAX save",
+    "shell": "render_settings_page() + render_tabs() emit the card-panel shell (header + sidebar nav + main slot); content rendered via add_settings_section/do_settings_sections.",
+    "hub": "admin/views/hub.php (render_hub + takeover_hub_landing at admin_menu:999).",
+    "assets": "assets/css/admin.css (shell, --wbredir-admin-* tokens) + assets/css/wbcom-redirect-content.css (relocated from the former admin/wbcom wrapper, styles the tab content) + admin/assets/css/bp-redirect-admin.css + admin/assets/js/wbcom-redirect-admin.js (AJAX save, jQuery-UI accordion, toggle/radio show-hide).",
+    "settings_save": "Custom AJAX (wbcom_redirect_save_settings) — NOT the Settings API. The card-panel form posts to the same handler."
+  },
+  "static_analysis": {
+    "alert_calls": [
+      { "file": "admin/assets/js/wbcom-redirect-admin.js:102,107", "verdict": "pre_existing", "reason": "AJAX save error path uses alert(); pre-dates the 2.3.0 migration. Candidate for a follow-up toast pass (add wbredirToast)." }
+    ],
+    "tap_target_nits": [ { "file": "assets/css/admin.css:556", "verdict": "shared_css_nit" } ],
+    "vendor_tooling": [ { "path": "vendor/ (excl. easy-digital-downloads/edd-sl-sdk submodule)", "verdict": "untracked_dev_tooling", "reason": "composer WPCS/lint tooling, untracked and not gitignored — stage migration files explicitly, never git add -A." } ]
+  },
+  "generated": {
+    "at": "2026-06-04",
+    "from": "wp-plugin-onboard skill (proportionate Small-plugin pass)",
+    "branch": "2.3.0 (off v2.2.0)",
+    "php_file_count": 23,
+    "schema_version": "v2-lite",
+    "notes": "Onboarded alongside the 2.3.0 card-panel migration. Base was the v2.2.0 release tag (user-selected over the diverged origin/master 2.1.0 line)."
+  }
+}
