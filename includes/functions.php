@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string|false Full relative path or false if not found.
  */
 function wbcom_redirect_get_asset_filename( $type, $filename ) {
-	$css_dirs     = array( 'admin/assets/css', 'admin/wbcom/assets/css' );
+	$css_dirs     = array( 'admin/assets/css', 'assets/css' );
 	$use_minified = ! ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG );
 	$is_rtl       = in_array( $type, $css_dirs, true ) ? is_rtl() : false;
 	$base_dir     = WBCOM_REDIRECT_PLUGIN_PATH . $type . '/';

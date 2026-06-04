@@ -49,6 +49,19 @@ class Wbcom_Redirect_Admin {
 	private $tabs = array();
 
 	/**
+	 * Dashicon class per tab slug (sidebar nav icons).
+	 *
+	 * @var array
+	 */
+	private $tab_icons = array(
+		'welcome' => 'dashicons-chart-bar',
+		'global'  => 'dashicons-admin-site-alt3',
+		'roles'   => 'dashicons-groups',
+		'faq'     => 'dashicons-editor-help',
+		'license' => 'dashicons-shield-alt',
+	);
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $plugin_name Plugin slug.
@@ -91,7 +104,7 @@ class Wbcom_Redirect_Admin {
 	 */
 	public function init_settings() {
 		// Core tabs.
-		$this->tabs['welcome'] = __( 'Welcome', 'bp-redirect' );
+		$this->tabs['welcome'] = __( 'Overview', 'bp-redirect' );
 
 		add_settings_section( 'wbcom-redirect-welcome', ' ', array( $this, 'render_welcome_tab' ), 'wbcom-redirect-welcome' );
 
@@ -120,36 +133,78 @@ class Wbcom_Redirect_Admin {
 
 		$this->tabs['faq'] = __( 'FAQ', 'bp-redirect' );
 		add_settings_section( 'wbcom-redirect-faq', ' ', array( $this, 'render_faq_tab' ), 'wbcom-redirect-faq' );
+
+		$this->tabs['license'] = __( 'License', 'bp-redirect' );
+		add_settings_section( 'wbcom-redirect-license', ' ', array( $this, 'render_license_tab' ), 'wbcom-redirect-license' );
 	}
 
 	/**
-	 * Render the main settings page.
+	 * Render the shared WB Plugins hub landing page.
+	 *
+	 * Reclaimed from the legacy wbcom wrapper so the hub lists every active
+	 * Wbcom plugin that registered a submenu under wbcomplugins.
+	 */
+	public function render_hub() {
+		$view = WBCOM_REDIRECT_PLUGIN_PATH . 'admin/views/hub.php';
+		if ( file_exists( $view ) ) {
+			include $view;
+		}
+	}
+
+	/**
+	 * Reclaim the shared hub landing render from any legacy wrapper plugin.
+	 */
+	public function takeover_hub_landing() {
+		global $admin_page_hooks;
+		if ( empty( $admin_page_hooks['wbcomplugins'] ) ) {
+			return;
+		}
+		remove_all_actions( 'toplevel_page_wbcomplugins' );
+		add_action( 'toplevel_page_wbcomplugins', array( $this, 'render_hub' ) );
+	}
+
+	/**
+	 * Render the main settings page (card-panel shell + sidebar nav).
 	 */
 	public function render_settings_page() {
-		$current_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'welcome'; // phpcs:ignore
+		$current_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'welcome'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! isset( $this->tabs[ $current_tab ] ) ) {
+			$current_tab = 'welcome';
+		}
+		$version = defined( 'WBCOM_REDIRECT_VERSION' ) ? WBCOM_REDIRECT_VERSION : '';
 		?>
-		<div class="wrap">
-			<div class="wbcom-bb-plugins-offer-wrapper">
-				<div id="wb_admin_logo"></div>
-			</div>
-			<div class="wbcom-wrap bp-member-blog-wrap">
-				<div class="blpro-header">
-					<div class="wbcom_admin_header-wrapper">
-						<div id="wb_admin_plugin_name">
-							<?php esc_html_e( 'Login Logout Redirect', 'bp-redirect' ); ?>
-							<span>
-							<?php
-							/* translators: %s is the plugin version number */
-							printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( WBCOM_REDIRECT_VERSION ) );
-							?>
-						</span>
-						</div>
-						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+		<div class="wrap wbredir-admin">
+			<header class="wbredir-page-header">
+				<div class="wbredir-page-header__title">
+					<span class="dashicons dashicons-randomize" aria-hidden="true"></span>
+					<div>
+						<h1><?php esc_html_e( 'Login Logout Redirect', 'bp-redirect' ); ?></h1>
+						<p class="wbredir-page-header__subtitle"><?php esc_html_e( 'Send users to the right place after login and logout — globally, by role, or by community type.', 'bp-redirect' ); ?></p>
 					</div>
 				</div>
-				<?php settings_errors(); ?>
-				<div class="wbcom-admin-settings-page">
+				<div class="wbredir-page-header__actions">
+					<?php if ( $version ) : ?>
+						<span class="wbredir-version-pill">v<?php echo esc_html( $version ); ?></span>
+					<?php endif; ?>
+				</div>
+			</header>
+
+			<hr class="wp-header-end">
+
+			<div class="wbredir-settings-layout">
+				<aside class="wbredir-settings-sidebar">
+					<div class="wbredir-settings-sidebar-brand">
+						<span class="wbredir-settings-brand-icon" aria-hidden="true"><span class="dashicons dashicons-randomize"></span></span>
+						<div class="wbredir-settings-brand-text">
+							<p class="wbredir-settings-brand-name"><?php esc_html_e( 'Login Redirect', 'bp-redirect' ); ?></p>
+							<p class="wbredir-settings-brand-sub"><?php esc_html_e( 'by Wbcom Designs', 'bp-redirect' ); ?></p>
+						</div>
+					</div>
 					<?php $this->render_tabs( $current_tab ); ?>
+				</aside>
+
+				<div class="wbredir-settings-main">
+					<?php settings_errors(); ?>
 					<?php do_settings_sections( 'wbcom-redirect-' . $current_tab ); ?>
 				</div>
 			</div>
@@ -158,26 +213,32 @@ class Wbcom_Redirect_Admin {
 	}
 
 	/**
-	 * Render tab navigation.
+	 * Render sidebar tab navigation.
 	 *
 	 * @param string $current_tab Active tab key.
 	 */
 	private function render_tabs( $current_tab ) {
-		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html__( 'Menu', 'bp-redirect' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
+		echo '<nav class="wbredir-settings-sidebar-nav" aria-label="' . esc_attr__( 'Login Redirect navigation', 'bp-redirect' ) . '">';
 
 		foreach ( $this->tabs as $key => $label ) {
-			$active = ( $current_tab === $key ) ? 'nav-tab-active' : '';
+			$active = ( $current_tab === $key ) ? ' wbredir-snav-link--active' : '';
 			$url    = admin_url( 'admin.php?page=' . $this->plugin_slug . '&tab=' . $key );
+			$icon   = isset( $this->tab_icons[ $key ] ) ? $this->tab_icons[ $key ] : 'dashicons-admin-generic';
+			if ( 'license' === $key ) {
+				echo '<div class="wbredir-snav-divider" role="separator"></div>';
+			}
 			printf(
-				'<li class="wbcom-redirect-%1$s"><a class="nav-tab %2$s" href="%3$s">%4$s</a></li>',
-				esc_attr( $key ),
+				'<a class="wbredir-snav-link%1$s" href="%2$s"><span class="dashicons %3$s" aria-hidden="true"></span>%4$s</a>',
 				esc_attr( $active ),
 				esc_url( $url ),
+				esc_attr( $icon ),
 				esc_html( $label )
 			);
 		}
 
-		echo '</ul></div></div>';
+		echo '<div class="wbredir-snav-divider" role="separator"></div>';
+		echo '<a class="wbredir-snav-link" href="https://docs.wbcomdesigns.com/doc_category/login-logout-redirect/" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-book" aria-hidden="true"></span>' . esc_html__( 'Documentation', 'bp-redirect' ) . '</a>';
+		echo '</nav>';
 	}
 
 	/**
@@ -192,6 +253,44 @@ class Wbcom_Redirect_Admin {
 	 */
 	public function render_faq_tab() {
 		include __DIR__ . '/partials/faq.php';
+	}
+
+	/**
+	 * License / Updates tab content.
+	 *
+	 * This plugin ships the official EDD Software Licensing SDK with a preset
+	 * key, so updates are automatic and there is no user-facing key to enter.
+	 * The tab simply confirms update delivery status.
+	 */
+	public function render_license_tab() {
+		?>
+		<div class="wbredir-card">
+			<div class="wbredir-card__head">
+				<p class="wbredir-card__title"><?php esc_html_e( 'Updates &amp; License', 'bp-redirect' ); ?></p>
+				<p class="wbredir-card__desc"><?php esc_html_e( 'How this plugin receives updates.', 'bp-redirect' ); ?></p>
+			</div>
+			<div class="wbredir-card__body">
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Automatic updates', 'bp-redirect' ); ?></th>
+						<td>
+							<span class="wbredir-license-status is-active"><?php esc_html_e( 'Enabled', 'bp-redirect' ); ?></span>
+							<p class="description"><?php esc_html_e( 'This plugin updates automatically through the Wbcom Designs update service — no license key required.', 'bp-redirect' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Need more plugins?', 'bp-redirect' ); ?></th>
+						<td>
+							<a class="wbredir-btn wbredir-btn-secondary" href="https://wbcomdesigns.com/" target="_blank" rel="noopener noreferrer">
+								<span class="dashicons dashicons-external" aria-hidden="true"></span>
+								<?php esc_html_e( 'Browse Wbcom Designs', 'bp-redirect' ); ?>
+							</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<?php
 	}
 
 	/**
@@ -593,16 +692,18 @@ class Wbcom_Redirect_Admin {
 			return;
 		}
 
+		// Card-panel shell chrome (replaces the former admin/wbcom wrapper styles).
+		wp_enqueue_style( 'wbredir-admin', WBCOM_REDIRECT_PLUGIN_URL . 'assets/css/admin.css', array(), $this->version );
+
+		// Settings-tab content styles, relocated into the plugin from the former
+		// admin/wbcom wrapper so the tab markup keeps its styling.
+		$content_css = is_rtl() ? 'assets/css/wbcom-redirect-content-rtl.css' : 'assets/css/wbcom-redirect-content.css';
+		wp_enqueue_style( 'wbredir-content', WBCOM_REDIRECT_PLUGIN_URL . $content_css, array( 'wbredir-admin' ), $this->version );
+
+		// Plugin's own redirect-form styles.
 		$admin_css = wbcom_redirect_get_asset_filename( 'admin/assets/css', 'bp-redirect-admin' );
 		if ( $admin_css ) {
 			wp_enqueue_style( 'wbcom-redirect-admin', WBCOM_REDIRECT_PLUGIN_URL . $admin_css, array(), $this->version );
-		}
-
-		if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
-			$wbcom_css = wbcom_redirect_get_asset_filename( 'admin/wbcom/assets/css', 'wbcom-admin-setting' );
-			if ( $wbcom_css ) {
-				wp_enqueue_style( 'wbcom-admin-setting-css', WBCOM_REDIRECT_PLUGIN_URL . $wbcom_css, array(), $this->version );
-			}
 		}
 	}
 

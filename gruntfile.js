@@ -62,22 +62,6 @@ module.exports = function (grunt) {
 						ext: '.min.css' // Output file extension.
 					}],
 				},
-				wbcom: {
-					files: [{
-						expand: true,
-						cwd: 'admin/wbcom/assets/css/', // Source directory for admin CSS files.
-						src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones.
-						dest: 'admin/wbcom/assets/css/min/', // Destination directory for minified admin CSS.
-						ext: '.min.css', // Extension for minified files.
-					},
-					{
-						expand: true,
-						cwd: 'admin/wbcom/assets/css/rtl/', // Source directory for RTL CSS files.
-						src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all .css files except already minified ones.
-						dest: 'admin/wbcom/assets/css/rtl/', // Destination directory for minified CSS.
-						ext: '.min.css' // Output file extension.
-					}],
-				},
 			},
 
 			// Task for JavaScript minification.
@@ -94,18 +78,6 @@ module.exports = function (grunt) {
 						ext: '.min.js', // Extension for minified files.
 					}],
 				},
-				wbcom: {
-					options: {
-						mangle: false, // Prevents variable name mangling.
-					},
-					files: [{
-						expand: true,
-						cwd: 'admin/wbcom/assets/js/', // Source directory for admin JS files.
-						src: ['*.js', '!*.min.js', '!vendor/*.js'], // Minify all admin JS files except already minified ones.
-						dest: 'admin/wbcom/assets/js/', // Destination directory for minified admin JS.
-						ext: '.min.js', // Extension for minified files.
-					}],
-				}
 			},
 
 			// Task for watching file changes.
@@ -145,14 +117,6 @@ module.exports = function (grunt) {
 						cwd: 'admin/assets/css/', // Source directory for admin CSS.
 						src: ['**/*.css', '!**/*.min.css', '!**/*-rtl.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS.
 						dest: 'admin/assets/css/', // Destination directory for admin RTL CSS.
-						ext: '-rtl.css',
-						flatten: true // Prevents creating subdirectories.
-					},
-					{
-						expand: true,
-						cwd: 'admin/wbcom/assets/css/', // Source directory for admin CSS.
-						src: ['**/*.css', '!**/*.min.css', '!**/*-rtl.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS.
-						dest: 'admin/wbcom/assets/css/', // Destination directory for admin RTL CSS.
 						ext: '-rtl.css',
 						flatten: true // Prevents creating subdirectories.
 					}

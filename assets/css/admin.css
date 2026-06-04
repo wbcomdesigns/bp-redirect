@@ -1,0 +1,1343 @@
+/**
+ * BuddyPress Contact Me — Admin Styles
+ *
+ * Card-based settings panel following the wp-plugin-development skill
+ * Part 6 pattern. All tokens scoped under --wbredir-admin-* so nothing
+ * leaks to other plugins on the same admin screen.
+ *
+ * @since 1.5.0
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   Design Tokens
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-admin {
+	/* Accent */
+	--wbredir-admin-accent: #2563eb;
+	--wbredir-admin-accent-hover: #1d4ed8;
+	--wbredir-admin-accent-light: #eff6ff;
+
+	/* Surfaces */
+	--wbredir-admin-white: #ffffff;
+	--wbredir-admin-surface-1: #f8fafc;
+	--wbredir-admin-surface-2: #f1f5f9;
+	--wbredir-admin-border: #e2e8f0;
+	--wbredir-admin-border-strong: #cbd5e1;
+
+	/* Text scale */
+	--wbredir-admin-text: #1e293b;
+	--wbredir-admin-text-2: #475569;
+	--wbredir-admin-text-3: #64748b;
+	--wbredir-admin-text-4: #374151;
+	--wbredir-admin-text-muted: #94a3b8;
+
+	/* Semantic */
+	--wbredir-admin-success: #16a34a;
+	--wbredir-admin-success-light: #dcfce7;
+	--wbredir-admin-warn: #f59e0b;
+	--wbredir-admin-warn-light: #fef9c3;
+	--wbredir-admin-danger: #dc2626;
+	--wbredir-admin-danger-dark: #b91c1c;
+	--wbredir-admin-danger-light: #fee2e2;
+
+	/* Radius / Shadow */
+	--wbredir-admin-radius: 8px;
+	--wbredir-admin-radius-sm: 6px;
+	--wbredir-admin-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+	--wbredir-admin-shadow-hover: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+
+	/* Spacing */
+	--wbredir-admin-gap-sm: 8px;
+	--wbredir-admin-gap-md: 16px;
+	--wbredir-admin-gap-lg: 20px;
+	--wbredir-admin-gap-xl: 32px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Page wrapper + page header
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-admin {
+	margin: 0 20px 0 0;
+	color: var(--wbredir-admin-text);
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.wbredir-admin h1,
+.wbredir-admin h2,
+.wbredir-admin h3,
+.wbredir-admin p {
+	margin: 0;
+	color: inherit;
+}
+
+.wbredir-admin a {
+	color: var(--wbredir-admin-accent);
+}
+
+.wbredir-page-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--wbredir-admin-gap-md);
+	padding: 18px 0 14px;
+	margin: 0 0 18px;
+	border-bottom: 1px solid var(--wbredir-admin-border);
+}
+
+.wbredir-page-header__title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.wbredir-page-header__title h1 {
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 1.2;
+	margin: 0;
+	padding: 0;
+}
+
+.wbredir-page-header__title .dashicons {
+	color: var(--wbredir-admin-accent);
+	width: 24px;
+	height: 24px;
+	font-size: 24px;
+}
+
+.wbredir-page-header__subtitle {
+	font-size: 13px;
+	color: var(--wbredir-admin-text-3);
+	margin: 2px 0 0;
+}
+
+.wbredir-page-header__actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.wbredir-version-pill {
+	display: inline-block;
+	padding: 4px 10px;
+	background: var(--wbredir-admin-accent);
+	color: #fff;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.03em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Two-column settings layout
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-settings-layout {
+	display: flex;
+	align-items: flex-start;
+	gap: 0;
+	margin-top: var(--wbredir-admin-gap-md);
+}
+
+.wbredir-settings-sidebar {
+	width: 240px;
+	flex-shrink: 0;
+	background: var(--wbredir-admin-white);
+	border: 1px solid var(--wbredir-admin-border);
+	border-radius: var(--wbredir-admin-radius);
+	box-shadow: var(--wbredir-admin-shadow);
+	position: sticky;
+	top: 32px;
+	overflow: hidden;
+}
+
+.wbredir-settings-sidebar-brand {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 16px 16px 14px;
+	border-bottom: 1px solid var(--wbredir-admin-surface-2);
+}
+
+.wbredir-settings-brand-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: var(--wbredir-admin-radius-sm);
+	background: var(--wbredir-admin-accent);
+	color: #fff;
+	flex-shrink: 0;
+}
+
+.wbredir-settings-brand-icon .dashicons {
+	color: #fff;
+	width: 18px;
+	height: 18px;
+	font-size: 18px;
+}
+
+.wbredir-settings-brand-text {
+	min-width: 0;
+}
+
+.wbredir-settings-brand-name {
+	margin: 0;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--wbredir-admin-text);
+	line-height: 1.2;
+}
+
+.wbredir-settings-brand-sub {
+	margin: 2px 0 0;
+	font-size: 10px;
+	color: var(--wbredir-admin-text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	font-weight: 600;
+}
+
+.wbredir-settings-sidebar-nav {
+	padding: 8px;
+}
+
+.wbredir-snav-link {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 9px 10px;
+	border-radius: var(--wbredir-admin-radius-sm);
+	color: var(--wbredir-admin-text-2);
+	text-decoration: none;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+	transition: background 0.12s, color 0.12s;
+	margin-bottom: 1px;
+}
+
+.wbredir-snav-link .dashicons {
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+	flex-shrink: 0;
+	color: var(--wbredir-admin-text-muted);
+	transition: color 0.12s;
+}
+
+.wbredir-snav-link:hover,
+.wbredir-snav-link:focus {
+	background: var(--wbredir-admin-surface-1);
+	color: var(--wbredir-admin-text);
+	box-shadow: none;
+}
+
+/* Mouse-focus only — keyboard users get a visible outline via the
+   .wbredir-snav-link:focus-visible rule below. */
+.wbredir-snav-link:focus:not(:focus-visible) {
+	outline: none;
+}
+
+.wbredir-snav-link:hover .dashicons,
+.wbredir-snav-link:focus .dashicons {
+	color: var(--wbredir-admin-text-3);
+}
+
+.wbredir-snav-link:focus-visible {
+	outline: 2px solid var(--wbredir-admin-accent);
+	outline-offset: 2px;
+}
+
+.wbredir-snav-link--active,
+.wbredir-snav-link--active:hover,
+.wbredir-snav-link--active:focus {
+	background: var(--wbredir-admin-accent-light);
+	color: var(--wbredir-admin-accent);
+	font-weight: 600;
+}
+
+.wbredir-snav-link--active .dashicons {
+	color: var(--wbredir-admin-accent);
+}
+
+.wbredir-snav-divider {
+	height: 1px;
+	background: var(--wbredir-admin-surface-2);
+	margin: 8px 0;
+}
+
+.wbredir-snav-section-label {
+	margin: 8px 0 4px 10px;
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--wbredir-admin-text-muted);
+}
+
+.wbredir-settings-main {
+	flex: 1;
+	min-width: 0;
+	margin-left: var(--wbredir-admin-gap-lg);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Cards
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-card {
+	background: var(--wbredir-admin-white);
+	border: 1px solid var(--wbredir-admin-border);
+	border-radius: var(--wbredir-admin-radius);
+	box-shadow: var(--wbredir-admin-shadow);
+	margin-bottom: var(--wbredir-admin-gap-lg);
+	overflow: hidden;
+}
+
+.wbredir-card__head {
+	padding: 14px 20px 12px;
+	border-bottom: 1px solid var(--wbredir-admin-border);
+	background: var(--wbredir-admin-surface-1);
+}
+
+.wbredir-card__title {
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--wbredir-admin-text);
+	margin: 0 0 2px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.wbredir-card__desc {
+	font-size: 13px;
+	color: var(--wbredir-admin-text-3);
+	margin: 0;
+	line-height: 1.5;
+}
+
+.wbredir-card__body {
+	padding: 20px;
+}
+
+.wbredir-card .form-table {
+	margin: 0;
+}
+
+.wbredir-card .form-table th {
+	padding: 14px 20px;
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--wbredir-admin-text-4);
+	width: 240px;
+	vertical-align: middle;
+}
+
+.wbredir-card .form-table td {
+	padding: 14px 20px;
+}
+
+.wbredir-card .form-table tr {
+	border-bottom: 1px solid var(--wbredir-admin-surface-2);
+}
+
+.wbredir-card .form-table tr:last-child {
+	border-bottom: none;
+}
+
+.wbredir-card .form-table .description {
+	margin: 6px 0 0;
+	color: var(--wbredir-admin-text-3);
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.wbredir-card .form-table input[type="text"],
+.wbredir-card .form-table input[type="number"],
+.wbredir-card .form-table input[type="email"],
+.wbredir-card .form-table input[type="url"],
+.wbredir-card .form-table input[type="date"],
+.wbredir-card .form-table select {
+	padding: 8px 10px;
+	border: 1px solid var(--wbredir-admin-border-strong);
+	border-radius: var(--wbredir-admin-radius-sm);
+	font-size: 13px;
+	line-height: 1.4;
+	box-shadow: none;
+	background: var(--wbredir-admin-white);
+	color: var(--wbredir-admin-text);
+}
+
+.wbredir-card .form-table input[type="text"]:focus,
+.wbredir-card .form-table input[type="number"]:focus,
+.wbredir-card .form-table input[type="email"]:focus,
+.wbredir-card .form-table input[type="url"]:focus,
+.wbredir-card .form-table input[type="date"]:focus,
+.wbredir-card .form-table select:focus {
+	border-color: var(--wbredir-admin-accent);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Mouse-focus gets the subtle box-shadow ring (above). Keyboard-focus
+   also keeps the browser's default outline so screen-reader / keyboard
+   users get the strongest indicator. Only suppress the outline on
+   mouse click. */
+.wbredir-card .form-table input[type="text"]:focus:not(:focus-visible),
+.wbredir-card .form-table input[type="email"]:focus:not(:focus-visible),
+.wbredir-card .form-table input[type="number"]:focus:not(:focus-visible),
+.wbredir-card .form-table input[type="url"]:focus:not(:focus-visible),
+.wbredir-card .form-table input[type="date"]:focus:not(:focus-visible),
+.wbredir-card .form-table select:focus:not(:focus-visible) {
+	outline: none;
+}
+
+.wbredir-card .form-table input.regular-text,
+.wbredir-card .form-table input.large-text {
+	width: 100%;
+	max-width: 480px;
+}
+
+.wbredir-card .form-table input.small-text {
+	width: 100px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Role chip grid (Permissions tab)
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-role-grid-wrap {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.wbredir-role-grid-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 0 0 12px;
+	margin-bottom: 12px;
+	border-bottom: 1px solid var(--wbredir-admin-surface-2);
+}
+
+.wbredir-role-grid-count {
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--wbredir-admin-text-3);
+	letter-spacing: 0.02em;
+}
+
+.wbredir-role-grid-actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.wbredir-role-grid-sep {
+	color: var(--wbredir-admin-border-strong);
+}
+
+.wbredir-link {
+	background: transparent;
+	border: 0;
+	padding: 0;
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--wbredir-admin-accent);
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.wbredir-link:hover,
+.wbredir-link:focus {
+	color: var(--wbredir-admin-accent-hover);
+	text-decoration: underline;
+}
+
+/* Mouse-focus only — keyboard users get a visible outline via the
+   .wbredir-link:focus-visible rule below. */
+.wbredir-link:focus:not(:focus-visible) {
+	outline: none;
+}
+
+.wbredir-link:focus-visible {
+	outline: 2px solid var(--wbredir-admin-accent);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+.wbredir-role-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.wbredir-role-chip {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 12px;
+	background: var(--wbredir-admin-surface-1);
+	border: 1px solid var(--wbredir-admin-border);
+	border-radius: var(--wbredir-admin-radius-sm);
+	cursor: pointer;
+	transition: background 0.12s, border-color 0.12s;
+	min-height: 40px;
+}
+
+.wbredir-role-chip:hover {
+	background: var(--wbredir-admin-white);
+	border-color: var(--wbredir-admin-border-strong);
+}
+
+.wbredir-role-chip input[type="checkbox"] {
+	margin: 0;
+	flex-shrink: 0;
+	accent-color: var(--wbredir-admin-accent);
+}
+
+.wbredir-role-chip__label {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--wbredir-admin-text-4);
+	line-height: 1.3;
+}
+
+.wbredir-role-chip:has(input:checked) {
+	background: var(--wbredir-admin-accent-light);
+	border-color: rgba(37, 99, 235, 0.35);
+}
+
+.wbredir-role-chip:has(input:checked) .wbredir-role-chip__label {
+	color: var(--wbredir-admin-accent);
+	font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Form helpers
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-inline-hint {
+	display: inline-block;
+	margin-left: 8px;
+	color: var(--wbredir-admin-text-3);
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.wbredir-save-bar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 16px 0 0;
+}
+
+/*
+ * When a save-bar sits at the bottom of a card (not inside a
+ * .wbredir-card__body wrapper), give it the same horizontal padding as
+ * form-table cells + a top separator so the buttons don't sit flush
+ * against the card border. Covers `<div class="wbredir-card"><form>...
+ * <div class="wbredir-save-bar">` and direct-child cases.
+ */
+.wbredir-card > .wbredir-save-bar,
+.wbredir-card > form > .wbredir-save-bar {
+	padding: 16px 20px 20px;
+	border-top: 1px solid var(--wbredir-admin-border);
+	background: var(--wbredir-admin-surface-1);
+}
+
+.wbredir-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 8px 16px;
+	border-radius: var(--wbredir-admin-radius-sm);
+	border: 1px solid transparent;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+	cursor: pointer;
+	text-decoration: none;
+	transition: background 0.12s, border-color 0.12s, color 0.12s;
+	min-height: 36px;
+	box-shadow: none;
+}
+
+.wbredir-btn-primary {
+	background: var(--wbredir-admin-accent);
+	color: #fff;
+	border-color: var(--wbredir-admin-accent);
+}
+
+.wbredir-btn-primary:hover,
+.wbredir-btn-primary:focus {
+	background: var(--wbredir-admin-accent-hover);
+	border-color: var(--wbredir-admin-accent-hover);
+	color: #fff;
+}
+
+.wbredir-btn-secondary {
+	background: var(--wbredir-admin-white);
+	color: var(--wbredir-admin-text);
+	border-color: var(--wbredir-admin-border-strong);
+}
+
+.wbredir-btn-secondary:hover,
+.wbredir-btn-secondary:focus {
+	background: var(--wbredir-admin-surface-1);
+	color: var(--wbredir-admin-text);
+	border-color: var(--wbredir-admin-border-strong);
+}
+
+.wbredir-btn-danger {
+	background: var(--wbredir-admin-white);
+	color: var(--wbredir-admin-danger);
+	border-color: var(--wbredir-admin-danger-light);
+}
+
+.wbredir-btn-danger:hover,
+.wbredir-btn-danger:focus {
+	background: var(--wbredir-admin-danger);
+	color: #fff;
+	border-color: var(--wbredir-admin-danger);
+}
+
+.wbredir-btn:focus-visible {
+	outline: 2px solid var(--wbredir-admin-accent);
+	outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Overview — stat grid
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-stats-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: var(--wbredir-admin-gap-md);
+	margin: 0 0 var(--wbredir-admin-gap-lg);
+}
+
+.wbredir-stat {
+	background: var(--wbredir-admin-white);
+	border: 1px solid var(--wbredir-admin-border);
+	border-radius: var(--wbredir-admin-radius);
+	box-shadow: var(--wbredir-admin-shadow);
+	padding: 18px;
+}
+
+.wbredir-stat__label {
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--wbredir-admin-text-muted);
+	margin: 0 0 6px;
+}
+
+.wbredir-stat__value {
+	font-size: 26px;
+	font-weight: 700;
+	color: var(--wbredir-admin-text);
+	line-height: 1.1;
+}
+
+.wbredir-stat__trend {
+	margin: 4px 0 0;
+	font-size: 12px;
+	color: var(--wbredir-admin-text-3);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Notices + empty states
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-notice {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 12px 16px;
+	border-radius: var(--wbredir-admin-radius-sm);
+	border: 1px solid var(--wbredir-admin-border);
+	background: var(--wbredir-admin-surface-1);
+	margin-bottom: var(--wbredir-admin-gap-md);
+	font-size: 13px;
+}
+
+.wbredir-notice--info {
+	background: var(--wbredir-admin-accent-light);
+	border-color: rgba(37, 99, 235, 0.2);
+	color: var(--wbredir-admin-accent);
+}
+
+.wbredir-notice--warn {
+	background: var(--wbredir-admin-warn-light);
+	border-color: rgba(245, 158, 11, 0.3);
+	color: #92400e;
+}
+
+.wbredir-notice--success {
+	background: var(--wbredir-admin-success-light);
+	border-color: rgba(22, 163, 74, 0.2);
+	color: var(--wbredir-admin-success);
+}
+
+.wbredir-empty-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0;
+	background: var(--wbredir-admin-white);
+	border: 1px solid var(--wbredir-admin-border);
+	border-radius: var(--wbredir-admin-radius);
+	box-shadow: var(--wbredir-admin-shadow);
+	padding: 56px 32px;
+	text-align: center;
+}
+
+.wbredir-empty-state__icon {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	margin: 0 auto 16px;
+	background: var(--wbredir-admin-accent-light);
+	color: var(--wbredir-admin-accent);
+	border-radius: 50%;
+	font-size: 32px;
+}
+
+.wbredir-empty-state__icon .dashicons {
+	width: 32px;
+	height: 32px;
+	font-size: 32px;
+	line-height: 1;
+	color: inherit;
+}
+
+.wbredir-empty-state__title {
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--wbredir-admin-text);
+	margin: 0 0 6px;
+	line-height: 1.3;
+}
+
+.wbredir-empty-state__desc {
+	font-size: 13px;
+	color: var(--wbredir-admin-text-3);
+	margin: 0 auto 20px;
+	max-width: 440px;
+	line-height: 1.55;
+}
+
+.wbredir-empty-state__desc:last-child {
+	margin-bottom: 0;
+}
+
+.wbredir-empty-state .wbredir-btn {
+	margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Toast + confirm modal (JS-driven)
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-toast-host {
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 100000;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	pointer-events: none;
+}
+
+.wbredir-toast {
+	background: var(--wbredir-admin-text);
+	color: #fff;
+	padding: 12px 16px;
+	border-radius: var(--wbredir-admin-radius-sm);
+	font-size: 13px;
+	font-weight: 500;
+	box-shadow: var(--wbredir-admin-shadow-hover);
+	min-width: 240px;
+	max-width: 360px;
+	pointer-events: auto;
+	transform: translateY(8px);
+	opacity: 0;
+	transition: opacity 0.2s, transform 0.2s;
+}
+
+.wbredir-toast--visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.wbredir-toast--success {
+	background: var(--wbredir-admin-success);
+}
+
+.wbredir-toast--error {
+	background: var(--wbredir-admin-danger);
+}
+
+.wbredir-confirm-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(15, 23, 42, 0.5);
+	z-index: 100001;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+}
+
+.wbredir-confirm {
+	background: var(--wbredir-admin-white);
+	border-radius: var(--wbredir-admin-radius);
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+	max-width: 420px;
+	width: 100%;
+	padding: 24px;
+}
+
+.wbredir-confirm__title {
+	font-size: 16px;
+	font-weight: 700;
+	margin: 0 0 8px;
+	color: var(--wbredir-admin-text);
+}
+
+.wbredir-confirm__desc {
+	font-size: 13px;
+	color: var(--wbredir-admin-text-3);
+	margin: 0 0 18px;
+	line-height: 1.5;
+}
+
+.wbredir-confirm__actions {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Toggle switch (settings tab)
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-switch {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.wbredir-switch input {
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+}
+
+.wbredir-switch__track {
+	display: inline-block;
+	width: 42px;
+	height: 24px;
+	border-radius: 999px;
+	background: var(--wbredir-admin-border-strong);
+	transition: background 0.15s ease;
+	flex: 0 0 auto;
+}
+
+.wbredir-switch__track::before {
+	content: "";
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: var(--wbredir-admin-white);
+	transition: transform 0.15s ease;
+}
+
+.wbredir-switch input:checked + .wbredir-switch__track {
+	background: var(--wbredir-admin-accent);
+}
+
+.wbredir-switch input:checked + .wbredir-switch__track::before {
+	transform: translateX(18px);
+}
+
+.wbredir-switch input:focus-visible + .wbredir-switch__track {
+	outline: 2px solid var(--wbredir-admin-accent);
+	outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Ghost button variant
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-btn-ghost {
+	background: transparent;
+	border: 1px solid transparent;
+	color: var(--wbredir-admin-text-2);
+}
+
+.wbredir-btn-ghost:hover,
+.wbredir-btn-ghost:focus {
+	background: var(--wbredir-admin-surface-2);
+	color: var(--wbredir-admin-text);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FAQ accordion (native <details>)
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-faq {
+	border: 1px solid var(--wbredir-admin-border);
+	border-radius: var(--wbredir-admin-radius-sm);
+	margin-bottom: 10px;
+	background: var(--wbredir-admin-surface-1);
+}
+
+.wbredir-faq[open] {
+	background: var(--wbredir-admin-surface-2);
+}
+
+.wbredir-faq__q {
+	cursor: pointer;
+	padding: 14px 16px;
+	font-weight: 600;
+	color: var(--wbredir-admin-text);
+	list-style: none;
+}
+
+.wbredir-faq__q::-webkit-details-marker {
+	display: none;
+}
+
+.wbredir-faq__q::after {
+	content: "+";
+	float: right;
+	font-weight: 400;
+	color: var(--wbredir-admin-text-3);
+}
+
+.wbredir-faq[open] .wbredir-faq__q::after {
+	content: "\2013";
+}
+
+.wbredir-faq__q:focus-visible {
+	outline: 2px solid var(--wbredir-admin-accent);
+	outline-offset: -2px;
+}
+
+.wbredir-faq__a {
+	margin: 0;
+	padding: 0 16px 16px;
+	color: var(--wbredir-admin-text-2);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Avatar / media picker field (settings tab)
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-avatar-field {
+	display: flex;
+	align-items: center;
+	gap: var(--wbredir-admin-gap-md);
+	flex-wrap: wrap;
+}
+
+.wbredir-avatar-field__preview {
+	width: 96px;
+	height: 96px;
+	border-radius: var(--wbredir-admin-radius-sm);
+	object-fit: cover;
+	border: 1px solid var(--wbredir-admin-border);
+	background: var(--wbredir-admin-surface-2);
+}
+
+.wbredir-avatar-field__actions {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Responsive — exactly two media blocks per skill Part 7.5
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+	.wbredir-settings-layout {
+		flex-direction: column;
+	}
+
+	.wbredir-settings-sidebar {
+		width: 100%;
+		position: static;
+		top: auto;
+	}
+
+	.wbredir-settings-sidebar-nav {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 8px;
+	}
+
+	.wbredir-snav-link {
+		flex: 1 1 auto;
+		justify-content: center;
+	}
+
+	.wbredir-snav-divider,
+	.wbredir-snav-section-label {
+		display: none;
+	}
+
+	.wbredir-settings-main {
+		margin-left: 0;
+		margin-top: var(--wbredir-admin-gap-md);
+	}
+}
+
+@media (max-width: 640px) {
+	.wbredir-admin {
+		margin-right: 0;
+	}
+
+	.wbredir-page-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.wbredir-card .form-table th,
+	.wbredir-card .form-table td {
+		display: block;
+		width: 100%;
+		padding: 8px 16px;
+	}
+
+	.wbredir-card .form-table th {
+		padding-top: 16px;
+		padding-bottom: 4px;
+	}
+
+	.wbredir-stats-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WB Plugins hub landing dashboard
+   ═══════════════════════════════════════════════════════════ */
+
+.wbredir-hub-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: var(--wbredir-admin-gap-md);
+	margin: 0 0 var(--wbredir-admin-gap-lg);
+}
+
+.wbredir-hub-card {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 20px;
+	background: var(--wbredir-admin-white);
+	border: 1px solid var(--wbredir-admin-border);
+	border-radius: var(--wbredir-admin-radius);
+	box-shadow: var(--wbredir-admin-shadow);
+	text-decoration: none;
+	color: var(--wbredir-admin-text);
+	transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+}
+
+.wbredir-hub-card:hover,
+.wbredir-hub-card:focus {
+	border-color: var(--wbredir-admin-accent);
+	box-shadow: var(--wbredir-admin-shadow-hover);
+	transform: translateY(-1px);
+	color: var(--wbredir-admin-text);
+	text-decoration: none;
+}
+
+/* Mouse-focus only — keyboard users get a visible outline via the
+   .wbredir-hub-card:focus-visible rule below. */
+.wbredir-hub-card:focus:not(:focus-visible) {
+	outline: none;
+}
+
+.wbredir-hub-card:focus-visible {
+	outline: 2px solid var(--wbredir-admin-accent);
+	outline-offset: 2px;
+}
+
+.wbredir-hub-card__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 10px;
+	background: var(--wbredir-admin-accent-light);
+	color: var(--wbredir-admin-accent);
+}
+
+.wbredir-hub-card__icon .dashicons {
+	width: 22px;
+	height: 22px;
+	font-size: 22px;
+	color: inherit;
+}
+
+.wbredir-hub-card__title {
+	font-size: 15px;
+	font-weight: 700;
+	color: var(--wbredir-admin-text);
+	line-height: 1.2;
+}
+
+.wbredir-hub-card__subtitle {
+	font-size: 12px;
+	color: var(--wbredir-admin-text-3);
+	line-height: 1.4;
+}
+
+.wbredir-hub-card__cta {
+	margin-top: auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding-top: 6px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--wbredir-admin-accent);
+}
+
+.wbredir-hub-card__cta .dashicons {
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+	transition: transform 0.12s;
+}
+
+.wbredir-hub-card:hover .wbredir-hub-card__cta .dashicons {
+	transform: translateX(2px);
+}
+
+/* ---------------------------------------------------------------------
+ * Settings notices ("Settings saved.", error banners, etc.)
+ *
+ * WP core's common.js hoists every .notice up to sit right after the
+ * first <h1> inside .wrap (or after .wp-header-end), regardless of
+ * where settings_errors() is called in PHP. With the notice's default
+ * styling the banner reads as a stray browser pill against our card
+ * panel below — flat, full-width, no chrome consistency.
+ *
+ * Scope styling to .wbredir-admin .notice so the banner picks up our
+ * radius + shadow + padding tokens and reads as part of the same UI.
+ * Reference: Basecamp card 9828831122.
+ * ------------------------------------------------------------------ */
+.wbredir-admin .notice {
+	border-radius: var( --wbredir-admin-radius );
+	box-shadow: var( --wbredir-admin-shadow );
+	padding: 12px 16px;
+	margin: 0 0 18px;
+	font-size: 14px;
+	line-height: 1.5;
+	border-width: 0 0 0 4px;
+	border-style: solid;
+}
+
+.wbredir-admin .notice p {
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+/* Restore the dismiss button into the new padding rhythm. */
+.wbredir-admin .notice.is-dismissible {
+	padding-right: 38px;
+}
+
+.wbredir-admin .notice .notice-dismiss {
+	top: 8px;
+	right: 8px;
+}
+
+/* ════════════════════════════════════════════════
+   License status (1.5.0+ - card-panel license tab)
+   Mirrors the BFFS pattern: status pill + inline
+   metadata (Expires, Activations) on a single row.
+   ════════════════════════════════════════════════ */
+.wbredir-license-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border-radius: var(--wbredir-admin-radius-sm);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	line-height: 1.4;
+	vertical-align: middle;
+}
+
+.wbredir-license-status::before {
+	content: "";
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: currentColor;
+	flex-shrink: 0;
+}
+
+.wbredir-license-status.is-active {
+	background: var(--wbredir-admin-success-light, rgba(16, 185, 129, 0.10));
+	color: var(--wbredir-admin-success, #047857);
+}
+
+.wbredir-license-status.is-inactive,
+.wbredir-license-status.is-pending {
+	background: var(--wbredir-admin-warn-light, rgba(217, 119, 6, 0.10));
+	color: var(--wbredir-admin-warn, #d97706);
+}
+
+.wbredir-license-status.is-expired,
+.wbredir-license-status.is-invalid {
+	background: var(--wbredir-admin-danger-light, rgba(220, 38, 38, 0.10));
+	color: var(--wbredir-admin-danger, #b91c1c);
+}
+
+.wbredir-license-meta {
+	display: inline-flex;
+	align-items: center;
+	color: var(--wbredir-admin-text-2);
+	font-size: 13px;
+	font-weight: 400;
+	vertical-align: middle;
+}
+
+.wbredir-license-meta strong {
+	color: var(--wbredir-admin-text);
+	font-weight: 600;
+	margin-right: 4px;
+}
+
+.wbredir-license-meta-sep {
+	display: inline-block;
+	color: var(--wbredir-admin-text-3);
+	margin: 0 8px;
+	vertical-align: middle;
+	font-size: 14px;
+	line-height: 1;
+}
+
+.wbredir-license-renew-warn {
+	margin: 8px 0 0;
+	color: var(--wbredir-admin-warn, #d97706);
+	font-size: 13px;
+}
+
+/* ── WP Stories: settings field components (2.4.0 migration) ───────── */
+
+/* Story display-style chooser (radio cards). */
+.wbredir-style-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 0 0 4px;
+	padding: 0;
+	border: 0;
+}
+
+.wbredir-style-choice {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	width: 116px;
+	padding: 10px;
+	background: var(--wbredir-admin-surface-1);
+	border: 1px solid var(--wbredir-admin-border);
+	border-radius: var(--wbredir-admin-radius-sm);
+	cursor: pointer;
+	transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+
+.wbredir-style-choice:hover {
+	border-color: var(--wbredir-admin-border-strong);
+}
+
+.wbredir-style-choice img {
+	width: 100%;
+	height: auto;
+	border-radius: 4px;
+	display: block;
+}
+
+.wbredir-style-choice span {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--wbredir-admin-text-3);
+}
+
+.wbredir-style-choice.is-selected,
+.wbredir-style-choice:has(input:checked) {
+	background: var(--wbredir-admin-accent-light);
+	border-color: rgba(37, 99, 235, 0.35);
+	box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25);
+}
+
+.wbredir-style-choice.is-selected span,
+.wbredir-style-choice:has(input:checked) span {
+	color: var(--wbredir-admin-accent);
+}
+
+.wbredir-style-choice input[type="radio"] {
+	margin: 0;
+	accent-color: var(--wbredir-admin-accent);
+}
+
+/* Inline numeric-field suffix (day(s), px, MB, …). */
+.wbredir-field-suffix {
+	margin-inline-start: 6px;
+	font-size: 13px;
+	color: var(--wbredir-admin-text-3);
+}
+
+/* Paired colour / numeric inputs (gradient left-right, padding). */
+.wbredir-color-pair {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 18px;
+}
+
+.wbredir-color-pair__item {
+	display: inline-flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.wbredir-color-pair__item label {
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--wbredir-admin-text-3);
+}
