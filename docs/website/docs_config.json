@@ -1,0 +1,55 @@
+{
+  "product": "BuddyPress Redirect",
+  "productType": "plugin",
+  "shortId": "bpredirect",
+  "sections": [
+    {
+      "slug": "getting-started",
+      "title": "Getting Started",
+      "pages": [
+        { "slug": "installation", "title": "Installation and Requirements", "file": "getting-started/installation.md" },
+        { "slug": "quick-start", "title": "Quick Start", "file": "getting-started/quick-start.md" }
+      ]
+    },
+    {
+      "slug": "features",
+      "title": "Features",
+      "pages": [
+        { "slug": "overview", "title": "What the Plugin Does", "file": "features/overview.md" }
+      ]
+    },
+    {
+      "slug": "usage",
+      "title": "Usage",
+      "pages": [
+        { "slug": "global-redirection", "title": "Global Redirection", "file": "usage/global-redirection.md" },
+        { "slug": "role-based-redirection", "title": "Role-Based Redirection", "file": "usage/role-based-redirection.md" },
+        { "slug": "integration-destinations", "title": "Integration Destinations", "file": "usage/integration-destinations.md" },
+        { "slug": "buddypress-member-types", "title": "BuddyPress Member Types", "file": "usage/buddypress-member-types.md" }
+      ]
+    },
+    {
+      "slug": "developer-guide",
+      "title": "Developer Guide",
+      "pages": [
+        { "slug": "architecture", "title": "Architecture and Resolution", "file": "developer-guide/architecture.md" },
+        { "slug": "options-reference", "title": "Options and Data Reference", "file": "developer-guide/options-reference.md" },
+        { "slug": "integration-api", "title": "Integration API", "file": "developer-guide/integration-api.md" }
+      ]
+    },
+    {
+      "slug": "faq",
+      "title": "FAQ",
+      "pages": [
+        { "slug": "faq", "title": "Frequently Asked Questions", "file": "faq/faq.md" }
+      ]
+    },
+    {
+      "slug": "troubleshooting",
+      "title": "Troubleshooting",
+      "pages": [
+        { "slug": "troubleshooting", "title": "Troubleshooting", "file": "troubleshooting/troubleshooting.md" }
+      ]
+    }
+  ]
+}
