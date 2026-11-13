@@ -1987,8 +1987,7 @@ button.bpr-accordion.active::after {
 	content: "\f111" !important;
 }
 
-.wbcom-wrap .notice.notice-error.is-dismissible.learndash-license-is-dismissible,
-#wpwrap .notice.notice-error {
+.wbcom-wrap .notice.notice-error.is-dismissible.learndash-license-is-dismissible {
 	display: none !important;
 }
 

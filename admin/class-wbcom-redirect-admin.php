@@ -333,7 +333,7 @@ class Wbcom_Redirect_Admin {
 							<button type="button" class="button button-primary wbcom-redirect-save" data-scope="global"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button>
 							<img src="<?php echo esc_url( $spinner_src ); ?>" alt="" class="wbcom-redirect-spinner" style="display:none" />
 						</p>
-						<div class="wbcom-redirect-notice is-dismissible" style="display:none">
+						<div class="wbcom-redirect-notice is-dismissible" role="status" aria-live="polite" style="display:none">
 							<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
 							<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'bp-redirect' ); ?></span></button>
 						</div>
@@ -395,7 +395,7 @@ class Wbcom_Redirect_Admin {
 							<button type="button" class="button button-primary wbcom-redirect-save" data-scope="roles"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button>
 							<img src="<?php echo esc_url( $spinner_src ); ?>" alt="" class="wbcom-redirect-spinner" style="display:none" />
 						</p>
-						<div class="wbcom-redirect-notice is-dismissible" style="display:none">
+						<div class="wbcom-redirect-notice is-dismissible" role="status" aria-live="polite" style="display:none">
 							<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
 							<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'bp-redirect' ); ?></span></button>
 						</div>
@@ -472,7 +472,7 @@ class Wbcom_Redirect_Admin {
 							<button type="button" class="button button-primary wbcom-redirect-save" data-scope="integration" data-integration="<?php echo esc_attr( $integration->get_slug() ); ?>"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button>
 							<img src="<?php echo esc_url( $spinner_src ); ?>" alt="" class="wbcom-redirect-spinner" style="display:none" />
 						</p>
-						<div class="wbcom-redirect-notice is-dismissible" style="display:none">
+						<div class="wbcom-redirect-notice is-dismissible" role="status" aria-live="polite" style="display:none">
 							<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
 							<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'bp-redirect' ); ?></span></button>
 						</div>
@@ -505,13 +505,24 @@ class Wbcom_Redirect_Admin {
 			$destinations = Wbcom_Redirect_Integration_Registry::instance()->get_all_destinations();
 		}
 
-		// Get all pages.
-		$pages = get_pages(
-			array(
-				'post_status' => 'publish',
-				'sort_column' => 'post_title',
-			)
-		);
+		// The full page list is printed once per screen; each select carries only its saved
+		// page and is filled from the shared list when opened (a tab can hold 40+ selects).
+		static $page_options_printed = false;
+		if ( ! $page_options_printed ) {
+			$page_options_printed = true;
+			// ponytail: one list of every published page; switch to a search field if a site has tens of thousands.
+			$pages = get_pages(
+				array(
+					'post_status' => 'publish',
+					'sort_column' => 'post_title',
+				)
+			);
+			echo '<template id="wbcom-redirect-page-options">';
+			foreach ( $pages as $page ) {
+				echo '<option value="' . esc_attr( $page->ID ) . '">' . esc_html( $page->post_title ) . '</option>';
+			}
+			echo '</template>';
+		}
 
 		$uid = wp_unique_id( 'wbcom-redir-' );
 		?>
@@ -541,13 +552,11 @@ class Wbcom_Redirect_Admin {
 			</div>
 
 			<div class="wbcom-redirect-field wbcom-redirect-field-page" <?php echo 'page' !== $type ? 'style="display:none"' : ''; ?>>
-				<select name="<?php echo esc_attr( $name_base . '[page_id]' ); ?>">
+				<select name="<?php echo esc_attr( $name_base . '[page_id]' ); ?>" class="wbcom-redirect-page-select">
 					<option value=""><?php esc_html_e( '-- Select Page --', 'bp-redirect' ); ?></option>
-					<?php foreach ( $pages as $page ) : ?>
-						<option value="<?php echo esc_attr( $page->ID ); ?>" <?php selected( $page_id, $page->ID ); ?>>
-							<?php echo esc_html( $page->post_title ); ?>
-						</option>
-					<?php endforeach; ?>
+					<?php if ( $page_id ) : ?>
+						<option value="<?php echo esc_attr( $page_id ); ?>" selected><?php echo esc_html( get_the_title( $page_id ) ); ?></option>
+					<?php endif; ?>
 				</select>
 			</div>
 
@@ -732,6 +741,11 @@ class Wbcom_Redirect_Admin {
 			array(
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'wbcom-redirect-admin' ),
+				'i18n'    => array(
+					'saved'  => __( 'Settings saved.', 'bp-redirect' ),
+					'error'  => __( 'Error saving settings.', 'bp-redirect' ),
+					'failed' => __( 'Request failed. Please try again.', 'bp-redirect' ),
+				),
 			)
 		);
 	}

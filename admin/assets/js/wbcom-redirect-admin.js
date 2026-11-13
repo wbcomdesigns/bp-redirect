@@ -31,6 +31,19 @@
 			$config.find('.wbcom-redirect-field-' + type).show();
 		});
 
+		// ——— Page selects: fill from the shared page list on first use ———.
+		$(document).on('mousedown focus', '.wbcom-redirect-page-select:not(.is-filled)', function () {
+			var $select  = $(this).addClass('is-filled');
+			var current  = $select.val();
+			var template = document.getElementById('wbcom-redirect-page-options');
+			if (!template) {
+				return;
+			}
+			$select.find('option[value!=""]').remove();
+			$select.append(template.content.cloneNode(true));
+			$select.val(current);
+		});
+
 		// ——— Accordion for role/group-type sections ———.
 		$('[id$="-accordion"]').each(function () {
 			$(this).accordion({
@@ -89,22 +102,29 @@
 			$spinner.show();
 			$btn.prop('disabled', true);
 
-			$.post(wbcomRedirect.ajaxUrl, postData, function (response) {
-				$spinner.hide();
-				$btn.prop('disabled', false);
-
-				if (response.success) {
-					$notice.addClass('updated settings-error notice').show();
+			var showNotice = function (ok, text) {
+				$notice.removeClass('updated notice-error').addClass('settings-error notice ' + (ok ? 'updated' : 'notice-error'));
+				$notice.find('strong').text(text);
+				$notice.stop(true, true).show();
+				if (ok) {
 					setTimeout(function () {
 						$notice.fadeOut();
 					}, 3000);
+				}
+			};
+
+			$.post(wbcomRedirect.ajaxUrl, postData, function (response) {
+				$spinner.hide();
+				$btn.prop('disabled', false);
+				if (response.success) {
+					showNotice(true, wbcomRedirect.i18n.saved);
 				} else {
-					alert(response.data || 'Error saving settings.');
+					showNotice(false, response.data || wbcomRedirect.i18n.error);
 				}
 			}).fail(function () {
 				$spinner.hide();
 				$btn.prop('disabled', false);
-				alert('Request failed. Please try again.');
+				showNotice(false, wbcomRedirect.i18n.failed);
 			});
 		});
 
