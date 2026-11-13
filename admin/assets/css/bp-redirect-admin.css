@@ -2083,6 +2083,7 @@ button.bpr-accordion.active::after {
 	.wbcom-redirect-field select,
 	.wbcom-redirect-field input[type="url"] {
 		width: 100%;
+		min-width: 0;
 		max-width: 100%;
 	}
 }

@@ -49,17 +49,11 @@ module.exports = function (grunt) {
 				admin: {
 					files: [{
 						expand: true,
-						cwd: 'admin/css/', // Source directory for admin CSS files.
-						src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones.
-						dest: 'admin/css/min/', // Destination directory for minified admin CSS.
-						ext: '.min.css', // Extension for minified files.
-					},
-					{
-						expand: true,
-						cwd: 'admin/css/rtl/', // Source directory for RTL CSS files.
-						src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all .css files except already minified ones.
-						dest: 'admin/css/rtl/', // Destination directory for minified CSS.
-						ext: '.min.css' // Output file extension.
+						cwd: 'admin/assets/css/', // Admin CSS sources and their -rtl copies.
+						src: ['*.css', '!*.min.css'],
+						dest: 'admin/assets/css/',
+						ext: '.min.css',
+						extDot: 'last',
 					}],
 				},
 			},
@@ -83,11 +77,11 @@ module.exports = function (grunt) {
 			// Task for watching file changes.
 			watch: {
 				adminCss: {
-					files: ['admin/css/*.css', '!admin/css/*.min.css', '!admin/css/*-rtl'], // Watch for changes in admin CSS files.
-					tasks: ['cssmin:admin'], // Run admin CSS minification task.
+					files: ['admin/assets/css/*.css', '!admin/assets/css/*.min.css', '!admin/assets/css/*-rtl.css'], // Watch for changes in admin CSS files.
+					tasks: ['rtlcss', 'cssmin:admin'], // Run admin CSS minification task.
 				},
 				adminJs: {
-					files: ['admin/js/*.js', '!admin/js/*.min.js'], // Watch for changes in admin JS files.
+					files: ['admin/assets/js/*.js', '!admin/assets/js/*.min.js'], // Watch for changes in admin JS files.
 					tasks: ['uglify:admin'], // Run admin JS minification task.
 				},
 				php: {
