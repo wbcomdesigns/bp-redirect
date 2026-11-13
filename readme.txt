@@ -2,10 +2,10 @@
 Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/donate/
 Tags: login redirect, logout redirect, role redirect, woocommerce redirect, buddypress redirect
-Requires at least: 5.6
-Tested up to: 6.9
+Requires at least: 6.5
+Tested up to: 7.1
 Stable tag: 2.3.0
-Requires PHP: 7.4
+Requires PHP: 8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,11 +87,18 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 
 == Changelog ==
 
-= 2.3.0 =
-* New: Redesigned settings screen with a cleaner, card-based layout and an easy left-hand menu (Overview, Global, User Roles, integration types, FAQ, License).
-* New: License screen showing your automatic-update status at a glance.
-* Improvement: Faster, self-contained admin — no reliance on the old shared settings wrapper.
-* Note: All your existing redirect settings carry over automatically — nothing to reconfigure.
+= 2.3.0 - November 2026 =
+
+* New      - Redesigned settings screen with a card layout and a left-hand menu for Overview, Global, User Roles, member types, FAQ and License.
+* New      - License screen shows your automatic-update status at a glance.
+* Improve  - Custom URL redirects now work for addresses on another domain, and links with query strings arrive intact.
+* Improve  - Login redirects also apply to the WooCommerce My Account login form.
+* Improve  - The User Roles tab loads quickly on sites with thousands of pages.
+* Improve  - Settings save errors now show on the page instead of a browser pop-up.
+* Fix      - Redirect options on the User Roles, Global and member type tabs line up correctly, including on phones.
+* Fix      - The Documentation link opens the plugin's own guide.
+* Dev      - Requires WordPress 6.5 and PHP 8.1. Tested up to WordPress 7.1.
+* Dev      - Your existing redirect settings carry over automatically.
 
 = 2.2.0 =
 * Enhancement: Renamed plugin to "WB Login Logout Redirect" for brand consistency.

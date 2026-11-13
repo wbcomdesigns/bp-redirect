@@ -7,7 +7,7 @@
 - **Version**: `2.3.0` (branch `2.3.0`, based on the **`v2.2.0` release tag** — see branch note below)
 - **Text domain**: `bp-redirect`
 - **Prefix**: `wbcom_redirect` / `WBCOM_REDIRECT_`; admin UI uses `wbredir` / `--wbredir-admin-*`
-- **Requires**: WP 5.6+, PHP 7.4+. Optional: BuddyPress / BuddyBoss / WooCommerce / bbPress / Dokan / LearnDash / PeepSo.
+- **Requires**: WP 6.5+, PHP 8.1+. Optional: BuddyPress / BuddyBoss / WooCommerce / bbPress / Dokan / LearnDash / PeepSo.
 
 ## ⚠️ Branch topology (important)
 The repo has **diverged lineages**. As of 2026-06-04:
@@ -35,12 +35,12 @@ Redirects users after login/logout — globally, by user role, or by integration
 - **EDD = official EDD SL SDK** (`vendor/easy-digital-downloads/edd-sl-sdk`, item_id 80951, preset key = free auto-updates). **KEEP it** — do not replace with the Contact Me custom client (portfolio policy). License tab = update status only, no key field.
 - Removed `admin/wbcom`, the `[wbcom_admin_setting_header]` shortcode call, the wrapper require, the dead admin/wbcom grunt sub-tasks, and repointed the `includes/functions.php` asset resolver off admin/wbcom.
 
-## Gotchas
-- **`vendor/` is untracked and NOT gitignored** — it holds local composer WPCS tooling (php-parallel-lint, squizlabs, wp-coding-standards, …). NEVER `git add -A`; stage migration files explicitly. (The EDD SL SDK under `vendor/easy-digital-downloads/edd-sl-sdk` is a tracked submodule.)
-- Admin JS (`admin/assets/js/wbcom-redirect-admin.js:102,107`) still uses `alert()` on the AJAX save error path — pre-existing, flagged by wppqa Rule 10; candidate for a follow-up toast pass.
+## Redirect rules worth knowing
+- Every login/logout goes through `Wbcom_Redirect_Public::allow()`: a destination this plugin resolved (custom URL, page, integration) has its host added to `allowed_redirect_hosts` for that one request, so a Custom URL on another domain is followed. WordPress' own `redirect_to` (which can come from the visitor) is never whitelisted. URLs stay raw (`esc_url()` would turn `&` into `&#038;`).
+- The WooCommerce My Account login form fires `woocommerce_login_redirect`, not `login_redirect`; both are hooked.
+- Page dropdowns: `render_redirect_form()` prints the page list once per screen in `<template id="wbcom-redirect-page-options">`; each select carries only its saved page and is filled from the template on first focus. Keep it that way - per-select page lists made the User Roles tab O(roles x pages).
 
-## Recent changes
-| Date | Type | Description | Files |
-|---|---|---|---|
-| 2026-06-04 | refactor | v2.3.0 card-panel admin migration (self-contained shell + relocated content CSS), kept EDD SL SDK + custom AJAX save; removed admin/wbcom | `admin/class-wbcom-redirect-admin.php`, `admin/views/hub.php`, `assets/css/*`, `includes/class-wbcom-redirect.php`, `includes/functions.php`, `gruntfile.js`, `bp-redirect.php`, `readme.txt` |
-| 2026-06-04 | docs | Onboarded — `audit/manifest.json` + wppqa baseline + this file | `audit/`, `CLAUDE.md` |
+## Gotchas
+- **`vendor/` holds local composer WPCS tooling** and is gitignored except the tracked EDD SL SDK submodule (`vendor/easy-digital-downloads/edd-sl-sdk`). Still stage files explicitly.
+- **Build**: `npm ci && npx grunt build` (rtlcss + cssmin + uglify over `admin/assets/{css,js}`). Production loads `bp-redirect-admin.min.css` / `-rtl.min.css`, so rebuild after any CSS edit. `assets/css/admin.css` and `wbcom-redirect-content*.css` load unminified.
+- Third-party admin notices are removed in PHP (`hide_admin_notices`); don't hide `.notice-error` in CSS or the settings save error disappears too.

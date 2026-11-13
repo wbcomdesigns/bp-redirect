@@ -154,7 +154,15 @@ module.exports = function (grunt) {
 						'!phpunit.xml',
 						'!tests/**',
 						'!*.log',
-						'!*.map'
+						'!*.map',
+						'!*.csv',
+						'!**/*.md',
+						'!audit/**',
+						'!.phpcs.xml.dist',
+						'!.gitmodules',
+						'!vendor/**',
+						'vendor/easy-digital-downloads/**',
+						'!vendor/easy-digital-downloads/**/.git'
 						],
 						dest: 'dist/<%= pkg.name %>/'
 					}]

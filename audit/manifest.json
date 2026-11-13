@@ -8,7 +8,7 @@
     "text_domain": "bp-redirect",
     "prefix": "wbcom_redirect / WBCOM_REDIRECT_ ; admin UI: wbredir / --wbredir-admin-*",
     "extends": null,
-    "requires": "WordPress 5.6+, PHP 7.4+. Optional integrations: BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash, PeepSo."
+    "requires": "WordPress 6.5+, PHP 8.1+. Optional integrations: BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash, PeepSo."
   },
   "rest": { "namespace": null, "endpoints": [] },
   "ajax": [
@@ -32,6 +32,8 @@
   "wp_cli": [],
   "hooks_consumed": [
     { "name": "login_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_login_redirect", "purpose": "Apply the resolved login redirect." },
+    { "name": "woocommerce_login_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_woocommerce_login_redirect", "purpose": "Apply the resolved login redirect to the WooCommerce My Account login form." },
+    { "name": "allowed_redirect_hosts", "type": "filter", "where": "public/class-wbcom-redirect-public.php::allow", "purpose": "Allow the host of a plugin-resolved destination for that one redirect (never the visitor redirect_to)." },
     { "name": "logout_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_logout_redirect", "purpose": "Apply the resolved logout redirect." }
   ],
   "integrations": {

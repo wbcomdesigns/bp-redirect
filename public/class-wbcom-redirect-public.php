@@ -101,7 +101,7 @@ class Wbcom_Redirect_Public {
 	/**
 	 * Let WordPress follow a destination the site admin configured.
 	 *
-	 * wp-login.php sends every login/logout through wp_safe_redirect(), which silently
+	 * WordPress sends every login/logout through wp_safe_redirect(), which silently
 	 * swaps any other host for the dashboard. A Custom URL on another domain is an admin
 	 * choice, so its host is allowed for this request only. The URL stays raw: entity
 	 * encoding would turn "&" in a query string into "&#038;".
