@@ -237,7 +237,7 @@ class Wbcom_Redirect_Admin {
 		}
 
 		echo '<div class="wbredir-snav-divider" role="separator"></div>';
-		echo '<a class="wbredir-snav-link" href="https://docs.wbcomdesigns.com/doc_category/login-logout-redirect/" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-book" aria-hidden="true"></span>' . esc_html__( 'Documentation', 'bp-redirect' ) . '</a>';
+		echo '<a class="wbredir-snav-link" href="https://docs.wbcomdesigns.com/bp-family/buddypress-redirect/" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-book" aria-hidden="true"></span>' . esc_html__( 'Documentation', 'bp-redirect' ) . '</a>';
 		echo '</nav>';
 	}
 

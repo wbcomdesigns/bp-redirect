@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div class="wbcom-support-inner">
 							<h3><span class="dashicons dashicons-book"></span><?php esc_html_e( 'Documentation', 'bp-redirect' ); ?></h3>
 							<p><?php esc_html_e( 'We have prepared an extensive guide to learn all aspects of the plugin. You will find most of your answers here.', 'bp-redirect' ); ?></p>
-							<a href="https://docs.wbcomdesigns.com/doc_category/buddypress-redirect/" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'bp-redirect' ); ?></a>
+							<a href="https://docs.wbcomdesigns.com/bp-family/buddypress-redirect/" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'bp-redirect' ); ?></a>
 						</div>
 					</div>
 
