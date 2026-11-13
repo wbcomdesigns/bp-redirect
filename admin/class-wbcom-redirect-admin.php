@@ -524,7 +524,18 @@ class Wbcom_Redirect_Admin {
 			echo '</template>';
 		}
 
-		$uid = wp_unique_id( 'wbcom-redir-' );
+		$uid    = wp_unique_id( 'wbcom-redir-' );
+		$labels = 'logout' === $context
+			? array(
+				'page'        => __( 'Page to open after logout', 'bp-redirect' ),
+				'custom_url'  => __( 'Custom URL to open after logout', 'bp-redirect' ),
+				'integration' => __( 'Destination to open after logout', 'bp-redirect' ),
+			)
+			: array(
+				'page'        => __( 'Page to open after login', 'bp-redirect' ),
+				'custom_url'  => __( 'Custom URL to open after login', 'bp-redirect' ),
+				'integration' => __( 'Destination to open after login', 'bp-redirect' ),
+			);
 		?>
 		<div class="wbcom-redirect-config" data-uid="<?php echo esc_attr( $uid ); ?>">
 			<div class="wbcom-redirect-type-options">
@@ -552,7 +563,7 @@ class Wbcom_Redirect_Admin {
 			</div>
 
 			<div class="wbcom-redirect-field wbcom-redirect-field-page" <?php echo 'page' !== $type ? 'style="display:none"' : ''; ?>>
-				<select name="<?php echo esc_attr( $name_base . '[page_id]' ); ?>" class="wbcom-redirect-page-select">
+				<select name="<?php echo esc_attr( $name_base . '[page_id]' ); ?>" class="wbcom-redirect-page-select" aria-label="<?php echo esc_attr( $labels['page'] ); ?>">
 					<option value=""><?php esc_html_e( '-- Select Page --', 'bp-redirect' ); ?></option>
 					<?php if ( $page_id ) : ?>
 						<option value="<?php echo esc_attr( $page_id ); ?>" selected><?php echo esc_html( get_the_title( $page_id ) ); ?></option>
@@ -561,12 +572,12 @@ class Wbcom_Redirect_Admin {
 			</div>
 
 			<div class="wbcom-redirect-field wbcom-redirect-field-custom_url" <?php echo 'custom_url' !== $type ? 'style="display:none"' : ''; ?>>
-				<input type="url" name="<?php echo esc_attr( $name_base . '[custom_url]' ); ?>" value="<?php echo esc_url( $custom_url ); ?>" placeholder="https://" class="regular-text">
+				<input type="url" name="<?php echo esc_attr( $name_base . '[custom_url]' ); ?>" aria-label="<?php echo esc_attr( $labels['custom_url'] ); ?>" value="<?php echo esc_url( $custom_url ); ?>" placeholder="https://" class="regular-text">
 			</div>
 
 			<?php if ( ! empty( $destinations ) ) : ?>
 				<div class="wbcom-redirect-field wbcom-redirect-field-integration" <?php echo 'integration' !== $type ? 'style="display:none"' : ''; ?>>
-					<select name="<?php echo esc_attr( $name_base . '[integration]' ); ?>">
+					<select name="<?php echo esc_attr( $name_base . '[integration]' ); ?>" aria-label="<?php echo esc_attr( $labels['integration'] ); ?>">
 						<option value=""><?php esc_html_e( '-- Select Destination --', 'bp-redirect' ); ?></option>
 						<?php
 						$grouped = array();

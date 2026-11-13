@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-13T11:36:05+00:00\n"
+"POT-Creation-Date: 2026-11-13T11:37:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-redirect\n"
@@ -156,8 +156,8 @@ msgstr ""
 #: admin/class-wbcom-redirect-admin.php:337
 #: admin/class-wbcom-redirect-admin.php:399
 #: admin/class-wbcom-redirect-admin.php:476
-#: admin/class-wbcom-redirect-admin.php:671
-#: admin/class-wbcom-redirect-admin.php:745
+#: admin/class-wbcom-redirect-admin.php:682
+#: admin/class-wbcom-redirect-admin.php:756
 msgid "Settings saved."
 msgstr ""
 
@@ -191,47 +191,71 @@ msgstr ""
 msgid "No types found. Create types in the integration plugin first."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:533
+#: admin/class-wbcom-redirect-admin.php:530
+msgid "Page to open after logout"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:531
+msgid "Custom URL to open after logout"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:532
+msgid "Destination to open after logout"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:535
+msgid "Page to open after login"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:536
+msgid "Custom URL to open after login"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:537
+msgid "Destination to open after login"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:544
 msgid "None (WordPress Default)"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:538
+#: admin/class-wbcom-redirect-admin.php:549
 msgid "Page"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:543
+#: admin/class-wbcom-redirect-admin.php:554
 msgid "Custom URL"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:549
+#: admin/class-wbcom-redirect-admin.php:560
 msgid "Integration Destination"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:556
+#: admin/class-wbcom-redirect-admin.php:567
 msgid "-- Select Page --"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:570
+#: admin/class-wbcom-redirect-admin.php:581
 msgid "-- Select Destination --"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:602
+#: admin/class-wbcom-redirect-admin.php:613
 msgid "Permission denied."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:647
+#: admin/class-wbcom-redirect-admin.php:658
 msgid "Missing integration slug."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:668
+#: admin/class-wbcom-redirect-admin.php:679
 msgid "Invalid scope."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:746
+#: admin/class-wbcom-redirect-admin.php:757
 msgid "Error saving settings."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:747
+#: admin/class-wbcom-redirect-admin.php:758
 msgid "Request failed. Please try again."
 msgstr ""
 
