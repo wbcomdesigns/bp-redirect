@@ -134,6 +134,7 @@ class Wbcom_Redirect {
 
 		$this->loader->add_filter( 'login_redirect', $public, 'handle_login_redirect', 10, 3 );
 		$this->loader->add_filter( 'logout_redirect', $public, 'handle_logout_redirect', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_login_redirect', $public, 'handle_woocommerce_login_redirect', 10, 2 );
 	}
 
 	/**
