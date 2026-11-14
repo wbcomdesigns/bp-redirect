@@ -105,12 +105,8 @@
 			var showNotice = function (ok, text) {
 				$notice.removeClass('updated notice-error').addClass('settings-error notice ' + (ok ? 'updated' : 'notice-error'));
 				$notice.find('strong').text(text);
+				// Stays until dismissed or the next save, like core's "Settings saved".
 				$notice.stop(true, true).show();
-				if (ok) {
-					setTimeout(function () {
-						$notice.fadeOut();
-					}, 3000);
-				}
 			};
 
 			$.post(wbcomRedirect.ajaxUrl, postData, function (response) {
