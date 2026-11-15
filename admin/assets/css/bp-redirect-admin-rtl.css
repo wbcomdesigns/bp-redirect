@@ -2066,6 +2066,11 @@ button.bpr-accordion.active::after {
 	background: #fff;
 }
 
+/* A failed save must not look like a success. */
+.wbcom-redirect-notice.notice-error {
+	border-right-color: #d63638;
+}
+
 .wbcom-redirect-form h4 {
 	font-size: 14px;
 	font-weight: 600;
