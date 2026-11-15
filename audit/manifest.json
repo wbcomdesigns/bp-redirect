@@ -30,6 +30,9 @@
   "capabilities": [],
   "cron": [],
   "wp_cli": [],
+  "hooks_fired": [
+    { "name": "wbcom_redirect_honor_redirect_to", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_login_redirect", "purpose": "Return true to let a requested same-site redirect_to win over the configured login redirect (default false)." }
+  ],
   "hooks_consumed": [
     { "name": "login_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_login_redirect", "purpose": "Apply the resolved login redirect." },
     { "name": "woocommerce_login_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_woocommerce_login_redirect", "purpose": "Apply the resolved login redirect to the WooCommerce My Account login form." },

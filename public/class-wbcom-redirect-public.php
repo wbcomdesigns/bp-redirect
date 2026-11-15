@@ -66,6 +66,27 @@ class Wbcom_Redirect_Public {
 			return $redirect_to;
 		}
 
+		/**
+		 * Filters whether a requested same-site redirect_to beats the configured login redirect.
+		 *
+		 * By default the configured rule always wins, so a member who logs in from
+		 * wp-login.php?redirect_to=... still lands on the rule's destination. Return true
+		 * to send the member back to the page they came from instead. Off-site
+		 * redirect_to values are never followed.
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param bool    $honor   Whether to follow the requested URL. Default false.
+		 * @param string  $request The redirect_to URL the visitor asked for.
+		 * @param WP_User $user    The member logging in.
+		 */
+		if ( $request && apply_filters( 'wbcom_redirect_honor_redirect_to', false, $request, $user ) ) {
+			$host = wp_parse_url( $request, PHP_URL_HOST );
+			if ( wp_validate_redirect( $request, '' ) && ( ! $host || wp_parse_url( home_url(), PHP_URL_HOST ) === $host ) ) {
+				return $request;
+			}
+		}
+
 		return $this->allow( $this->resolver->resolve_login( $user, $redirect_to ), $redirect_to );
 	}
 

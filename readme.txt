@@ -68,6 +68,10 @@ No. This plugin works standalone on any WordPress site. BuddyPress, WooCommerce,
 
 User Role > Integration Group Types (e.g. BuddyPress member types) > Global > WordPress Default.
 
+= A member logged in from a link that should bring them back to the same page. Why did they land on the redirect page instead? =
+
+The redirect you set up always wins, even when the login link asks to return the member to the page they came from. Developers can let the return page win instead with the `wbcom_redirect_honor_redirect_to` filter: `add_filter( 'wbcom_redirect_honor_redirect_to', '__return_true' );`. Only pages on your own site are followed.
+
 = What happens if no redirect is configured? =
 
 WordPress default behavior applies: admins go to the dashboard, other users go to the home page.
@@ -97,6 +101,7 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 * Improve  - Settings save errors now show on the page instead of a browser pop-up.
 * Fix      - Redirect options on the User Roles, Global and member type tabs line up correctly, including on phones.
 * Fix      - The Documentation link opens the plugin's own guide.
+* Dev      - New `wbcom_redirect_honor_redirect_to` filter lets a login link's return page on your own site win over the configured redirect.
 * Dev      - Requires WordPress 6.5 and PHP 8.1. Tested up to WordPress 7.1.
 * Dev      - Your existing redirect settings carry over automatically.
 

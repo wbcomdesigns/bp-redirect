@@ -46,6 +46,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<div class="bpmmd-xprofile-admin-row">
 					<div class="bpmmd-xprofile-admin-col-12">
+						<button class="bpr-accordion"><?php esc_html_e( 'Why does a member land on the redirect page instead of the page they logged in from?', 'bp-redirect' ); ?></button>
+						<div class="bpr-panel">
+							<p><?php esc_html_e( 'The redirect you set up always wins, even when the login link asks to return the member to the page they came from. Developers can let the return page win instead with the wbcom_redirect_honor_redirect_to filter. Only pages on your own site are followed.', 'bp-redirect' ); ?></p>
+						</div>
+					</div>
+				</div>
+
+				<div class="bpmmd-xprofile-admin-row">
+					<div class="bpmmd-xprofile-admin-col-12">
 						<button class="bpr-accordion"><?php esc_html_e( 'Can I use role and BuddyPress member type redirects together?', 'bp-redirect' ); ?></button>
 						<div class="bpr-panel">
 							<p><?php esc_html_e( 'Yes! Role-based redirects take priority. If no role redirect is configured for a user, the plugin will check their BuddyPress member type, then fall back to global settings.', 'bp-redirect' ); ?></p>
