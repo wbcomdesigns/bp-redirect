@@ -14,6 +14,7 @@
  * Description:       Redirect users after login & logout by role — built for BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash & PeepSo.
  * Version:           2.3.0
  * Requires at least: 6.5
+ * Tested up to:      7.1
  * Requires PHP:      8.1
  * Author:            Wbcom Designs <admin@wbcomdesigns.com>
  * Author URI:        https://wbcomdesigns.com/contact/
