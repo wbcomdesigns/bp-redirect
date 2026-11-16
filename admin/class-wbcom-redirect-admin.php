@@ -228,11 +228,12 @@ class Wbcom_Redirect_Admin {
 				echo '<div class="wbredir-snav-divider" role="separator"></div>';
 			}
 			printf(
-				'<a class="wbredir-snav-link%1$s" href="%2$s"><span class="dashicons %3$s" aria-hidden="true"></span>%4$s</a>',
+				'<a class="wbredir-snav-link%1$s" href="%2$s"%5$s><span class="dashicons %3$s" aria-hidden="true"></span>%4$s</a>',
 				esc_attr( $active ),
 				esc_url( $url ),
 				esc_attr( $icon ),
-				esc_html( $label )
+				esc_html( $label ),
+				$active ? ' aria-current="page"' : ''
 			);
 		}
 
@@ -381,10 +382,10 @@ class Wbcom_Redirect_Admin {
 										<h3><?php echo esc_html( translate_user_role( $role_data['name'] ) ); ?></h3>
 										<div>
 											<h4><?php esc_html_e( 'Login Redirect', 'bp-redirect' ); ?></h4>
-											<?php $this->render_redirect_form( 'login', $role_login, 'roles[' . $role_slug . ']' ); ?>
+											<?php $this->render_redirect_form( 'login', $role_login, 'roles[' . $role_slug . ']', translate_user_role( $role_data['name'] ) ); ?>
 
 											<h4><?php esc_html_e( 'Logout Redirect', 'bp-redirect' ); ?></h4>
-											<?php $this->render_redirect_form( 'logout', $role_logout, 'roles[' . $role_slug . ']' ); ?>
+											<?php $this->render_redirect_form( 'logout', $role_logout, 'roles[' . $role_slug . ']', translate_user_role( $role_data['name'] ) ); ?>
 										</div>
 									</div>
 								<?php endforeach; ?>
@@ -457,10 +458,10 @@ class Wbcom_Redirect_Admin {
 											<h3><?php echo esc_html( $type_label ); ?></h3>
 											<div>
 												<h4><?php esc_html_e( 'Login Redirect', 'bp-redirect' ); ?></h4>
-												<?php $this->render_redirect_form( 'login', $type_login, 'groups[' . $type_slug . ']' ); ?>
+												<?php $this->render_redirect_form( 'login', $type_login, 'groups[' . $type_slug . ']', $type_label ); ?>
 
 												<h4><?php esc_html_e( 'Logout Redirect', 'bp-redirect' ); ?></h4>
-												<?php $this->render_redirect_form( 'logout', $type_logout, 'groups[' . $type_slug . ']' ); ?>
+												<?php $this->render_redirect_form( 'logout', $type_logout, 'groups[' . $type_slug . ']', $type_label ); ?>
 											</div>
 										</div>
 									<?php endforeach; ?>
@@ -490,8 +491,9 @@ class Wbcom_Redirect_Admin {
 	 * @param string $context 'login' or 'logout'.
 	 * @param array  $config  Saved config: type, page_id, custom_url, integration.
 	 * @param string $prefix  Field name prefix for nested data (e.g. 'roles[administrator]').
+	 * @param string $for     Role or member type name, added to the field names screen readers announce.
 	 */
-	public function render_redirect_form( $context, $config = array(), $prefix = '' ) {
+	public function render_redirect_form( $context, $config = array(), $prefix = '', $for = '' ) {
 		$type        = ! empty( $config['type'] ) ? $config['type'] : 'none';
 		$page_id     = ! empty( $config['page_id'] ) ? absint( $config['page_id'] ) : 0;
 		$custom_url  = ! empty( $config['custom_url'] ) ? $config['custom_url'] : '';
@@ -536,9 +538,16 @@ class Wbcom_Redirect_Admin {
 				'custom_url'  => __( 'Custom URL to open after login', 'bp-redirect' ),
 				'integration' => __( 'Destination to open after login', 'bp-redirect' ),
 			);
+		$labels['type'] = 'logout' === $context ? __( 'Redirect after logout', 'bp-redirect' ) : __( 'Redirect after login', 'bp-redirect' );
+		if ( $for ) {
+			foreach ( $labels as $key => $label ) {
+				/* translators: 1: field name, 2: role or member type name. */
+				$labels[ $key ] = sprintf( __( '%1$s, %2$s', 'bp-redirect' ), $label, $for );
+			}
+		}
 		?>
 		<div class="wbcom-redirect-config" data-uid="<?php echo esc_attr( $uid ); ?>">
-			<div class="wbcom-redirect-type-options">
+			<div class="wbcom-redirect-type-options" role="radiogroup" aria-label="<?php echo esc_attr( $labels['type'] ); ?>">
 				<label>
 					<input type="radio" name="<?php echo esc_attr( $name_base . '[type]' ); ?>" value="none" <?php checked( $type, 'none' ); ?> class="wbcom-redirect-type-radio">
 					<?php esc_html_e( 'None (WordPress Default)', 'bp-redirect' ); ?>

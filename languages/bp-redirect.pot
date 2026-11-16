@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-15T17:28:39+00:00\n"
+"POT-Creation-Date: 2026-11-16T05:37:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-redirect\n"
@@ -52,9 +52,9 @@ msgstr ""
 #: admin/class-wbcom-redirect-admin.php:94
 #: admin/class-wbcom-redirect-admin.php:95
 #: admin/class-wbcom-redirect-admin.php:199
-#: admin/class-wbcom-redirect-admin.php:324
-#: admin/class-wbcom-redirect-admin.php:383
-#: admin/class-wbcom-redirect-admin.php:459
+#: admin/class-wbcom-redirect-admin.php:325
+#: admin/class-wbcom-redirect-admin.php:384
+#: admin/class-wbcom-redirect-admin.php:460
 msgid "Login Redirect"
 msgstr ""
 
@@ -100,162 +100,176 @@ msgstr ""
 msgid "Login Redirect navigation"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:240
+#: admin/class-wbcom-redirect-admin.php:241
 #: admin/partials/welcome.php:26
 msgid "Documentation"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:269
+#: admin/class-wbcom-redirect-admin.php:270
 msgid "Updates &amp; License"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:270
+#: admin/class-wbcom-redirect-admin.php:271
 msgid "How this plugin receives updates."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:275
+#: admin/class-wbcom-redirect-admin.php:276
 msgid "Automatic updates"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:277
+#: admin/class-wbcom-redirect-admin.php:278
 msgid "Enabled"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:278
+#: admin/class-wbcom-redirect-admin.php:279
 msgid "This plugin updates automatically through the Wbcom Designs update service — no license key required."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:282
+#: admin/class-wbcom-redirect-admin.php:283
 msgid "Need more plugins?"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:286
+#: admin/class-wbcom-redirect-admin.php:287
 msgid "Browse Wbcom Designs"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:309
+#: admin/class-wbcom-redirect-admin.php:310
 msgid "Global Redirection Settings"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:316
+#: admin/class-wbcom-redirect-admin.php:317
 msgid "Enable Global Redirection"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:327
-#: admin/class-wbcom-redirect-admin.php:386
-#: admin/class-wbcom-redirect-admin.php:462
+#: admin/class-wbcom-redirect-admin.php:328
+#: admin/class-wbcom-redirect-admin.php:387
+#: admin/class-wbcom-redirect-admin.php:463
 msgid "Logout Redirect"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:333
-#: admin/class-wbcom-redirect-admin.php:395
-#: admin/class-wbcom-redirect-admin.php:472
+#: admin/class-wbcom-redirect-admin.php:334
+#: admin/class-wbcom-redirect-admin.php:396
+#: admin/class-wbcom-redirect-admin.php:473
 msgid "Save Settings"
-msgstr ""
-
-#: admin/class-wbcom-redirect-admin.php:337
-#: admin/class-wbcom-redirect-admin.php:399
-#: admin/class-wbcom-redirect-admin.php:476
-#: admin/class-wbcom-redirect-admin.php:682
-#: admin/class-wbcom-redirect-admin.php:756
-msgid "Settings saved."
 msgstr ""
 
 #: admin/class-wbcom-redirect-admin.php:338
 #: admin/class-wbcom-redirect-admin.php:400
 #: admin/class-wbcom-redirect-admin.php:477
+#: admin/class-wbcom-redirect-admin.php:691
+#: admin/class-wbcom-redirect-admin.php:765
+msgid "Settings saved."
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:339
+#: admin/class-wbcom-redirect-admin.php:401
+#: admin/class-wbcom-redirect-admin.php:478
 msgid "Dismiss"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:360
+#: admin/class-wbcom-redirect-admin.php:361
 msgid "Redirect By User Role"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:367
+#: admin/class-wbcom-redirect-admin.php:368
 msgid "Enable User Role Redirection"
 msgstr ""
 
 #. translators: %s is the integration name
-#: admin/class-wbcom-redirect-admin.php:428
+#: admin/class-wbcom-redirect-admin.php:429
 #, php-format
 msgid "Redirect By %s Type"
 msgstr ""
 
 #. translators: %s is the integration name
-#: admin/class-wbcom-redirect-admin.php:439
+#: admin/class-wbcom-redirect-admin.php:440
 #, php-format
 msgid "Enable %s Type Redirection"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:447
+#: admin/class-wbcom-redirect-admin.php:448
 msgid "No types found. Create types in the integration plugin first."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:530
+#: admin/class-wbcom-redirect-admin.php:532
 msgid "Page to open after logout"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:531
+#: admin/class-wbcom-redirect-admin.php:533
 msgid "Custom URL to open after logout"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:532
+#: admin/class-wbcom-redirect-admin.php:534
 msgid "Destination to open after logout"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:535
+#: admin/class-wbcom-redirect-admin.php:537
 msgid "Page to open after login"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:536
+#: admin/class-wbcom-redirect-admin.php:538
 msgid "Custom URL to open after login"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:537
+#: admin/class-wbcom-redirect-admin.php:539
 msgid "Destination to open after login"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:544
+#: admin/class-wbcom-redirect-admin.php:541
+msgid "Redirect after logout"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:541
+msgid "Redirect after login"
+msgstr ""
+
+#. translators: 1: field name, 2: role or member type name.
+#: admin/class-wbcom-redirect-admin.php:545
+#, php-format
+msgid "%1$s, %2$s"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:553
 msgid "None (WordPress Default)"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:549
+#: admin/class-wbcom-redirect-admin.php:558
 msgid "Page"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:554
+#: admin/class-wbcom-redirect-admin.php:563
 msgid "Custom URL"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:560
+#: admin/class-wbcom-redirect-admin.php:569
 msgid "Integration Destination"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:567
+#: admin/class-wbcom-redirect-admin.php:576
 msgid "-- Select Page --"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:581
+#: admin/class-wbcom-redirect-admin.php:590
 msgid "-- Select Destination --"
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:613
+#: admin/class-wbcom-redirect-admin.php:622
 msgid "Permission denied."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:658
+#: admin/class-wbcom-redirect-admin.php:667
 msgid "Missing integration slug."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:679
+#: admin/class-wbcom-redirect-admin.php:688
 msgid "Invalid scope."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:757
+#: admin/class-wbcom-redirect-admin.php:766
 msgid "Error saving settings."
 msgstr ""
 
-#: admin/class-wbcom-redirect-admin.php:758
+#: admin/class-wbcom-redirect-admin.php:767
 msgid "Request failed. Please try again."
 msgstr ""
 

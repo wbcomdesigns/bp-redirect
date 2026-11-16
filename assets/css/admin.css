@@ -207,6 +207,8 @@
 }
 
 .wbredir-snav-link {
+	min-height: 40px; /* tap target */
+	box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	gap: 8px;
@@ -1341,4 +1343,10 @@
 	font-size: 12px;
 	font-weight: 600;
 	color: var(--wbredir-admin-text-3);
+}
+
+/* Below 782px WordPress stacks form-table cells at width 100%; keep their padding inside the card. */
+.wbredir-card .form-table th,
+.wbredir-card .form-table td {
+	box-sizing: border-box;
 }
