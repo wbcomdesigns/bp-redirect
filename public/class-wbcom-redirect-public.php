@@ -80,7 +80,9 @@ class Wbcom_Redirect_Public {
 		 * @param string  $request The redirect_to URL the visitor asked for.
 		 * @param WP_User $user    The member logging in.
 		 */
-		if ( $request && apply_filters( 'wbcom_redirect_honor_redirect_to', false, $request, $user ) ) {
+		// wp-login.php posts redirect_to=admin_url() on every plain login; that is not a real request.
+		$is_default = untrailingslashit( $request ) === untrailingslashit( admin_url() );
+		if ( $request && ! $is_default && apply_filters( 'wbcom_redirect_honor_redirect_to', false, $request, $user ) ) {
 			$host = wp_parse_url( $request, PHP_URL_HOST );
 			if ( wp_validate_redirect( $request, '' ) && ( ! $host || wp_parse_url( home_url(), PHP_URL_HOST ) === $host ) ) {
 				return $request;
