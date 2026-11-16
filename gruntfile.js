@@ -162,7 +162,12 @@ module.exports = function (grunt) {
 						'!.gitmodules',
 						'!vendor/**',
 						'vendor/easy-digital-downloads/**',
-						'!vendor/easy-digital-downloads/**/.git'
+						// Excludes after the re-include above, or the SDK's dev files ship.
+						// Its vendor/autoload.php and vendor/composer stay: edd-sl-sdk.php needs them.
+						'!vendor/easy-digital-downloads/**/.git',
+						'!vendor/easy-digital-downloads/**/{package.json,package-lock.json,composer.json,composer.lock,phpunit.xml,webpack.config.js}',
+						'!vendor/easy-digital-downloads/**/*.md',
+						'!**/*.map'
 						],
 						dest: 'dist/<%= pkg.name %>/'
 					}]
@@ -217,5 +222,17 @@ module.exports = function (grunt) {
 	grunt.registerTask( 'dev', ['build', 'watch'] );
 	grunt.registerTask( 'release', ['checktextdomain', 'rtlcss', 'cssmin', 'uglify', 'shell'] );
 	grunt.registerTask( 'i18n', ['checktextdomain', 'makepot'] );
-	grunt.registerTask( 'dist', ['build', 'shell', 'clean:dist', 'copy:dist', 'compress:dist'] );
+	// A fresh clone has an empty SDK submodule; a zip built from it ships with no updater.
+	grunt.registerTask( 'sdk-check', function () {
+		if ( ! grunt.file.exists( 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php' ) ) {
+			grunt.fail.fatal( 'EDD SL SDK missing. Run: git submodule update --init' );
+		}
+	} );
+	// grunt-contrib-clean breaks under the rimraf 6 override; Grunt's own delete needs no rimraf.
+	grunt.registerTask( 'clean-dist', function () {
+		if ( grunt.file.exists( 'dist' ) ) {
+			grunt.file.delete( 'dist' );
+		}
+	} );
+	grunt.registerTask( 'dist', ['sdk-check', 'build', 'shell', 'clean-dist', 'copy:dist', 'compress:dist'] );
 };
