@@ -54,6 +54,8 @@ If you need additional help you can contact us for [Custom Development](https://
 
 == Installation ==
 
+Requires BuddyPress 12.0 or higher (or BuddyBoss Platform).
+
 1. Upload the "bp-redirect" folder to `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to WB Plugins > Redirect to configure settings.
