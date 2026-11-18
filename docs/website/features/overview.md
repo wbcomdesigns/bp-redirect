@@ -32,6 +32,6 @@ A rule is skipped if it is disabled, has no matching entry for the user, or reso
 | bbPress | bbPress is active | Forums, User Profile |
 | Dokan | Dokan is active | Vendor Dashboard, Store Page (vendors only) |
 | LearnDash | LearnDash is active | Student Dashboard (when a `dashboard` page exists), Courses |
-| PeepSo | PeepSo is active | Profile, Activity Stream |
+| PeepSo | PeepSo is active | Profile, Activity Stream (each when PeepSo's page for it exists) |
 
 Destination availability is read live from each integration, so a destination appears only when its underlying feature is present. See Usage > Integration Destinations for the behavior of each destination.

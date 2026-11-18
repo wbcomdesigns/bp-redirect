@@ -30,6 +30,8 @@ If the Activity or Groups component is turned off later, a rule pointing at it i
 | Forums | The bbPress forums archive URL |
 | User Profile | The user's bbPress profile URL |
 
+With BuddyPress active, bbPress sends User Profile to the member's BuddyPress profile; that is bbPress's own behaviour.
+
 ## Dokan
 
 | Destination | Resolves to |
@@ -54,6 +56,8 @@ Student Dashboard is offered only when the site has a published page with the sl
 |---|---|
 | Profile | The user's PeepSo profile URL |
 | Activity Stream | The PeepSo activity page |
+
+Each PeepSo destination is offered only while the page assigned in PeepSo > Configuration > Navigation exists and holds PeepSo's shortcode. Next to BuddyPress, PeepSo may point Activity at `/activity/`, which belongs to BuddyPress; PeepSo then shows "Error: page not found!" on that screen. Pick PeepSo's own page there and the destination appears.
 
 ## What happens if a destination cannot be resolved
 

@@ -105,6 +105,7 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 * Improve  - A rule whose page is no longer published, or whose BuddyPress component (Activity, Groups) is turned off, is skipped so the next rule applies instead of a missing page.
 * Improve  - A configured redirect now wins over another plugin's default, such as Dokan sending every customer to My Account.
 * Improve  - Dokan destinations apply to vendors only, and LearnDash Student Dashboard is offered only when the site has a dashboard page.
+* Improve  - PeepSo Profile and Activity Stream are offered only when PeepSo's own page for them exists, so a member is never sent to another plugin's page.
 * Improve  - Settings from version 2.0 carry over on the first visit after the update, including a member's first login, not only after an admin visit.
 * Improve  - When the update files are missing, administrators see a notice to reinstall and the License tab shows updates as off.
 * Fix      - Redirect options on the User Roles, Global and member type tabs line up correctly, including on phones.
