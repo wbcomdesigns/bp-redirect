@@ -9,7 +9,7 @@ Requires PHP: 8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Redirect users after login & logout by role — built for BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash & PeepSo.
+Redirect users after login & logout by role - built for BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash & PeepSo.
 
 == Short Description ==
 
@@ -19,18 +19,18 @@ Redirect users after login and logout by role, with optional BuddyPress, WooComm
 
 **Login Logout Redirect** is a powerful, free WordPress plugin that lets you control where users are redirected after login and logout based on their roles.
 
-The plugin works **completely standalone** — no third-party plugins required. When BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, or PeepSo are active, additional redirect destinations automatically become available.
+The plugin works **completely standalone** - no third-party plugins required. When BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, or PeepSo are active, additional redirect destinations automatically become available.
 
 = Features =
 
-* **Global Redirect** — Set a default login/logout redirect for all users
-* **Role-Based Redirect** — Configure separate redirects per user role (Administrator, Editor, Subscriber, etc.)
-* **Page or Custom URL** — Redirect to any WordPress page or enter a custom URL
-* **Integration Destinations** — Redirect to BuddyPress profiles, WooCommerce My Account, bbPress forums, and more
-* **Priority Chain** — Role > Integration Group Types > Global > WordPress Default
-* **Auto-Detection** — Integration options appear only when their parent plugin is active
-* **BuddyPress Member Types** — Configure redirects per member type (when BuddyPress is active)
-* **Clean Admin UI** — Unified settings interface with accordion-style role management
+* **Global Redirect** - Set a default login/logout redirect for all users
+* **Role-Based Redirect** - Configure separate redirects per user role (Administrator, Editor, Subscriber, etc.)
+* **Page or Custom URL** - Redirect to any WordPress page or enter a custom URL
+* **Integration Destinations** - Redirect to BuddyPress profiles, WooCommerce My Account, bbPress forums, and more
+* **Priority Chain** - Role > Integration Group Types > Global > WordPress Default
+* **Auto-Detection** - Integration options appear only when their parent plugin is active
+* **BuddyPress Member Types** - Configure redirects per member type (when BuddyPress is active)
+* **Clean Admin UI** - Unified settings interface with accordion-style role management
 
 = Supported Integrations =
 
@@ -45,10 +45,10 @@ The plugin works **completely standalone** — no third-party plugins required. 
 
 = How It Works =
 
-1. **Install & Activate** — Plugin works immediately with WordPress defaults
-2. **Configure Global Redirect** — Set where all users go after login/logout
-3. **Configure Role Redirects** — Override globals per role (e.g., send Subscribers to their profile, Vendors to their dashboard)
-4. **Integration Destinations** — When BuddyPress/WooCommerce/etc. are active, their pages appear as destination options
+1. **Install & Activate** - Plugin works immediately with WordPress defaults
+2. **Configure Global Redirect** - Set where all users go after login/logout
+3. **Configure Role Redirects** - Override globals per role (e.g., send Subscribers to their profile, Vendors to their dashboard)
+4. **Integration Destinations** - When BuddyPress/WooCommerce/etc. are active, their pages appear as destination options
 
 If you need additional help you can contact us for [Custom Development](https://wbcomdesigns.com/contact/).
 
@@ -88,8 +88,8 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 
 == Screenshots ==
 
-1. Global Redirection Settings — configure login/logout redirects for all users.
-2. User Role Settings — accordion-style per-role login/logout redirect configuration.
+1. Global Redirection Settings - configure login/logout redirects for all users.
+2. User Role Settings - accordion-style per-role login/logout redirect configuration.
 
 == Changelog ==
 
@@ -101,11 +101,21 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 * Improve  - Login redirects also apply to the WooCommerce My Account login form.
 * Improve  - The User Roles tab loads quickly on sites with thousands of pages.
 * Improve  - Settings save errors now show on the page instead of a browser pop-up.
+* Improve  - The member types tab is called Member Types on BuddyPress and Profile Types on BuddyBoss, and every type shows its name.
+* Improve  - A rule whose page is no longer published, or whose BuddyPress component (Activity, Groups) is turned off, is skipped so the next rule applies instead of a missing page.
+* Improve  - A configured redirect now wins over another plugin's default, such as Dokan sending every customer to My Account.
+* Improve  - Dokan destinations apply to vendors only, and LearnDash Student Dashboard is offered only when the site has a dashboard page.
+* Improve  - Settings from version 2.0 carry over on the first visit after the update, including a member's first login, not only after an admin visit.
+* Improve  - When the update files are missing, administrators see a notice to reinstall and the License tab shows updates as off.
 * Fix      - Redirect options on the User Roles, Global and member type tabs line up correctly, including on phones.
 * Fix      - The Documentation link opens the plugin's own guide.
+* Fix      - Overview text is no longer cut off, and the settings screen keeps a side margin on phones.
+* Fix      - FAQ questions announce whether they are open to screen readers, and role rows can no longer be dragged (the order had no effect).
+* Fix      - bbPress Forums no longer falls back to a guessed /forums/ address.
 * Dev      - New `wbcom_redirect_honor_redirect_to` filter lets a login link's return page on your own site win over the configured redirect.
 * Dev      - Requires WordPress 6.5 and PHP 8.1. Tested up to WordPress 7.1.
 * Dev      - Your existing redirect settings carry over automatically.
+* Dev      - Login and logout filters run at priority 99. Release zip built from .distignore by bin/build-release.sh.
 
 = 2.2.0 =
 * Enhancement: Renamed plugin to "WB Login Logout Redirect" for brand consistency.
@@ -119,7 +129,7 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 * Fix: Fixed broken REDIRECT_PLUGIN_VERSION constant in license page.
 
 = 2.1.0 =
-* Major: Rebuilt as standalone WordPress plugin — no longer requires BuddyPress.
+* Major: Rebuilt as standalone WordPress plugin - no longer requires BuddyPress.
 * New: Integration framework with auto-detection for BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, PeepSo.
 * New: WooCommerce destinations (My Account, Shop, Checkout, Orders).
 * New: bbPress destinations (Forums, User Profile).

@@ -8,19 +8,71 @@
     "text_domain": "bp-redirect",
     "prefix": "wbcom_redirect / WBCOM_REDIRECT_ ; admin UI: wbredir / --wbredir-admin-*",
     "extends": null,
-    "requires": "WordPress 6.5+, PHP 8.1+. Optional integrations: BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash, PeepSo."
+    "requires": "WordPress 6.5+, PHP 8.1+. Optional integrations: BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash, PeepSo.",
+    "helpers": [
+      "wbcom_redirect_update_files_present()",
+      "wbcom_redirect_update_files_missing_message()",
+      "wbcom_redirect_update_files_missing_notice()",
+      "Wbcom_Redirect_Integration::get_group_type_labels()"
+    ]
   },
-  "rest": { "namespace": null, "endpoints": [] },
+  "rest": {
+    "namespace": null,
+    "endpoints": []
+  },
   "ajax": [
-    { "action": "wbcom_redirect_save_settings", "handler": "Wbcom_Redirect_Admin::ajax_save_settings", "nonce": "wbcom-redirect-admin", "capability": "manage_options", "purpose": "Save settings for any scope (global, roles, integration) — parses a serialized form payload, sanitizes per-scope, writes the matching option." }
+    {
+      "action": "wbcom_redirect_save_settings",
+      "handler": "Wbcom_Redirect_Admin::ajax_save_settings",
+      "nonce": "wbcom-redirect-admin",
+      "capability": "manage_options",
+      "purpose": "Save settings for any scope (global, roles, integration) — parses a serialized form payload, sanitizes per-scope, writes the matching option."
+    }
   ],
   "admin_pages": [
-    { "title": "Login Redirect", "slug": "bp-redirect", "parent": "wbcomplugins", "capability": "manage_options", "source": "admin/class-wbcom-redirect-admin.php (Wbcom_Redirect_Admin)", "tabs": ["welcome (Overview)", "global", "roles", "integration-{slug} (dynamic)", "faq", "license"], "note": "Card-panel admin added in 2.3.0 (replaces the legacy admin/wbcom wrapper). Integration tabs are added dynamically by the registry for active integrations that expose group types (e.g. BuddyPress member types). Settings save via the custom AJAX handler, not options.php." }
+    {
+      "title": "Login Redirect",
+      "slug": "bp-redirect",
+      "parent": "wbcomplugins",
+      "capability": "manage_options",
+      "source": "admin/class-wbcom-redirect-admin.php (Wbcom_Redirect_Admin)",
+      "tabs": [
+        "welcome (Overview)",
+        "global",
+        "roles",
+        "integration-{slug} (dynamic)",
+        "faq",
+        "license"
+      ],
+      "note": "Card-panel admin added in 2.3.0 (replaces the legacy admin/wbcom wrapper). Integration tabs are added dynamically by the registry for active integrations that expose group types (e.g. BuddyPress member types). Settings save via the custom AJAX handler, not options.php."
+    }
   ],
   "settings": [
-    { "key": "wbcom_redirect_global", "save": "AJAX (scope=global)", "keys": { "enabled": "yes/no", "login": "{type:none|page|custom_url|integration, page_id, custom_url, integration}", "logout": "same shape" } },
-    { "key": "wbcom_redirect_roles", "save": "AJAX (scope=roles)", "keys": { "enabled": "yes/no", "roles": "{ {role_slug}: {login:{...}, logout:{...}} }" } },
-    { "key": "wbcom_redirect_{integration_slug}", "save": "AJAX (scope=integration)", "keys": { "enabled": "yes/no", "groups": "{ {type_slug}: {login:{...}, logout:{...}} }" } }
+    {
+      "key": "wbcom_redirect_global",
+      "save": "AJAX (scope=global)",
+      "keys": {
+        "enabled": "yes/no",
+        "login": "{type:none|page|custom_url|integration, page_id, custom_url, integration}",
+        "logout": "same shape"
+      }
+    },
+    {
+      "key": "wbcom_redirect_roles",
+      "save": "AJAX (scope=roles)",
+      "keys": {
+        "enabled": "yes/no",
+        "roles": "{ {role_slug}: {login:{...}, logout:{...}} }"
+      }
+    },
+    {
+      "key": "wbcom_redirect_{integration_slug}",
+      "save": "AJAX (scope=integration)",
+      "keys": {
+        "enabled": "yes/no",
+        "groups": "{ {type_slug}: {login:{...}, logout:{...}} }"
+      }
+    }
   ],
   "shortcodes": [],
   "blocks": [],
@@ -31,18 +83,66 @@
   "cron": [],
   "wp_cli": [],
   "hooks_fired": [
-    { "name": "wbcom_redirect_honor_redirect_to", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_login_redirect", "purpose": "Return true to let a requested same-site redirect_to win over the configured login redirect (default false)." }
+    {
+      "name": "wbcom_redirect_honor_redirect_to",
+      "type": "filter",
+      "where": "public/class-wbcom-redirect-public.php::handle_login_redirect",
+      "purpose": "Return true to let a requested same-site redirect_to win over the configured login redirect (default false)."
+    }
   ],
   "hooks_consumed": [
-    { "name": "login_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_login_redirect", "purpose": "Apply the resolved login redirect." },
-    { "name": "woocommerce_login_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_woocommerce_login_redirect", "purpose": "Apply the resolved login redirect to the WooCommerce My Account login form." },
-    { "name": "allowed_redirect_hosts", "type": "filter", "where": "public/class-wbcom-redirect-public.php::allow", "purpose": "Allow the host of a plugin-resolved destination for that one redirect (never the visitor redirect_to)." },
-    { "name": "logout_redirect", "type": "filter", "where": "public/class-wbcom-redirect-public.php::handle_logout_redirect", "purpose": "Apply the resolved logout redirect." }
+    {
+      "name": "login_redirect",
+      "type": "filter",
+      "where": "public/class-wbcom-redirect-public.php::handle_login_redirect",
+      "purpose": "Apply the resolved login redirect.",
+      "priority": 99
+    },
+    {
+      "name": "woocommerce_login_redirect",
+      "type": "filter",
+      "where": "public/class-wbcom-redirect-public.php::handle_woocommerce_login_redirect",
+      "purpose": "Apply the resolved login redirect to the WooCommerce My Account login form.",
+      "priority": 99
+    },
+    {
+      "name": "allowed_redirect_hosts",
+      "type": "filter",
+      "where": "public/class-wbcom-redirect-public.php::allow",
+      "purpose": "Allow the host of a plugin-resolved destination for that one redirect (never the visitor redirect_to)."
+    },
+    {
+      "name": "logout_redirect",
+      "type": "filter",
+      "where": "public/class-wbcom-redirect-public.php::handle_logout_redirect",
+      "purpose": "Apply the resolved logout redirect.",
+      "priority": 99
+    },
+    {
+      "name": "init",
+      "type": "action",
+      "where": "includes/functions.php::wbcom_redirect_maybe_migrate",
+      "purpose": "One-time 2.0.x settings migration; runs on any request so a member's first login after update keeps the old rules."
+    },
+    {
+      "name": "admin_notices",
+      "type": "action",
+      "where": "bp-redirect.php::wbcom_redirect_update_files_missing_notice",
+      "purpose": "Warn users with update_plugins when vendor/easy-digital-downloads is missing (only hooked then)."
+    }
   ],
   "integrations": {
     "framework": "integrations/class-wbcom-redirect-integration*.php + a registry (Wbcom_Redirect_Integration_Registry::instance()). Each integration provides destinations and optional group-type admin tabs.",
-    "modules": ["buddypress", "woocommerce", "bbpress", "dokan", "learndash", "peepso"],
-    "loaded": "Each integration file is required on load if present; integrations self-register with the registry."
+    "modules": [
+      "buddypress",
+      "woocommerce",
+      "bbpress",
+      "dokan",
+      "learndash",
+      "peepso"
+    ],
+    "loaded": "Each integration file is required on load if present; integrations self-register with the registry.",
+    "notes_2_3_0": "BuddyPress activity/groups destinations resolve only while the component is active; page rules need a published page; Dokan destinations vendors only (dokan_is_user_seller); LearnDash dashboard offered only when a published 'dashboard' page exists; bbPress forums uses bbp_get_forums_url() only."
   },
   "edd_license": {
     "client": "Official EDD Software Licensing SDK (vendor/easy-digital-downloads/edd-sl-sdk, git submodule from vapvarun/edd-sl-sdk)",
@@ -59,11 +159,20 @@
     "settings_save": "Custom AJAX (wbcom_redirect_save_settings) — NOT the Settings API. The card-panel form posts to the same handler."
   },
   "static_analysis": {
-    "alert_calls": [
-      { "file": "admin/assets/js/wbcom-redirect-admin.js:102,107", "verdict": "pre_existing", "reason": "AJAX save error path uses alert(); pre-dates the 2.3.0 migration. Candidate for a follow-up toast pass (add wbredirToast)." }
+    "alert_calls": [],
+    "tap_target_nits": [
+      {
+        "file": "assets/css/admin.css:556",
+        "verdict": "shared_css_nit"
+      }
     ],
-    "tap_target_nits": [ { "file": "assets/css/admin.css:556", "verdict": "shared_css_nit" } ],
-    "vendor_tooling": [ { "path": "vendor/ (excl. easy-digital-downloads/edd-sl-sdk submodule)", "verdict": "untracked_dev_tooling", "reason": "composer WPCS/lint tooling, untracked and not gitignored — stage migration files explicitly, never git add -A." } ]
+    "vendor_tooling": [
+      {
+        "path": "vendor/ (excl. easy-digital-downloads/edd-sl-sdk submodule)",
+        "verdict": "untracked_dev_tooling",
+        "reason": "composer WPCS/lint tooling, untracked and not gitignored — stage migration files explicitly, never git add -A."
+      }
+    ]
   },
   "generated": {
     "at": "2026-06-04",
@@ -71,6 +180,7 @@
     "branch": "2.3.0 (off v2.2.0)",
     "php_file_count": 23,
     "schema_version": "v2-lite",
-    "notes": "Onboarded alongside the 2.3.0 card-panel migration. Base was the v2.2.0 release tag (user-selected over the diverged origin/master 2.1.0 line)."
+    "notes": "Onboarded alongside the 2.3.0 card-panel migration. Base was the v2.2.0 release tag (user-selected over the diverged origin/master 2.1.0 line).",
+    "delta_2026_11_19": "2.3.0 2nd-team pass: hooks priority 99, init migration, update-files notice, group type labels, integration dead-target guards."
   }
 }

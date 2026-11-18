@@ -9,13 +9,9 @@
 - **Prefix**: `wbcom_redirect` / `WBCOM_REDIRECT_`; admin UI uses `wbredir` / `--wbredir-admin-*`
 - **Requires**: WP 6.5+, PHP 8.1+. Optional: BuddyPress / BuddyBoss / WooCommerce / bbPress / Dokan / LearnDash / PeepSo.
 
-## ⚠️ Branch topology (important)
-The repo has **diverged lineages**. As of 2026-06-04:
-- `origin/master` — 2.1.0, name "Wbcom Designs - Login Logout Redirect", chronologically newest, has a CI workflow. **248 commits diverged** from the v2.2.0 line.
-- `v2.2.0` tag — 2.2.0, name "WB Login Logout Redirect", the **released** line (renamed plugin + added EDD SL SDK). 254 commits diverged from master.
-- `origin/wpcs-fixes` — 2.1.0, WPCS/branding work.
-
-The 2.3.0 card-panel migration was based on **`v2.2.0`** (owner's choice). If resuming, confirm which lineage is canonical before branching.
+## Branch topology (important)
+- `master` is an author-rewritten copy of the original history (its 2.1.0 tree equals the `v2.1.0` tag tree), so it shares no commits with the release tags. Tags `v2.0.0`..`v2.2.0` live on the original lineage.
+- Branch `2.3.0` builds on `v2.2.0` and carries a merge of `master` (`-s ours` plus master's only unique file, `.github/workflows/ci.yml`), so the release PR into `master` merges cleanly. Cut the next release branch from `master` after 2.3.0 merges.
 
 ## What it does
 Redirects users after login/logout — globally, by user role, or by integration group type (e.g. BuddyPress member types). Resolution: `Wbcom_Redirect_Resolver` + `login_redirect`/`logout_redirect` filters.
@@ -37,10 +33,13 @@ Redirects users after login/logout — globally, by user role, or by integration
 
 ## Redirect rules worth knowing
 - Every login/logout goes through `Wbcom_Redirect_Public::allow()`: a destination this plugin resolved (custom URL, page, integration) has its host added to `allowed_redirect_hosts` for that one request, so a Custom URL on another domain is followed. WordPress' own `redirect_to` (which can come from the visitor) is never whitelisted. URLs stay raw (`esc_url()` would turn `&` into `&#038;`).
-- The WooCommerce My Account login form fires `woocommerce_login_redirect`, not `login_redirect`; both are hooked.
+- The WooCommerce My Account login form fires `woocommerce_login_redirect`, not `login_redirect`; both are hooked, at priority 99 so a configured rule beats other plugins' defaults (Dokan forces My Account at 20).
+- A rule that resolves to nothing (unpublished page, BP component off, non-vendor on a Dokan destination) is skipped and the next rule applies. Integrations return `false` rather than a guessed URL.
+- The 2.0.x migration runs on `init`, not `admin_init`.
 - Page dropdowns: `render_redirect_form()` prints the page list once per screen in `<template id="wbcom-redirect-page-options">`; each select carries only its saved page and is filled from the template on first focus. Keep it that way - per-select page lists made the User Roles tab O(roles x pages).
 
 ## Gotchas
 - **`vendor/` holds local composer WPCS tooling** and is gitignored except the tracked EDD SL SDK submodule (`vendor/easy-digital-downloads/edd-sl-sdk`). Still stage files explicitly.
+- **Release**: `bin/build-release.sh` (runs `bin/local-ci.sh`, then `grunt dist`; the zip excludes what `.distignore` lists).
 - **Build**: `npm ci && npx grunt build` (rtlcss + cssmin + uglify over `admin/assets/{css,js}`). Production loads `bp-redirect-admin.min.css` / `-rtl.min.css`, so rebuild after any CSS edit. `assets/css/admin.css` and `wbcom-redirect-content*.css` load unminified.
 - Third-party admin notices are removed in PHP (`hide_admin_notices`); don't hide `.notice-error` in CSS or the settings save error disappears too.

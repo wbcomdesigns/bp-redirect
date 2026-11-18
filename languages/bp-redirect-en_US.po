@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: BP Redirect\n"
-"POT-Creation-Date: 2017-08-17 10:51+0530\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-redirect\n"
+"POT-Creation-Date: 2026-11-18T21:58:36+00:00\n"
 "PO-Revision-Date: 2017-08-17 10:51+0530\n"
 "Last-Translator: \n"
 "Language-Team: Wbcom Designs\n"
@@ -16,134 +17,569 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_x\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/class-bp-redirect-admin.php:78
-msgid "BP Redirect Setting Page"
+#. Plugin Name of the plugin
+#: bp-redirect.php
+msgid "WB Login Logout Redirect"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:78 bp-redirect.php:43
-msgid "BP Redirect"
+#. Plugin URI of the plugin
+#: bp-redirect.php
+msgid "https://wbcomdesigns.com/downloads/buddypress-redirect/"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:80 admin/class-bp-redirect-admin.php:379
+#. Description of the plugin
+#: bp-redirect.php
+msgid ""
+"Redirect users after login & logout by role — built for BuddyPress, "
+"BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash & PeepSo."
+msgstr ""
+
+#. Author of the plugin
+#: bp-redirect.php
+msgid "Wbcom Designs <admin@wbcomdesigns.com>"
+msgstr ""
+
+#. Author URI of the plugin
+#: bp-redirect.php
+msgid "https://wbcomdesigns.com/contact/"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:81
+#: admin/class-wbcom-redirect-admin.php:82 admin/views/hub.php:57
+msgid "WB Plugins"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:89
 msgid "General"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:80
-msgid " General "
+#: admin/class-wbcom-redirect-admin.php:94
+#: admin/class-wbcom-redirect-admin.php:95
+#: admin/class-wbcom-redirect-admin.php:199
+#: admin/class-wbcom-redirect-admin.php:330
+#: admin/class-wbcom-redirect-admin.php:389
+#: admin/class-wbcom-redirect-admin.php:466
+msgid "Login Redirect"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:162
-msgid "BP Redirect Settings"
+#: admin/class-wbcom-redirect-admin.php:107
+msgid "Overview"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:164
-msgid "Settings saved."
+#: admin/class-wbcom-redirect-admin.php:111
+msgid "Global Redirection"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:165
-msgid "Dismiss this notice."
+#: admin/class-wbcom-redirect-admin.php:114
+msgid "User Roles"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:170
-msgid "Login Redirect Settings"
+#: admin/class-wbcom-redirect-admin.php:134
+msgid "FAQ"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:173
-msgid "Logout Redirect Settings"
+#: admin/class-wbcom-redirect-admin.php:137
+msgid "License"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:178
-msgid "FAQ(s)"
+#: admin/class-wbcom-redirect-admin.php:181
+msgid "Login Logout Redirect"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:183
+#: admin/class-wbcom-redirect-admin.php:182
+msgid ""
+"Send users to the right place after login and logout — globally, by role, or "
+"by community type."
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:200
+msgid "by Wbcom Designs"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:221
+msgid "Login Redirect navigation"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:241 admin/partials/welcome.php:26
+msgid "Documentation"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:270
+msgid "Updates &amp; License"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:271
+msgid "How this plugin receives updates."
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:276
+msgid "Automatic updates"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:279
+msgid "Enabled"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:280
+msgid ""
+"This plugin updates automatically through the Wbcom Designs update service - "
+"no license key required."
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:282
+msgid "Off"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:288
+msgid "Need more plugins?"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:292
+msgid "Browse Wbcom Designs"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:315
+msgid "Global Redirection Settings"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:322
+msgid "Enable Global Redirection"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:333
+#: admin/class-wbcom-redirect-admin.php:392
+#: admin/class-wbcom-redirect-admin.php:469
+msgid "Logout Redirect"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:339
+#: admin/class-wbcom-redirect-admin.php:401
+#: admin/class-wbcom-redirect-admin.php:479
 msgid "Save Settings"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:242 admin/class-bp-redirect-admin.php:321
-msgid "BuddyPress Component"
+#: admin/class-wbcom-redirect-admin.php:343
+#: admin/class-wbcom-redirect-admin.php:405
+#: admin/class-wbcom-redirect-admin.php:483
+#: admin/class-wbcom-redirect-admin.php:702
+#: admin/class-wbcom-redirect-admin.php:773
+msgid "Settings saved."
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:247 admin/class-bp-redirect-admin.php:326
+#: admin/class-wbcom-redirect-admin.php:344
+#: admin/class-wbcom-redirect-admin.php:406
+#: admin/class-wbcom-redirect-admin.php:484
+msgid "Dismiss"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:366
+msgid "Redirect By User Role"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:373
+msgid "Enable User Role Redirection"
+msgstr ""
+
+#. translators: %s is the kind of type, e.g. "Member Type".
+#: admin/class-wbcom-redirect-admin.php:435
+#, php-format
+msgid "Redirect By %s"
+msgstr ""
+
+#. translators: %s is the kind of type, e.g. "Member Type".
+#: admin/class-wbcom-redirect-admin.php:446
+#, php-format
+msgid "Enable %s Redirection"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:454
+msgid "No types found. Create types in the integration plugin first."
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:538
+msgid "Page to open after logout"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:539
+msgid "Custom URL to open after logout"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:540
+msgid "Destination to open after logout"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:543
+msgid "Page to open after login"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:544
+msgid "Custom URL to open after login"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:545
+msgid "Destination to open after login"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:547
+msgid "Redirect after logout"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:547
+msgid "Redirect after login"
+msgstr ""
+
+#. translators: 1: field name, 2: role or member type name.
+#: admin/class-wbcom-redirect-admin.php:551
+#, php-format
+msgid "%1$s, %2$s"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:559
+msgid "None (WordPress Default)"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:564
+msgid "Page"
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:569
 msgid "Custom URL"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:252 admin/class-bp-redirect-admin.php:331
-msgid "Member Profile"
+#: admin/class-wbcom-redirect-admin.php:575
+msgid "Integration Destination"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:255 admin/class-bp-redirect-admin.php:334
-msgid "Member Activity"
+#: admin/class-wbcom-redirect-admin.php:582
+msgid "-- Select Page --"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:272 admin/class-bp-redirect-admin.php:351
-msgid "Enter custom url"
+#: admin/class-wbcom-redirect-admin.php:596
+msgid "-- Select Destination --"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:415
-msgid "Is this plugin requires another plugin?"
+#: admin/class-wbcom-redirect-admin.php:628
+msgid "Permission denied."
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:418
-msgid "Yes, this plugin requires BuddyPress plugin."
+#: admin/class-wbcom-redirect-admin.php:678
+msgid "Unknown integration."
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:423
+#: admin/class-wbcom-redirect-admin.php:699
+msgid "Invalid scope."
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:774
+msgid "Error saving settings."
+msgstr ""
+
+#: admin/class-wbcom-redirect-admin.php:775
+msgid "Request failed. Please try again."
+msgstr ""
+
+#: admin/partials/faq.php:15
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: admin/partials/faq.php:22
+msgid "Does this plugin require BuddyPress?"
+msgstr ""
+
+#: admin/partials/faq.php:24
 msgid ""
-"Where it redirects if no option selected or in the case of empty custom URL "
-"field?"
+"No. This plugin works standalone on any WordPress site. BuddyPress, "
+"WooCommerce, bbPress, Dokan, LearnDash, and PeepSo support is automatically "
+"enabled when those plugins are active."
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:426
-msgid "In that case, plugin follows default redirection rule."
+#: admin/partials/faq.php:31
+msgid "What happens if no redirect is configured?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:431
+#: admin/partials/faq.php:33
 msgid ""
-"Where it redirects, when we select \"Member profile\" in BuddyPress "
-"Component dropdown?"
+"WordPress default behavior applies: admins go to the dashboard, other users "
+"go to the profile or home page."
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:434
-msgid "It redirects to logged in member's profile page"
+#: admin/partials/faq.php:40
+msgid "What is the redirect priority order?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:439
+#: admin/partials/faq.php:42
 msgid ""
-"Where it redirects, when we select \"Member activity\" in BuddyPress "
-"Component dropdown?"
+"User Role redirect takes highest priority, followed by Integration Group "
+"Types (e.g. BuddyPress member types), then Global redirect, and finally "
+"WordPress default."
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:442
-msgid "It redirects to logged in member's activity page"
-msgstr ""
-
-#: admin/class-bp-redirect-admin.php:447
+#: admin/partials/faq.php:49
 msgid ""
-"Where it redirects, when we select \"Activity\" in BuddyPress Component "
-"dropdown?"
+"Why does a member land on the redirect page instead of the page they logged "
+"in from?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:450
-msgid "It redirects to logged in site wide activity page"
+#: admin/partials/faq.php:51
+msgid ""
+"The redirect you set up always wins, even when the login link asks to return "
+"the member to the page they came from. Developers can let the return page "
+"win instead with the wbcom_redirect_honor_redirect_to filter. Only pages on "
+"your own site are followed."
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:455
+#: admin/partials/faq.php:58
+msgid "Can I use role and BuddyPress member type redirects together?"
+msgstr ""
+
+#: admin/partials/faq.php:60
+msgid ""
+"Yes! Role-based redirects take priority. If no role redirect is configured "
+"for a user, the plugin will check their BuddyPress member type, then fall "
+"back to global settings."
+msgstr ""
+
+#: admin/partials/faq.php:67
+msgid "Which integrations are supported?"
+msgstr ""
+
+#: admin/partials/faq.php:69
+msgid ""
+"BuddyPress (Profile, Activity, Groups + Member Types), WooCommerce (My "
+"Account, Shop, Checkout, Orders), bbPress (Forums, User Profile), Dokan "
+"(Vendor Dashboard, Store Page), LearnDash (Dashboard, Courses), and PeepSo "
+"(Profile, Activity)."
+msgstr ""
+
+#: admin/partials/faq.php:76
 msgid "Where do I ask for support?"
 msgstr ""
 
-#: admin/class-bp-redirect-admin.php:458
+#: admin/partials/faq.php:78
+msgid "Please visit"
+msgstr ""
+
+#: admin/partials/faq.php:78
+msgid "Wbcom Designs"
+msgstr ""
+
+#: admin/partials/faq.php:78
+msgid "for any query related to the plugin."
+msgstr ""
+
+#: admin/partials/welcome.php:15
 msgid ""
-"Please visit <a href='http://wbcomdesigns.com/contact' rel='nofollow'>Wbcom "
-"Designs</a> for any query related to plugin and BuddyPress."
+"WB Login Logout Redirect lets you control where users go after login and "
+"logout based on their roles. Built for BuddyPress, BuddyBoss, WooCommerce, "
+"bbPress, Dokan, LearnDash, and PeepSo."
 msgstr ""
 
-#: bp-redirect.php:44
-msgid "BuddyPress"
+#: admin/partials/welcome.php:20
+msgid "Help & Support Resources"
 msgstr ""
 
-#: bp-redirect.php:46
+#: admin/partials/welcome.php:21
+msgid ""
+"Here are all the resources you may need to get help from us. Documentation "
+"is usually the best place to start. Should you require help anytime, our "
+"customer care team is available to assist you at the support center."
+msgstr ""
+
+#: admin/partials/welcome.php:27
+msgid ""
+"We have prepared an extensive guide to learn all aspects of the plugin. You "
+"will find most of your answers here."
+msgstr ""
+
+#: admin/partials/welcome.php:28
+msgid "Read Documentation"
+msgstr ""
+
+#: admin/partials/welcome.php:34
+msgid "Support Center"
+msgstr ""
+
+#: admin/partials/welcome.php:35
+msgid ""
+"We strive to offer the best customer care via our support center. Once the "
+"plugin is activated, you can ask us for help anytime."
+msgstr ""
+
+#: admin/partials/welcome.php:36
+msgid "Get Support"
+msgstr ""
+
+#: admin/partials/welcome.php:42
+msgid "Got Feedback?"
+msgstr ""
+
+#: admin/partials/welcome.php:43
+msgid ""
+"We want to hear about your experience with the plugin. We would also love to "
+"hear any suggestions you may have for future updates."
+msgstr ""
+
+#: admin/partials/welcome.php:44
+msgid "Send Feedback"
+msgstr ""
+
+#. translators: %d: active Wbcom plugin count
+#: admin/views/hub.php:63
+#, php-format
+msgid "%d Wbcom plugin active on this site."
+msgid_plural "%d Wbcom plugins active on this site."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/views/hub.php:83
+msgid "No Wbcom plugins attached to this hub yet"
+msgstr ""
+
+#: admin/views/hub.php:85
+msgid ""
+"Activate one or more Wbcom plugins and they will appear here automatically."
+msgstr ""
+
+#: admin/views/hub.php:100
+msgid "Open settings"
+msgstr ""
+
+#: admin/views/hub.php:110
+msgid "About WB Plugins"
+msgstr ""
+
+#: admin/views/hub.php:114
+msgid ""
+"This hub is the single entry point for every Wbcom Designs plugin installed "
+"on your site. Each plugin lives on its own page under this menu and keeps "
+"its own settings, license, and data."
+msgstr ""
+
+#: admin/views/hub.php:118
+msgid "Visit wbcomdesigns.com for more plugins and themes →"
+msgstr ""
+
+#: bp-redirect.php:99
+msgid "Settings"
+msgstr ""
+
+#: bp-redirect.php:100
+msgid "Support"
+msgstr ""
+
+#. translators: %s: plugin name.
+#: bp-redirect.php:171
 #, php-format
 msgid ""
-"The %1$s plugin requires %2$s plugin to activate and function correctly."
+"%s: the update files (vendor/easy-digital-downloads folder) are missing, so "
+"automatic updates are off. Please reinstall the plugin from your Wbcom "
+"Designs account."
+msgstr ""
+
+#: integrations/bbpress/class-wbcom-redirect-bbpress.php:35
+msgid "bbPress"
+msgstr ""
+
+#: integrations/bbpress/class-wbcom-redirect-bbpress.php:46
+msgid "Forums"
+msgstr ""
+
+#: integrations/bbpress/class-wbcom-redirect-bbpress.php:47
+msgid "User Profile"
+msgstr ""
+
+#: integrations/buddypress/class-wbcom-redirect-buddypress.php:46
+msgid "Profile Types"
+msgstr ""
+
+#: integrations/buddypress/class-wbcom-redirect-buddypress.php:47
+msgid "Profile Type"
+msgstr ""
+
+#: integrations/buddypress/class-wbcom-redirect-buddypress.php:51
+msgid "Member Types"
+msgstr ""
+
+#: integrations/buddypress/class-wbcom-redirect-buddypress.php:52
+msgid "Member Type"
+msgstr ""
+
+#: integrations/buddypress/class-wbcom-redirect-buddypress.php:76
+msgid "Member Profile"
+msgstr ""
+
+#: integrations/buddypress/class-wbcom-redirect-buddypress.php:83
+msgid "Member Activity"
+msgstr ""
+
+#: integrations/buddypress/class-wbcom-redirect-buddypress.php:91
+msgid "Groups Directory"
+msgstr ""
+
+#. translators: %s is the integration name
+#: integrations/class-wbcom-redirect-integration.php:81
+#, php-format
+msgid "%s Types"
+msgstr ""
+
+#. translators: %s is the integration name
+#: integrations/class-wbcom-redirect-integration.php:83
+#, php-format
+msgid "%s Type"
+msgstr ""
+
+#: integrations/dokan/class-wbcom-redirect-dokan.php:34
+msgid "Dokan"
+msgstr ""
+
+#: integrations/dokan/class-wbcom-redirect-dokan.php:45
+msgid "Vendor Dashboard"
+msgstr ""
+
+#: integrations/dokan/class-wbcom-redirect-dokan.php:46
+msgid "Store Page"
+msgstr ""
+
+#: integrations/learndash/class-wbcom-redirect-learndash.php:34
+msgid "LearnDash"
+msgstr ""
+
+#: integrations/learndash/class-wbcom-redirect-learndash.php:47
+msgid "Student Dashboard"
+msgstr ""
+
+#: integrations/learndash/class-wbcom-redirect-learndash.php:49
+msgid "Courses"
+msgstr ""
+
+#: integrations/peepso/class-wbcom-redirect-peepso.php:34
+msgid "PeepSo"
+msgstr ""
+
+#: integrations/peepso/class-wbcom-redirect-peepso.php:45
+msgid "Profile"
+msgstr ""
+
+#: integrations/peepso/class-wbcom-redirect-peepso.php:46
+msgid "Activity Stream"
+msgstr ""
+
+#: integrations/woocommerce/class-wbcom-redirect-woocommerce.php:34
+msgid "WooCommerce"
+msgstr ""
+
+#: integrations/woocommerce/class-wbcom-redirect-woocommerce.php:45
+msgid "My Account"
+msgstr ""
+
+#: integrations/woocommerce/class-wbcom-redirect-woocommerce.php:46
+msgid "Shop"
+msgstr ""
+
+#: integrations/woocommerce/class-wbcom-redirect-woocommerce.php:47
+msgid "Checkout"
+msgstr ""
+
+#: integrations/woocommerce/class-wbcom-redirect-woocommerce.php:48
+msgid "Orders"
 msgstr ""

@@ -11,5 +11,5 @@ version=$(grep -m1 '"version"' package.json | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")
 zip="dist/$slug-$version.zip"
 leaks=$(unzip -l "$zip" | grep -iE "$slug/(audit|bin|docs|tests|node_modules)/|CLAUDE|QA-TESTING|\.md$|\.map$|gruntfile|package(-lock)?\.json|composer\.(json|lock)|\.distignore" || true)
 [ -z "$leaks" ] || { echo "Zip contains dev files:"; echo "$leaks"; exit 1; }
-unzip -l "$zip" | grep -q "$slug/vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php" || { echo "Zip has no update SDK"; exit 1; }
+unzip -l "$zip" | grep "$slug/vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php" >/dev/null || { echo "Zip has no update SDK"; exit 1; }
 echo "Built $zip"
