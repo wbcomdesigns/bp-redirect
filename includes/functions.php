@@ -70,7 +70,7 @@ if ( ! function_exists( 'bp_redirect_get_asset_filename' ) ) {
 
 /**
  * Migrate v2.0.0 settings to v2.1.0 format.
- * Runs once on admin_init if old options exist and new ones don't.
+ * Runs once on init if old options exist and new ones don't.
  */
 function wbcom_redirect_maybe_migrate() {
 	// Skip if new settings already exist.
@@ -213,4 +213,5 @@ function wbcom_redirect_migrate_config( $old_config, $context ) {
 	return $new;
 }
 
-add_action( 'admin_init', 'wbcom_redirect_maybe_migrate' );
+// On init, not admin_init: a site updated from 2.0 must keep its rules for the first front-end login.
+add_action( 'init', 'wbcom_redirect_maybe_migrate' );

@@ -725,14 +725,7 @@ div#wb_admin_plugin_name span {
 }
 
 .wbcom-welcome-support-info .wbcom-support-inner p {
-	height: 95px;
 	margin-bottom: 20px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 4;
-	line-clamp: 4;
-	-webkit-box-orient: vertical;
 }
 
 .wbcom-support-info-wrap {

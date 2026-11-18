@@ -54,13 +54,6 @@
 					activeHeader: 'ui-icon-minus'
 				},
 				header: '> .group > h3'
-			}).sortable({
-				axis: 'y',
-				handle: 'h3',
-				stop: function (event, ui) {
-					ui.item.children('h3').triggerHandler('focusout');
-					$(this).accordion('refresh');
-				}
 			});
 		});
 
@@ -130,9 +123,14 @@
 		});
 
 		// ——— FAQ accordion ———.
+		$('.bpr-accordion').each(function (i) {
+			var id = 'bpr-faq-panel-' + i;
+			$(this).attr('aria-controls', id).next('.bpr-panel').attr('id', id);
+		});
 		$(document).on('click', '.bpr-accordion', function (e) {
 			e.preventDefault();
 			$(this).toggleClass('active');
+			$(this).attr('aria-expanded', $(this).hasClass('active') ? 'true' : 'false');
 			var panel = $(this).next('.bpr-panel');
 			if (panel[0].style.maxHeight) {
 				panel[0].style.maxHeight = '';

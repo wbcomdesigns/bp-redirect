@@ -67,6 +67,24 @@ abstract class Wbcom_Redirect_Integration {
 	}
 
 	/**
+	 * Name of the group types, as the host plugin calls them in its own admin.
+	 *
+	 * @since 2.3.0
+	 * @return array {
+	 *     @type string $plural   Tab label, e.g. "Member Types".
+	 *     @type string $singular Used in "Redirect By %s", e.g. "Member Type".
+	 * }
+	 */
+	public function get_group_type_labels() {
+		return array(
+			/* translators: %s is the integration name */
+			'plural'   => sprintf( __( '%s Types', 'bp-redirect' ), $this->get_name() ),
+			/* translators: %s is the integration name */
+			'singular' => sprintf( __( '%s Type', 'bp-redirect' ), $this->get_name() ),
+		);
+	}
+
+	/**
 	 * Whether this integration has group types that need their own admin tab.
 	 *
 	 * @return bool

@@ -149,8 +149,47 @@ add_action(
 	}
 );
 
-if ( file_exists( WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php' ) ) {
+/**
+ * Whether the update SDK shipped with the plugin is on disk. A partial upload or a
+ * security scanner can strip it; redirects keep working, updates stop.
+ *
+ * @since 2.3.0
+ * @return bool
+ */
+function wbcom_redirect_update_files_present() {
+	return file_exists( WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php' );
+}
+
+/**
+ * The message shown when the update files are missing.
+ *
+ * @since 2.3.0
+ * @return string
+ */
+function wbcom_redirect_update_files_missing_message() {
+	/* translators: %s: plugin name. */
+	return sprintf( __( '%s: the update files (vendor/easy-digital-downloads folder) are missing, so automatic updates are off. Please reinstall the plugin from your Wbcom Designs account.', 'bp-redirect' ), 'WB Login Logout Redirect' );
+}
+
+/**
+ * Tell site admins that the update files are missing.
+ *
+ * @since 2.3.0
+ */
+function wbcom_redirect_update_files_missing_notice() {
+	if ( ! current_user_can( 'update_plugins' ) ) {
+		return;
+	}
+	printf(
+		'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+		esc_html( wbcom_redirect_update_files_missing_message() )
+	);
+}
+
+if ( wbcom_redirect_update_files_present() ) {
 	require_once WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php';
+} else {
+	add_action( 'admin_notices', 'wbcom_redirect_update_files_missing_notice' );
 }
 
 /**

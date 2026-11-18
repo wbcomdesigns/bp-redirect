@@ -31,7 +31,35 @@ class Wbcom_Redirect_BuddyPress extends Wbcom_Redirect_Integration {
 
 	/** {@inheritDoc} */
 	public function get_name() {
-		return __( 'BuddyPress', 'bp-redirect' );
+		return $this->is_buddyboss() ? 'BuddyBoss' : 'BuddyPress';
+	}
+
+	/**
+	 * BuddyPress calls them Member Types, BuddyBoss calls them Profile Types.
+	 *
+	 * @since 2.3.0
+	 * @return array
+	 */
+	public function get_group_type_labels() {
+		if ( $this->is_buddyboss() ) {
+			return array(
+				'plural'   => __( 'Profile Types', 'bp-redirect' ),
+				'singular' => __( 'Profile Type', 'bp-redirect' ),
+			);
+		}
+		return array(
+			'plural'   => __( 'Member Types', 'bp-redirect' ),
+			'singular' => __( 'Member Type', 'bp-redirect' ),
+		);
+	}
+
+	/**
+	 * Whether the BuddyPress API comes from BuddyBoss Platform.
+	 *
+	 * @return bool
+	 */
+	private function is_buddyboss() {
+		return defined( 'BP_PLATFORM_VERSION' );
 	}
 
 	/** {@inheritDoc} */
@@ -91,7 +119,9 @@ class Wbcom_Redirect_BuddyPress extends Wbcom_Redirect_Integration {
 		$types  = bp_get_member_types( array(), 'objects' );
 		$result = array();
 		foreach ( $types as $slug => $type ) {
-			$result[ $slug ] = isset( $type->labels['singular_name'] ) ? $type->labels['singular_name'] : $slug;
+			// A type registered without labels still needs a name the owner can recognise.
+			$labels          = isset( $type->labels ) ? (array) $type->labels : array();
+			$result[ $slug ] = ! empty( $labels['singular_name'] ) ? $labels['singular_name'] : ( ! empty( $labels['name'] ) ? $labels['name'] : $slug );
 		}
 		return $result;
 	}
@@ -113,15 +143,21 @@ class Wbcom_Redirect_BuddyPress extends Wbcom_Redirect_Integration {
 				return $this->get_user_profile_url( $user );
 
 			case 'activity':
+				// A rule saved while the component was on must not lead to a 404 once it is off.
+				if ( ! bp_is_active( 'activity' ) ) {
+					return false;
+				}
 				$profile = $this->get_user_profile_url( $user );
 				return $profile ? trailingslashit( $profile . 'activity' ) : false;
 
 			case 'groups':
-				$bp_pages = get_option( 'bp-pages', array() );
-				if ( isset( $bp_pages['groups'] ) ) {
-					return get_permalink( $bp_pages['groups'] );
+				if ( ! bp_is_active( 'groups' ) ) {
+					return false;
 				}
-				return false;
+				if ( function_exists( 'bp_get_groups_directory_url' ) ) {
+					return bp_get_groups_directory_url();
+				}
+				return function_exists( 'bp_get_groups_directory_permalink' ) ? bp_get_groups_directory_permalink() : false;
 		}
 
 		return false;

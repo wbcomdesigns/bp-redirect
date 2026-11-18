@@ -192,7 +192,9 @@ class Wbcom_Redirect_Resolver {
 		switch ( $type ) {
 			case 'page':
 				$page_id = ! empty( $config['page_id'] ) ? absint( $config['page_id'] ) : 0;
-				if ( $page_id ) {
+				// A page trashed, drafted or made private after the rule was saved is skipped,
+				// so the next rule applies instead of a 404.
+				if ( $page_id && 'publish' === get_post_status( $page_id ) ) {
 					$url = get_permalink( $page_id );
 					return $url ? esc_url_raw( $url ) : false;
 				}

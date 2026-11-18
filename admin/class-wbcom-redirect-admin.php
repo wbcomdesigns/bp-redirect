@@ -117,9 +117,9 @@ class Wbcom_Redirect_Admin {
 		// Dynamic tabs from integrations with group types (e.g. BP member types).
 		if ( class_exists( 'Wbcom_Redirect_Integration_Registry' ) ) {
 			foreach ( Wbcom_Redirect_Integration_Registry::instance()->get_with_admin_tabs() as $integration ) {
-				$tab_key = 'integration-' . $integration->get_slug();
-				/* translators: %s is the integration name */
-				$this->tabs[ $tab_key ] = sprintf( __( '%s Types', 'bp-redirect' ), $integration->get_name() );
+				$tab_key                = 'integration-' . $integration->get_slug();
+				$type_labels            = $integration->get_group_type_labels();
+				$this->tabs[ $tab_key ] = $type_labels['plural'];
 				add_settings_section(
 					'wbcom-redirect-' . $tab_key,
 					' ',
@@ -223,7 +223,7 @@ class Wbcom_Redirect_Admin {
 		foreach ( $this->tabs as $key => $label ) {
 			$active = ( $current_tab === $key ) ? ' wbredir-snav-link--active' : '';
 			$url    = admin_url( 'admin.php?page=' . $this->plugin_slug . '&tab=' . $key );
-			$icon   = isset( $this->tab_icons[ $key ] ) ? $this->tab_icons[ $key ] : 'dashicons-admin-generic';
+			$icon   = isset( $this->tab_icons[ $key ] ) ? $this->tab_icons[ $key ] : 'dashicons-id';
 			if ( 'license' === $key ) {
 				echo '<div class="wbredir-snav-divider" role="separator"></div>';
 			}
@@ -275,8 +275,13 @@ class Wbcom_Redirect_Admin {
 					<tr>
 						<th scope="row"><?php esc_html_e( 'Automatic updates', 'bp-redirect' ); ?></th>
 						<td>
-							<span class="wbredir-license-status is-active"><?php esc_html_e( 'Enabled', 'bp-redirect' ); ?></span>
-							<p class="description"><?php esc_html_e( 'This plugin updates automatically through the Wbcom Designs update service — no license key required.', 'bp-redirect' ); ?></p>
+							<?php if ( wbcom_redirect_update_files_present() ) : ?>
+								<span class="wbredir-license-status is-active"><?php esc_html_e( 'Enabled', 'bp-redirect' ); ?></span>
+								<p class="description"><?php esc_html_e( 'This plugin updates automatically through the Wbcom Designs update service - no license key required.', 'bp-redirect' ); ?></p>
+							<?php else : ?>
+								<span class="wbredir-license-status is-inactive"><?php esc_html_e( 'Off', 'bp-redirect' ); ?></span>
+								<p class="description"><?php echo esc_html( wbcom_redirect_update_files_missing_message() ); ?></p>
+							<?php endif; ?>
 						</td>
 					</tr>
 					<tr>
@@ -419,14 +424,15 @@ class Wbcom_Redirect_Admin {
 		$groups_cfg  = isset( $settings['groups'] ) ? $settings['groups'] : array();
 		$all_types   = $integration->get_all_group_types();
 		$spinner_src = includes_url( 'images/spinner.gif' );
+		$type_label  = $integration->get_group_type_labels()['singular'];
 		?>
 		<div class="wbcom-tab-content">
 			<div class="wbcom-wrapper-admin">
 				<div class="wbcom-admin-title-section">
 					<h3>
 						<?php
-						/* translators: %s is the integration name */
-						printf( esc_html__( 'Redirect By %s Type', 'bp-redirect' ), esc_html( $integration->get_name() ) );
+						/* translators: %s is the kind of type, e.g. "Member Type". */
+						printf( esc_html__( 'Redirect By %s', 'bp-redirect' ), esc_html( $type_label ) );
 						?>
 					</h3>
 				</div>
@@ -436,8 +442,8 @@ class Wbcom_Redirect_Admin {
 						<div class="enable_disable_btn wbcom-settings-section-wrap">
 							<label for="wbcom-redirect-<?php echo esc_attr( $integration->get_slug() ); ?>-enable" class="enable_disable_setting">
 								<?php
-								/* translators: %s is the integration name */
-								printf( esc_html__( 'Enable %s Type Redirection', 'bp-redirect' ), esc_html( $integration->get_name() ) );
+								/* translators: %s is the kind of type, e.g. "Member Type". */
+								printf( esc_html__( 'Enable %s Redirection', 'bp-redirect' ), esc_html( $type_label ) );
 								?>
 							</label>
 							<input type="checkbox" class="wppd-ui-toggle wbcom-redirect-toggle" id="wbcom-redirect-<?php echo esc_attr( $integration->get_slug() ); ?>-enable" data-target=".wbcom-redirect-<?php echo esc_attr( $integration->get_slug() ); ?>-fields" <?php checked( $enabled, 'yes' ); ?>>
@@ -526,8 +532,8 @@ class Wbcom_Redirect_Admin {
 			echo '</template>';
 		}
 
-		$uid    = wp_unique_id( 'wbcom-redir-' );
-		$labels = 'logout' === $context
+		$uid            = wp_unique_id( 'wbcom-redir-' );
+		$labels         = 'logout' === $context
 			? array(
 				'page'        => __( 'Page to open after logout', 'bp-redirect' ),
 				'custom_url'  => __( 'Custom URL to open after logout', 'bp-redirect' ),
@@ -633,10 +639,13 @@ class Wbcom_Redirect_Admin {
 			$data = $raw_data;
 		}
 
+		// Only "yes" switches a scope on; anything else is stored as "no".
+		$enabled = ( isset( $data['enabled'] ) && 'yes' === $data['enabled'] ) ? 'yes' : 'no';
+
 		switch ( $scope ) {
 			case 'global':
 				$settings = array(
-					'enabled' => ! empty( $data['enabled'] ) ? sanitize_key( $data['enabled'] ) : 'no',
+					'enabled' => $enabled,
 					'login'   => $this->sanitize_config( isset( $data['login'] ) ? $data['login'] : array() ),
 					'logout'  => $this->sanitize_config( isset( $data['logout'] ) ? $data['logout'] : array() ),
 				);
@@ -645,7 +654,7 @@ class Wbcom_Redirect_Admin {
 
 			case 'roles':
 				$settings = array(
-					'enabled' => ! empty( $data['enabled'] ) ? sanitize_key( $data['enabled'] ) : 'no',
+					'enabled' => $enabled,
 					'roles'   => array(),
 				);
 
@@ -663,12 +672,14 @@ class Wbcom_Redirect_Admin {
 
 			case 'integration':
 				$integration_slug = isset( $_POST['integration'] ) ? sanitize_key( $_POST['integration'] ) : '';
-				if ( empty( $integration_slug ) ) {
-					wp_send_json_error( __( 'Missing integration slug.', 'bp-redirect' ) );
+				// Only an integration that shows a types tab may be saved; any other slug would
+				// write over another option (wbcom_redirect_global, wbcom_redirect_roles).
+				if ( ! array_key_exists( $integration_slug, Wbcom_Redirect_Integration_Registry::instance()->get_with_admin_tabs() ) ) {
+					wp_send_json_error( __( 'Unknown integration.', 'bp-redirect' ) );
 				}
 
 				$settings = array(
-					'enabled' => ! empty( $data['enabled'] ) ? sanitize_key( $data['enabled'] ) : 'no',
+					'enabled' => $enabled,
 					'groups'  => array(),
 				);
 
@@ -744,13 +755,10 @@ class Wbcom_Redirect_Admin {
 			return;
 		}
 
-		wp_enqueue_script( 'jquery-ui-accordion' );
-		wp_enqueue_script( 'jquery-ui-sortable' );
-
 		wp_enqueue_script(
 			'wbcom-redirect-admin',
 			WBCOM_REDIRECT_PLUGIN_URL . 'admin/assets/js/wbcom-redirect-admin.js',
-			array( 'jquery', 'jquery-ui-accordion', 'jquery-ui-sortable' ),
+			array( 'jquery', 'jquery-ui-accordion' ),
 			$this->version,
 			true
 		);
