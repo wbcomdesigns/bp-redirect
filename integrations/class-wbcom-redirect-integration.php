@@ -101,4 +101,15 @@ abstract class Wbcom_Redirect_Integration {
 	 * @return string|false URL or false if cannot resolve.
 	 */
 	abstract public function resolve_url( $destination_slug, $user );
+
+	/**
+	 * The WordPress page a destination opens, so the resolver can skip it when it is not published.
+	 *
+	 * @param string $destination_slug The destination slug (e.g. 'shop').
+	 * @return int Page ID; 0 when the destination is not a page (a profile, an archive);
+	 *             -1 when it should be a page but none is assigned.
+	 */
+	public function get_page_id( $destination_slug ) {
+		return 0;
+	}
 }

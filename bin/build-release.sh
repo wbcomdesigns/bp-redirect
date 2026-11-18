@@ -4,6 +4,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 slug=bp-redirect
+# The update SDK is a git submodule; a fresh clone or `git archive` leaves it empty.
+git submodule update --init --recursive
 bin/local-ci.sh
 [ -d node_modules ] || npm ci
 npx grunt dist

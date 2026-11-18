@@ -77,9 +77,6 @@ class Wbcom_Redirect_PeepSo extends Wbcom_Redirect_Integration {
 	 * @param WP_User $user             The user object.
 	 */
 	public function resolve_url( $destination_slug, $user ) {
-		if ( ! in_array( $destination_slug, array( 'profile', 'activity' ), true ) || ! $this->peepso_page( $destination_slug ) ) {
-			return false;
-		}
 		switch ( $destination_slug ) {
 			case 'profile':
 				if ( class_exists( 'PeepSoUser' ) ) {
@@ -95,6 +92,15 @@ class Wbcom_Redirect_PeepSo extends Wbcom_Redirect_Integration {
 		}
 
 		return false;
+	}
+
+	/** {@inheritDoc} */
+	public function get_page_id( $destination_slug ) {
+		if ( ! in_array( $destination_slug, array( 'profile', 'activity' ), true ) ) {
+			return 0;
+		}
+		$page = $this->peepso_page( $destination_slug );
+		return $page ? (int) $page->ID : -1;
 	}
 }
 

@@ -78,6 +78,15 @@ class Wbcom_Redirect_LearnDash extends Wbcom_Redirect_Integration {
 
 		return false;
 	}
+
+	/** {@inheritDoc} */
+	public function get_page_id( $destination_slug ) {
+		if ( 'dashboard' !== $destination_slug ) {
+			return 0; // Courses is a post type archive, not a page.
+		}
+		$page = get_page_by_path( 'dashboard' );
+		return $page ? (int) $page->ID : -1;
+	}
 }
 
 new Wbcom_Redirect_LearnDash();

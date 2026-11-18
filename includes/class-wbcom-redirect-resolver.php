@@ -245,6 +245,13 @@ class Wbcom_Redirect_Resolver {
 			return false;
 		}
 
+		// Same rule as a Page rule: a destination page that is unassigned, drafted, private or
+		// trashed is skipped, so the next rule applies instead of a 404 (?page_id=N).
+		$page_id = (int) $integration->get_page_id( $dest_slug );
+		if ( $page_id < 0 || ( $page_id > 0 && 'publish' !== get_post_status( $page_id ) ) ) {
+			return false;
+		}
+
 		$url = $integration->resolve_url( $dest_slug, $user );
 		return $url ? esc_url_raw( $url ) : false;
 	}

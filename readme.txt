@@ -102,7 +102,7 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 * Improve  - The User Roles tab loads quickly on sites with thousands of pages.
 * Improve  - Settings save errors now show on the page instead of a browser pop-up.
 * Improve  - The member types tab is called Member Types on BuddyPress and Profile Types on BuddyBoss, and every type shows its name.
-* Improve  - A rule whose page is no longer published, or whose BuddyPress component (Activity, Groups) is turned off, is skipped so the next rule applies instead of a missing page.
+* Improve  - A rule whose page is no longer published (including the WooCommerce, Dokan, PeepSo and LearnDash pages a destination opens), or whose BuddyPress component (Activity, Groups) is turned off, is skipped so the next rule applies instead of a missing page.
 * Improve  - A configured redirect now wins over another plugin's default, such as Dokan sending every customer to My Account.
 * Improve  - Dokan destinations apply to vendors only, and LearnDash Student Dashboard is offered only when the site has a dashboard page.
 * Improve  - PeepSo Profile and Activity Stream are offered only when PeepSo's own page for them exists, so a member is never sent to another plugin's page.

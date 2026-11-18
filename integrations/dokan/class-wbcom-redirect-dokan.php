@@ -74,6 +74,16 @@ class Wbcom_Redirect_Dokan extends Wbcom_Redirect_Integration {
 
 		return false;
 	}
+
+	/** {@inheritDoc} */
+	public function get_page_id( $destination_slug ) {
+		// The store page is a virtual URL; only the dashboard is a WordPress page.
+		if ( 'dashboard' !== $destination_slug || ! function_exists( 'dokan_get_option' ) ) {
+			return 0;
+		}
+		$page_id = (int) dokan_get_option( 'dashboard', 'dokan_pages', 0 );
+		return $page_id > 0 ? $page_id : -1;
+	}
 }
 
 new Wbcom_Redirect_Dokan();

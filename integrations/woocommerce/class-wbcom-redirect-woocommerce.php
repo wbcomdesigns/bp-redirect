@@ -75,6 +75,21 @@ class Wbcom_Redirect_WooCommerce extends Wbcom_Redirect_Integration {
 
 		return false;
 	}
+
+	/** {@inheritDoc} */
+	public function get_page_id( $destination_slug ) {
+		$pages = array(
+			'my-account' => 'myaccount',
+			'orders'     => 'myaccount',
+			'shop'       => 'shop',
+			'checkout'   => 'checkout',
+		);
+		if ( ! isset( $pages[ $destination_slug ] ) || ! function_exists( 'wc_get_page_id' ) ) {
+			return 0;
+		}
+		$page_id = (int) wc_get_page_id( $pages[ $destination_slug ] );
+		return $page_id > 0 ? $page_id : -1;
+	}
 }
 
 new Wbcom_Redirect_WooCommerce();

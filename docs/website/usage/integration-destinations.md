@@ -61,4 +61,7 @@ Each PeepSo destination is offered only while the page assigned in PeepSo > Conf
 
 ## What happens if a destination cannot be resolved
 
+A destination that opens a WordPress page (WooCommerce Shop, My Account, Orders and Checkout, the Dokan Vendor Dashboard, the PeepSo pages, the LearnDash dashboard page) is skipped while that page is in draft, private, trashed or unassigned.
+
+
 If the underlying plugin function is unavailable or returns nothing (for example the user is not a Dokan vendor, or a required page is missing), the rule produces no URL. The plugin then continues down the priority chain and finally falls back to WordPress default behavior.

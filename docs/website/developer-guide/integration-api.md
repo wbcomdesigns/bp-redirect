@@ -16,6 +16,7 @@ Integrations supply extra redirect destinations and, optionally, group types (li
 | `get_group_types( $user )` | no | Group type slugs the given user belongs to (default: empty) |
 | `get_all_group_types()` | no | All group type slug => label pairs for the admin tab (default: empty) |
 | `get_group_type_labels()` | no | Plural and singular tab labels, default "{Name} Types" / "{Name} Type" (BuddyPress returns Member Types, or Profile Types on BuddyBoss) |
+| `get_page_id( $destination_slug )` | no | The WordPress page the destination opens: 0 when it is not a page, -1 when none is assigned. The resolver skips the destination unless that page is published |
 | `has_admin_tab()` | no | Whether this integration needs its own settings tab (default: true when `get_all_group_types()` is non-empty) |
 
 ## Destination value object
