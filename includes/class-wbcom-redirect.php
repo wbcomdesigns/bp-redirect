@@ -75,9 +75,6 @@ class Wbcom_Redirect {
 		// Public.
 		require_once $path . 'public/class-wbcom-redirect-public.php';
 
-		// Wbcom admin wrapper.
-		require_once $path . 'admin/wbcom/class-wbcom-admin-settings.php';
-
 		$this->loader = new Wbcom_Redirect_Loader();
 	}
 
@@ -124,6 +121,7 @@ class Wbcom_Redirect {
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_init', $admin, 'init_settings' );
 		$this->loader->add_action( 'admin_menu', $admin, 'add_menu' );
+		$this->loader->add_action( 'admin_menu', $admin, 'takeover_hub_landing', 999 );
 		$this->loader->add_action( 'wp_ajax_wbcom_redirect_save_settings', $admin, 'ajax_save_settings' );
 		$this->loader->add_action( 'in_admin_header', $admin, 'hide_admin_notices' );
 	}
@@ -134,8 +132,11 @@ class Wbcom_Redirect {
 	private function define_public_hooks() {
 		$public = new Wbcom_Redirect_Public( $this->plugin_name, $this->version );
 
-		$this->loader->add_filter( 'login_redirect', $public, 'handle_login_redirect', 10, 3 );
-		$this->loader->add_filter( 'logout_redirect', $public, 'handle_logout_redirect', 10, 3 );
+		// Late priority: a rule the owner set must beat another plugin's default (Dokan sends every
+		// customer to My Account at 20). A rule set to None returns the incoming URL untouched.
+		$this->loader->add_filter( 'login_redirect', $public, 'handle_login_redirect', 99, 3 );
+		$this->loader->add_filter( 'logout_redirect', $public, 'handle_logout_redirect', 99, 3 );
+		$this->loader->add_filter( 'woocommerce_login_redirect', $public, 'handle_woocommerce_login_redirect', 99, 2 );
 	}
 
 	/**

@@ -192,7 +192,9 @@ class Wbcom_Redirect_Resolver {
 		switch ( $type ) {
 			case 'page':
 				$page_id = ! empty( $config['page_id'] ) ? absint( $config['page_id'] ) : 0;
-				if ( $page_id ) {
+				// A page trashed, drafted or made private after the rule was saved is skipped,
+				// so the next rule applies instead of a 404.
+				if ( $page_id && 'publish' === get_post_status( $page_id ) ) {
 					$url = get_permalink( $page_id );
 					return $url ? esc_url_raw( $url ) : false;
 				}
@@ -240,6 +242,13 @@ class Wbcom_Redirect_Resolver {
 		$integration      = $registry->get( $integration_slug );
 
 		if ( ! $integration || ! $integration->is_available() ) {
+			return false;
+		}
+
+		// Same rule as a Page rule: a destination page that is unassigned, drafted, private or
+		// trashed is skipped, so the next rule applies instead of a 404 (?page_id=N).
+		$page_id = (int) $integration->get_page_id( $dest_slug );
+		if ( $page_id < 0 || ( $page_id > 0 && 'publish' !== get_post_status( $page_id ) ) ) {
 			return false;
 		}
 

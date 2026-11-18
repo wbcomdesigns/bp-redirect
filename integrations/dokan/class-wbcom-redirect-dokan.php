@@ -54,6 +54,10 @@ class Wbcom_Redirect_Dokan extends Wbcom_Redirect_Integration {
 	 * @param WP_User $user             The user object.
 	 */
 	public function resolve_url( $destination_slug, $user ) {
+		// Both destinations exist only for vendors; a customer would land on an empty store or a refusal.
+		if ( function_exists( 'dokan_is_user_seller' ) && ! dokan_is_user_seller( $user->ID ) ) {
+			return false;
+		}
 		switch ( $destination_slug ) {
 			case 'dashboard':
 				if ( function_exists( 'dokan_get_navigation_url' ) ) {
@@ -69,6 +73,16 @@ class Wbcom_Redirect_Dokan extends Wbcom_Redirect_Integration {
 		}
 
 		return false;
+	}
+
+	/** {@inheritDoc} */
+	public function get_page_id( $destination_slug ) {
+		// The store page is a virtual URL; only the dashboard is a WordPress page.
+		if ( 'dashboard' !== $destination_slug || ! function_exists( 'dokan_get_option' ) ) {
+			return 0;
+		}
+		$page_id = (int) dokan_get_option( 'dashboard', 'dokan_pages', 0 );
+		return $page_id > 0 ? $page_id : -1;
 	}
 }
 

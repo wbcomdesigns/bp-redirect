@@ -67,6 +67,24 @@ abstract class Wbcom_Redirect_Integration {
 	}
 
 	/**
+	 * Name of the group types, as the host plugin calls them in its own admin.
+	 *
+	 * @since 2.3.0
+	 * @return array {
+	 *     @type string $plural   Tab label, e.g. "Member Types".
+	 *     @type string $singular Used in "Redirect By %s", e.g. "Member Type".
+	 * }
+	 */
+	public function get_group_type_labels() {
+		return array(
+			/* translators: %s is the integration name */
+			'plural'   => sprintf( __( '%s Types', 'bp-redirect' ), $this->get_name() ),
+			/* translators: %s is the integration name */
+			'singular' => sprintf( __( '%s Type', 'bp-redirect' ), $this->get_name() ),
+		);
+	}
+
+	/**
 	 * Whether this integration has group types that need their own admin tab.
 	 *
 	 * @return bool
@@ -83,4 +101,15 @@ abstract class Wbcom_Redirect_Integration {
 	 * @return string|false URL or false if cannot resolve.
 	 */
 	abstract public function resolve_url( $destination_slug, $user );
+
+	/**
+	 * The WordPress page a destination opens, so the resolver can skip it when it is not published.
+	 *
+	 * @param string $destination_slug The destination slug (e.g. 'shop').
+	 * @return int Page ID; 0 when the destination is not a page (a profile, an archive);
+	 *             -1 when it should be a page but none is assigned.
+	 */
+	public function get_page_id( $destination_slug ) {
+		return 0;
+	}
 }

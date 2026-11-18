@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wbcom-tab-content">
 	<div class="wbcom-welcome-main-wrapper">
 		<div class="wbcom-welcome-head">
-			<p class="wbcom-welcome-description"><?php esc_html_e( 'Login Logout Redirect lets you control where users go after login and logout. Works standalone or with BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo.', 'bp-redirect' ); ?></p>
+			<p class="wbcom-welcome-description"><?php esc_html_e( 'WB Login Logout Redirect lets you control where users go after login and logout based on their roles. Built for BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo.', 'bp-redirect' ); ?></p>
 		</div>
 
 		<div class="wbcom-welcome-content">
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div class="wbcom-support-inner">
 							<h3><span class="dashicons dashicons-book"></span><?php esc_html_e( 'Documentation', 'bp-redirect' ); ?></h3>
 							<p><?php esc_html_e( 'We have prepared an extensive guide to learn all aspects of the plugin. You will find most of your answers here.', 'bp-redirect' ); ?></p>
-							<a href="https://docs.wbcomdesigns.com/doc_category/buddypress-redirect/" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'bp-redirect' ); ?></a>
+							<a href="https://docs.wbcomdesigns.com/bp-family/buddypress-redirect/" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'bp-redirect' ); ?></a>
 						</div>
 					</div>
 

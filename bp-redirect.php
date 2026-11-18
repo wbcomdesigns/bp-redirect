@@ -9,10 +9,13 @@
  * @package           Wbcom_Redirect
  *
  * @wordpress-plugin
- * Plugin Name:       Wbcom Designs - Login Logout Redirect
+ * Plugin Name:       WB Login Logout Redirect
  * Plugin URI:        https://wbcomdesigns.com/downloads/buddypress-redirect/
- * Description:       Redirect users after login and logout based on user roles, with optional support for BuddyPress, WooCommerce, bbPress, Dokan, LearnDash, and PeepSo.
- * Version:           2.1.0
+ * Description:       Redirect users after login & logout by role — built for BuddyPress, BuddyBoss, WooCommerce, bbPress, Dokan, LearnDash & PeepSo.
+ * Version:           2.3.0
+ * Requires at least: 6.5
+ * Tested up to:      7.1
+ * Requires PHP:      8.1
  * Author:            Wbcom Designs <admin@wbcomdesigns.com>
  * Author URI:        https://wbcomdesigns.com/contact/
  * License:           GPL-2.0+
@@ -26,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WBCOM_REDIRECT_VERSION' ) ) {
-	define( 'WBCOM_REDIRECT_VERSION', '2.1.0' );
+	define( 'WBCOM_REDIRECT_VERSION', '2.3.0' );
 }
 
 if ( ! defined( 'WBCOM_REDIRECT_PLUGIN_PATH' ) ) {
@@ -69,7 +72,10 @@ register_activation_hook( __FILE__, 'wbcom_redirect_activate' );
  * Plugin deactivation.
  */
 function wbcom_redirect_deactivate() {
-	// Nothing to clean up.
+	// Stop the background preset-activation cron if it is still scheduled.
+	if ( defined( 'WBCOM_REDIRECT_PRESET_CRON' ) ) {
+		wp_clear_scheduled_hook( WBCOM_REDIRECT_PRESET_CRON );
+	}
 }
 register_deactivation_hook( __FILE__, 'wbcom_redirect_deactivate' );
 
@@ -106,9 +112,161 @@ function wbcom_redirect_activation_redirect( $plugin ) {
 	if ( plugin_basename( __FILE__ ) !== $plugin ) {
 		return;
 	}
-	if ( isset( $_REQUEST['action'] ) && 'activate' === $_REQUEST['action'] && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] === $plugin ) { // phpcs:ignore
+	$action_param = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$plugin_param = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( 'activate' === $action_param && $plugin_param === $plugin ) {
 		wp_safe_redirect( admin_url( 'admin.php?page=bp-redirect' ) );
 		exit;
 	}
 }
 add_action( 'activated_plugin', 'wbcom_redirect_activation_redirect' );
+
+// Preset license key shipped with this free plugin (enables auto-updates).
+if ( ! defined( 'WBCOM_REDIRECT_PRESET_KEY' ) ) {
+	define( 'WBCOM_REDIRECT_PRESET_KEY', 'wbcomfreef2c8a1d7b3e94c6a0f5d2e9b7c1a4e33' );
+}
+if ( ! defined( 'WBCOM_REDIRECT_PRESET_ITEM_ID' ) ) {
+	define( 'WBCOM_REDIRECT_PRESET_ITEM_ID', 80951 );
+}
+if ( ! defined( 'WBCOM_REDIRECT_PRESET_CRON' ) ) {
+	define( 'WBCOM_REDIRECT_PRESET_CRON', 'wbcom_redirect_activate_preset_license' );
+}
+
+// EDD Software Licensing SDK — free plugin auto-updates with preset key.
+add_action(
+	'edd_sl_sdk_registry',
+	function ( $registry ) {
+		$registry->register(
+			array(
+				'id'      => 'bp-redirect',
+				'url'     => 'https://wbcomdesigns.com',
+				'item_id' => WBCOM_REDIRECT_PRESET_ITEM_ID,
+				'version' => WBCOM_REDIRECT_VERSION,
+				'file'    => WBCOM_REDIRECT_PLUGIN_FILE,
+				'license' => WBCOM_REDIRECT_PRESET_KEY,
+			)
+		);
+	}
+);
+
+/**
+ * Whether the update SDK shipped with the plugin is on disk. A partial upload or a
+ * security scanner can strip it; redirects keep working, updates stop.
+ *
+ * @since 2.3.0
+ * @return bool
+ */
+function wbcom_redirect_update_files_present() {
+	return file_exists( WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php' );
+}
+
+/**
+ * The message shown when the update files are missing.
+ *
+ * @since 2.3.0
+ * @return string
+ */
+function wbcom_redirect_update_files_missing_message() {
+	/* translators: %s: plugin name. */
+	return sprintf( __( '%s: the update files (vendor/easy-digital-downloads folder) are missing, so automatic updates are off. Please reinstall the plugin from your Wbcom Designs account.', 'bp-redirect' ), 'WB Login Logout Redirect' );
+}
+
+/**
+ * Tell site admins that the update files are missing.
+ *
+ * @since 2.3.0
+ */
+function wbcom_redirect_update_files_missing_notice() {
+	if ( ! current_user_can( 'update_plugins' ) ) {
+		return;
+	}
+	printf(
+		'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+		esc_html( wbcom_redirect_update_files_missing_message() )
+	);
+}
+
+if ( wbcom_redirect_update_files_present() ) {
+	require_once WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php';
+} else {
+	add_action( 'admin_notices', 'wbcom_redirect_update_files_missing_notice' );
+}
+
+/**
+ * Ensure the preset license key is stored and the background activation is
+ * scheduled. Cheap and HTTP-free, so it is safe to run on every admin load.
+ *
+ * The remote activation itself is performed by a WP-Cron event (see
+ * wbcom_redirect_activate_preset_license()), NOT here — a blocking
+ * wp_remote_post() on admin_init previously made every admin page wait on
+ * wbcomdesigns.com (up to the HTTP timeout) until the preset key activated.
+ * WP-Cron runs in its own non-blocking request, so admin loads are never held.
+ */
+function wbcom_redirect_maybe_schedule_preset_activation() {
+	if ( get_option( 'bp_redirect_preset_activated' ) ) {
+		return;
+	}
+
+	// Store the preset key locally so the License screen reflects it immediately.
+	if ( WBCOM_REDIRECT_PRESET_KEY !== get_option( 'bp_redirect_license_key' ) ) {
+		update_option( 'bp_redirect_license_key', WBCOM_REDIRECT_PRESET_KEY, false );
+	}
+
+	// Defer the remote activation to the background; it retries on each cron
+	// run until it succeeds, then unschedules itself.
+	if ( ! wp_next_scheduled( WBCOM_REDIRECT_PRESET_CRON ) ) {
+		wp_schedule_event( time(), 'twicedaily', WBCOM_REDIRECT_PRESET_CRON );
+	}
+}
+add_action( 'admin_init', 'wbcom_redirect_maybe_schedule_preset_activation' );
+
+/**
+ * Background cron callback: perform the remote preset-license activation.
+ *
+ * Runs inside WP-Cron's own request, so the HTTP timeout never affects a
+ * user-facing admin page. Writes exactly the same options the previous
+ * inline activation wrote, then self-unschedules once activated.
+ */
+function wbcom_redirect_activate_preset_license() {
+	if ( get_option( 'bp_redirect_preset_activated' ) ) {
+		wp_clear_scheduled_hook( WBCOM_REDIRECT_PRESET_CRON );
+		return;
+	}
+
+	if ( WBCOM_REDIRECT_PRESET_KEY !== get_option( 'bp_redirect_license_key' ) ) {
+		update_option( 'bp_redirect_license_key', WBCOM_REDIRECT_PRESET_KEY, false );
+	}
+
+	$response = wp_remote_post(
+		'https://wbcomdesigns.com',
+		array(
+			'timeout' => 15,
+			'body'    => array(
+				'edd_action' => 'activate_license',
+				'license'    => WBCOM_REDIRECT_PRESET_KEY,
+				'item_id'    => WBCOM_REDIRECT_PRESET_ITEM_ID,
+				'url'        => home_url(),
+			),
+		)
+	);
+
+	if ( is_wp_error( $response ) ) {
+		return; // Transient failure — the next scheduled run retries.
+	}
+
+	$data = json_decode( wp_remote_retrieve_body( $response ) );
+	if ( isset( $data->success ) && $data->success ) {
+		update_option( 'bp_redirect_preset_activated', 1, false );
+		// Auto-enable usage tracking checkbox (unchanged data shape).
+		update_option(
+			'bp_redirect_license_key_allow_tracking',
+			array(
+				'allowed'   => true,
+				'timestamp' => time(),
+			),
+			false
+		);
+		wp_clear_scheduled_hook( WBCOM_REDIRECT_PRESET_CRON );
+	}
+}
+add_action( WBCOM_REDIRECT_PRESET_CRON, 'wbcom_redirect_activate_preset_license' );

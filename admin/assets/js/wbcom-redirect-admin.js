@@ -7,7 +7,7 @@
 
 	$(document).ready(function () {
 
-		// ——— Toggle enable/disable ———
+		// ——— Toggle enable/disable ———.
 		$(document).on('click', '.wbcom-redirect-toggle', function () {
 			var $toggle = $(this);
 			var target  = $toggle.data('target');
@@ -22,7 +22,7 @@
 			}
 		});
 
-		// ——— Radio type switching: show/hide relevant fields ———
+		// ——— Radio type switching: show/hide relevant fields ———.
 		$(document).on('change', '.wbcom-redirect-type-radio', function () {
 			var $config = $(this).closest('.wbcom-redirect-config');
 			var type    = $(this).val();
@@ -31,7 +31,20 @@
 			$config.find('.wbcom-redirect-field-' + type).show();
 		});
 
-		// ——— Accordion for role/group-type sections ———
+		// ——— Page selects: fill from the shared page list on first use ———.
+		$(document).on('mousedown focus', '.wbcom-redirect-page-select:not(.is-filled)', function () {
+			var $select  = $(this).addClass('is-filled');
+			var current  = $select.val();
+			var template = document.getElementById('wbcom-redirect-page-options');
+			if (!template) {
+				return;
+			}
+			$select.find('option[value!=""]').remove();
+			$select.append(template.content.cloneNode(true));
+			$select.val(current);
+		});
+
+		// ——— Accordion for role/group-type sections ———.
 		$('[id$="-accordion"]').each(function () {
 			$(this).accordion({
 				heightStyle: 'content',
@@ -41,17 +54,10 @@
 					activeHeader: 'ui-icon-minus'
 				},
 				header: '> .group > h3'
-			}).sortable({
-				axis: 'y',
-				handle: 'h3',
-				stop: function (event, ui) {
-					ui.item.children('h3').triggerHandler('focusout');
-					$(this).accordion('refresh');
-				}
 			});
 		});
 
-		// ——— AJAX Save ———
+		// ——— AJAX Save ———.
 		$(document).on('click', '.wbcom-redirect-save', function () {
 			var $btn     = $(this);
 			var $form    = $btn.closest('.wbcom-redirect-form');
@@ -89,34 +95,42 @@
 			$spinner.show();
 			$btn.prop('disabled', true);
 
+			var showNotice = function (ok, text) {
+				$notice.removeClass('updated notice-error').addClass('settings-error notice ' + (ok ? 'updated' : 'notice-error'));
+				$notice.find('strong').text(text);
+				// Stays until dismissed or the next save, like core's "Settings saved".
+				$notice.stop(true, true).show();
+			};
+
 			$.post(wbcomRedirect.ajaxUrl, postData, function (response) {
 				$spinner.hide();
 				$btn.prop('disabled', false);
-
 				if (response.success) {
-					$notice.addClass('updated settings-error notice').show();
-					setTimeout(function () {
-						$notice.fadeOut();
-					}, 3000);
+					showNotice(true, wbcomRedirect.i18n.saved);
 				} else {
-					alert(response.data || 'Error saving settings.');
+					showNotice(false, response.data || wbcomRedirect.i18n.error);
 				}
 			}).fail(function () {
 				$spinner.hide();
 				$btn.prop('disabled', false);
-				alert('Request failed. Please try again.');
+				showNotice(false, wbcomRedirect.i18n.failed);
 			});
 		});
 
-		// ——— Dismiss notice ———
+		// ——— Dismiss notice ———.
 		$(document).on('click', '.wbcom-redirect-notice .notice-dismiss', function () {
 			$(this).closest('.wbcom-redirect-notice').fadeOut();
 		});
 
-		// ——— FAQ accordion ———
+		// ——— FAQ accordion ———.
+		$('.bpr-accordion').each(function (i) {
+			var id = 'bpr-faq-panel-' + i;
+			$(this).attr('aria-controls', id).next('.bpr-panel').attr('id', id);
+		});
 		$(document).on('click', '.bpr-accordion', function (e) {
 			e.preventDefault();
 			$(this).toggleClass('active');
+			$(this).attr('aria-expanded', $(this).hasClass('active') ? 'true' : 'false');
 			var panel = $(this).next('.bpr-panel');
 			if (panel[0].style.maxHeight) {
 				panel[0].style.maxHeight = '';

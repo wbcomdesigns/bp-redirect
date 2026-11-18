@@ -49,6 +49,19 @@ class Wbcom_Redirect_Admin {
 	private $tabs = array();
 
 	/**
+	 * Dashicon class per tab slug (sidebar nav icons).
+	 *
+	 * @var array
+	 */
+	private $tab_icons = array(
+		'welcome' => 'dashicons-chart-bar',
+		'global'  => 'dashicons-admin-site-alt3',
+		'roles'   => 'dashicons-groups',
+		'faq'     => 'dashicons-editor-help',
+		'license' => 'dashicons-shield-alt',
+	);
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $plugin_name Plugin slug.
@@ -78,8 +91,8 @@ class Wbcom_Redirect_Admin {
 
 		add_submenu_page(
 			'wbcomplugins',
-			__( 'Redirect', 'bp-redirect' ),
-			__( 'Redirect', 'bp-redirect' ),
+			__( 'Login Redirect', 'bp-redirect' ),
+			__( 'Login Redirect', 'bp-redirect' ),
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'render_settings_page' )
@@ -91,7 +104,7 @@ class Wbcom_Redirect_Admin {
 	 */
 	public function init_settings() {
 		// Core tabs.
-		$this->tabs['welcome'] = __( 'Welcome', 'bp-redirect' );
+		$this->tabs['welcome'] = __( 'Overview', 'bp-redirect' );
 
 		add_settings_section( 'wbcom-redirect-welcome', ' ', array( $this, 'render_welcome_tab' ), 'wbcom-redirect-welcome' );
 
@@ -104,9 +117,9 @@ class Wbcom_Redirect_Admin {
 		// Dynamic tabs from integrations with group types (e.g. BP member types).
 		if ( class_exists( 'Wbcom_Redirect_Integration_Registry' ) ) {
 			foreach ( Wbcom_Redirect_Integration_Registry::instance()->get_with_admin_tabs() as $integration ) {
-				$tab_key = 'integration-' . $integration->get_slug();
-				/* translators: %s is the integration name */
-				$this->tabs[ $tab_key ] = sprintf( __( '%s Types', 'bp-redirect' ), $integration->get_name() );
+				$tab_key                = 'integration-' . $integration->get_slug();
+				$type_labels            = $integration->get_group_type_labels();
+				$this->tabs[ $tab_key ] = $type_labels['plural'];
 				add_settings_section(
 					'wbcom-redirect-' . $tab_key,
 					' ',
@@ -120,36 +133,78 @@ class Wbcom_Redirect_Admin {
 
 		$this->tabs['faq'] = __( 'FAQ', 'bp-redirect' );
 		add_settings_section( 'wbcom-redirect-faq', ' ', array( $this, 'render_faq_tab' ), 'wbcom-redirect-faq' );
+
+		$this->tabs['license'] = __( 'License', 'bp-redirect' );
+		add_settings_section( 'wbcom-redirect-license', ' ', array( $this, 'render_license_tab' ), 'wbcom-redirect-license' );
 	}
 
 	/**
-	 * Render the main settings page.
+	 * Render the shared WB Plugins hub landing page.
+	 *
+	 * Reclaimed from the legacy wbcom wrapper so the hub lists every active
+	 * Wbcom plugin that registered a submenu under wbcomplugins.
+	 */
+	public function render_hub() {
+		$view = WBCOM_REDIRECT_PLUGIN_PATH . 'admin/views/hub.php';
+		if ( file_exists( $view ) ) {
+			include $view;
+		}
+	}
+
+	/**
+	 * Reclaim the shared hub landing render from any legacy wrapper plugin.
+	 */
+	public function takeover_hub_landing() {
+		global $admin_page_hooks;
+		if ( empty( $admin_page_hooks['wbcomplugins'] ) ) {
+			return;
+		}
+		remove_all_actions( 'toplevel_page_wbcomplugins' );
+		add_action( 'toplevel_page_wbcomplugins', array( $this, 'render_hub' ) );
+	}
+
+	/**
+	 * Render the main settings page (card-panel shell + sidebar nav).
 	 */
 	public function render_settings_page() {
-		$current_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'welcome'; // phpcs:ignore
+		$current_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'welcome'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! isset( $this->tabs[ $current_tab ] ) ) {
+			$current_tab = 'welcome';
+		}
+		$version = defined( 'WBCOM_REDIRECT_VERSION' ) ? WBCOM_REDIRECT_VERSION : '';
 		?>
-		<div class="wrap">
-			<div class="wbcom-bb-plugins-offer-wrapper">
-				<div id="wb_admin_logo"></div>
-			</div>
-			<div class="wbcom-wrap bp-member-blog-wrap">
-				<div class="blpro-header">
-					<div class="wbcom_admin_header-wrapper">
-						<div id="wb_admin_plugin_name">
-							<?php esc_html_e( 'Login Logout Redirect', 'bp-redirect' ); ?>
-							<span>
-							<?php
-							/* translators: %s is the plugin version number */
-							printf( esc_html__( 'Version %s', 'bp-redirect' ), esc_html( WBCOM_REDIRECT_VERSION ) );
-							?>
-						</span>
-						</div>
-						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+		<div class="wrap wbredir-admin">
+			<header class="wbredir-page-header">
+				<div class="wbredir-page-header__title">
+					<span class="dashicons dashicons-randomize" aria-hidden="true"></span>
+					<div>
+						<h1><?php esc_html_e( 'Login Logout Redirect', 'bp-redirect' ); ?></h1>
+						<p class="wbredir-page-header__subtitle"><?php esc_html_e( 'Send users to the right place after login and logout — globally, by role, or by community type.', 'bp-redirect' ); ?></p>
 					</div>
 				</div>
-				<?php settings_errors(); ?>
-				<div class="wbcom-admin-settings-page">
+				<div class="wbredir-page-header__actions">
+					<?php if ( $version ) : ?>
+						<span class="wbredir-version-pill">v<?php echo esc_html( $version ); ?></span>
+					<?php endif; ?>
+				</div>
+			</header>
+
+			<hr class="wp-header-end">
+
+			<div class="wbredir-settings-layout">
+				<aside class="wbredir-settings-sidebar">
+					<div class="wbredir-settings-sidebar-brand">
+						<span class="wbredir-settings-brand-icon" aria-hidden="true"><span class="dashicons dashicons-randomize"></span></span>
+						<div class="wbredir-settings-brand-text">
+							<p class="wbredir-settings-brand-name"><?php esc_html_e( 'Login Redirect', 'bp-redirect' ); ?></p>
+							<p class="wbredir-settings-brand-sub"><?php esc_html_e( 'by Wbcom Designs', 'bp-redirect' ); ?></p>
+						</div>
+					</div>
 					<?php $this->render_tabs( $current_tab ); ?>
+				</aside>
+
+				<div class="wbredir-settings-main">
+					<?php settings_errors(); ?>
 					<?php do_settings_sections( 'wbcom-redirect-' . $current_tab ); ?>
 				</div>
 			</div>
@@ -158,26 +213,33 @@ class Wbcom_Redirect_Admin {
 	}
 
 	/**
-	 * Render tab navigation.
+	 * Render sidebar tab navigation.
 	 *
 	 * @param string $current_tab Active tab key.
 	 */
 	private function render_tabs( $current_tab ) {
-		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html__( 'Menu', 'bp-redirect' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
+		echo '<nav class="wbredir-settings-sidebar-nav" aria-label="' . esc_attr__( 'Login Redirect navigation', 'bp-redirect' ) . '">';
 
 		foreach ( $this->tabs as $key => $label ) {
-			$active = ( $current_tab === $key ) ? 'nav-tab-active' : '';
+			$active = ( $current_tab === $key ) ? ' wbredir-snav-link--active' : '';
 			$url    = admin_url( 'admin.php?page=' . $this->plugin_slug . '&tab=' . $key );
+			$icon   = isset( $this->tab_icons[ $key ] ) ? $this->tab_icons[ $key ] : 'dashicons-id';
+			if ( 'license' === $key ) {
+				echo '<div class="wbredir-snav-divider" role="separator"></div>';
+			}
 			printf(
-				'<li class="wbcom-redirect-%1$s"><a class="nav-tab %2$s" href="%3$s">%4$s</a></li>',
-				esc_attr( $key ),
+				'<a class="wbredir-snav-link%1$s" href="%2$s"%5$s><span class="dashicons %3$s" aria-hidden="true"></span>%4$s</a>',
 				esc_attr( $active ),
 				esc_url( $url ),
-				esc_html( $label )
+				esc_attr( $icon ),
+				esc_html( $label ),
+				$active ? ' aria-current="page"' : ''
 			);
 		}
 
-		echo '</ul></div></div>';
+		echo '<div class="wbredir-snav-divider" role="separator"></div>';
+		echo '<a class="wbredir-snav-link" href="https://docs.wbcomdesigns.com/bp-family/buddypress-redirect/" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-book" aria-hidden="true"></span>' . esc_html__( 'Documentation', 'bp-redirect' ) . '</a>';
+		echo '</nav>';
 	}
 
 	/**
@@ -192,6 +254,49 @@ class Wbcom_Redirect_Admin {
 	 */
 	public function render_faq_tab() {
 		include __DIR__ . '/partials/faq.php';
+	}
+
+	/**
+	 * License / Updates tab content.
+	 *
+	 * This plugin ships the official EDD Software Licensing SDK with a preset
+	 * key, so updates are automatic and there is no user-facing key to enter.
+	 * The tab simply confirms update delivery status.
+	 */
+	public function render_license_tab() {
+		?>
+		<div class="wbredir-card">
+			<div class="wbredir-card__head">
+				<p class="wbredir-card__title"><?php esc_html_e( 'Updates &amp; License', 'bp-redirect' ); ?></p>
+				<p class="wbredir-card__desc"><?php esc_html_e( 'How this plugin receives updates.', 'bp-redirect' ); ?></p>
+			</div>
+			<div class="wbredir-card__body">
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Automatic updates', 'bp-redirect' ); ?></th>
+						<td>
+							<?php if ( wbcom_redirect_update_files_present() ) : ?>
+								<span class="wbredir-license-status is-active"><?php esc_html_e( 'Enabled', 'bp-redirect' ); ?></span>
+								<p class="description"><?php esc_html_e( 'This plugin updates automatically through the Wbcom Designs update service - no license key required.', 'bp-redirect' ); ?></p>
+							<?php else : ?>
+								<span class="wbredir-license-status is-inactive"><?php esc_html_e( 'Off', 'bp-redirect' ); ?></span>
+								<p class="description"><?php echo esc_html( wbcom_redirect_update_files_missing_message() ); ?></p>
+							<?php endif; ?>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Need more plugins?', 'bp-redirect' ); ?></th>
+						<td>
+							<a class="wbredir-btn wbredir-btn-secondary" href="https://wbcomdesigns.com/" target="_blank" rel="noopener noreferrer">
+								<span class="dashicons dashicons-external" aria-hidden="true"></span>
+								<?php esc_html_e( 'Browse Wbcom Designs', 'bp-redirect' ); ?>
+							</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<?php
 	}
 
 	/**
@@ -232,9 +337,9 @@ class Wbcom_Redirect_Admin {
 
 						<p>
 							<button type="button" class="button button-primary wbcom-redirect-save" data-scope="global"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button>
-							<img src="<?php echo esc_url( $spinner_src ); ?>" class="wbcom-redirect-spinner" style="display:none" />
+							<img src="<?php echo esc_url( $spinner_src ); ?>" alt="" class="wbcom-redirect-spinner" style="display:none" />
 						</p>
-						<div class="wbcom-redirect-notice is-dismissible" style="display:none">
+						<div class="wbcom-redirect-notice is-dismissible" role="status" aria-live="polite" style="display:none">
 							<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
 							<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'bp-redirect' ); ?></span></button>
 						</div>
@@ -282,10 +387,10 @@ class Wbcom_Redirect_Admin {
 										<h3><?php echo esc_html( translate_user_role( $role_data['name'] ) ); ?></h3>
 										<div>
 											<h4><?php esc_html_e( 'Login Redirect', 'bp-redirect' ); ?></h4>
-											<?php $this->render_redirect_form( 'login', $role_login, 'roles[' . $role_slug . ']' ); ?>
+											<?php $this->render_redirect_form( 'login', $role_login, 'roles[' . $role_slug . ']', translate_user_role( $role_data['name'] ) ); ?>
 
 											<h4><?php esc_html_e( 'Logout Redirect', 'bp-redirect' ); ?></h4>
-											<?php $this->render_redirect_form( 'logout', $role_logout, 'roles[' . $role_slug . ']' ); ?>
+											<?php $this->render_redirect_form( 'logout', $role_logout, 'roles[' . $role_slug . ']', translate_user_role( $role_data['name'] ) ); ?>
 										</div>
 									</div>
 								<?php endforeach; ?>
@@ -294,9 +399,9 @@ class Wbcom_Redirect_Admin {
 
 						<p>
 							<button type="button" class="button button-primary wbcom-redirect-save" data-scope="roles"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button>
-							<img src="<?php echo esc_url( $spinner_src ); ?>" class="wbcom-redirect-spinner" style="display:none" />
+							<img src="<?php echo esc_url( $spinner_src ); ?>" alt="" class="wbcom-redirect-spinner" style="display:none" />
 						</p>
-						<div class="wbcom-redirect-notice is-dismissible" style="display:none">
+						<div class="wbcom-redirect-notice is-dismissible" role="status" aria-live="polite" style="display:none">
 							<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
 							<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'bp-redirect' ); ?></span></button>
 						</div>
@@ -319,14 +424,15 @@ class Wbcom_Redirect_Admin {
 		$groups_cfg  = isset( $settings['groups'] ) ? $settings['groups'] : array();
 		$all_types   = $integration->get_all_group_types();
 		$spinner_src = includes_url( 'images/spinner.gif' );
+		$type_label  = $integration->get_group_type_labels()['singular'];
 		?>
 		<div class="wbcom-tab-content">
 			<div class="wbcom-wrapper-admin">
 				<div class="wbcom-admin-title-section">
 					<h3>
 						<?php
-						/* translators: %s is the integration name */
-						printf( esc_html__( 'Redirect By %s Type', 'bp-redirect' ), esc_html( $integration->get_name() ) );
+						/* translators: %s is the kind of type, e.g. "Member Type". */
+						printf( esc_html__( 'Redirect By %s', 'bp-redirect' ), esc_html( $type_label ) );
 						?>
 					</h3>
 				</div>
@@ -336,8 +442,8 @@ class Wbcom_Redirect_Admin {
 						<div class="enable_disable_btn wbcom-settings-section-wrap">
 							<label for="wbcom-redirect-<?php echo esc_attr( $integration->get_slug() ); ?>-enable" class="enable_disable_setting">
 								<?php
-								/* translators: %s is the integration name */
-								printf( esc_html__( 'Enable %s Type Redirection', 'bp-redirect' ), esc_html( $integration->get_name() ) );
+								/* translators: %s is the kind of type, e.g. "Member Type". */
+								printf( esc_html__( 'Enable %s Redirection', 'bp-redirect' ), esc_html( $type_label ) );
 								?>
 							</label>
 							<input type="checkbox" class="wppd-ui-toggle wbcom-redirect-toggle" id="wbcom-redirect-<?php echo esc_attr( $integration->get_slug() ); ?>-enable" data-target=".wbcom-redirect-<?php echo esc_attr( $integration->get_slug() ); ?>-fields" <?php checked( $enabled, 'yes' ); ?>>
@@ -358,10 +464,10 @@ class Wbcom_Redirect_Admin {
 											<h3><?php echo esc_html( $type_label ); ?></h3>
 											<div>
 												<h4><?php esc_html_e( 'Login Redirect', 'bp-redirect' ); ?></h4>
-												<?php $this->render_redirect_form( 'login', $type_login, 'groups[' . $type_slug . ']' ); ?>
+												<?php $this->render_redirect_form( 'login', $type_login, 'groups[' . $type_slug . ']', $type_label ); ?>
 
 												<h4><?php esc_html_e( 'Logout Redirect', 'bp-redirect' ); ?></h4>
-												<?php $this->render_redirect_form( 'logout', $type_logout, 'groups[' . $type_slug . ']' ); ?>
+												<?php $this->render_redirect_form( 'logout', $type_logout, 'groups[' . $type_slug . ']', $type_label ); ?>
 											</div>
 										</div>
 									<?php endforeach; ?>
@@ -371,9 +477,9 @@ class Wbcom_Redirect_Admin {
 
 						<p>
 							<button type="button" class="button button-primary wbcom-redirect-save" data-scope="integration" data-integration="<?php echo esc_attr( $integration->get_slug() ); ?>"><?php esc_html_e( 'Save Settings', 'bp-redirect' ); ?></button>
-							<img src="<?php echo esc_url( $spinner_src ); ?>" class="wbcom-redirect-spinner" style="display:none" />
+							<img src="<?php echo esc_url( $spinner_src ); ?>" alt="" class="wbcom-redirect-spinner" style="display:none" />
 						</p>
-						<div class="wbcom-redirect-notice is-dismissible" style="display:none">
+						<div class="wbcom-redirect-notice is-dismissible" role="status" aria-live="polite" style="display:none">
 							<p><strong><?php esc_html_e( 'Settings saved.', 'bp-redirect' ); ?></strong></p>
 							<button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'bp-redirect' ); ?></span></button>
 						</div>
@@ -391,8 +497,9 @@ class Wbcom_Redirect_Admin {
 	 * @param string $context 'login' or 'logout'.
 	 * @param array  $config  Saved config: type, page_id, custom_url, integration.
 	 * @param string $prefix  Field name prefix for nested data (e.g. 'roles[administrator]').
+	 * @param string $for     Role or member type name, added to the field names screen readers announce.
 	 */
-	public function render_redirect_form( $context, $config = array(), $prefix = '' ) {
+	public function render_redirect_form( $context, $config = array(), $prefix = '', $for = '' ) {
 		$type        = ! empty( $config['type'] ) ? $config['type'] : 'none';
 		$page_id     = ! empty( $config['page_id'] ) ? absint( $config['page_id'] ) : 0;
 		$custom_url  = ! empty( $config['custom_url'] ) ? $config['custom_url'] : '';
@@ -406,18 +513,47 @@ class Wbcom_Redirect_Admin {
 			$destinations = Wbcom_Redirect_Integration_Registry::instance()->get_all_destinations();
 		}
 
-		// Get all pages.
-		$pages = get_pages(
-			array(
-				'post_status' => 'publish',
-				'sort_column' => 'post_title',
-			)
-		);
+		// The full page list is printed once per screen; each select carries only its saved
+		// page and is filled from the shared list when opened (a tab can hold 40+ selects).
+		static $page_options_printed = false;
+		if ( ! $page_options_printed ) {
+			$page_options_printed = true;
+			// ponytail: one list of every published page; switch to a search field if a site has tens of thousands.
+			$pages = get_pages(
+				array(
+					'post_status' => 'publish',
+					'sort_column' => 'post_title',
+				)
+			);
+			echo '<template id="wbcom-redirect-page-options">';
+			foreach ( $pages as $page ) {
+				echo '<option value="' . esc_attr( $page->ID ) . '">' . esc_html( $page->post_title ) . '</option>';
+			}
+			echo '</template>';
+		}
 
-		$uid = wp_unique_id( 'wbcom-redir-' );
+		$uid            = wp_unique_id( 'wbcom-redir-' );
+		$labels         = 'logout' === $context
+			? array(
+				'page'        => __( 'Page to open after logout', 'bp-redirect' ),
+				'custom_url'  => __( 'Custom URL to open after logout', 'bp-redirect' ),
+				'integration' => __( 'Destination to open after logout', 'bp-redirect' ),
+			)
+			: array(
+				'page'        => __( 'Page to open after login', 'bp-redirect' ),
+				'custom_url'  => __( 'Custom URL to open after login', 'bp-redirect' ),
+				'integration' => __( 'Destination to open after login', 'bp-redirect' ),
+			);
+		$labels['type'] = 'logout' === $context ? __( 'Redirect after logout', 'bp-redirect' ) : __( 'Redirect after login', 'bp-redirect' );
+		if ( $for ) {
+			foreach ( $labels as $key => $label ) {
+				/* translators: 1: field name, 2: role or member type name. */
+				$labels[ $key ] = sprintf( __( '%1$s, %2$s', 'bp-redirect' ), $label, $for );
+			}
+		}
 		?>
 		<div class="wbcom-redirect-config" data-uid="<?php echo esc_attr( $uid ); ?>">
-			<div class="wbcom-redirect-type-options">
+			<div class="wbcom-redirect-type-options" role="radiogroup" aria-label="<?php echo esc_attr( $labels['type'] ); ?>">
 				<label>
 					<input type="radio" name="<?php echo esc_attr( $name_base . '[type]' ); ?>" value="none" <?php checked( $type, 'none' ); ?> class="wbcom-redirect-type-radio">
 					<?php esc_html_e( 'None (WordPress Default)', 'bp-redirect' ); ?>
@@ -442,23 +578,21 @@ class Wbcom_Redirect_Admin {
 			</div>
 
 			<div class="wbcom-redirect-field wbcom-redirect-field-page" <?php echo 'page' !== $type ? 'style="display:none"' : ''; ?>>
-				<select name="<?php echo esc_attr( $name_base . '[page_id]' ); ?>">
+				<select name="<?php echo esc_attr( $name_base . '[page_id]' ); ?>" class="wbcom-redirect-page-select" aria-label="<?php echo esc_attr( $labels['page'] ); ?>">
 					<option value=""><?php esc_html_e( '-- Select Page --', 'bp-redirect' ); ?></option>
-					<?php foreach ( $pages as $page ) : ?>
-						<option value="<?php echo esc_attr( $page->ID ); ?>" <?php selected( $page_id, $page->ID ); ?>>
-							<?php echo esc_html( $page->post_title ); ?>
-						</option>
-					<?php endforeach; ?>
+					<?php if ( $page_id ) : ?>
+						<option value="<?php echo esc_attr( $page_id ); ?>" selected><?php echo esc_html( get_the_title( $page_id ) ); ?></option>
+					<?php endif; ?>
 				</select>
 			</div>
 
 			<div class="wbcom-redirect-field wbcom-redirect-field-custom_url" <?php echo 'custom_url' !== $type ? 'style="display:none"' : ''; ?>>
-				<input type="url" name="<?php echo esc_attr( $name_base . '[custom_url]' ); ?>" value="<?php echo esc_url( $custom_url ); ?>" placeholder="https://" class="regular-text">
+				<input type="url" name="<?php echo esc_attr( $name_base . '[custom_url]' ); ?>" aria-label="<?php echo esc_attr( $labels['custom_url'] ); ?>" value="<?php echo esc_url( $custom_url ); ?>" placeholder="https://" class="regular-text">
 			</div>
 
 			<?php if ( ! empty( $destinations ) ) : ?>
 				<div class="wbcom-redirect-field wbcom-redirect-field-integration" <?php echo 'integration' !== $type ? 'style="display:none"' : ''; ?>>
-					<select name="<?php echo esc_attr( $name_base . '[integration]' ); ?>">
+					<select name="<?php echo esc_attr( $name_base . '[integration]' ); ?>" aria-label="<?php echo esc_attr( $labels['integration'] ); ?>">
 						<option value=""><?php esc_html_e( '-- Select Destination --', 'bp-redirect' ); ?></option>
 						<?php
 						$grouped = array();
@@ -505,10 +639,13 @@ class Wbcom_Redirect_Admin {
 			$data = $raw_data;
 		}
 
+		// Only "yes" switches a scope on; anything else is stored as "no".
+		$enabled = ( isset( $data['enabled'] ) && 'yes' === $data['enabled'] ) ? 'yes' : 'no';
+
 		switch ( $scope ) {
 			case 'global':
 				$settings = array(
-					'enabled' => ! empty( $data['enabled'] ) ? sanitize_key( $data['enabled'] ) : 'no',
+					'enabled' => $enabled,
 					'login'   => $this->sanitize_config( isset( $data['login'] ) ? $data['login'] : array() ),
 					'logout'  => $this->sanitize_config( isset( $data['logout'] ) ? $data['logout'] : array() ),
 				);
@@ -517,7 +654,7 @@ class Wbcom_Redirect_Admin {
 
 			case 'roles':
 				$settings = array(
-					'enabled' => ! empty( $data['enabled'] ) ? sanitize_key( $data['enabled'] ) : 'no',
+					'enabled' => $enabled,
 					'roles'   => array(),
 				);
 
@@ -535,12 +672,14 @@ class Wbcom_Redirect_Admin {
 
 			case 'integration':
 				$integration_slug = isset( $_POST['integration'] ) ? sanitize_key( $_POST['integration'] ) : '';
-				if ( empty( $integration_slug ) ) {
-					wp_send_json_error( __( 'Missing integration slug.', 'bp-redirect' ) );
+				// Only an integration that shows a types tab may be saved; any other slug would
+				// write over another option (wbcom_redirect_global, wbcom_redirect_roles).
+				if ( ! array_key_exists( $integration_slug, Wbcom_Redirect_Integration_Registry::instance()->get_with_admin_tabs() ) ) {
+					wp_send_json_error( __( 'Unknown integration.', 'bp-redirect' ) );
 				}
 
 				$settings = array(
-					'enabled' => ! empty( $data['enabled'] ) ? sanitize_key( $data['enabled'] ) : 'no',
+					'enabled' => $enabled,
 					'groups'  => array(),
 				);
 
@@ -593,16 +732,18 @@ class Wbcom_Redirect_Admin {
 			return;
 		}
 
+		// Card-panel shell chrome (replaces the former admin/wbcom wrapper styles).
+		wp_enqueue_style( 'wbredir-admin', WBCOM_REDIRECT_PLUGIN_URL . 'assets/css/admin.css', array(), $this->version );
+
+		// Settings-tab content styles, relocated into the plugin from the former
+		// admin/wbcom wrapper so the tab markup keeps its styling.
+		$content_css = is_rtl() ? 'assets/css/wbcom-redirect-content-rtl.css' : 'assets/css/wbcom-redirect-content.css';
+		wp_enqueue_style( 'wbredir-content', WBCOM_REDIRECT_PLUGIN_URL . $content_css, array( 'wbredir-admin' ), $this->version );
+
+		// Plugin's own redirect-form styles.
 		$admin_css = wbcom_redirect_get_asset_filename( 'admin/assets/css', 'bp-redirect-admin' );
 		if ( $admin_css ) {
 			wp_enqueue_style( 'wbcom-redirect-admin', WBCOM_REDIRECT_PLUGIN_URL . $admin_css, array(), $this->version );
-		}
-
-		if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
-			$wbcom_css = wbcom_redirect_get_asset_filename( 'admin/wbcom/assets/css', 'wbcom-admin-setting' );
-			if ( $wbcom_css ) {
-				wp_enqueue_style( 'wbcom-admin-setting-css', WBCOM_REDIRECT_PLUGIN_URL . $wbcom_css, array(), $this->version );
-			}
 		}
 	}
 
@@ -614,13 +755,10 @@ class Wbcom_Redirect_Admin {
 			return;
 		}
 
-		wp_enqueue_script( 'jquery-ui-accordion' );
-		wp_enqueue_script( 'jquery-ui-sortable' );
-
 		wp_enqueue_script(
 			'wbcom-redirect-admin',
 			WBCOM_REDIRECT_PLUGIN_URL . 'admin/assets/js/wbcom-redirect-admin.js',
-			array( 'jquery', 'jquery-ui-accordion', 'jquery-ui-sortable' ),
+			array( 'jquery', 'jquery-ui-accordion' ),
 			$this->version,
 			true
 		);
@@ -631,6 +769,11 @@ class Wbcom_Redirect_Admin {
 			array(
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'wbcom-redirect-admin' ),
+				'i18n'    => array(
+					'saved'  => __( 'Settings saved.', 'bp-redirect' ),
+					'error'  => __( 'Error saving settings.', 'bp-redirect' ),
+					'failed' => __( 'Request failed. Please try again.', 'bp-redirect' ),
+				),
 			)
 		);
 	}
