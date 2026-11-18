@@ -2,6 +2,20 @@ module.exports = function (grunt) {
 	// Load all grunt tasks matching the ['grunt-*', '@*/grunt-*'] patterns.
 	require( 'load-grunt-tasks' )( grunt, { pattern: ['grunt-*', '@*/grunt-*'] } );
 
+	// One exclude list for the release zip: .distignore ("/x" = root path, "*.ext" = any depth).
+	var distIgnore = [];
+	grunt.file.read( '.distignore' ).split( '\n' ).forEach( function ( line ) {
+		line = line.trim();
+		if ( ! line || '#' === line.charAt( 0 ) ) {
+			return;
+		}
+		if ( '/' === line.charAt( 0 ) ) {
+			distIgnore.push( '!' + line.slice( 1 ), '!' + line.slice( 1 ) + '/**' );
+		} else {
+			distIgnore.push( '!**/' + line );
+		}
+	} );
+
 	// Project configuration.
 	grunt.initConfig(
 		{
@@ -133,33 +147,7 @@ module.exports = function (grunt) {
 				dist: {
 					files: [{
 						expand: true,
-						src: [
-						'**',
-						'!node_modules/**',
-						'!dist/**',
-						'!docs/**',
-						'!marketing/**',
-						'!.git/**',
-						'!.gitignore',
-						'!.editorconfig',
-						'!.eslintrc',
-						'!gruntfile.js',
-						'!package.json',
-						'!package-lock.json',
-						'!readme.md',
-						'!QA-TESTING.md',
-						'!composer.json',
-						'!composer.lock',
-						'!phpcs.xml',
-						'!phpunit.xml',
-						'!tests/**',
-						'!*.log',
-						'!*.map',
-						'!*.csv',
-						'!**/*.md',
-						'!audit/**',
-						'!.phpcs.xml.dist',
-						'!.gitmodules',
+						src: [ '**' ].concat( distIgnore, [
 						'!vendor/**',
 						'vendor/easy-digital-downloads/**',
 						// Excludes after the re-include above, or the SDK's dev files ship.
@@ -168,7 +156,7 @@ module.exports = function (grunt) {
 						'!vendor/easy-digital-downloads/**/{package.json,package-lock.json,composer.json,composer.lock,phpunit.xml,webpack.config.js}',
 						'!vendor/easy-digital-downloads/**/*.md',
 						'!**/*.map'
-						],
+						] ),
 						dest: 'dist/<%= pkg.name %>/'
 					}]
 				}

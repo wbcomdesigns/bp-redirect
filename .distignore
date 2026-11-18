@@ -1,0 +1,25 @@
+# Paths left out of the release zip. gruntfile.js (copy:dist) reads this list;
+# the vendor/ rules that keep only the update SDK live there.
+/.git
+/.github
+/.gitignore
+/.gitmodules
+/.distignore
+/.phpcs.xml.dist
+/audit
+/bin
+/docs
+/node_modules
+/dist
+/tests
+/CLAUDE.md
+/QA-TESTING.md
+/composer.json
+/composer.lock
+/gruntfile.js
+/package.json
+/package-lock.json
+*.md
+*.map
+*.log
+*.csv
