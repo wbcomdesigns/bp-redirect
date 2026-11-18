@@ -41,10 +41,23 @@ class Wbcom_Redirect_LearnDash extends Wbcom_Redirect_Integration {
 
 	/** {@inheritDoc} */
 	public function get_destinations() {
-		return array(
-			new Wbcom_Redirect_Destination( 'learndash.dashboard', __( 'Student Dashboard', 'bp-redirect' ), 'learndash' ),
-			new Wbcom_Redirect_Destination( 'learndash.courses', __( 'Courses', 'bp-redirect' ), 'learndash' ),
-		);
+		$destinations = array();
+		// LearnDash has no dashboard page of its own; offer it only when the site has a published "dashboard" page.
+		if ( $this->get_dashboard_url() ) {
+			$destinations[] = new Wbcom_Redirect_Destination( 'learndash.dashboard', __( 'Student Dashboard', 'bp-redirect' ), 'learndash' );
+		}
+		$destinations[] = new Wbcom_Redirect_Destination( 'learndash.courses', __( 'Courses', 'bp-redirect' ), 'learndash' );
+		return $destinations;
+	}
+
+	/**
+	 * URL of the published page with the slug "dashboard", if there is one.
+	 *
+	 * @return string|false
+	 */
+	private function get_dashboard_url() {
+		$page = get_page_by_path( 'dashboard' );
+		return ( $page && 'publish' === $page->post_status ) ? get_permalink( $page ) : false;
 	}
 
 	/**
@@ -56,23 +69,9 @@ class Wbcom_Redirect_LearnDash extends Wbcom_Redirect_Integration {
 	public function resolve_url( $destination_slug, $user ) {
 		switch ( $destination_slug ) {
 			case 'dashboard':
-				// LearnDash 4.x+ has a dashboard page setting.
-				$page_id = get_option( 'learndash_settings_custom_labels' );
-				// Fallback: try common slug.
-				$dashboard_page = get_page_by_path( 'dashboard' );
-				if ( $dashboard_page ) {
-					return get_permalink( $dashboard_page->ID );
-				}
-				return false;
+				return $this->get_dashboard_url();
 
 			case 'courses':
-				if ( function_exists( 'learndash_get_course_list' ) ) {
-					$courses_page = get_option( 'learndash_settings_courses_cpt' );
-					if ( ! empty( $courses_page['has_archive'] ) ) {
-						return get_post_type_archive_link( 'sfwd-courses' );
-					}
-				}
-				// Fallback.
 				$archive = get_post_type_archive_link( 'sfwd-courses' );
 				return $archive ? $archive : false;
 		}

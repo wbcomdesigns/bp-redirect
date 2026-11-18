@@ -54,6 +54,10 @@ class Wbcom_Redirect_Dokan extends Wbcom_Redirect_Integration {
 	 * @param WP_User $user             The user object.
 	 */
 	public function resolve_url( $destination_slug, $user ) {
+		// Both destinations exist only for vendors; a customer would land on an empty store or a refusal.
+		if ( function_exists( 'dokan_is_user_seller' ) && ! dokan_is_user_seller( $user->ID ) ) {
+			return false;
+		}
 		switch ( $destination_slug ) {
 			case 'dashboard':
 				if ( function_exists( 'dokan_get_navigation_url' ) ) {

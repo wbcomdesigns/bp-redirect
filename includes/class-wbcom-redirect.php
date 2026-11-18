@@ -132,9 +132,11 @@ class Wbcom_Redirect {
 	private function define_public_hooks() {
 		$public = new Wbcom_Redirect_Public( $this->plugin_name, $this->version );
 
-		$this->loader->add_filter( 'login_redirect', $public, 'handle_login_redirect', 10, 3 );
-		$this->loader->add_filter( 'logout_redirect', $public, 'handle_logout_redirect', 10, 3 );
-		$this->loader->add_filter( 'woocommerce_login_redirect', $public, 'handle_woocommerce_login_redirect', 10, 2 );
+		// Late priority: a rule the owner set must beat another plugin's default (Dokan sends every
+		// customer to My Account at 20). A rule set to None returns the incoming URL untouched.
+		$this->loader->add_filter( 'login_redirect', $public, 'handle_login_redirect', 99, 3 );
+		$this->loader->add_filter( 'logout_redirect', $public, 'handle_logout_redirect', 99, 3 );
+		$this->loader->add_filter( 'woocommerce_login_redirect', $public, 'handle_woocommerce_login_redirect', 99, 2 );
 	}
 
 	/**

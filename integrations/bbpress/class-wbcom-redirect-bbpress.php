@@ -57,15 +57,7 @@ class Wbcom_Redirect_bbPress extends Wbcom_Redirect_Integration {
 	public function resolve_url( $destination_slug, $user ) {
 		switch ( $destination_slug ) {
 			case 'forums':
-				if ( function_exists( 'bbp_get_forums_url' ) ) {
-					return bbp_get_forums_url();
-				}
-				// Fallback: get the forums page.
-				$page_id = get_option( '_bbp_root_slug_custom_slug' );
-				if ( $page_id ) {
-					return get_permalink( $page_id );
-				}
-				return home_url( '/forums/' );
+				return function_exists( 'bbp_get_forums_url' ) ? bbp_get_forums_url() : false;
 
 			case 'user-profile':
 				if ( function_exists( 'bbp_get_user_profile_url' ) ) {
