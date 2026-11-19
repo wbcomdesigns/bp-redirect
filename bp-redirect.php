@@ -170,6 +170,9 @@ add_action(
 				'version'      => WBCOM_REDIRECT_VERSION,
 				'file'         => WBCOM_REDIRECT_PLUGIN_FILE,
 				'license'      => WBCOM_REDIRECT_PRESET_KEY,
+				// The SDK reads the key from "<folder>_license_key" (bp-redirect_license_key) unless told otherwise;
+				// the preset key has always been stored in bp_redirect_license_key, so point the SDK there.
+				'option_name'  => 'bp_redirect_license_key',
 			)
 		);
 	}
