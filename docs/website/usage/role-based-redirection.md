@@ -4,7 +4,7 @@ Role rules set a login and logout destination per WordPress role. A role rule is
 
 ## Configure
 
-1. Go to WB Plugins > Redirect and open the User Roles tab.
+1. Go to WB Plugins > Login Redirect and open the User Roles tab.
 2. Make sure Enable User Role Redirection is on. It is on by default, though no per-role destinations are set until you add them.
 3. The page lists every role registered on the site as an accordion. Expand a role.
 4. Set its Login Redirect and Logout Redirect using the type options (None, Page, Custom URL, or Integration Destination).

@@ -27,7 +27,7 @@ If the Activity or Groups component is turned off later, a rule pointing at it i
 
 | Destination | Resolves to |
 |---|---|
-| Forums | The bbPress forums archive URL |
+| Forums | The forums URL that bbPress itself reports. If bbPress cannot give one, the rule is skipped and the next rule applies; the plugin never guesses a `/forums/` address. |
 | User Profile | The user's bbPress profile URL |
 
 With BuddyPress active, bbPress sends User Profile to the member's BuddyPress profile; that is bbPress's own behaviour.

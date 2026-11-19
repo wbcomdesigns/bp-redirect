@@ -13,6 +13,18 @@ Work down the checklist:
 
 The plugin hooks the standard WordPress `login_redirect` and `logout_redirect` filters. Login or logout flows that do not run those filters (some social login, single sign-on, or custom auth flows) will not trigger the redirect. Check whether the other flow applies those filters.
 
+## Another login or redirect plugin sends users somewhere else
+
+BuddyPress Redirect runs on `login_redirect`, `logout_redirect` and `woocommerce_login_redirect` at priority 99, so it wins over plugins that use the default priority, such as Dokan sending every customer to My Account. A plugin that runs later than priority 99, or that redirects by its own code without those filters (some membership, social login and single sign-on plugins), can still send the user elsewhere. To find the cause, deactivate the other redirect or login plugin, test again, then bring it back and adjust its own redirect setting.
+
+## A login link's return page is ignored
+
+By default the rule you configured wins over a `redirect_to` value on the login link, including `wp-login.php?redirect_to=...`. A developer can let a same-site return page win with the `wbcom_redirect_honor_redirect_to` filter. A `redirect_to` pointing at another site is never followed.
+
+## I am on 2.2.x or earlier and no update appears
+
+Earlier versions could not find the built-in key, so update checks never succeeded. Download 2.3.0 from your Wbcom Designs account and install it over the old copy; later updates then appear in Plugins. See [Installation](../getting-started/installation.md#automatic-updates).
+
 ## An Integration Destination is selected but the user is not redirected there
 
 The destination is resolved live at redirect time using the integration's own functions. It returns no URL, and the plugin falls back to WordPress default, when:
