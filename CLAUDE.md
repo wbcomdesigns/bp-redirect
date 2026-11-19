@@ -28,7 +28,7 @@ Redirects users after login/logout — globally, by user role, or by integration
 - Migrated off the legacy `admin/wbcom/` wrapper onto a **self-contained** card-panel shell. **UX-only**: every option key, the custom AJAX save handler, the integration registry, and the EDD SDK wiring are unchanged.
 - **Settings save = custom AJAX** (`wbcom_redirect_save_settings` → `ajax_save_settings`), NOT the Settings API. Three option groups: `wbcom_redirect_global`, `wbcom_redirect_roles`, `wbcom_redirect_{integration_slug}`. The card-panel form posts to the same handler; the per-scope sanitizers are in `ajax_save_settings` + `sanitize_config`.
 - **Tab content** uses `.wbcom-*` classes styled by `assets/css/wbcom-redirect-content.css` (relocated from the wrapper so the dir could be deleted). The **chrome** uses `.wbredir-*` (new shell). Two stylesheets by design.
-- **EDD = official EDD SL SDK** (`vendor/easy-digital-downloads/edd-sl-sdk`, item_id 80951, preset key = free auto-updates). **KEEP it** — do not replace with the Contact Me custom client (portfolio policy). License tab = update status only, no key field.
+- **EDD = official EDD SL SDK** (vendored in `libs/edd-sl-sdk` from `vapvarun/edd-sl-sdk` tag `1.0.4-wbcom.4`, never patched; `libs/package-signatures` 1.0.1; host `updates.wbcomdesigns.com` via `wbcom_redirect_licence_request()`, fallback `wbcomdesigns.com`; item_id 80951, preset key = free auto-updates). **KEEP it** — do not replace with the Contact Me custom client (portfolio policy). License tab = update status only, no key field.
 - Removed `admin/wbcom`, the `[wbcom_admin_setting_header]` shortcode call, the wrapper require, the dead admin/wbcom grunt sub-tasks, and repointed the `includes/functions.php` asset resolver off admin/wbcom.
 
 ## Redirect rules worth knowing
@@ -39,7 +39,7 @@ Redirects users after login/logout — globally, by user role, or by integration
 - Page dropdowns: `render_redirect_form()` prints the page list once per screen in `<template id="wbcom-redirect-page-options">`; each select carries only its saved page and is filled from the template on first focus. Keep it that way - per-select page lists made the User Roles tab O(roles x pages).
 
 ## Gotchas
-- **`vendor/` holds local composer WPCS tooling** and is gitignored except the tracked EDD SL SDK submodule (`vendor/easy-digital-downloads/edd-sl-sdk`). Still stage files explicitly.
+- **`vendor/` holds local composer WPCS tooling** and is fully gitignored and left out of the zip. The update SDK lives in tracked `libs/`.
 - **Release**: `bin/build-release.sh` (runs `bin/local-ci.sh`, then `grunt dist`; the zip excludes what `.distignore` lists).
 - **Build**: `npm ci && npx grunt build` (rtlcss + cssmin + uglify over `admin/assets/{css,js}`). Production loads `bp-redirect-admin.min.css` / `-rtl.min.css`, so rebuild after any CSS edit. `assets/css/admin.css` and `wbcom-redirect-content*.css` load unminified.
 - Third-party admin notices are removed in PHP (`hide_admin_notices`); don't hide `.notice-error` in CSS or the settings save error disappears too.

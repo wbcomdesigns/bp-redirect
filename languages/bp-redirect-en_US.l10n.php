@@ -1,2 +1,2 @@
 <?php
-return ['domain'=>NULL,'plural-forms'=>'nplurals=2; plural=(n != 1);','language'=>'en_US','project-id-version'=>'BP Redirect','pot-creation-date'=>'2026-11-18T23:25:44+00:00','po-revision-date'=>'2017-08-17 10:51+0530','x-generator'=>'Poedit 2.0.3','messages'=>[]];
+return ['domain'=>NULL,'plural-forms'=>'nplurals=2; plural=(n != 1);','language'=>'en_US','project-id-version'=>'BP Redirect','pot-creation-date'=>'2026-11-19T07:25:44+00:00','po-revision-date'=>'2017-08-17 10:51+0530','x-generator'=>'Poedit 2.0.3','messages'=>[]];

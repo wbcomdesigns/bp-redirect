@@ -113,10 +113,12 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 * Fix      - Overview text is no longer cut off, and the settings screen keeps a side margin on phones.
 * Fix      - FAQ questions announce whether they are open to screen readers, and role rows can no longer be dragged (the order had no effect).
 * Fix      - bbPress Forums no longer falls back to a guessed /forums/ address.
+* Fix      - Automatic update checks run again; earlier versions could not find the built-in licence key, so sites never saw new versions.
 * Dev      - New `wbcom_redirect_honor_redirect_to` filter lets a login link's return page on your own site win over the configured redirect.
 * Dev      - Requires WordPress 6.5 and PHP 8.1. Tested up to WordPress 7.1.
 * Dev      - Your existing redirect settings carry over automatically.
 * Dev      - Login and logout filters run at priority 99. Release zip built from .distignore by bin/build-release.sh.
+* Dev      - Updates are now delivered through the Wbcom update service with signed packages.
 
 = 2.2.0 =
 * Enhancement: Renamed plugin to "WB Login Logout Redirect" for brand consistency.

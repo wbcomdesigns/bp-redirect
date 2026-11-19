@@ -8,7 +8,7 @@ step() { printf '\n== %s\n' "$1"; }
 bad() { echo "FAIL: $1"; fail=1; }
 
 step "PHP lint"
-while IFS= read -r f; do php -l "$f" >/dev/null || bad "lint $f"; done < <(find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -not -path './dist/*')
+while IFS= read -r f; do php -l "$f" >/dev/null || bad "lint $f"; done < <(find . -name '*.php' -not -path './vendor/*' -not -path './libs/*' -not -path './node_modules/*' -not -path './dist/*')
 
 step "Version triangulation"
 hv=$(grep -m1 -E '^\s*\*\s*Version:' bp-redirect.php | awk '{print $NF}')
@@ -22,7 +22,8 @@ step "Changelog entry"
 grep -q "^= $hv" readme.txt || bad "readme.txt has no = $hv = changelog entry"
 
 step "Update SDK present"
-[ -f vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php ] || bad "EDD SL SDK missing: git submodule update --init"
+[ -f libs/edd-sl-sdk/edd-sl-sdk.php ] && [ -f libs/package-signatures/package-signatures.php ] || bad "update SDK or package-signatures missing from libs/"
+grep -q 1_0_4_3 libs/edd-sl-sdk/edd-sl-sdk.php || bad "libs/edd-sl-sdk is not the Wbcom build (1.0.4.3)"
 
 step "WPCS"
 if [ -x vendor/bin/phpcs ]; then
