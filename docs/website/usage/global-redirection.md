@@ -4,7 +4,7 @@ The Global rule sets one login destination and one logout destination for every 
 
 ## Configure
 
-1. Go to WB Plugins > Redirect and open the Global Redirection tab.
+1. Go to WB Plugins > Login Redirect and open the Global Redirection tab.
 2. Turn on Enable Global Redirection. The login and logout fields appear only while this is on.
 3. Set the Login Redirect and the Logout Redirect using the redirect type options below.
 4. Select Save Settings. The setting is stored immediately over AJAX; a "Settings saved" notice confirms it.

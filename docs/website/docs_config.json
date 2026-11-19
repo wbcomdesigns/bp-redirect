@@ -7,42 +7,92 @@
       "name": "Features",
       "folder": "features",
       "description": "What the plugin does and which rule wins when several apply.",
-      "pages": [ { "slug": "overview" } ]
+      "pages": [
+        {
+          "slug": "overview"
+        },
+        {
+          "slug": "settings-screen"
+        }
+      ]
     },
     {
       "name": "Getting Started",
       "folder": "getting-started",
       "description": "Install the plugin and set up your first login redirect.",
-      "pages": [ { "slug": "installation" }, { "slug": "quick-start" } ]
+      "pages": [
+        {
+          "slug": "installation"
+        },
+        {
+          "slug": "quick-start"
+        }
+      ]
     },
     {
       "name": "Usage",
       "folder": "usage",
       "description": "Global, role, member type and integration destinations, one page each.",
       "pages": [
-        { "slug": "global-redirection" },
-        { "slug": "role-based-redirection" },
-        { "slug": "buddypress-member-types" },
-        { "slug": "integration-destinations" }
+        {
+          "slug": "global-redirection"
+        },
+        {
+          "slug": "role-based-redirection"
+        },
+        {
+          "slug": "buddypress-member-types"
+        },
+        {
+          "slug": "integration-destinations"
+        }
       ]
     },
     {
       "name": "Developer Guide",
       "folder": "developer-guide",
       "description": "Hooks, stored options and how to add your own integration.",
-      "pages": [ { "slug": "architecture" }, { "slug": "options-reference" }, { "slug": "integration-api" } ]
+      "pages": [
+        {
+          "slug": "architecture"
+        },
+        {
+          "slug": "options-reference"
+        },
+        {
+          "slug": "integration-api"
+        }
+      ]
     },
     {
       "name": "FAQ",
       "folder": "faq",
       "description": "Short answers to the questions site owners ask most.",
-      "pages": [ { "slug": "faq" } ]
+      "pages": [
+        {
+          "slug": "faq"
+        }
+      ]
     },
     {
       "name": "Troubleshooting",
       "folder": "troubleshooting",
       "description": "What to check when a redirect does not happen.",
-      "pages": [ { "slug": "troubleshooting" } ]
+      "pages": [
+        {
+          "slug": "troubleshooting"
+        }
+      ]
+    },
+    {
+      "name": "What's New",
+      "folder": "whats-new",
+      "description": "What changed in each release, newest first.",
+      "pages": [
+        {
+          "slug": "whats-new-in-2-3-0"
+        }
+      ]
     }
   ]
 }

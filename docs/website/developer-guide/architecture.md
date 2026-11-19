@@ -17,7 +17,7 @@ This page describes how the plugin loads, which WordPress hooks it uses, and how
 | `login_redirect` | filter (priority 99, 3 args) | `Wbcom_Redirect_Public::handle_login_redirect` | Rewrite the post-login URL |
 | `logout_redirect` | filter (priority 99, 3 args) | `Wbcom_Redirect_Public::handle_logout_redirect` | Rewrite the post-logout URL |
 | `woocommerce_login_redirect` | filter (priority 99, 2 args) | `Wbcom_Redirect_Public::handle_woocommerce_login_redirect` | Same rules for the My Account login form |
-| `admin_menu` | action | `Wbcom_Redirect_Admin::add_menu` | Add the WB Plugins > Redirect page |
+| `admin_menu` | action | `Wbcom_Redirect_Admin::add_menu` | Add the WB Plugins > Login Redirect page |
 | `admin_init` | action | `Wbcom_Redirect_Admin::init_settings` | Build the settings tabs |
 | `init` | action | `wbcom_redirect_maybe_migrate` | One-time migration from 2.0.0 settings |
 | `admin_enqueue_scripts` | action | `enqueue_styles`, `enqueue_scripts` | Load admin CSS and JS on plugin pages only |

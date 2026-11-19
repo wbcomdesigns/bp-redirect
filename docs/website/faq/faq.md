@@ -40,6 +40,18 @@ That option only appears when at least one supported integration is active. On a
 
 That tab appears only when BuddyPress or BuddyBoss is active and at least one member type is registered. On BuddyBoss it is called Profile Types. Create the types first.
 
+## Do I need a license key?
+
+No. The plugin is free and updates itself through the Wbcom Designs update service. The License tab only shows whether automatic updates are enabled.
+
+## What happens to my rules if I delete the plugin?
+
+Nothing is removed. The rule options stay in the database, so reinstalling the plugin brings your rules back. See [Installation](../getting-started/installation.md#removing-the-plugin).
+
+## Does the plugin store personal data?
+
+No. It stores only your redirect rules, as options. It stores nothing about individual users.
+
 ## Where do I get support?
 
 Visit the Wbcom Designs support center at https://wbcomdesigns.com/support/ or the contact page at https://wbcomdesigns.com/contact/.

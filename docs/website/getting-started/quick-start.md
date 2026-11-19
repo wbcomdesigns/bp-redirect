@@ -1,10 +1,10 @@
 # Quick Start
 
-This walkthrough sets up a redirect in under a minute. All settings live under WB Plugins > Redirect in the WordPress admin.
+This walkthrough sets up a redirect in under a minute. All settings live under WB Plugins > Login Redirect in the WordPress admin.
 
 ## Send everyone to one page after login
 
-1. Go to WB Plugins > Redirect and open the Global Redirection tab.
+1. Go to WB Plugins > Login Redirect and open the Global Redirection tab.
 2. Turn on Enable Global Redirection.
 3. Under Login Redirect, choose Page and select a published page, or choose Custom URL and enter a full URL.
 4. Select Save Settings.
