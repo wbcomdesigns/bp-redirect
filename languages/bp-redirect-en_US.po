@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BP Redirect\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-redirect\n"
-"POT-Creation-Date: 2026-11-18T23:25:44+00:00\n"
+"POT-Creation-Date: 2026-11-19T07:25:44+00:00\n"
 "PO-Revision-Date: 2017-08-17 10:51+0530\n"
 "Last-Translator: \n"
 "Language-Team: Wbcom Designs\n"
@@ -538,7 +538,15 @@ msgid "Support"
 msgstr ""
 
 #. translators: %s: plugin name.
-#: bp-redirect.php:171 dist/bp-redirect/bp-redirect.php:171
+#: bp-redirect.php:198
+#, php-format
+msgid ""
+"%s: the update files (libs folder) are missing, so automatic updates are "
+"off. Please reinstall the plugin from your Wbcom Designs account."
+msgstr ""
+
+#. translators: %s: plugin name.
+#: dist/bp-redirect/bp-redirect.php:171
 #, php-format
 msgid ""
 "%s: the update files (vendor/easy-digital-downloads folder) are missing, so "
