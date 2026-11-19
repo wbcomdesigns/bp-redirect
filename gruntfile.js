@@ -148,9 +148,6 @@ module.exports = function (grunt) {
 					files: [{
 						expand: true,
 						src: [ '**' ].concat( distIgnore, [
-						// libs/ (update SDK, package signatures) ships as vendored; its dev files do not.
-						'!libs/**/{package.json,package-lock.json,composer.json,composer.lock,phpunit.xml,webpack.config.js}',
-						'!libs/**/*.md',
 						'!**/*.map'
 						] ),
 						dest: 'dist/<%= pkg.name %>/'
