@@ -2,6 +2,5 @@ node_modules/
 dist/
 *.log
 *.map
-# Local composer tooling; the EDD SL SDK submodule stays tracked.
-vendor/*
-!vendor/easy-digital-downloads/
+# Local composer tooling (WPCS, lint). The update SDK is vendored in libs/.
+/vendor/

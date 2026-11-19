@@ -1,3 +1,0 @@
-[submodule "vendor/easy-digital-downloads/edd-sl-sdk"]
-	path = vendor/easy-digital-downloads/edd-sl-sdk
-	url = https://github.com/vapvarun/edd-sl-sdk.git

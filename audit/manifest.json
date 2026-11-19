@@ -145,7 +145,7 @@
     "notes_2_3_0": "BuddyPress activity/groups destinations resolve only while the component is active; page rules need a published page; Dokan destinations vendors only (dokan_is_user_seller); LearnDash dashboard offered only when a published 'dashboard' page exists; bbPress forums uses bbp_get_forums_url() only."
   },
   "edd_license": {
-    "client": "Official EDD Software Licensing SDK (vendor/easy-digital-downloads/edd-sl-sdk, git submodule from vapvarun/edd-sl-sdk)",
+    "client": "Official EDD Software Licensing SDK (libs/edd-sl-sdk, vendored from vapvarun/edd-sl-sdk tag 1.0.4-wbcom.4; host updates.wbcomdesigns.com with wbcomdesigns.com fallback; libs/package-signatures 1.0.1 registered as buddypress-redirect, warn mode)",
     "item_id": 80951,
     "model": "Free auto-updates with a preset key — no user-facing license-key field. The License tab surfaces update status only.",
     "policy": "KEEP the SDK — do NOT replace with the Contact Me custom client (it would be a downgrade). See portfolio memory feedback_edd_sdk_keep_when_present."
@@ -168,9 +168,9 @@
     ],
     "vendor_tooling": [
       {
-        "path": "vendor/ (excl. easy-digital-downloads/edd-sl-sdk submodule)",
+        "path": "vendor/",
         "verdict": "untracked_dev_tooling",
-        "reason": "composer WPCS/lint tooling, untracked and not gitignored — stage migration files explicitly, never git add -A."
+        "reason": "composer WPCS/lint tooling, gitignored and excluded from the release zip."
       }
     ]
   },

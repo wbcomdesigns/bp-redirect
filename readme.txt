@@ -117,6 +117,7 @@ Yes. On first load after updating to v2.1.0, your existing settings are automati
 * Dev      - Requires WordPress 6.5 and PHP 8.1. Tested up to WordPress 7.1.
 * Dev      - Your existing redirect settings carry over automatically.
 * Dev      - Login and logout filters run at priority 99. Release zip built from .distignore by bin/build-release.sh.
+* Dev      - Updates are now delivered through the Wbcom update service with signed packages.
 
 = 2.2.0 =
 * Enhancement: Renamed plugin to "WB Login Logout Redirect" for brand consistency.

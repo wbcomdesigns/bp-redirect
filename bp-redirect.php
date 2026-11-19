@@ -132,32 +132,59 @@ if ( ! defined( 'WBCOM_REDIRECT_PRESET_CRON' ) ) {
 	define( 'WBCOM_REDIRECT_PRESET_CRON', 'wbcom_redirect_activate_preset_license' );
 }
 
-// EDD Software Licensing SDK — free plugin auto-updates with preset key.
+// Licence and update host for this plugin; the SDK falls back to https://wbcomdesigns.com.
+if ( ! defined( 'WBCOM_REDIRECT_LICENCE_HOST' ) ) {
+	define( 'WBCOM_REDIRECT_LICENCE_HOST', 'https://updates.wbcomdesigns.com' );
+}
+
+/**
+ * One licence-server request (activate, deactivate or check). Goes through the bundled SDK, so it uses the same
+ * host as update checks and falls back to the old host when the new one cannot be reached. Returns the decoded
+ * reply, or false when no host answered.
+ *
+ * @since 2.3.0
+ * @param array $params EDD Software Licensing parameters (edd_action, license, item_id).
+ * @return object|false
+ */
+function wbcom_redirect_licence_request( array $params ) {
+	if ( ! class_exists( '\\EasyDigitalDownloads\\Updater\\Requests\\API' ) ) {
+		return false;
+	}
+	// Name the fallback here as well: on an early request the SDK registry has not run yet.
+	if ( method_exists( '\\EasyDigitalDownloads\\Updater\\Requests\\API', 'set_fallback' ) ) {
+		\EasyDigitalDownloads\Updater\Requests\API::set_fallback( WBCOM_REDIRECT_LICENCE_HOST, 'https://wbcomdesigns.com' );
+	}
+	return ( new \EasyDigitalDownloads\Updater\Requests\API( WBCOM_REDIRECT_LICENCE_HOST ) )->make_request( $params );
+}
+
+// EDD Software Licensing SDK - free plugin auto-updates with preset key.
 add_action(
 	'edd_sl_sdk_registry',
 	function ( $registry ) {
 		$registry->register(
 			array(
-				'id'      => 'bp-redirect',
-				'url'     => 'https://wbcomdesigns.com',
-				'item_id' => WBCOM_REDIRECT_PRESET_ITEM_ID,
-				'version' => WBCOM_REDIRECT_VERSION,
-				'file'    => WBCOM_REDIRECT_PLUGIN_FILE,
-				'license' => WBCOM_REDIRECT_PRESET_KEY,
+				'id'           => 'bp-redirect',
+				'url'          => WBCOM_REDIRECT_LICENCE_HOST,
+				'fallback_url' => 'https://wbcomdesigns.com',
+				'item_id'      => WBCOM_REDIRECT_PRESET_ITEM_ID,
+				'version'      => WBCOM_REDIRECT_VERSION,
+				'file'         => WBCOM_REDIRECT_PLUGIN_FILE,
+				'license'      => WBCOM_REDIRECT_PRESET_KEY,
 			)
 		);
 	}
 );
 
 /**
- * Whether the update SDK shipped with the plugin is on disk. A partial upload or a
+ * Whether the update SDK shipped with the plugin is on disk and complete. A partial upload or a
  * security scanner can strip it; redirects keep working, updates stop.
  *
  * @since 2.3.0
  * @return bool
  */
 function wbcom_redirect_update_files_present() {
-	return file_exists( WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php' );
+	return file_exists( WBCOM_REDIRECT_PLUGIN_PATH . 'libs/edd-sl-sdk/edd-sl-sdk.php' )
+		&& file_exists( WBCOM_REDIRECT_PLUGIN_PATH . 'libs/edd-sl-sdk/src/Versions.php' );
 }
 
 /**
@@ -168,7 +195,7 @@ function wbcom_redirect_update_files_present() {
  */
 function wbcom_redirect_update_files_missing_message() {
 	/* translators: %s: plugin name. */
-	return sprintf( __( '%s: the update files (vendor/easy-digital-downloads folder) are missing, so automatic updates are off. Please reinstall the plugin from your Wbcom Designs account.', 'bp-redirect' ), 'WB Login Logout Redirect' );
+	return sprintf( __( '%s: the update files (libs folder) are missing, so automatic updates are off. Please reinstall the plugin from your Wbcom Designs account.', 'bp-redirect' ), 'WB Login Logout Redirect' );
 }
 
 /**
@@ -187,9 +214,26 @@ function wbcom_redirect_update_files_missing_notice() {
 }
 
 if ( wbcom_redirect_update_files_present() ) {
-	require_once WBCOM_REDIRECT_PLUGIN_PATH . 'vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php';
+	require_once WBCOM_REDIRECT_PLUGIN_PATH . 'libs/edd-sl-sdk/edd-sl-sdk.php';
 } else {
 	add_action( 'admin_notices', 'wbcom_redirect_update_files_missing_notice' );
+}
+
+// Package Signatures (libs/package-signatures, vapvarun/package-signatures): checks that each update package
+// carries the release signature before WordPress installs it. Warn mode: the result is logged (option
+// package_signatures_log) and the update installs either way. Product = store slug.
+if ( file_exists( WBCOM_REDIRECT_PLUGIN_PATH . 'libs/package-signatures/package-signatures.php' ) ) {
+	require_once WBCOM_REDIRECT_PLUGIN_PATH . 'libs/package-signatures/package-signatures.php';
+	package_signatures_register(
+		array(
+			'product'  => 'buddypress-redirect',
+			'plugin'   => WBCOM_REDIRECT_PLUGIN_BASENAME,
+			'hosts'    => array( 'wbcomdesigns.com', 'updates.wbcomdesigns.com' ),
+			'keys'     => array( 'wbcom-2026-1' => 'kr+2P1WqRbENpZw0BXZmwFnA2tMLi6MlHbBa6jB13U4=' ),
+			'mode'     => 'warn',
+			'fallback' => 'https://wbcomdesigns.com/package-signatures/{product}/{version}/',
+		)
+	);
 }
 
 /**
@@ -237,24 +281,18 @@ function wbcom_redirect_activate_preset_license() {
 		update_option( 'bp_redirect_license_key', WBCOM_REDIRECT_PRESET_KEY, false );
 	}
 
-	$response = wp_remote_post(
-		'https://wbcomdesigns.com',
+	// False means no host answered (or the SDK is not loaded yet): the next scheduled run retries.
+	$data = wbcom_redirect_licence_request(
 		array(
-			'timeout' => 15,
-			'body'    => array(
-				'edd_action' => 'activate_license',
-				'license'    => WBCOM_REDIRECT_PRESET_KEY,
-				'item_id'    => WBCOM_REDIRECT_PRESET_ITEM_ID,
-				'url'        => home_url(),
-			),
+			'edd_action' => 'activate_license',
+			'license'    => WBCOM_REDIRECT_PRESET_KEY,
+			'item_id'    => WBCOM_REDIRECT_PRESET_ITEM_ID,
 		)
 	);
-
-	if ( is_wp_error( $response ) ) {
-		return; // Transient failure — the next scheduled run retries.
+	if ( false === $data ) {
+		return;
 	}
 
-	$data = json_decode( wp_remote_retrieve_body( $response ) );
 	if ( isset( $data->success ) && $data->success ) {
 		update_option( 'bp_redirect_preset_activated', 1, false );
 		// Auto-enable usage tracking checkbox (unchanged data shape).

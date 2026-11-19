@@ -35,4 +35,4 @@ This is intentional. The plugin hides other admin notices on its own settings pa
 
 ## The plugin says the update files are missing
 
-The `vendor/easy-digital-downloads` folder was removed (often by a file sync or a security plugin). Redirects keep working, but automatic updates are off. Reinstall the plugin from your Wbcom Designs account.
+The `libs` folder was removed (often by a file sync or a security plugin). Redirects keep working, but automatic updates are off. Reinstall the plugin from your Wbcom Designs account.
